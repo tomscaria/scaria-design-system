@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<link rel="stylesheet" href="theme-switcher.css"/>
+<style>
+  body{margin:0;background:var(--bg);padding:80px 32px 48px;font-family:var(--font-sans);color:var(--fg);min-height:100vh;display:flex;justify-content:center;align-items:flex-start}
+  .card{background:var(--bg-2);border:1px solid var(--line);border-radius:24px;width:460px;padding:16px;box-shadow:var(--shadow-md)}
+  .mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums slashed-zero}
+
+  .head{display:flex;align-items:center;justify-content:space-between;padding:4px 6px 14px}
+  .tabs{display:flex;gap:18px}
+  .tab{font-size:16px;font-weight:600;color:var(--fg-3);cursor:pointer;padding:4px 0;border-bottom:2px solid transparent}
+  .tab.on{color:var(--fg);border-color:var(--fg)}
+  .hic{display:flex;gap:4px}
+  .ib{width:32px;height:32px;border-radius:999px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--fg-3)}
+  .ib:hover{background:var(--bg-3);color:var(--fg)}
+  .ib svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+  .panel{background:var(--bg);border:1px solid var(--line-2);border-radius:18px;padding:18px 18px 16px;position:relative}
+  .panel + .panel{margin-top:6px}
+  .panel .lab{font-family:var(--font-mono);font-size:12px;color:var(--fg-3);margin-bottom:6px}
+  .panel .rw{display:flex;align-items:center;gap:10px}
+  .panel input{all:unset;flex:1;min-width:0;font-family:var(--font-display);font-size:36px;font-weight:500;letter-spacing:-.02em;line-height:1;color:var(--fg);font-variant-numeric:tabular-nums slashed-zero;width:100%}
+  .panel input::placeholder{color:var(--fg-3)}
+  .panel .meta{display:flex;justify-content:space-between;margin-top:10px;font-family:var(--font-mono);font-size:12px;color:var(--fg-3);align-items:center}
+  .panel .meta .max{color:var(--brand);cursor:pointer;font-weight:600;padding:3px 8px;border-radius:999px;background:color-mix(in oklab,var(--brand) 12%,transparent)}
+  .panel .meta .max:hover{background:color-mix(in oklab,var(--brand) 20%,transparent)}
+
+  /* token chip */
+  .tk{display:inline-flex;align-items:center;gap:8px;padding:5px 10px 5px 5px;background:var(--bg-2);border:1px solid var(--line);border-radius:999px;font-weight:600;font-size:17px;cursor:pointer;flex-shrink:0;transition:background .1s}
+  .tk:hover{background:var(--bg-3)}
+  .tk.empty{background:var(--brand);color:var(--brand-fg);border-color:var(--brand);padding:5px 14px 5px 14px}
+  .tk .logo{width:24px;height:24px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:11px;font-weight:700;color:#fff}
+  .tk.empty .logo{display:none}
+  .tk svg.chev{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;opacity:.6}
+
+  /* flip button */
+  .flip{position:absolute;left:50%;top:-16px;transform:translateX(-50%);width:34px;height:34px;border-radius:12px;background:var(--bg-2);border:4px solid var(--bg);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--fg)}
+  .flip:hover{background:var(--bg-3)}
+  .flip svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+  /* rate row */
+  .rate{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;margin-top:6px;font-family:var(--font-mono);font-size:12px;color:var(--fg-2);cursor:pointer;user-select:none}
+  .rate:hover{color:var(--fg)}
+  .rate .l{display:flex;align-items:center;gap:6px}
+  .rate .l svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;opacity:.6}
+  .rate .r{display:flex;align-items:center;gap:6px}
+  .rate .chev{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s}
+  .rate.open .chev{transform:rotate(180deg)}
+
+  /* details */
+  .detail{max-height:0;overflow:hidden;transition:max-height .24s ease}
+  .rate.open + .detail{max-height:400px}
+  .detail-inner{padding:2px 16px 14px;font-family:var(--font-mono);font-size:12px}
+  .detail-inner .dr{display:flex;justify-content:space-between;padding:6px 0;color:var(--fg-3)}
+  .detail-inner .dr b{color:var(--fg);font-weight:500}
+  .detail-inner .dr .help{display:inline-block;width:12px;height:12px;border:1px solid var(--fg-3);border-radius:999px;font-size:9px;text-align:center;line-height:10px;color:var(--fg-3);margin-left:4px;cursor:help}
+
+  /* route viz */
+  .route{margin-top:8px;padding:10px 12px;background:var(--bg-3);border-radius:12px;display:flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:11px;color:var(--fg-2);flex-wrap:wrap}
+  .route .hop{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;background:var(--bg-2);border:1px solid var(--line);border-radius:999px}
+  .route .hop .dot{width:14px;height:14px;border-radius:999px}
+  .route .arrow{color:var(--fg-3)}
+
+  /* action */
+  .go{margin-top:10px;width:100%;height:56px;border:none;border-radius:20px;background:color-mix(in oklab,var(--brand) 18%,transparent);color:var(--brand);font-family:var(--font-sans);font-weight:600;font-size:17px;cursor:pointer;transition:all .1s}
+  .go:hover{background:color-mix(in oklab,var(--brand) 28%,transparent)}
+  .go.ready{background:var(--brand);color:var(--brand-fg)}
+  .go.ready:hover{filter:brightness(.95)}
+  .go.warn{background:color-mix(in oklab,var(--warning) 22%,transparent);color:var(--warning)}
+
+  /* slippage popover */
+  .slip{position:absolute;top:60px;right:16px;background:var(--bg-2);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:var(--shadow-lg);width:280px;z-index:10;display:none}
+  .slip.on{display:block}
+  .slip h6{margin:0 0 10px;font-size:13px;font-weight:600}
+  .slip .seg{display:grid;grid-template-columns:1fr 1fr;background:var(--bg);border:1px solid var(--line-2);border-radius:999px;padding:3px;margin-bottom:10px;font-family:var(--font-mono);font-size:12px}
+  .slip .seg > *{text-align:center;padding:6px;border-radius:999px;cursor:pointer;color:var(--fg-3)}
+  .slip .seg > .on{background:var(--bg-2);color:var(--fg);box-shadow:var(--shadow-xs)}
+  .slip .slip-row{display:flex;gap:6px;align-items:center}
+  .slip .sr{flex:1;padding:8px 10px;border:1px solid var(--line-2);background:var(--bg);border-radius:12px;font-family:var(--font-mono);font-size:12px;text-align:center;cursor:pointer;color:var(--fg-3)}
+  .slip .sr.on{background:color-mix(in oklab,var(--brand) 15%,transparent);border-color:var(--brand);color:var(--brand)}
+  .slip .si{width:72px;text-align:right;padding:8px 10px;border:1px solid var(--line-2);background:var(--bg);border-radius:12px;font-family:var(--font-mono);font-size:12px;color:var(--fg)}
+</style></head><body data-theme="lore-light">
+
+<div class="card">
+  <div class="head">
+    <div class="tabs">
+      <div class="tab on">Swap</div>
+      <div class="tab">Limit</div>
+      <div class="tab">Send</div>
+      <div class="tab">Buy</div>
+    </div>
+    <div class="hic">
+      <div class="ib" title="Chart"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 14l3-3 4 4 7-7"/></svg></div>
+      <div class="ib" id="slipBtn" title="Settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09a1.65 1.65 0 00-1-1.51 1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09a1.65 1.65 0 001.51-1 1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06a1.65 1.65 0 001.82.33h0a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51h0a1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82v0a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg></div>
+    </div>
+  </div>
+
+  <!-- SELL -->
+  <div class="panel">
+    <div class="lab">Sell</div>
+    <div class="rw">
+      <input id="sellAmt" value="1.2"/>
+      <div class="tk"><span class="logo" style="background:#627EEA">Ξ</span>ETH<svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div>
+    </div>
+    <div class="meta">
+      <span id="sellUsd">$3,754.10</span>
+      <span>Balance: 3.82 <span class="max">Max</span></span>
+    </div>
+  </div>
+
+  <!-- BUY -->
+  <div class="panel" style="position:relative">
+    <div class="flip" title="Flip"><svg viewBox="0 0 24 24"><path d="M7 10V6M7 6L3 10M7 6l4 4"/><path d="M17 14v4M17 18l4-4M17 18l-4-4"/></svg></div>
+    <div class="lab">Buy</div>
+    <div class="rw">
+      <input id="buyAmt" value="3,748.22"/>
+      <div class="tk"><span class="logo" style="background:#2775CA">$</span>USDC<svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div>
+    </div>
+    <div class="meta">
+      <span>$3,747.84 <span style="color:var(--danger);font-weight:600">(-0.17%)</span></span>
+      <span>Balance: 12,480.22</span>
+    </div>
+  </div>
+
+  <!-- RATE ROW (expandable) -->
+  <div class="rate" id="rateRow">
+    <div class="l">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      <span>1 ETH = 3,128.42 USDC</span>
+      <span style="color:var(--fg-3)">· $3,128.22</span>
+    </div>
+    <div class="r">
+      <span style="color:var(--success)">Free</span>
+      <svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+    </div>
+  </div>
+
+  <div class="detail">
+    <div class="detail-inner">
+      <div class="dr"><span>Price impact <span class="help">?</span></span><b style="color:var(--success)">0.04%</b></div>
+      <div class="dr"><span>Max slippage <span class="help">?</span></span><b>Auto <span style="color:var(--fg-3)">· 0.50%</span></b></div>
+      <div class="dr"><span>Min received after slippage</span><b>3,729.48 USDC</b></div>
+      <div class="dr"><span>Network cost <span class="help">?</span></span><b>$0.03 <span style="color:var(--fg-3)">· on Base</span></b></div>
+      <div class="dr"><span>Lore fee</span><b style="color:var(--success)">0.00 <span class="mono" style="color:var(--fg-3);text-decoration:line-through">0.25%</span></b></div>
+
+      <div class="route">
+        <span style="color:var(--fg-3);margin-right:2px">Route:</span>
+        <span class="hop"><span class="dot" style="background:#627EEA"></span>ETH</span>
+        <span class="arrow">→</span>
+        <span class="hop">Uniswap v4 · 0.05%</span>
+        <span class="arrow">→</span>
+        <span class="hop"><span class="dot" style="background:#2775CA"></span>USDC</span>
+        <span style="margin-left:auto;color:var(--fg-3)">1 hop · Base</span>
+      </div>
+    </div>
+  </div>
+
+  <button class="go ready">Swap</button>
+
+  <div class="slip" id="slipPop">
+    <h6>Max slippage</h6>
+    <div class="seg"><span class="on">Auto</span><span>Custom</span></div>
+    <div class="slip-row">
+      <div class="sr">0.1%</div>
+      <div class="sr on">0.5%</div>
+      <div class="sr">1.0%</div>
+      <input class="si" value="0.50" readonly>
+    </div>
+    <div style="margin-top:12px;font-family:var(--font-mono);font-size:11px;color:var(--fg-3);line-height:1.5">
+      Your transaction will revert if price moves unfavorably by more than this percent.
+    </div>
+  </div>
+</div>
+
+<script>
+  // rate row expand
+  const r=document.getElementById('rateRow');
+  r.addEventListener('click',()=>r.classList.toggle('open'));
+  // open by default for preview
+  r.classList.add('open');
+  // settings popover
+  const sb=document.getElementById('slipBtn'), sp=document.getElementById('slipPop');
+  sb.addEventListener('click',e=>{e.stopPropagation();sp.classList.toggle('on');});
+  document.addEventListener('click',e=>{if(!sp.contains(e.target)) sp.classList.remove('on');});
+
+  // naive linked inputs (illustrative)
+  const sa=document.getElementById('sellAmt'), ba=document.getElementById('buyAmt'), su=document.getElementById('sellUsd');
+  const RATE=3128.42;
+  sa.addEventListener('input',()=>{
+    const v=parseFloat(sa.value.replace(/,/g,''))||0;
+    ba.value=(v*RATE).toLocaleString('en-US',{maximumFractionDigits:2});
+    su.textContent='$'+(v*RATE).toLocaleString('en-US',{maximumFractionDigits:2});
+  });
+  ba.addEventListener('input',()=>{
+    const v=parseFloat(ba.value.replace(/,/g,''))||0;
+    sa.value=(v/RATE).toLocaleString('en-US',{maximumFractionDigits:6});
+    su.textContent='$'+v.toLocaleString('en-US',{maximumFractionDigits:2});
+  });
+</script>
+<script src="theme-switcher.js" defer></script>
+</body></html>

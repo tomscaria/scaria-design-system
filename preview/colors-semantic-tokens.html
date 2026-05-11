@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<link rel="stylesheet" href="theme-switcher.css"/>
+<style>
+  body{margin:0;background:var(--bg);padding:60px 16px 16px;font-family:var(--font-sans);color:var(--fg);min-height:100vh}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .tok{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-sm)}
+  .sw{width:32px;height:32px;border-radius:var(--r-xs);border:1px solid var(--line-2);flex-shrink:0}
+  .name{font-family:var(--font-mono);font-size:11px;color:var(--fg)}
+  .val{font-size:10px;color:var(--fg-3);font-family:var(--font-mono)}
+</style></head><body data-theme="lore-light">
+<div class="grid">
+  <div class="tok"><div class="sw" style="background:var(--brand)"></div><div><div class="name">--brand</div><div class="val">primary action surface</div></div></div>
+  <div class="tok"><div class="sw" style="background:var(--brand-hover)"></div><div><div class="name">--brand-hover</div><div class="val">brand hover state</div></div></div>
+  <div class="tok"><div class="sw" style="background:var(--accent)"></div><div><div class="name">--accent</div><div class="val">hero accent</div></div></div>
+  <div class="tok"><div class="sw" style="background:var(--accent-deep)"></div><div><div class="name">--accent-deep</div><div class="val">legible on light</div></div></div>
+  <div class="tok"><div class="sw" style="background:var(--accent-soft)"></div><div><div class="name">--accent-soft</div><div class="val">tinted surfaces</div></div></div>
+  <div class="tok"><div class="sw" style="background:var(--success)"></div><div><div class="name">--success</div><div class="val">positive / gains</div></div></div>
+  <div class="tok"><div class="sw" style="background:var(--info)"></div><div><div class="name">--info</div><div class="val">info / links</div></div></div>
+  <div class="tok"><div class="sw" style="background:var(--warn)"></div><div><div class="name">--warn</div><div class="val">caution</div></div></div>
+  <div class="tok"><div class="sw" style="background:var(--danger)"></div><div><div class="name">--danger</div><div class="val">errors / losses</div></div></div>
+  <div class="tok"><div class="sw" style="background:var(--line-strong)"></div><div><div class="name">--line-strong</div><div class="val">accent borders</div></div></div>
+</div>
+<script src="theme-switcher.js" defer></script>
+</body></html>

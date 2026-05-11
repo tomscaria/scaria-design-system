@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<link rel="stylesheet" href="theme-switcher.css"/>
+<style>
+  body{margin:0;background:var(--bg);padding:64px 20px 24px;font-family:var(--font-sans);color:var(--fg);min-height:100vh}
+  h4{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--fg-3);margin:0 0 12px;font-weight:600;font-family:var(--font-mono)}
+  section{margin-bottom:22px}
+  .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+
+  /* All button variants reference tokens — every theme re-skins */
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;
+       height:40px;padding:0 18px;border-radius:var(--r-pill);
+       font-size:14px;font-weight:600;border:1px solid transparent;cursor:pointer;
+       font-family:var(--font-sans);transition:all .15s;line-height:1}
+  .btn-primary  {background:var(--brand);color:var(--brand-fg);box-shadow:var(--shadow-xs)}
+  .btn-primary:hover{background:var(--brand-hover)}
+  .btn-accent   {background:var(--accent);color:var(--accent-fg)}
+  .btn-accent:hover{background:var(--accent-deep);color:var(--accent-fg)}
+  .btn-secondary{background:var(--bg-2);color:var(--fg);border-color:var(--line)}
+  .btn-secondary:hover{background:var(--bg-3);border-color:var(--fg-3)}
+  .btn-outline  {background:transparent;color:var(--fg);border-color:var(--line-strong)}
+  .btn-outline:hover{background:var(--bg-2)}
+  .btn-ghost    {background:transparent;color:var(--fg-2)}
+  .btn-ghost:hover{background:var(--bg-2);color:var(--fg)}
+  .btn-danger   {background:transparent;color:var(--danger);border-color:var(--danger)}
+  .btn-danger:hover{background:color-mix(in oklab,var(--danger) 14%,var(--bg))}
+  .btn-inverse  {background:var(--fg);color:var(--bg);border-color:var(--fg)}
+  .btn[disabled]{opacity:.45;cursor:not-allowed}
+
+  .btn-sm{height:32px;padding:0 14px;font-size:13px;border-radius:var(--r-pill)}
+  .btn-lg{height:48px;padding:0 22px;font-size:16px;border-radius:var(--r-pill)}
+  .btn-ico{width:40px;padding:0}
+  .btn-ico.btn-sm{width:32px}
+
+  .ico{width:16px;height:16px;background:currentColor;display:block;
+    -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+    -webkit-mask-size:contain;mask-size:contain;
+    -webkit-mask-position:center;mask-position:center}
+</style></head><body data-theme="lore-light">
+
+<section>
+  <h4>Variants</h4>
+  <div class="row">
+    <button class="btn btn-primary">Connect wallet</button>
+    <button class="btn btn-accent">Deposit</button>
+    <button class="btn btn-secondary">Share</button>
+    <button class="btn btn-outline">Filter</button>
+    <button class="btn btn-ghost">Cancel</button>
+    <button class="btn btn-danger">Remove</button>
+    <button class="btn btn-inverse">Ship it</button>
+    <button class="btn btn-accent" disabled>Pending…</button>
+  </div>
+</section>
+
+<section>
+  <h4>Sizes</h4>
+  <div class="row">
+    <button class="btn btn-primary btn-sm">Approve</button>
+    <button class="btn btn-primary">Open vault</button>
+    <button class="btn btn-primary btn-lg">Transfer $8,420</button>
+  </div>
+</section>
+
+<section>
+  <h4>With icon</h4>
+  <div class="row">
+    <button class="btn btn-primary"><span class="ico" style="-webkit-mask-image:url(../assets/icons/svg/ArrowUp.svg);mask-image:url(../assets/icons/svg/ArrowUp.svg)"></span>Send</button>
+    <button class="btn btn-accent"><span class="ico" style="-webkit-mask-image:url(../assets/icons/svg/Plus.svg);mask-image:url(../assets/icons/svg/Plus.svg)"></span>Add funds</button>
+    <button class="btn btn-secondary"><span class="ico" style="-webkit-mask-image:url(../assets/icons/svg/Filter.svg);mask-image:url(../assets/icons/svg/Filter.svg)"></span>Filter</button>
+    <button class="btn btn-ico btn-secondary" title="Settings"><span class="ico" style="-webkit-mask-image:url(../assets/icons/svg/Settings.svg);mask-image:url(../assets/icons/svg/Settings.svg)"></span></button>
+    <button class="btn btn-ico btn-sm btn-secondary" title="More"><span class="ico" style="-webkit-mask-image:url(../assets/icons/svg/MoreHorizontal.svg);mask-image:url(../assets/icons/svg/MoreHorizontal.svg)"></span></button>
+  </div>
+</section>
+
+<script src="theme-switcher.js" defer></script>
+</body></html>

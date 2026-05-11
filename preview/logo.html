@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<link rel="stylesheet" href="theme-switcher.css"/>
+<style>
+  body{margin:0;background:var(--bg);padding:28px;font-family:var(--font-sans);color:var(--fg)}
+  h4{font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:var(--fg-3);margin:0 0 12px;font-weight:600;font-family:var(--font-mono)}
+  .meta{font-size:11px;color:var(--fg-3);font-family:var(--font-mono);margin:-4px 0 18px;max-width:760px;line-height:1.55}
+  section{margin-bottom:32px}
+  .grid{display:grid;gap:14px}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  .g5{grid-template-columns:repeat(5,1fr)}
+  .card{border:1px solid var(--line);border-radius:16px;padding:24px 20px;display:flex;flex-direction:column;align-items:center;gap:14px;background:var(--bg-2);position:relative;min-height:190px;justify-content:center}
+  .card.dark{background:#101311;border-color:#1e231f;color:#F3EDE1}
+  .card.cream{background:#F5EFE0;border-color:#e8dfc8}
+  .label{position:absolute;top:10px;left:14px;font-size:9px;font-family:var(--font-mono);letter-spacing:.12em;text-transform:uppercase;opacity:.55}
+  .tag{font-family:var(--font-mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-3)}
+  .card.dark .tag{color:#a4a69e}
+  .card.cream .tag{color:#6b6650}
+  .note{font-size:11px;color:var(--fg-3);font-family:var(--font-mono);text-align:center;max-width:190px;line-height:1.45;margin-top:-4px}
+  .tile{display:inline-flex;align-items:center;justify-content:center;overflow:hidden}
+  .rd{border-radius:999px}
+  .sq-r{border-radius:22%}
+  .row{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+
+  .official{display:flex;gap:36px;align-items:center;flex-wrap:wrap;padding:22px 28px;border:1px solid var(--line);border-radius:16px;background:var(--bg-2)}
+  .official .dark-plate{background:#101311;padding:14px 22px;border-radius:12px;display:flex;align-items:center;gap:20px}
+
+  /* banking context mock */
+  .phone{width:220px;height:420px;border-radius:36px;background:linear-gradient(180deg,#0E1110 0%,#1a1d1b 100%);padding:18px;display:flex;flex-direction:column;gap:12px;color:#F3EDE1;position:relative;box-shadow:0 30px 60px -20px rgba(0,0,0,.4)}
+  .phone .top{display:flex;justify-content:space-between;align-items:center;font-family:var(--font-mono);font-size:9px;opacity:.7}
+  .phone .balance{margin-top:14px;font-family:'Cormorant Garamond',Georgia,serif;font-size:34px;font-weight:500;letter-spacing:-.01em}
+  .phone .subtitle{font-size:10px;opacity:.6;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.1em}
+  .phone .pill{margin-top:auto;background:rgba(212,242,75,.14);color:#D4F24B;padding:10px 14px;border-radius:12px;font-size:11px;display:flex;align-items:center;gap:10px}
+</style></head><body data-theme="lore-light">
+
+<section>
+  <h4>Official wordmark</h4>
+  <div class="meta">Uploaded assets — kept as canonical for product chrome, docs, legal. Variations below iterate only on the mark.</div>
+  <div class="official">
+    <img src="../assets/brand/lore-wordmark-black.svg" alt="Lore" style="height:42px"/>
+    <div class="dark-plate">
+      <img src="../assets/brand/lore-wordmark-chartreuse.svg" alt="Lore" style="height:32px"/>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SUBTLE VARIATIONS ============ -->
+<section>
+  <h4>Spiral · subtle variations toward softer, trustworthy-but-fun</h4>
+  <div class="meta">All share the same spiral DNA. Each varies one thing: stroke weight, terminal shape, curvature, or negative-space pacing. Think neobank calm (Monzo, Revolut, N26) meeting playful warmth.</div>
+
+  <div class="grid g4">
+
+    <!-- A. Rounded terminal -->
+    <div class="card">
+      <span class="label">A · soft cap</span>
+      <svg width="120" height="120" viewBox="0 0 500 500">
+        <circle cx="250" cy="250" r="250" fill="#D4F24B"/>
+        <path d="M260 430c-115 0-200-74-200-168 0-52 72-73 163-73 69 0 117 25 117 61 0 23-47 48-85 48-17 0-23-6-23-14 0-20 43-39 43-59 0-9-8-13-22-13-55 0-165 47-165 81 0 23 58 40 149 40 96 0 154-31 154-91s-62-94-162-94c-50 0-89 11-121 27-16 9-24 5-24-10 0-60 68-111 148-111 104 0 187 84 187 186 0 103-78 189-173 189Z" fill="#141613" stroke="#141613" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"/>
+      </svg>
+      <div class="tag">rounded joins · -10% heft</div>
+    </div>
+
+    <!-- B. Thinner stroke / more air -->
+    <div class="card">
+      <span class="label">B · airy</span>
+      <svg width="120" height="120" viewBox="0 0 500 500">
+        <circle cx="250" cy="250" r="250" fill="#D4F24B"/>
+        <g transform="translate(25 25) scale(.9)">
+          <path d="M260 430c-115 0-200-74-200-168 0-52 72-73 163-73 69 0 117 25 117 61 0 23-47 48-85 48-17 0-23-6-23-14 0-20 43-39 43-59 0-9-8-13-22-13-55 0-165 47-165 81 0 23 58 40 149 40 96 0 154-31 154-91s-62-94-162-94c-50 0-89 11-121 27-16 9-24 5-24-10 0-60 68-111 148-111 104 0 187 84 187 186 0 103-78 189-173 189Z" fill="#141613"/>
+        </g>
+      </svg>
+      <div class="tag">breathing room · friendlier</div>
+    </div>
+
+    <!-- C. Two-tone warmth -->
+    <div class="card">
+      <span class="label">C · two-tone</span>
+      <svg width="120" height="120" viewBox="0 0 500 500">
+        <circle cx="250" cy="250" r="250" fill="#D4F24B"/>
+        <path d="M260 430c-115 0-200-74-200-168 0-52 72-73 163-73 69 0 117 25 117 61 0 23-47 48-85 48-17 0-23-6-23-14 0-20 43-39 43-59 0-9-8-13-22-13-55 0-165 47-165 81 0 23 58 40 149 40 96 0 154-31 154-91s-62-94-162-94c-50 0-89 11-121 27-16 9-24 5-24-10 0-60 68-111 148-111 104 0 187 84 187 186 0 103-78 189-173 189Z" fill="#2B3028"/>
+      </svg>
+      <div class="tag">graphite → coal · warmer</div>
+    </div>
+
+    <!-- D. Slight smile tilt -->
+    <div class="card">
+      <span class="label">D · smile</span>
+      <svg width="120" height="120" viewBox="0 0 500 500">
+        <circle cx="250" cy="250" r="250" fill="#D4F24B"/>
+        <g transform="rotate(-6 250 260)">
+          <path d="M260 430c-115 0-200-74-200-168 0-52 72-73 163-73 69 0 117 25 117 61 0 23-47 48-85 48-17 0-23-6-23-14 0-20 43-39 43-59 0-9-8-13-22-13-55 0-165 47-165 81 0 23 58 40 149 40 96 0 154-31 154-91s-62-94-162-94c-50 0-89 11-121 27-16 9-24 5-24-10 0-60 68-111 148-111 104 0 187 84 187 186 0 103-78 189-173 189Z" fill="#141613"/>
+        </g>
+      </svg>
+      <div class="tag">6° tilt · playful lilt</div>
+    </div>
+
+    <!-- E. Pupil eye -->
+    <div class="card">
+      <span class="label">E · eye-in</span>
+      <svg width="120" height="120" viewBox="0 0 500 500">
+        <circle cx="250" cy="250" r="250" fill="#D4F24B"/>
+        <path d="M260 430c-115 0-200-74-200-168 0-52 72-73 163-73 69 0 117 25 117 61 0 23-47 48-85 48-17 0-23-6-23-14 0-20 43-39 43-59 0-9-8-13-22-13-55 0-165 47-165 81 0 23 58 40 149 40 96 0 154-31 154-91s-62-94-162-94c-50 0-89 11-121 27-16 9-24 5-24-10 0-60 68-111 148-111 104 0 187 84 187 186 0 103-78 189-173 189Z" fill="#141613"/>
+        <circle cx="280" cy="255" r="14" fill="#D4F24B"/>
+      </svg>
+      <div class="tag">pupil dot · alive</div>
+    </div>
+
+    <!-- F. Gradient ground (warm) -->
+    <div class="card">
+      <span class="label">F · sunrise</span>
+      <svg width="120" height="120" viewBox="0 0 500 500">
+        <defs><radialGradient id="sr" cx=".5" cy=".35" r=".75"><stop offset="0" stop-color="#E4FF6B"/><stop offset="1" stop-color="#B4D028"/></radialGradient></defs>
+        <circle cx="250" cy="250" r="250" fill="url(#sr)"/>
+        <path d="M260 430c-115 0-200-74-200-168 0-52 72-73 163-73 69 0 117 25 117 61 0 23-47 48-85 48-17 0-23-6-23-14 0-20 43-39 43-59 0-9-8-13-22-13-55 0-165 47-165 81 0 23 58 40 149 40 96 0 154-31 154-91s-62-94-162-94c-50 0-89 11-121 27-16 9-24 5-24-10 0-60 68-111 148-111 104 0 187 84 187 186 0 103-78 189-173 189Z" fill="#1F2220"/>
+      </svg>
+      <div class="tag">soft radial ground</div>
+    </div>
+
+    <!-- G. Outline only (soft) -->
+    <div class="card cream">
+      <span class="label">G · outline</span>
+      <svg width="120" height="120" viewBox="0 0 500 500">
+        <circle cx="250" cy="250" r="244" fill="none" stroke="#141613" stroke-width="10"/>
+        <path d="M260 430c-115 0-200-74-200-168 0-52 72-73 163-73 69 0 117 25 117 61 0 23-47 48-85 48-17 0-23-6-23-14 0-20 43-39 43-59 0-9-8-13-22-13-55 0-165 47-165 81 0 23 58 40 149 40 96 0 154-31 154-91s-62-94-162-94c-50 0-89 11-121 27-16 9-24 5-24-10 0-60 68-111 148-111 104 0 187 84 187 186 0 103-78 189-173 189Z" fill="none" stroke="#141613" stroke-width="14" stroke-linejoin="round" stroke-linecap="round"/>
+      </svg>
+      <div class="tag" style="color:#6b6650">for paper · embroidered feel</div>
+    </div>
+
+    <!-- H. Dark ground inverted -->
+    <div class="card dark">
+      <span class="label">H · reverse</span>
+      <svg width="120" height="120" viewBox="0 0 500 500">
+        <circle cx="250" cy="250" r="250" fill="#141613"/>
+        <path d="M260 430c-115 0-200-74-200-168 0-52 72-73 163-73 69 0 117 25 117 61 0 23-47 48-85 48-17 0-23-6-23-14 0-20 43-39 43-59 0-9-8-13-22-13-55 0-165 47-165 81 0 23 58 40 149 40 96 0 154-31 154-91s-62-94-162-94c-50 0-89 11-121 27-16 9-24 5-24-10 0-60 68-111 148-111 104 0 187 84 187 186 0 103-78 189-173 189Z" fill="#D4F24B"/>
+      </svg>
+      <div class="tag">chartreuse on graphite</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ B + D MERGE ============ -->
+<section>
+  <h4>B + D · airy + lilt — three tilts to pick from</h4>
+  <div class="meta">Breathing spiral (B) rotated slightly (D's playful lilt). Three angle options so you can pick the exact amount of "smile." Any stronger and it reads wonky; any less and the lilt disappears.</div>
+
+  <div class="grid g3">
+
+    <!-- 4° -->
+    <div class="card">
+      <span class="label">B+D · 4°</span>
+      <svg width="150" height="150" viewBox="0 0 500 500">
+        <circle cx="250" cy="250" r="250" fill="#D4F24B"/>
+        <g transform="rotate(-4 250 260)">
+          <g transform="translate(25 25) scale(.9)">
+            <path d="M260 430c-115 0-200-74-200-168 0-52 72-73 163-73 69 0 117 25 117 61 0 23-47 48-85 48-17 0-23-6-23-14 0-20 43-39 43-59 0-9-8-13-22-13-55 0-165 47-165 81 0 23 58 40 149 40 96 0 154-31 154-91s-62-94-162-94c-50 0-89 11-121 27-16 9-24 5-24-10 0-60 68-111 148-111 104 0 187 84 187 186 0 103-78 189-173 189Z" fill="#141613"/>
+          </g>
+        </g>
+      </svg>
+      <div class="tag">subtle · grown-up</div>
+    </div>
+
+    <!-- 6° (D original) -->
+    <div class="card" style="border-color:#141613;border-width:2px">
+      <span class="label">B+D · 6°  ★ recommended</span>
+      <svg width="150" height="150" viewBox="0 0 500 500">
+        <circle cx="250" cy="250" r="250" fill="#D4F24B"/>
+        <g transform="rotate(-6 250 260)">
+          <g transform="translate(25 25) scale(.9)">
+            <path d="M260 430c-115 0-200-74-200-168 0-52 72-73 163-73 69 0 117 25 117 61 0 23-47 48-85 48-17 0-23-6-23-14 0-20 43-39 43-59 0-9-8-13-22-13-55 0-165 47-165 81 0 23 58 40 149 40 96 0 154-31 154-91s-62-94-162-94c-50 0-89 11-121 27-16 9-24 5-24-10 0-60 68-111 148-111 104 0 187 84 187 186 0 103-78 189-173 189Z" fill="#141613"/>
+          </g>
+        </g>
+      </svg>
+      <div class="tag">balanced · fun + legible</div>
+    </div>
+
+    <!-- 9° -->
+    <div class="card">
+      <span class="label">B+D · 9°</span>
+      <svg width="150" height="150" viewBox="0 0 500 500">
+        <circle cx="250" cy="250" r="250" fill="#D4F24B"/>
+        <g transform="rotate(-9 250 260)">
+          <g transform="translate(25 25) scale(.9)">
+            <path d="M260 430c-115 0-200-74-200-168 0-52 72-73 163-73 69 0 117 25 117 61 0 23-47 48-85 48-17 0-23-6-23-14 0-20 43-39 43-59 0-9-8-13-22-13-55 0-165 47-165 81 0 23 58 40 149 40 96 0 154-31 154-91s-62-94-162-94c-50 0-89 11-121 27-16 9-24 5-24-10 0-60 68-111 148-111 104 0 187 84 187 186 0 103-78 189-173 189Z" fill="#141613"/>
+          </g>
+        </g>
+      </svg>
+      <div class="tag">more playful · bolder lilt</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ B+D @ 6° AT EVERY SIZE ============ -->
+<section>
+  <h4>B + D @ 6° · sizes, inversions, and ground treatments</h4>
+  <div class="meta">The recommended combo at every scale and in every context. Lilt holds up from 16px favicon to full-bleed marketing.</div>
+
+  <div class="row" style="gap:24px;align-items:center">
+    <!-- 16 -->
+    <div class="tile rd" style="width:16px;height:16px;background:#D4F24B">
+      <svg width="16" height="16" viewBox="0 0 500 500"><g transform="rotate(-6 250 260)"><g transform="translate(25 25) scale(.9)"><path d="M260 430c-115 0-200-74-200-168 0-52 72-73 163-73 69 0 117 25 117 61 0 23-47 48-85 48-17 0-23-6-23-14 0-20 43-39 43-59 0-9-8-13-22-13-55 0-165 47-165 81 0 23 58 40 149 40 96 0 154-31 154-91s-62-94-162-94c-50 0-89 11-121 27-16 9-24 5-24-10 0-60 68-111 148-111 104 0 187 84 187 186 0 103-78 189-173 189Z" fill="#141613"/></g></g></svg>
+    </div>
+    <!-- 24 -->
+    <div class="tile rd" style="width:24px;height:24px;background:#D4F24B">
+      <svg width="24" height="24" viewBox="0 0 500 500"><g transform="rotate(-6 250 260)"><g transform="translate(25 25) scale(.9)"><path d="M260 430c-115 0-200-74-200-168 0-52 72-73 163-73 69 0 117 25 117 61 0 23-47 48-85 48-17 0-23-6-23-14 0-20 43-39 43-59 0-9-8-13-22-13-55 0-165 47-165 81 0 23 58 40 149 40 96 0 154-31 154-91s-62-94-162-94c-50 0-89 11-121 27-16 9-24 5-24-10 0-60 68-111 148-111 104 0 187 84 187 186 0 103-78 189-173 189Z" fill="#141613"/></g></g></svg>
+    </div>
+    <!-- 40 -->
+    <div class="tile rd" style="width:40px;height:40px;background:#D4F24B">
+      <svg width="40" height="40" viewBox="0 0 500 500"><g transform="rotate(-6 250 260)"><g transform="translate(25 25) scale(.9)"><path d="M260 430c-115 0-200-74-200-168 0-52 72-73 163-73 69 0 117 25 117 61 0 23-47 48-85 48-17 0-23-6-23-14 0-20 43-39 43-59 0-9-8-13-22-13-55 0-165 47-165 81 0 23 58 40 149 40 96 0 154-31 154-91s-62-94-162-94c-50 0-89 11-121 27-16 9-24 5-24-10 0-60 68-111 148-111 104 0 187 84 187 186 0 103-78 189-173 189Z" fill="#141613"/></g></g></svg>
+    </div>
+    <!-- 64 sq-r -->
+    <div class="tile sq-r" style="width:64px;height:64px;background:#D4F24B">
+      <svg width="64" height="64" viewBox="0 0 500 500"><g transform="rotate(-6 250 260)"><g transform="translate(25 25) scale(.9)"><path d="M260 430c-115 0-200-74-200-168 0-52 72-73 163-73 69 0 117 25 117 61 0 23-47 48-85 48-17 0-23-6-23-14 0-20 43-39 43-59 0-9-8-13-22-13-55 0-165 47-165 81 0 23 58 40 149 40 96 0 154-31 154-91s-62-94-162-94c-50 0-89 11-121 27-16 9-24 5-24-10 0-60 68-111 148-111 104 0 187 84 187 186 0 103-78 189-173 189Z" fill="#141613"/></g></g></svg>
+    </div>
+    <!-- 96 rd -->
+    <div class="tile rd" style="width:96px;height:96px;background:#D4F24B">
+      <svg width="96" height="96" viewBox="0 0 500 500"><g transform="rotate(-6 250 260)"><g transform="translate(25 25) scale(.9)"><path d="M260 430c-115 0-200-74-200-168 0-52 72-73 163-73 69 0 117 25 117 61 0 23-47 48-85 48-17 0-23-6-23-14 0-20 43-39 43-59 0-9-8-13-22-13-55 0-165 47-165 81 0 23 58 40 149 40 96 0 154-31 154-91s-62-94-162-94c-50 0-89 11-121 27-16 9-24 5-24-10 0-60 68-111 148-111 104 0 187 84 187 186 0 103-78 189-173 189Z" fill="#141613"/></g></g></svg>
+    </div>
+    <!-- 140 rd -->
+    <div class="tile rd" style="width:140px;height:140px;background:#D4F24B">
+      <svg width="140" height="140" viewBox="0 0 500 500"><g transform="rotate(-6 250 260)"><g transform="translate(25 25) scale(.9)"><path d="M260 430c-115 0-200-74-200-168 0-52 72-73 163-73 69 0 117 25 117 61 0 23-47 48-85 48-17 0-23-6-23-14 0-20 43-39 43-59 0-9-8-13-22-13-55 0-165 47-165 81 0 23 58 40 149 40 96 0 154-31 154-91s-62-94-162-94c-50 0-89 11-121 27-16 9-24 5-24-10 0-60 68-111 148-111 104 0 187 84 187 186 0 103-78 189-173 189Z" fill="#141613"/></g></g></svg>
+    </div>
+  </div>
+
+  <div class="row" style="gap:18px;margin-top:22px">
+    <!-- dark inverse -->
+    <div class="tile rd" style="width:140px;height:140px;background:#101311">
+      <svg width="140" height="140" viewBox="0 0 500 500"><g transform="rotate(-6 250 260)"><g transform="translate(25 25) scale(.9)"><path d="M260 430c-115 0-200-74-200-168 0-52 72-73 163-73 69 0 117 25 117 61 0 23-47 48-85 48-17 0-23-6-23-14 0-20 43-39 43-59 0-9-8-13-22-13-55 0-165 47-165 81 0 23 58 40 149 40 96 0 154-31 154-91s-62-94-162-94c-50 0-89 11-121 27-16 9-24 5-24-10 0-60 68-111 148-111 104 0 187 84 187 186 0 103-78 189-173 189Z" fill="#D4F24B"/></g></g></svg>
+    </div>
+    <!-- cream mono -->
+    <div class="tile rd" style="width:140px;height:140px;background:#F5EFE0;border:1px solid #e8dfc8">
+      <svg width="140" height="140" viewBox="0 0 500 500"><g transform="rotate(-6 250 260)"><g transform="translate(25 25) scale(.9)"><path d="M260 430c-115 0-200-74-200-168 0-52 72-73 163-73 69 0 117 25 117 61 0 23-47 48-85 48-17 0-23-6-23-14 0-20 43-39 43-59 0-9-8-13-22-13-55 0-165 47-165 81 0 23 58 40 149 40 96 0 154-31 154-91s-62-94-162-94c-50 0-89 11-121 27-16 9-24 5-24-10 0-60 68-111 148-111 104 0 187 84 187 186 0 103-78 189-173 189Z" fill="#141613"/></g></g></svg>
+    </div>
+    <!-- chartreuse flat -->
+    <div class="tile sq-r" style="width:140px;height:140px;background:#D4F24B">
+      <svg width="140" height="140" viewBox="0 0 500 500"><g transform="rotate(-6 250 260)"><g transform="translate(25 25) scale(.9)"><path d="M260 430c-115 0-200-74-200-168 0-52 72-73 163-73 69 0 117 25 117 61 0 23-47 48-85 48-17 0-23-6-23-14 0-20 43-39 43-59 0-9-8-13-22-13-55 0-165 47-165 81 0 23 58 40 149 40 96 0 154-31 154-91s-62-94-162-94c-50 0-89 11-121 27-16 9-24 5-24-10 0-60 68-111 148-111 104 0 187 84 187 186 0 103-78 189-173 189Z" fill="#141613"/></g></g></svg>
+    </div>
+    <!-- sunrise gradient -->
+    <div class="tile rd" style="width:140px;height:140px">
+      <svg width="140" height="140" viewBox="0 0 500 500">
+        <defs><radialGradient id="sr2" cx=".5" cy=".35" r=".75"><stop offset="0" stop-color="#E4FF6B"/><stop offset="1" stop-color="#B4D028"/></radialGradient></defs>
+        <circle cx="250" cy="250" r="250" fill="url(#sr2)"/>
+        <g transform="rotate(-6 250 260)"><g transform="translate(25 25) scale(.9)"><path d="M260 430c-115 0-200-74-200-168 0-52 72-73 163-73 69 0 117 25 117 61 0 23-47 48-85 48-17 0-23-6-23-14 0-20 43-39 43-59 0-9-8-13-22-13-55 0-165 47-165 81 0 23 58 40 149 40 96 0 154-31 154-91s-62-94-162-94c-50 0-89 11-121 27-16 9-24 5-24-10 0-60 68-111 148-111 104 0 187 84 187 186 0 103-78 189-173 189Z" fill="#141613"/></g></g>
+      </svg>
+    </div>
+    <!-- outline -->
+    <div class="tile rd" style="width:140px;height:140px;background:#F5EFE0;border:1px solid #e8dfc8">
+      <svg width="140" height="140" viewBox="0 0 500 500">
+        <circle cx="250" cy="250" r="244" fill="none" stroke="#141613" stroke-width="10"/>
+        <g transform="rotate(-6 250 260)"><g transform="translate(25 25) scale(.9)"><path d="M260 430c-115 0-200-74-200-168 0-52 72-73 163-73 69 0 117 25 117 61 0 23-47 48-85 48-17 0-23-6-23-14 0-20 43-39 43-59 0-9-8-13-22-13-55 0-165 47-165 81 0 23 58 40 149 40 96 0 154-31 154-91s-62-94-162-94c-50 0-89 11-121 27-16 9-24 5-24-10 0-60 68-111 148-111 104 0 187 84 187 186 0 103-78 189-173 189Z" fill="#141613"/></g></g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BANKING CONTEXT ============ -->
+<section>
+  <h4>In context · the feeling</h4>
+  <div class="meta">Where the mark actually lives: app icon, in-product avatar, card-print. Softer terminals read calmer next to numbers and balances.</div>
+
+  <div class="row" style="gap:28px;align-items:flex-start">
+
+    <div class="phone">
+      <div class="top">
+        <svg width="22" height="22" viewBox="0 0 500 500"><circle cx="250" cy="250" r="250" fill="#D4F24B"/><g transform="rotate(-6 250 260)"><g transform="translate(25 25) scale(.9)"><path d="M260 430c-115 0-200-74-200-168 0-52 72-73 163-73 69 0 117 25 117 61 0 23-47 48-85 48-17 0-23-6-23-14 0-20 43-39 43-59 0-9-8-13-22-13-55 0-165 47-165 81 0 23 58 40 149 40 96 0 154-31 154-91s-62-94-162-94c-50 0-89 11-121 27-16 9-24 5-24-10 0-60 68-111 148-111 104 0 187 84 187 186 0 103-78 189-173 189Z" fill="#141613"/></g></g></svg>
+        <span>9:41</span>
+      </div>
+      <div class="subtitle">Total balance</div>
+      <div class="balance">$42,318.04</div>
+      <div style="font-size:11px;color:#D4F24B;margin-top:2px">+$1,204 · this week</div>
+      <div class="pill">
+        <svg width="16" height="16" viewBox="0 0 500 500"><circle cx="250" cy="250" r="250" fill="#D4F24B"/><g transform="rotate(-6 250 260)"><g transform="translate(25 25) scale(.9)"><path d="M260 430c-115 0-200-74-200-168 0-52 72-73 163-73 69 0 117 25 117 61 0 23-47 48-85 48-17 0-23-6-23-14 0-20 43-39 43-59 0-9-8-13-22-13-55 0-165 47-165 81 0 23 58 40 149 40 96 0 154-31 154-91s-62-94-162-94c-50 0-89 11-121 27-16 9-24 5-24-10 0-60 68-111 148-111 104 0 187 84 187 186 0 103-78 189-173 189Z" fill="#141613"/></g></g></svg>
+        Your Lore · 4 chains connected
+      </div>
+    </div>
+
+    <!-- card -->
+    <div style="width:320px;height:200px;border-radius:18px;background:linear-gradient(135deg,#F5EFE0 0%,#D4F24B 100%);padding:22px;display:flex;flex-direction:column;justify-content:space-between;color:#141613;box-shadow:0 20px 40px -16px rgba(0,0,0,.25)">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start">
+        <div style="font-family:'Cormorant Garamond',Georgia,serif;font-size:22px;letter-spacing:.3em;text-transform:uppercase">Lore</div>
+        <svg width="40" height="40" viewBox="0 0 500 500"><circle cx="250" cy="250" r="250" fill="#141613"/><g transform="rotate(-6 250 260)"><g transform="translate(25 25) scale(.9)"><path d="M260 430c-115 0-200-74-200-168 0-52 72-73 163-73 69 0 117 25 117 61 0 23-47 48-85 48-17 0-23-6-23-14 0-20 43-39 43-59 0-9-8-13-22-13-55 0-165 47-165 81 0 23 58 40 149 40 96 0 154-31 154-91s-62-94-162-94c-50 0-89 11-121 27-16 9-24 5-24-10 0-60 68-111 148-111 104 0 187 84 187 186 0 103-78 189-173 189Z" fill="#D4F24B"/></g></g></svg>
+      </div>
+      <div style="font-family:var(--font-mono);font-size:15px;letter-spacing:.2em">5274  ••••  ••••  0491</div>
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase">
+        <span>Henry Osaro</span><span>04 / 28</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script src="theme-switcher.js" defer></script>
+</body></html>

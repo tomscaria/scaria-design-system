@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>Finance · Asset Rows · Lore</title>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<link rel="stylesheet" href="theme-switcher.css"/>
+<link rel="stylesheet" href="_preview-base.css"/>
+<link rel="stylesheet" href="_primitives.css"/>
+<style>
+  .ass{display:grid;grid-template-columns:32px 1fr 90px 120px 90px;gap:12px;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line-2)}
+  .ass:last-child{border-bottom:none}
+  .ass:hover{background:color-mix(in oklab,var(--fg) 3%,var(--bg-2))}
+  .ass .tk{width:32px;height:32px;border-radius:999px;background:var(--bg-3);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--fg)}
+  .ass .tk.eth{background:#627EEA;color:#fff}
+  .ass .tk.btc{background:#F7931A;color:#fff}
+  .ass .tk.sol{background:linear-gradient(135deg,#9945FF,#14F195);color:#fff}
+  .ass .tk.usd{background:#2775CA;color:#fff}
+  .ass .nm{font-size:14px;font-weight:500}
+  .ass .sub{font-size:11px;color:var(--fg-3);font-family:var(--font-mono);margin-top:2px}
+  .ass .price{font-family:var(--font-mono);font-variant-numeric:tabular-nums slashed-zero;font-size:13px;text-align:right}
+  .ass .delta{font-family:var(--font-mono);font-size:12px;text-align:right}
+  .ass .spark{width:80px;height:28px}
+  .ass .spark path{fill:none;stroke:currentColor;stroke-width:1.5}
+</style></head><body data-theme="lore-light">
+
+<section>
+  <h4>Asset rows · watchlist / holdings</h4>
+  <div class="card flush">
+    <div class="ass">
+      <div class="tk eth">Ξ</div>
+      <div><div class="nm">Ethereum</div><div class="sub">ETH · 3.82 held</div></div>
+      <div class="price">$3,128.<span class="muted">42</span></div>
+      <svg class="spark" viewBox="0 0 80 28" preserveAspectRatio="none" style="color:var(--danger)">
+        <path d="M0 8 L10 10 L22 9 L35 14 L48 12 L60 18 L72 16 L80 22"/>
+      </svg>
+      <div class="delta neg">−1.8%</div>
+    </div>
+    <div class="ass">
+      <div class="tk btc">₿</div>
+      <div><div class="nm">Bitcoin</div><div class="sub">BTC · 0.18 held</div></div>
+      <div class="price">$67,420.<span class="muted">01</span></div>
+      <svg class="spark" viewBox="0 0 80 28" preserveAspectRatio="none" style="color:var(--success)">
+        <path d="M0 22 L12 18 L24 20 L36 12 L48 14 L60 8 L72 10 L80 4"/>
+      </svg>
+      <div class="delta pos">+2.4%</div>
+    </div>
+    <div class="ass">
+      <div class="tk sol">◎</div>
+      <div><div class="nm">Solana</div><div class="sub">SOL · 24.0 held</div></div>
+      <div class="price">$178.<span class="muted">32</span></div>
+      <svg class="spark" viewBox="0 0 80 28" preserveAspectRatio="none" style="color:var(--success)">
+        <path d="M0 24 L10 22 L22 18 L34 14 L48 10 L60 8 L72 6 L80 3"/>
+      </svg>
+      <div class="delta pos">+6.1%</div>
+    </div>
+    <div class="ass">
+      <div class="tk usd">$</div>
+      <div><div class="nm">USD Coin</div><div class="sub">USDC · 12,480.22 held · earning 4.8%</div></div>
+      <div class="price">$1.0001</div>
+      <svg class="spark" viewBox="0 0 80 28" preserveAspectRatio="none" style="color:var(--fg-3)">
+        <path d="M0 14 L20 14 L40 14 L60 14 L80 14"/>
+      </svg>
+      <div class="delta muted">±0.02%</div>
+    </div>
+  </div>
+</section>
+
+<script src="theme-switcher.js" defer></script>
+</body></html>

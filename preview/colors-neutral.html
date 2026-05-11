@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<link rel="stylesheet" href="theme-switcher.css"/>
+<style>
+  body{margin:0;background:var(--bg);padding:60px 20px 24px;font-family:var(--font-sans);color:var(--fg);min-height:100vh}
+  .grp{margin-bottom:22px}
+  .row{display:grid;grid-template-columns:repeat(11,1fr);gap:4px;margin-bottom:8px}
+  .sw{height:32px;border-radius:var(--r-xs);border:1px solid var(--line-2)}
+  .lab{font-size:9px;color:var(--fg-3);font-family:var(--font-mono);text-align:center;margin-top:3px}
+  h4{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--fg-3);margin:0 0 8px;font-family:var(--font-mono);font-weight:600}
+  .surf-row{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+  .surf{height:56px;border-radius:var(--r-sm);border:1px solid var(--line);display:flex;align-items:flex-end;padding:6px;font-size:9px;font-family:var(--font-mono);color:var(--fg-3)}
+</style></head><body data-theme="lore-light">
+<div class="grp">
+  <h4>Theme surfaces (adapt to current skin)</h4>
+  <div class="surf-row">
+    <div class="surf" style="background:var(--bg)">bg</div>
+    <div class="surf" style="background:var(--bg-2)">bg-2</div>
+    <div class="surf" style="background:var(--bg-3)">bg-3</div>
+    <div class="surf" style="background:var(--bg-muted)">bg-muted</div>
+    <div class="surf" style="background:var(--fg);color:var(--bg)">fg</div>
+    <div class="surf" style="background:var(--fg-3);color:var(--bg)">fg-3</div>
+  </div>
+</div>
+<div class="grp">
+  <h4>Neutral scale (primitives)</h4>
+  <div class="row">
+    <div><div class="sw" style="background:var(--p-white)"></div><div class="lab">white</div></div>
+    <div><div class="sw" style="background:var(--p-gray-050)"></div><div class="lab">50</div></div>
+    <div><div class="sw" style="background:var(--p-gray-100)"></div><div class="lab">100</div></div>
+    <div><div class="sw" style="background:var(--p-gray-200)"></div><div class="lab">200</div></div>
+    <div><div class="sw" style="background:var(--p-gray-300)"></div><div class="lab">300</div></div>
+    <div><div class="sw" style="background:var(--p-gray-400)"></div><div class="lab">400</div></div>
+    <div><div class="sw" style="background:var(--p-gray-500)"></div><div class="lab">500</div></div>
+    <div><div class="sw" style="background:var(--p-gray-600)"></div><div class="lab">600</div></div>
+    <div><div class="sw" style="background:var(--p-gray-700)"></div><div class="lab">700</div></div>
+    <div><div class="sw" style="background:var(--p-gray-800)"></div><div class="lab">800</div></div>
+    <div><div class="sw" style="background:var(--p-gray-900)"></div><div class="lab">900</div></div>
+  </div>
+</div>
+<script src="theme-switcher.js" defer></script>
+</body></html>

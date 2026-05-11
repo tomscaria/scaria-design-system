@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>Card · Balance · Lore</title>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<link rel="stylesheet" href="theme-switcher.css"/>
+<link rel="stylesheet" href="_preview-base.css"/>
+<link rel="stylesheet" href="_primitives.css"/>
+<style>
+  .bal-card{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-lg);padding:20px;box-shadow:var(--shadow-sm);color:var(--fg)}
+  .bal-card .eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--fg-3);margin-bottom:10px;font-family:var(--font-mono)}
+  .bal-card .big{font-family:var(--font-display);font-size:36px;line-height:1;letter-spacing:-.01em;font-weight:500;font-variant-numeric:tabular-nums slashed-zero}
+  .bal-card .row{display:flex;justify-content:space-between;align-items:baseline;margin-top:12px}
+  .bal-card .delta{color:var(--success);font-family:var(--font-mono);font-size:13px;font-variant-numeric:tabular-nums slashed-zero}
+  .bal-card .delta.neg{color:var(--danger)}
+  .bal-card .sub{font-size:13px;color:var(--fg-3);font-family:var(--font-mono)}
+  .bal-card .spark{height:44px;margin-top:14px;display:block}
+  .bal-card .spark path{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;opacity:.85}
+  .bal-card.ink{background:var(--fg);color:var(--bg);border-color:transparent;box-shadow:var(--shadow-md)}
+  .bal-card.ink .eyebrow,.bal-card.ink .sub{color:currentColor;opacity:.7}
+  .bal-card.ink .delta{color:currentColor}
+</style></head><body data-theme="lore-light">
+
+<section>
+  <h4>Balance card · primary</h4>
+  <div class="grid-2">
+    <div class="bal-card">
+      <div class="eyebrow">Total balance</div>
+      <div class="big">$12,480.22</div>
+      <div class="row"><div class="delta">+$1,240.00 · +11.0%</div><div class="sub">30d</div></div>
+      <svg class="spark" viewBox="0 0 200 44" preserveAspectRatio="none"><path d="M0 30 Q20 28 30 24 T60 20 Q80 16 100 18 T140 14 Q160 10 180 8 T200 6"/></svg>
+    </div>
+
+    <div class="bal-card ink">
+      <div class="eyebrow">Total balance</div>
+      <div class="big">$12,480.22</div>
+      <div class="row"><div class="delta">+$1,240.00 · +11.0%</div><div class="sub">30d</div></div>
+      <svg class="spark" viewBox="0 0 200 44" preserveAspectRatio="none"><path d="M0 30 Q20 28 30 24 T60 20 Q80 16 100 18 T140 14 Q160 10 180 8 T200 6"/></svg>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h4>Balance card · spend variant</h4>
+  <div class="bal-card" style="max-width:380px">
+    <div class="eyebrow">This month · spend</div>
+    <div class="big">$2,104.80</div>
+    <div class="row"><div class="delta neg">−$308 vs Oct</div><div class="sub">budget 60%</div></div>
+    <div style="margin-top:14px;height:6px;background:var(--bg-3);border-radius:999px;overflow:hidden"><div style="width:60%;height:100%;background:var(--fg);border-radius:999px"></div></div>
+  </div>
+</section>
+
+<script src="theme-switcher.js" defer></script>
+</body></html>

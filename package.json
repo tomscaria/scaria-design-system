@@ -1,0 +1,15 @@
+{
+  "name": "@tomscaria/lore-design-system",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Canonical Lore design system: tokens, fonts, brand assets, shadcn UI primitives, institutional patterns, and deck runtime. Consumed by Thomas OS, swarm-fund-mvp, lore-teaser-prea.",
+  "scripts": {
+    "sync": "node scripts/sync.mjs",
+    "check": "node scripts/check.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tomscaria/lore-design-system.git"
+  }
+}

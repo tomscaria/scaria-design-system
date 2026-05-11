@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<link rel="stylesheet" href="theme-switcher.css"/>
+<style>
+  body{margin:0;background:var(--bg);padding:60px 20px 24px;font-family:var(--font-sans);color:var(--fg);min-height:100vh}
+  h4{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--fg-3);margin:0 0 10px;font-family:var(--font-mono);font-weight:600}
+  section{margin-bottom:26px}
+  .row{display:flex;gap:14px;flex-wrap:wrap}
+  .b{width:84px;height:84px;background:var(--bg-2);border:1px solid var(--line);display:flex;align-items:flex-end;justify-content:center;padding-bottom:6px;font-family:var(--font-mono);font-size:10px;color:var(--fg-3)}
+  .ctx{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .c{padding:14px;background:var(--bg-2);border:1px solid var(--line);color:var(--fg)}
+  .c .lbl{font-family:var(--font-mono);font-size:10px;color:var(--fg-3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+  .c .btn{display:inline-flex;align-items:center;justify-content:center;padding:10px 18px;background:var(--brand);color:var(--brand-fg);font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font-sans)}
+  .c .input{display:block;width:100%;padding:10px 12px;background:var(--bg-3);border:1px solid var(--line);color:var(--fg);font-family:var(--font-sans);font-size:13px;box-sizing:border-box;margin-bottom:8px}
+</style></head><body data-theme="lore-light">
+
+<section>
+  <h4>Theme radii scale (responds to current theme)</h4>
+  <div class="row">
+    <div class="b" style="border-radius:var(--r-xs)">xs</div>
+    <div class="b" style="border-radius:var(--r-sm)">sm</div>
+    <div class="b" style="border-radius:var(--r-md)">md · card</div>
+    <div class="b" style="border-radius:var(--r-lg)">lg · modal</div>
+    <div class="b" style="border-radius:var(--r-xl)">xl · feature</div>
+    <div class="b" style="border-radius:var(--r-pill)">pill · button</div>
+  </div>
+</section>
+
+<section>
+  <h4>In context — card / button / input for this theme</h4>
+  <div class="ctx">
+    <div class="c" style="border-radius:var(--r-lg)">
+      <div class="lbl">card · r-lg</div>
+      <div style="font-size:14px;color:var(--fg-2)">A content container uses <code style="font-family:var(--font-mono);font-size:12px">--r-lg</code>. Different themes will render this same markup differently — sharp rectangles in Kiosk, chunky pills in Mallow.</div>
+    </div>
+    <div class="c" style="border-radius:var(--r-md);display:flex;flex-direction:column;justify-content:space-between;gap:10px">
+      <div class="lbl">button · r-pill</div>
+      <button class="btn" style="border-radius:var(--r-pill);border:none">Transfer →</button>
+      <button class="btn" style="border-radius:var(--r-sm);border:none;background:var(--bg-3);color:var(--fg)">Alt radius · r-sm</button>
+    </div>
+    <div class="c" style="border-radius:var(--r-md)">
+      <div class="lbl">input · r-sm</div>
+      <input class="input" placeholder="0.00 USDC" style="border-radius:var(--r-sm)"/>
+      <input class="input" placeholder="Memo" style="border-radius:var(--r-sm);margin-bottom:0"/>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h4>Extreme comparison — same tile, every theme's xl radius</h4>
+  <div class="row" style="gap:10px">
+    <div class="b" style="border-radius:0;background:#fff;color:#000;border-color:#000">0 · Kiosk</div>
+    <div class="b" style="border-radius:2px;background:#F7F5EF;color:#0B1540;border-color:#1846F0">2 · Champagne</div>
+    <div class="b" style="border-radius:6px;background:#F6FBEF;color:#0A1F12;border-color:#00A303">6 · Garden</div>
+    <div class="b" style="border-radius:12px;background:#141613;color:#D4F24B;border-color:#D4F24B">12 · Midnight</div>
+    <div class="b" style="border-radius:16px;background:#F4E8D6;color:#3C1810;border-color:#C5442B">16 · Bazaar</div>
+    <div class="b" style="border-radius:24px;background:#1A0F3A;color:#FFF100;border-color:#FFF100">24 · Confetti</div>
+    <div class="b" style="border-radius:32px;background:#000;color:#00D632;border-color:#00D632">32 · Cashtag</div>
+    <div class="b" style="border-radius:40px;background:linear-gradient(135deg,#E5D4FF,#FFEDC4);color:#3A2154;border-color:transparent">40 · Mallow</div>
+  </div>
+</section>
+
+<script src="theme-switcher.js" defer></script>
+</body></html>

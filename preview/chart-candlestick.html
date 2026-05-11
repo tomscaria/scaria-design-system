@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>Chart · Candlestick · Lore</title>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<link rel="stylesheet" href="theme-switcher.css"/>
+<link rel="stylesheet" href="_preview-base.css"/>
+<style>
+  .cdl-wrap{position:relative}
+  .cdl{height:240px;width:100%;display:block;cursor:crosshair}
+  .grid-line{stroke:var(--line-2);stroke-width:1;stroke-dasharray:3 4}
+  .cdl rect{transition:opacity .12s}
+  .cdl-wrap.hov rect.cdl-bar,.cdl-wrap.hov line.cdl-wick{opacity:.35}
+  .cdl-wrap.hov rect.cdl-bar.on,.cdl-wrap.hov line.cdl-wick.on{opacity:1}
+  .cdl .hcross{stroke:var(--fg-3);stroke-width:1;stroke-dasharray:2 3;opacity:0}
+  .cdl-wrap.hov .hcross{opacity:.7}
+</style></head><body data-theme="lore-light">
+
+<section>
+  <h4>Candlestick · ETH/USD · 4h · hover a candle</h4>
+  <div class="card pad-lg">
+    <div class="row" style="margin-bottom:12px">
+      <div>
+        <div class="eyebrow">ETH · last</div>
+        <div class="num" style="font-size:30px" id="cdl-last">$3,128.<span class="muted">42</span></div>
+      </div>
+      <div class="mono" style="font-size:12px;color:var(--fg-3);text-align:right" id="cdl-meta">
+        <div>H $3,184  L $3,098</div>
+        <div>V 48.2M · O $3,140</div>
+      </div>
+    </div>
+    <div class="cdl-wrap" id="cdlWrap">
+      <svg class="cdl" viewBox="0 0 600 240" preserveAspectRatio="none" id="cdlSvg">
+        <line class="grid-line" x1="0" y1="50" x2="600" y2="50"/>
+        <line class="grid-line" x1="0" y1="120" x2="600" y2="120"/>
+        <line class="grid-line" x1="0" y1="190" x2="600" y2="190"/>
+        <line class="hcross" id="cdlCross" x1="0" y1="0" x2="0" y2="220"/>
+        <g id="candles"></g>
+      </svg>
+      <div class="tt" id="cdlTip"></div>
+    </div>
+  </div>
+</section>
+
+<script>
+(()=>{
+  const seq=[[110,95,115,100,1,'Apr 18 00:00'],[100,92,108,96,1,'Apr 18 04:00'],[96,85,100,90,1,'Apr 18 08:00'],[90,82,95,88,0,'Apr 18 12:00'],[88,78,92,80,0,'Apr 18 16:00'],[80,72,86,76,0,'Apr 18 20:00'],[76,70,82,74,0,'Apr 19 00:00'],[74,68,80,72,0,'Apr 19 04:00'],[72,62,78,66,0,'Apr 19 08:00'],[66,58,74,70,1,'Apr 19 12:00'],[70,62,78,74,1,'Apr 19 16:00'],[74,66,82,78,1,'Apr 19 20:00'],[78,70,86,80,1,'Apr 20 00:00'],[80,72,88,76,0,'Apr 20 04:00'],[76,70,84,78,1,'Apr 20 08:00'],[78,72,84,82,1,'Apr 20 12:00'],[82,74,90,86,1,'Apr 20 16:00'],[86,76,94,82,0,'Apr 20 20:00'],[82,74,90,80,0,'Apr 21 00:00'],[80,72,88,78,0,'Apr 21 04:00'],[78,68,84,72,0,'Apr 21 08:00'],[72,60,80,66,0,'Apr 21 12:00'],[66,56,72,62,0,'Apr 21 16:00'],[62,50,70,58,0,'Apr 21 20:00'],[58,46,66,52,0,'Apr 22 00:00'],[52,42,58,48,0,'Apr 22 04:00'],[48,38,56,44,0,'Apr 22 08:00'],[44,32,52,40,0,'Apr 22 12:00']];
+  const g=document.getElementById('candles');
+  const bw=14,gap=6,x0=10;
+  seq.forEach((c,i)=>{
+    const [o,l,hh,cc,up]=c;
+    const cls=up?'cdl-g':'cdl-r';
+    const color=up?'var(--success)':'var(--danger)';
+    const x=x0+i*(bw+gap);
+    const yt=220-hh-20,yb=220-l-20;
+    const bt=220-Math.max(o,cc)-20,bb=220-Math.min(o,cc)-20;
+    g.insertAdjacentHTML('beforeend',`<line class="${cls} cdl-wick" data-i="${i}" x1="${x+bw/2}" y1="${yt}" x2="${x+bw/2}" y2="${yb}" stroke="${color}" stroke-width="1.5"/><rect class="${cls} cdl-bar" data-i="${i}" x="${x}" y="${bt}" width="${bw}" height="${Math.max(2,bb-bt)}" rx="1" fill="${color}"/>`);
+  });
+  const wrap=document.getElementById('cdlWrap'),svg=document.getElementById('cdlSvg'),cross=document.getElementById('cdlCross'),tip=document.getElementById('cdlTip'),last=document.getElementById('cdl-last'),meta=document.getElementById('cdl-meta');
+  const basePx=3128.42;
+  svg.addEventListener('mousemove',e=>{
+    const r=svg.getBoundingClientRect();
+    const xUser=(e.clientX-r.left)/r.width*600;
+    const i=Math.max(0,Math.min(seq.length-1,Math.floor((xUser-x0)/(bw+gap))));
+    const [o,l,hh,cc,up,lab]=seq[i];
+    const x=x0+i*(bw+gap)+bw/2;
+    cross.setAttribute('x1',x);cross.setAttribute('x2',x);
+    wrap.classList.add('hov');
+    svg.querySelectorAll('.cdl-bar,.cdl-wick').forEach(el=>el.classList.toggle('on',+el.dataset.i===i));
+    const scale=basePx/78;
+    const fmt=v=>'$'+(v*scale).toFixed(2);
+    const dir=up?'+':'−';
+    const pct=(((cc-o)/o)*100).toFixed(2);
+    tip.innerHTML=`<b>${fmt(cc)} <span class="${up?'delta-pos':'delta-neg'}">${dir}${Math.abs(pct)}%</span></b><span class="dim">${lab} · O ${fmt(o)} · H ${fmt(hh)} · L ${fmt(l)}</span>`;
+    tip.style.left=((x/600)*r.width)+'px';
+    const yMid=220-(o+cc)/2-20;
+    tip.style.top=((yMid/240)*r.height - 6)+'px';
+    tip.classList.add('on');
+    last.innerHTML=fmt(cc).replace('.','.<span class="muted">')+'</span>';
+    meta.innerHTML=`<div>H ${fmt(hh)}  L ${fmt(l)}</div><div>V 48.2M · O ${fmt(o)}</div>`;
+  });
+  svg.addEventListener('mouseleave',()=>{
+    wrap.classList.remove('hov');tip.classList.remove('on');
+    last.innerHTML='$3,128.<span class="muted">42</span>';
+    meta.innerHTML='<div>H $3,184  L $3,098</div><div>V 48.2M · O $3,140</div>';
+  });
+})();
+</script>
+<script src="theme-switcher.js" defer></script>
+</body></html>

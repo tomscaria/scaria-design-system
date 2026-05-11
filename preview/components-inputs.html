@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<link rel="stylesheet" href="theme-switcher.css"/>
+<style>
+  body{margin:0;background:var(--bg);padding:64px 20px 24px;font-family:var(--font-sans);color:var(--fg);min-height:100vh}
+  h4{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--fg-3);margin:0 0 12px;font-weight:600;font-family:var(--font-mono)}
+  section{margin-bottom:24px}
+  .stack{display:flex;flex-direction:column;gap:14px;max-width:520px}
+  label{font-size:12px;color:var(--fg-2);font-weight:500}
+  .field{display:flex;flex-direction:column;gap:6px}
+  .input{height:40px;padding:0 14px;border-radius:var(--r-md);
+         border:1px solid var(--line);background:var(--bg-2);color:var(--fg);
+         font-family:var(--font-sans);font-size:14px;outline:none;transition:all .15s;box-sizing:border-box;width:100%}
+  .input::placeholder{color:var(--fg-muted)}
+  .input:focus{border-color:var(--brand);box-shadow:0 0 0 3px color-mix(in oklab,var(--brand) 22%,transparent)}
+  .input-err{border-color:var(--danger)}
+  .input-err:focus{border-color:var(--danger);box-shadow:0 0 0 3px color-mix(in oklab,var(--danger) 22%,transparent)}
+  .hint{font-size:11px;color:var(--fg-3);font-family:var(--font-mono)}
+  .hint-err{color:var(--danger);font-family:var(--font-sans)}
+  .row{display:flex;gap:8px}
+  .row .input{flex:1}
+
+  /* search w/ icon */
+  .ifield{position:relative}
+  .ifield .ico{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;background:var(--fg-3);
+    -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-size:contain;mask-size:contain;-webkit-mask-position:center;mask-position:center;pointer-events:none}
+  .ifield .input{padding-left:36px}
+
+  /* toggle */
+  .toggle{display:inline-flex;align-items:center;gap:10px;cursor:pointer;user-select:none}
+  .toggle input{display:none}
+  .track{width:36px;height:22px;border-radius:999px;background:var(--bg-3);border:1px solid var(--line);position:relative;transition:background .15s}
+  .track::after{content:'';position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:999px;background:var(--fg);transition:all .15s}
+  .toggle input:checked + .track{background:var(--brand);border-color:var(--brand)}
+  .toggle input:checked + .track::after{left:16px;background:var(--brand-fg)}
+
+  /* chips / segmented */
+  .seg{display:inline-flex;padding:3px;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-pill);gap:2px}
+  .seg button{appearance:none;border:none;background:transparent;color:var(--fg-2);font-family:inherit;font-size:12px;padding:6px 14px;border-radius:var(--r-pill);cursor:pointer}
+  .seg button[aria-selected="true"]{background:var(--bg);color:var(--fg);box-shadow:var(--shadow-xs)}
+</style></head><body data-theme="lore-light">
+
+<section>
+  <h4>Text inputs</h4>
+  <div class="stack">
+    <div class="field"><label>Recipient</label><input class="input" value="@irwin" placeholder="Username or 0x…"/><div class="hint">resolved · 0x5b0f…4e0A</div></div>
+    <div class="field"><label>Amount</label><div class="row"><input class="input" value="120.00" style="flex:2;font-family:var(--font-mono);font-variant-numeric:tabular-nums"/><input class="input" value="USDC" style="width:90px;flex:0 0 90px"/></div></div>
+    <div class="field"><label>Memo (optional)</label><input class="input" placeholder="What's this for?"/></div>
+    <div class="field ifield"><label>Search</label>
+      <div class="ifield"><span class="ico" style="-webkit-mask-image:url(../assets/icons/svg/Search.svg);mask-image:url(../assets/icons/svg/Search.svg)"></span><input class="input" placeholder="Find a transaction, person, or vault"/></div>
+    </div>
+    <div class="field"><label>Email</label><input class="input input-err" value="notvalid@"/><div class="hint hint-err">Enter a valid email</div></div>
+  </div>
+</section>
+
+<section>
+  <h4>Controls</h4>
+  <div style="display:flex;gap:24px;align-items:center;flex-wrap:wrap">
+    <label class="toggle"><input type="checkbox" checked/><span class="track"></span><span style="font-size:13px">Instant transfer</span></label>
+    <label class="toggle"><input type="checkbox"/><span class="track"></span><span style="font-size:13px;color:var(--fg-3)">Savings auto-pilot</span></label>
+    <div class="seg" role="tablist">
+      <button aria-selected="true">Day</button>
+      <button>Week</button>
+      <button>Month</button>
+      <button>All</button>
+    </div>
+  </div>
+</section>
+
+<script src="theme-switcher.js" defer></script>
+</body></html>

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>Chart · Bars · Lore</title>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<link rel="stylesheet" href="theme-switcher.css"/>
+<link rel="stylesheet" href="_preview-base.css"/>
+<style>
+  .bars-wrap{position:relative}
+  .bars{height:160px;width:100%;display:block;cursor:crosshair}
+  .grid-line{stroke:var(--line-2);stroke-width:1;stroke-dasharray:3 4}
+  .bars rect{cursor:pointer;transition:opacity .12s}
+  .bars-wrap.hov rect.bar{opacity:.4}
+  .bars-wrap.hov rect.bar.on{opacity:1}
+</style></head><body data-theme="lore-light">
+
+<section>
+  <h4>Bars · 30d in / out · hover a bar</h4>
+  <div class="card pad-lg">
+    <div class="eyebrow">Net flow · last 30 days</div>
+    <div class="bars-wrap" id="barsWrap" style="margin-top:6px">
+      <svg class="bars" viewBox="0 0 600 160" preserveAspectRatio="none">
+        <line class="grid-line" x1="0" y1="80" x2="600" y2="80"/>
+        <g id="bbars"></g>
+      </svg>
+      <div class="tt" id="barsTip"></div>
+    </div>
+    <div class="row mono" style="margin-top:6px;font-size:11px;color:var(--fg-3)">
+      <span>Deposits <b class="delta-pos">+$8,420</b></span>
+      <span>Withdrawals <b class="delta-neg">−$1,820</b></span>
+      <span>Net <b>+$6,600</b></span>
+    </div>
+  </div>
+</section>
+
+<script>
+(()=>{
+  const data=[[20,'Mar 22'],[30,'Mar 23'],[-12,'Mar 24'],[40,'Mar 25'],[24,'Mar 26'],[-8,'Mar 27'],[35,'Mar 28'],[48,'Mar 29'],[-22,'Mar 30'],[30,'Mar 31'],[44,'Apr 1'],[55,'Apr 2'],[-10,'Apr 3'],[38,'Apr 4'],[60,'Apr 5'],[42,'Apr 6'],[-18,'Apr 7'],[52,'Apr 8'],[70,'Apr 9'],[64,'Apr 10'],[-25,'Apr 11'],[48,'Apr 12'],[66,'Apr 13'],[78,'Apr 14'],[82,'Apr 15'],[-30,'Apr 16'],[68,'Apr 17'],[80,'Apr 18'],[92,'Apr 19'],[75,'Apr 20']];
+  const g=document.getElementById('bbars'),barW=14,gap=5;
+  data.forEach(([v,lab],i)=>{
+    const x=10+i*(barW+gap);
+    if(v>=0) g.insertAdjacentHTML('beforeend',`<rect class="bar" data-i="${i}" x="${x}" y="${80-v}" width="${barW}" height="${v}" rx="2" fill="var(--success)"/>`);
+    else g.insertAdjacentHTML('beforeend',`<rect class="bar" data-i="${i}" x="${x}" y="80" width="${barW}" height="${-v}" rx="2" fill="var(--danger)" opacity=".9"/>`);
+  });
+  const wrap=document.getElementById('barsWrap'),svg=wrap.querySelector('svg'),tip=document.getElementById('barsTip');
+  svg.addEventListener('mousemove',e=>{
+    const r=svg.getBoundingClientRect();
+    const xUser=(e.clientX-r.left)/r.width*600;
+    const i=Math.max(0,Math.min(data.length-1,Math.floor((xUser-10)/(barW+gap))));
+    const [v,lab]=data[i];
+    wrap.classList.add('hov');
+    svg.querySelectorAll('.bar').forEach(b=>b.classList.toggle('on',+b.dataset.i===i));
+    const amt='$'+Math.abs(v*80).toLocaleString();
+    tip.innerHTML=`<b>${v>=0?'+':'−'}${amt}</b><span class="dim">${lab} · ${v>=0?'deposit':'withdrawal'}</span>`;
+    const x=10+i*(barW+gap)+barW/2;
+    tip.style.left=((x/600)*r.width)+'px';
+    tip.style.top=((v>=0?(80-v):80)/160*r.height - 6)+'px';
+    tip.classList.add('on');
+  });
+  svg.addEventListener('mouseleave',()=>{wrap.classList.remove('hov');tip.classList.remove('on');});
+})();
+</script>
+<script src="theme-switcher.js" defer></script>
+</body></html>

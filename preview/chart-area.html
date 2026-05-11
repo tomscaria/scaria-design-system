@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>Chart · Area · Lore</title>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<link rel="stylesheet" href="theme-switcher.css"/>
+<link rel="stylesheet" href="_preview-base.css"/>
+<style>
+  .area-wrap{position:relative}
+  .area{height:240px;width:100%;display:block;cursor:crosshair}
+  .grid-line{stroke:var(--line-2);stroke-width:1;stroke-dasharray:3 4}
+  .axis{font-family:var(--font-mono);font-size:10px;fill:var(--fg-3)}
+  .lineA{fill:none;stroke:var(--brand);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .fillA{fill:var(--brand);opacity:.12}
+  .lineB{fill:none;stroke:var(--fg-3);stroke-width:1.25;stroke-dasharray:4 3}
+  .dot{fill:var(--bg);stroke:var(--brand);stroke-width:2;opacity:0;transition:opacity .12s}
+  .cross{stroke:var(--fg-3);stroke-width:1;stroke-dasharray:2 3;opacity:0;transition:opacity .12s}
+  .area-wrap.hov .cross,.area-wrap.hov .dot{opacity:1}
+  .area-wrap.hov .cross{opacity:.7}
+  .chip{padding:6px 10px;background:var(--bg);border:1px solid var(--line);border-radius:var(--r-pill);font-size:11px;color:var(--fg-3);cursor:pointer;font-family:var(--font-mono);user-select:none;transition:background .12s,color .12s}
+  .chip:hover{background:var(--bg-3);color:var(--fg-2)}
+  .chip.on{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+</style></head><body data-theme="lore-light">
+
+<section>
+  <h4>Area chart · portfolio · 30d with benchmark overlay</h4>
+  <div class="card pad-lg">
+    <div class="row" style="margin-bottom:14px">
+      <div>
+        <div class="eyebrow">Total portfolio · USD</div>
+        <div class="num" style="font-size:40px" id="pf-val">$42,840.22</div>
+        <div class="mono delta-pos" style="font-size:13px;margin-top:4px" id="pf-delta">+$4,280.14 · +11.1% (30d)</div>
+      </div>
+      <div style="display:flex;gap:4px" id="periods">
+        <span class="chip" data-p="1D">1D</span>
+        <span class="chip" data-p="7D">7D</span>
+        <span class="chip on" data-p="30D">30D</span>
+        <span class="chip" data-p="1Y">1Y</span>
+        <span class="chip" data-p="MAX">MAX</span>
+      </div>
+    </div>
+    <div class="area-wrap" id="areaWrap">
+      <svg class="area" viewBox="0 0 600 240" preserveAspectRatio="none" id="areaSvg">
+        <line class="grid-line" x1="0" y1="40" x2="600" y2="40"/>
+        <line class="grid-line" x1="0" y1="90" x2="600" y2="90"/>
+        <line class="grid-line" x1="0" y1="140" x2="600" y2="140"/>
+        <line class="grid-line" x1="0" y1="190" x2="600" y2="190"/>
+        <path class="lineB" d="M0 140 L60 138 L120 130 L180 132 L240 125 L300 120 L360 115 L420 110 L480 108 L540 102 L600 100"/>
+        <path class="fillA" id="areaFill"/>
+        <path class="lineA" id="areaLine"/>
+        <line class="cross" id="crossLine" x1="0" y1="0" x2="0" y2="220"/>
+        <circle class="dot" id="areaDot" cx="0" cy="0" r="4"/>
+        <text class="axis" x="4" y="234">Mar 20</text>
+        <text class="axis" x="150" y="234">Mar 28</text>
+        <text class="axis" x="296" y="234">Apr 5</text>
+        <text class="axis" x="442" y="234">Apr 12</text>
+        <text class="axis" x="560" y="234">Apr 19</text>
+      </svg>
+      <div class="tt" id="areaTip"></div>
+    </div>
+    <div class="row mono" style="margin-top:8px;font-size:11px;color:var(--fg-3)">
+      <span><span style="display:inline-block;width:10px;height:2px;background:var(--brand);vertical-align:middle;margin-right:6px"></span>Your portfolio</span>
+      <span><span style="display:inline-block;width:10px;height:0;border-top:1.5px dashed var(--fg-3);vertical-align:middle;margin-right:6px"></span>S&amp;P 500</span>
+      <span>Vol 12.4%</span>
+    </div>
+  </div>
+</section>
+
+<script>
+(()=>{
+  const pts=[[0,160],[40,152],[80,158],[120,144],[160,140],[200,128],[240,120],[280,130],[320,112],[360,96],[400,104],[440,84],[480,78],[520,68],[560,56],[600,48]];
+  const bases=[38560,39200,38720,39710,40000,40990,41700,40870,42170,43540,42800,44700,45330,46200,47140,47920];
+  const bench=[38560,38720,38920,39140,39410,39680,39990,40260,40520,40810,41020,41290,41510,41740,42010,42280];
+  const dates=['Mar 20','Mar 22','Mar 24','Mar 26','Mar 28','Mar 30','Apr 1','Apr 3','Apr 5','Apr 7','Apr 9','Apr 11','Apr 13','Apr 15','Apr 17','Apr 19'];
+  const line=document.getElementById('areaLine');
+  const fill=document.getElementById('areaFill');
+  let d='M'+pts.map(p=>p.join(' ')).join(' L');
+  line.setAttribute('d',d);
+  fill.setAttribute('d',d+' L600 220 L0 220 Z');
+  const wrap=document.getElementById('areaWrap'),svg=document.getElementById('areaSvg'),cross=document.getElementById('crossLine'),dot=document.getElementById('areaDot'),tip=document.getElementById('areaTip'),valEl=document.getElementById('pf-val'),delEl=document.getElementById('pf-delta');
+  const fmt=n=>n.toLocaleString('en-US',{maximumFractionDigits:0});
+  const fmt2=n=>n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+  svg.addEventListener('mousemove',e=>{
+    const r=svg.getBoundingClientRect();
+    const x=(e.clientX-r.left)/r.width*600;
+    let best=0,dist=1e9;
+    pts.forEach((p,i)=>{const d=Math.abs(p[0]-x);if(d<dist){dist=d;best=i;}});
+    const [px,py]=pts[best];
+    cross.setAttribute('x1',px);cross.setAttribute('x2',px);
+    dot.setAttribute('cx',px);dot.setAttribute('cy',py);
+    wrap.classList.add('hov');
+    const v=bases[best],b=bench[best],base0=bases[0];
+    const pct=((v-base0)/base0*100),diff=v-base0;
+    const vsB_abs=v-b,vsB_pct=((v-b)/b*100);
+    const vsSign=vsB_abs>=0?'+':'−';
+    const vsClass=vsB_abs>=0?'delta-pos':'delta-neg';
+    tip.innerHTML=`<b>$${fmt(v)}</b><span class="dim">${dates[best]}</span><span style="display:block;margin-top:4px;border-top:1px solid color-mix(in oklab,currentColor 20%,transparent);padding-top:4px"><span style="opacity:.7">30d</span> <b style="font-weight:500">+$${fmt2(diff)} · +${pct.toFixed(1)}%</b></span><span class="dim" style="display:block">vs S&P <b style="color:${vsB_abs>=0?'#34d17a':'#ff6a6a'};font-weight:500">${vsSign}$${fmt2(Math.abs(vsB_abs))} · ${vsSign}${Math.abs(vsB_pct).toFixed(1)}%</b></span>`;
+    tip.style.left=((px/600)*r.width)+'px';
+    tip.style.top=((py/240)*r.height - 8)+'px';
+    tip.classList.add('on');
+    valEl.textContent='$'+fmt2(v);
+    delEl.innerHTML=`+$${fmt2(diff)} · +${pct.toFixed(1)}% (30d) <span style="color:var(--fg-3);margin-left:8px">vs S&P <b class="${vsClass}" style="font-weight:500">${vsSign}${Math.abs(vsB_pct).toFixed(1)}%</b></span>`;
+  });
+  svg.addEventListener('mouseleave',()=>{
+    wrap.classList.remove('hov');tip.classList.remove('on');
+    valEl.textContent='$42,840.22';
+    delEl.innerHTML='+$4,280.14 · +11.1% (30d) <span style="color:var(--fg-3);margin-left:8px">vs S&P <b class="delta-pos" style="font-weight:500">+5.8%</b></span>';
+  });
+  svg.dispatchEvent(new Event('mouseleave'));
+  document.querySelectorAll('#periods .chip').forEach(c=>c.addEventListener('click',()=>{document.querySelectorAll('#periods .chip').forEach(x=>x.classList.remove('on'));c.classList.add('on');}));
+})();
+</script>
+<script src="theme-switcher.js" defer></script>
+</body></html>

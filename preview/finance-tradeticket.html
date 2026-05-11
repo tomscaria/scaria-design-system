@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>Finance · Trade Ticket · Lore</title>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<link rel="stylesheet" href="theme-switcher.css"/>
+<link rel="stylesheet" href="_preview-base.css"/>
+<link rel="stylesheet" href="_primitives.css"/>
+<style>
+  .ticket{padding:16px}
+  .ticket .tabs{display:grid;grid-template-columns:1fr 1fr;background:var(--bg-3);border-radius:var(--r-md);padding:3px;margin-bottom:14px}
+  .ticket .tab{padding:8px;text-align:center;font-size:13px;font-weight:600;border-radius:calc(var(--r-md) - 3px);cursor:pointer;color:var(--fg-3)}
+  .ticket .tab.on{background:var(--bg-2);color:var(--fg);box-shadow:var(--shadow-xs)}
+  .ticket .tab.buy.on{color:var(--success)}
+  .ticket .tab.sell.on{color:var(--danger)}
+  .ticket .amt-input{background:var(--bg);border:1px solid var(--line);border-radius:var(--r-md);padding:14px 14px 10px}
+  .ticket .amt-input .lab{font-family:var(--font-mono);font-size:10px;color:var(--fg-3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+  .ticket .amt-input .row{display:flex;align-items:baseline;gap:8px;justify-content:space-between}
+  .ticket .amt-input .v{font-family:var(--font-display);font-size:36px;font-weight:500;letter-spacing:-.01em;line-height:1;flex:1;min-width:0;font-variant-numeric:tabular-nums slashed-zero}
+  .ticket .chip{display:inline-flex;align-items:center;gap:6px;padding:6px 10px 6px 6px;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-pill);font-size:13px;font-weight:600;flex-shrink:0}
+  .ticket .chip .tk{width:22px;height:22px;border-radius:999px;background:#627EEA;color:#fff;font-family:var(--font-mono);font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center}
+  .ticket .meta{display:flex;justify-content:space-between;margin-top:8px;font-family:var(--font-mono);font-size:11px;color:var(--fg-3)}
+  .ticket .meta b{color:var(--fg);font-weight:500}
+  .ticket .quick{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:12px 0}
+  .ticket .q{padding:8px;background:var(--bg);border:1px solid var(--line);border-radius:var(--r-sm);font-family:var(--font-mono);font-size:12px;text-align:center;color:var(--fg-2);cursor:pointer}
+  .ticket .q.on{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+  .ticket .sum{background:var(--bg-3);border-radius:var(--r-md);padding:12px;margin-top:12px;font-size:12px}
+  .ticket .sum .r{display:flex;justify-content:space-between;padding:3px 0}
+  .ticket .sum .r.t{border-top:1px solid var(--line);margin-top:4px;padding-top:8px;font-weight:600;font-size:13px}
+  .ticket .go{margin-top:12px;width:100%;height:48px;border:none;border-radius:var(--r-pill);background:var(--brand);color:var(--brand-fg);font-family:var(--font-sans);font-weight:700;font-size:15px;cursor:pointer}
+  .ticket .go.buy{background:var(--success);color:#fff}
+  .ticket .go.sell{background:var(--danger);color:#fff}
+</style></head><body data-theme="lore-light">
+
+<section>
+  <h4>Trade ticket · amount input + token selector</h4>
+  <div style="max-width:420px">
+    <div class="card flush">
+      <div class="ticket">
+        <div class="tabs"><div class="tab buy on">Buy</div><div class="tab sell">Sell</div></div>
+        <div class="amt-input">
+          <div class="lab">You pay</div>
+          <div class="row">
+            <div class="v">1,250<span class="muted">.00</span></div>
+            <div class="chip"><span class="tk" style="background:#2775CA">$</span>USDC</div>
+          </div>
+          <div class="meta"><span>≈ 0.3994 ETH</span><span>Balance <b>12,480.22</b> · <span style="color:var(--brand)">max</span></span></div>
+        </div>
+        <div class="quick">
+          <div class="q">25%</div><div class="q">50%</div><div class="q on">75%</div><div class="q">MAX</div>
+        </div>
+        <div class="amt-input" style="background:var(--bg-3)">
+          <div class="lab">You receive</div>
+          <div class="row">
+            <div class="v">0.3994</div>
+            <div class="chip"><span class="tk" style="background:#627EEA">Ξ</span>ETH</div>
+          </div>
+          <div class="meta"><span>Rate · 1 ETH = 3,128.42 USDC</span><span>Impact <b style="color:var(--success)">0.04%</b></span></div>
+        </div>
+        <div class="sum mono">
+          <div class="r"><span>Route</span><span>Uniswap v4 · Base</span></div>
+          <div class="r"><span>Min received</span><span>0.3982 ETH</span></div>
+          <div class="r"><span>Network fee</span><span>$0.003</span></div>
+          <div class="r t"><span>Total cost</span><span>$1,250.003</span></div>
+        </div>
+        <button class="go buy">Buy ETH</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="theme-switcher.js" defer></script>
+</body></html>

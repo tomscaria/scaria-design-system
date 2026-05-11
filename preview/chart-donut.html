@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>Chart · Donut · Lore</title>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<link rel="stylesheet" href="theme-switcher.css"/>
+<link rel="stylesheet" href="_preview-base.css"/>
+<link rel="stylesheet" href="_primitives.css"/>
+<style>
+  .donut-wrap{position:relative;min-width:0}
+  .donut-row{display:grid;grid-template-columns:180px 1fr;gap:24px;align-items:center;min-width:0}
+  .donut-slot{position:relative;width:180px;height:180px;flex-shrink:0;container-type:inline-size}
+  .donut{width:100%;height:100%;overflow:visible;display:block}
+  .donut circle.seg{cursor:pointer;transition:stroke-width .14s ease, filter .14s ease, opacity .14s ease}
+  .donut-wrap.hov circle.seg{opacity:.35}
+  .donut-wrap.hov circle.seg.on{opacity:1;stroke-width:10;filter:drop-shadow(0 0 4px color-mix(in oklab,currentColor 40%,transparent))}
+  .donut-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;gap:2px}
+  .donut-center .cv{font-family:var(--font-display);font-weight:500;letter-spacing:-.02em;line-height:1;color:var(--fg);
+    font-size:clamp(15px, 4.4cqw + 10px, 26px);
+    max-width:92px;text-align:center;font-variant-numeric:tabular-nums slashed-zero;white-space:nowrap;overflow:hidden}
+  .donut-center .cl{font-family:var(--font-mono);font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--fg-3)}
+
+  .lg{font-family:var(--font-sans);display:flex;flex-direction:column;gap:2px;min-width:0;flex:1 1 0}
+  .lg .li{display:grid;grid-template-columns:10px minmax(0,1fr) auto;column-gap:10px;row-gap:2px;align-items:center;padding:8px 10px;border-radius:6px;cursor:pointer;transition:background .12s}
+  .lg .li:hover,.lg .li.on{background:var(--bg-3)}
+  .lg .sw{width:10px;height:10px;border-radius:2px;flex-shrink:0;grid-row:1/span 2;align-self:center}
+  .lg .nm{color:var(--fg);font-size:13px;font-weight:500;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .lg .sub{color:var(--fg-3);font-family:var(--font-mono);font-size:11px;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;grid-column:2}
+  .lg .pct{color:var(--fg);font-family:var(--font-mono);font-size:15px;font-weight:600;grid-row:1;font-variant-numeric:tabular-nums slashed-zero}
+  .lg .amt{color:var(--fg-3);font-family:var(--font-mono);font-size:11px;grid-row:2;text-align:right;font-variant-numeric:tabular-nums slashed-zero}
+
+  .ctx-note{font-family:var(--font-mono);font-size:10px;color:var(--fg-3);background:var(--bg-3);border:1px dashed var(--line-2);border-radius:4px;padding:3px 8px;display:inline-block}
+</style></head><body data-theme="lore-light">
+
+<section>
+  <h4>Donut · allocation · hover segment or legend</h4>
+  <div class="card pad-lg">
+    <div class="donut-wrap" id="donutWrap">
+      <div class="donut-row">
+        <div class="donut-slot">
+          <svg class="donut" viewBox="0 0 42 42" aria-label="Portfolio allocation donut">
+            <circle cx="21" cy="21" r="16" fill="none" stroke="var(--line-2)" stroke-width="8"/>
+            <circle class="seg" data-k="yield"  cx="21" cy="21" r="16" fill="none" stroke="var(--brand)"  stroke-width="8" stroke-dasharray="42 100" stroke-dashoffset="25"  transform="rotate(-90 21 21)"/>
+            <circle class="seg" data-k="spot"   cx="21" cy="21" r="16" fill="none" stroke="var(--accent)" stroke-width="8" stroke-dasharray="28 100" stroke-dashoffset="-17" transform="rotate(-90 21 21)"/>
+            <circle class="seg" data-k="stable" cx="21" cy="21" r="16" fill="none" stroke="var(--info)"   stroke-width="8" stroke-dasharray="18 100" stroke-dashoffset="-45" transform="rotate(-90 21 21)"/>
+            <circle class="seg" data-k="other"  cx="21" cy="21" r="16" fill="none" stroke="var(--fg-3)"   stroke-width="8" stroke-dasharray="12 100" stroke-dashoffset="-63" transform="rotate(-90 21 21)"/>
+          </svg>
+          <div class="donut-center">
+            <div class="cv" id="donutV">—</div>
+            <div class="cl" id="donutL">Total</div>
+          </div>
+        </div>
+
+        <div class="lg" id="donutLegend">
+          <div class="li" data-k="yield">
+            <span class="sw" style="background:var(--brand)"></span>
+            <span class="nm">Yield · Aave v3</span>
+            <span class="pct">42%</span>
+            <span class="sub">3 positions</span>
+            <span class="amt" data-amt="yield"></span>
+          </div>
+          <div class="li" data-k="spot">
+            <span class="sw" style="background:var(--accent)"></span>
+            <span class="nm">Spot · ETH</span>
+            <span class="pct">28%</span>
+            <span class="sub">3.82 ETH</span>
+            <span class="amt" data-amt="spot"></span>
+          </div>
+          <div class="li" data-k="stable">
+            <span class="sw" style="background:var(--info)"></span>
+            <span class="nm">Stable · USDC</span>
+            <span class="pct">18%</span>
+            <span class="sub">earning 4.8%</span>
+            <span class="amt" data-amt="stable"></span>
+          </div>
+          <div class="li" data-k="other">
+            <span class="sw" style="background:var(--fg-3)"></span>
+            <span class="nm">Other</span>
+            <span class="pct">12%</span>
+            <span class="sub">7 assets</span>
+            <span class="amt" data-amt="other"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ctx-note" style="margin-top:14px">Display currency sourced from <code>window.__currency</code> (set by Navbar currency menu).</div>
+  </div>
+</section>
+
+<script>
+// Chart-Donut is a pure visualization. It READS currency from a global
+// set by the Navbar's currency menu, and LISTENS for changes.
+// Default is USD if no navbar is present on the page.
+(()=>{
+  const USD={yield:17993,spot:11995,stable:7711,other:5141};
+  const TOTAL_USD=Object.values(USD).reduce((a,b)=>a+b,0);
+  const pct={yield:42,spot:28,stable:18,other:12};
+  const nms={yield:'Yield',spot:'Spot',stable:'Stable',other:'Other'};
+  const FX={USD:1, EUR:0.92, GBP:0.78, BRL:5.18, JPY:155.4};
+
+  const fmtters={}, compact={};
+  function f(ccy){
+    if(!fmtters[ccy]) fmtters[ccy]=new Intl.NumberFormat(undefined,{style:'currency',currency:ccy,maximumFractionDigits:(ccy==='JPY'?0:0)});
+    return fmtters[ccy];
+  }
+  function fc(ccy){
+    if(!compact[ccy]) compact[ccy]=new Intl.NumberFormat(undefined,{style:'currency',currency:ccy,notation:'compact',maximumFractionDigits:1});
+    return compact[ccy];
+  }
+
+  const wrap=document.getElementById('donutWrap');
+  const v=document.getElementById('donutV'), l=document.getElementById('donutL');
+  const segs=document.querySelectorAll('.donut .seg');
+  const lis=document.querySelectorAll('#donutLegend .li');
+
+  function ccy(){ return (window.__currency && FX[window.__currency]) ? window.__currency : 'USD'; }
+  function amtIn(k){ return USD[k]*FX[ccy()]; }
+  function totalIn(){ return TOTAL_USD*FX[ccy()]; }
+
+  function paint(){
+    document.querySelectorAll('[data-amt]').forEach(el=>{
+      el.textContent=f(ccy()).format(amtIn(el.dataset.amt));
+    });
+    clear();
+  }
+  function hl(k){
+    wrap.classList.add('hov');
+    segs.forEach(s=>s.classList.toggle('on',s.dataset.k===k));
+    lis.forEach(li=>li.classList.toggle('on',li.dataset.k===k));
+    v.textContent=pct[k]+'%';
+    l.textContent=nms[k]+' · '+f(ccy()).format(amtIn(k));
+  }
+  function clear(){
+    wrap.classList.remove('hov');
+    segs.forEach(s=>s.classList.remove('on'));
+    lis.forEach(li=>li.classList.remove('on'));
+    v.textContent=fc(ccy()).format(totalIn());
+    l.textContent='Total';
+  }
+
+  segs.forEach(s=>s.addEventListener('mouseenter',()=>hl(s.dataset.k)));
+  lis.forEach(li=>li.addEventListener('mouseenter',()=>hl(li.dataset.k)));
+  wrap.addEventListener('mouseleave',clear);
+
+  // React to currency changes from navbar
+  window.addEventListener('lore:currency-change', paint);
+  paint();
+})();
+</script>
+<script src="theme-switcher.js" defer></script>
+</body></html>

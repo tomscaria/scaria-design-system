@@ -1,0 +1,791 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>Lore · Playground Skins</title>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<link rel="stylesheet" href="theme-switcher.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Fraunces:opsz,wght,SOFT@9..144,400,50;9..144,500,50;9..144,600,50&family=Archivo:wght@400;500;700;900&family=Outfit:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Syne:wght@500;700;800&family=VT323&family=Redaction:wght@400;700&family=Rubik+Mono+One&family=Major+Mono+Display&family=Unbounded:wght@400;700;800&family=Doto:wght@400;700&family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --page-bg:#EEEBE3;
+    --ink:#141613;
+    --muted:#5E6660;
+    --rule:rgba(20,22,19,.10);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--page-bg);color:var(--ink);font-family:var(--font-sans)}
+  .page{padding:36px 40px 80px;max-width:1280px;margin:0 auto}
+  .kicker{display:flex;align-items:center;gap:10px;font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);margin-bottom:14px}
+  .kicker .dot{width:6px;height:6px;border-radius:999px;background:var(--ink)}
+  h1{font-family:var(--font-display);font-size:64px;line-height:1;letter-spacing:-.02em;margin:0 0 10px;font-weight:400}
+  h1 em{font-style:italic;color:#4A7A3F}
+  .sub{font-size:16px;color:var(--muted);max-width:720px;line-height:1.5;margin:0 0 24px}
+  .hint{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:999px;background:#141613;color:#D4F24B;font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:30px}
+
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+
+  .card{
+    position:relative;border-radius:18px;overflow:hidden;min-height:320px;
+    transition:transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s, filter .35s;
+    cursor:pointer; display:flex; flex-direction:column;
+  }
+  .card:hover{transform:translateY(-4px) rotate(-.3deg);box-shadow:0 28px 60px -20px rgba(0,0,0,.35)}
+  .card .inner{padding:22px;display:flex;flex-direction:column;justify-content:space-between;flex:1;position:relative;z-index:2}
+  .card .meta{position:absolute;top:14px;right:14px;z-index:3;display:flex;gap:6px;align-items:center}
+  .pill{padding:4px 10px;border-radius:999px;font-size:10px;font-weight:600;letter-spacing:.04em;font-family:system-ui}
+  .lab{font-size:10px;text-transform:uppercase;letter-spacing:.14em;opacity:.75;font-weight:600;font-family:'Space Grotesk',system-ui}
+  .name{font-size:22px;margin:0;letter-spacing:-.01em}
+  .bal{font-size:38px;letter-spacing:-.02em;font-variant-numeric:tabular-nums slashed-zero;margin:14px 0 4px;line-height:1}
+  .delta{font-size:12px;opacity:.85}
+  .btnrow{display:flex;gap:8px;margin-top:20px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;font-size:13px;font-weight:600;cursor:pointer;border:none;font-family:inherit;transition:transform .15s, filter .15s;text-decoration:none}
+  .btn:hover{transform:translateY(-1px);filter:brightness(1.08)}
+  .btn-pri{/*primary*/}
+  .btn-sec{/*secondary*/}
+
+  .blob{position:absolute;filter:blur(48px);opacity:.55;pointer-events:none;z-index:1}
+
+  /* =========================================================== */
+  /* CLASSIC · Lore House (the always-on baseline) */
+  /* =========================================================== */
+  /* HEARTH — Lore Light flat */
+  .hearth{background:#F2EADB;color:#1A120A;font-family:'Fraunces',serif}
+  .hearth .lab{color:#5C4A33}
+  .hearth .name{font-style:italic;font-weight:500}
+  .hearth .btn-pri{background:#1A120A;color:#F2EADB;padding:12px 20px;border-radius:999px;font-family:'Space Grotesk',system-ui}
+  .hearth .btn-sec{background:transparent;color:#1A120A;border:1px solid rgba(26,18,10,.22);padding:11px 19px;border-radius:999px;font-family:'Space Grotesk',system-ui}
+
+  /* HEARTH GLOW — Lore Light gradient */
+  .hearthg{background:radial-gradient(120% 80% at 100% 0%,#F6E4B8 0%,#F2EADB 50%,#EBDAB6 100%);color:#1A120A;font-family:'Fraunces',serif}
+  .hearthg .lab{color:#5C4A33}
+  .hearthg .name{font-style:italic;font-weight:500}
+  .hearthg .btn-pri{background:#1A120A;color:#F2EADB;padding:12px 20px;border-radius:999px;font-family:'Space Grotesk',system-ui}
+  .hearthg .btn-sec{background:rgba(255,255,255,.4);color:#1A120A;backdrop-filter:blur(8px);padding:12px 20px;border-radius:999px;font-family:'Space Grotesk',system-ui}
+  .hearthg .blob{width:240px;height:240px;background:#D4F24B;top:-100px;right:-80px;opacity:.4;border-radius:50%}
+
+  /* MIDNIGHT — Lore Dark flat */
+  .mid{background:#0E1410;color:#E8F5DB;font-family:'Space Grotesk',system-ui;border:1px solid #1F2A22}
+  .mid .lab{color:#B9D09C}
+  .mid .name{color:#fff;font-weight:500}
+  .mid .btn-pri{background:#D4F24B;color:#0E1410;padding:12px 20px;border-radius:10px;font-weight:700}
+  .mid .btn-sec{background:#1C2820;color:#D4F24B;padding:12px 20px;border-radius:10px;border:1px solid rgba(212,242,75,.2)}
+
+  /* MIDNIGHT AURORA — Lore Dark gradient */
+  .midg{background:radial-gradient(120% 80% at 100% 0%,#2A3F2D 0%,#0E1410 70%);color:#E8F5DB;font-family:'Space Grotesk',system-ui}
+  .midg .lab{color:#B9D09C}
+  .midg .name{color:#fff;font-weight:500}
+  .midg .btn-pri{background:#D4F24B;color:#0E1410;padding:12px 20px;border-radius:10px;font-weight:700;box-shadow:0 0 24px rgba(212,242,75,.3)}
+  .midg .btn-sec{background:rgba(212,242,75,.1);color:#D4F24B;padding:12px 20px;border-radius:10px;border:1px solid rgba(212,242,75,.35)}
+  .midg .blob{width:280px;height:280px;background:#D4F24B;bottom:-140px;left:-100px;opacity:.2;border-radius:50%}
+
+  /* =========================================================== */
+  /* POLISHED · confident, institutional */
+  /* =========================================================== */
+  /* CHAMPAGNE — cream blue flat */
+  .cham{background:#F7F5EF;color:#0B1540;font-family:'Archivo',system-ui;border:1px solid #E6E2D6}
+  .cham .lab{color:#4D568C}
+  .cham .name{font-weight:900}
+  .cham .btn-pri{background:#1846F0;color:#fff;padding:12px 20px;border-radius:6px;font-weight:700}
+  .cham .btn-sec{background:transparent;color:#0B1540;border:1px solid rgba(11,21,64,.2);padding:11px 19px;border-radius:6px;font-weight:600}
+
+  /* NOIR — electric flat */
+  .noir{background:#050608;color:#fff;font-family:'Space Grotesk',system-ui;border:1px solid #14171C}
+  .noir .lab{color:#6F7583}
+  .noir .name{color:#fff;font-weight:500}
+  .noir .btn-pri{background:#0052FF;color:#fff;padding:12px 20px;border-radius:8px;font-weight:600}
+  .noir .btn-sec{background:#14171C;color:#8FB4FF;padding:12px 20px;border-radius:8px;border:1px solid #1E232B}
+
+  /* NOIR BLUR — electric gradient */
+  .noirg{background:#050608;color:#fff;font-family:'Space Grotesk',system-ui;position:relative}
+  .noirg .lab{color:#6F7583}
+  .noirg .name{color:#fff;font-weight:500}
+  .noirg .btn-pri{background:linear-gradient(135deg,#0052FF 0%,#5B8EFF 100%);color:#fff;padding:12px 20px;border-radius:8px;font-weight:600;box-shadow:0 8px 24px -6px rgba(0,82,255,.5)}
+  .noirg .btn-sec{background:rgba(0,82,255,.15);color:#8FB4FF;padding:12px 20px;border-radius:8px;border:1px solid rgba(0,82,255,.3)}
+  .noirg::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 0% 100%,rgba(0,82,255,.25) 0%,transparent 55%),radial-gradient(circle at 100% 0%,rgba(91,142,255,.15) 0%,transparent 50%);pointer-events:none;z-index:1}
+
+  /* GARDEN — green flat */
+  .gard{background:#F6FBEF;color:#0A1F12;font-family:'Outfit',system-ui;border:1px solid #DEE9CD}
+  .gard .lab{color:#4A7A3F}
+  .gard .btn-pri{background:#00A303;color:#fff;padding:12px 20px;border-radius:14px;font-weight:700}
+  .gard .btn-sec{background:transparent;color:#00A303;border:1.5px solid #00A303;padding:10.5px 19px;border-radius:14px;font-weight:700}
+
+  /* =========================================================== */
+  /* PLAYFUL · social, warm */
+  /* =========================================================== */
+  /* POPSICLE — sunset gradient */
+  .pop{background:linear-gradient(135deg,#FF2D87 0%,#FF7A3D 60%,#FFB545 100%);color:#fff;font-family:'Outfit',system-ui}
+  .pop .lab{color:rgba(255,255,255,.85)}
+  .pop .name{font-weight:800;letter-spacing:-.02em;color:#fff}
+  .pop .btn-pri{background:#fff;color:#C01566;padding:12px 20px;border-radius:999px;font-weight:800}
+  .pop .btn-sec{background:rgba(255,255,255,.22);color:#fff;backdrop-filter:blur(10px);padding:12px 20px;border-radius:999px;font-weight:700;border:1px solid rgba(255,255,255,.35)}
+  .pop::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 20%,rgba(255,255,255,.35) 0 2px,transparent 3px) 0 0/24px 24px;pointer-events:none;z-index:1;opacity:.6}
+
+  /* MALLOW — pastel dream */
+  .mal{background:linear-gradient(135deg,#E5D4FF 0%,#FFD4E5 50%,#FFEDC4 100%);color:#3A2154;font-family:'DM Serif Display',serif;border-radius:28px}
+  .mal .inner{padding:26px}
+  .mal .lab{font-family:'Outfit',system-ui;color:#6B3FB5}
+  .mal .name{font-weight:400;letter-spacing:-.01em}
+  .mal .btn-pri{background:#6B3FB5;color:#fff;padding:12px 22px;border-radius:999px;font-weight:600;font-family:'Outfit',system-ui}
+  .mal .btn-sec{background:rgba(255,255,255,.65);color:#3A2154;padding:12px 22px;border-radius:999px;font-family:'Outfit',system-ui;font-weight:600;backdrop-filter:blur(10px)}
+
+  /* BAZAAR — market stripe */
+  .baz{background:#F4E8D6;color:#3C1810;font-family:'Archivo',system-ui;border:1px solid #D4BFA1}
+  .baz .inner{padding-top:32px}
+  .baz .lab{color:#8B5A3C}
+  .baz .name{font-weight:900;font-style:italic}
+  .baz .btn-pri{background:#C5442B;color:#FFF5E5;padding:11px 18px;border-radius:4px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:11px}
+  .baz .btn-sec{background:transparent;color:#0F766E;border:2px solid #0F766E;padding:9px 16px;border-radius:4px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:11px}
+  .baz::before{content:"";position:absolute;top:0;left:0;right:0;height:8px;background:repeating-linear-gradient(90deg,#C5442B 0 14px,#0F766E 14px 28px,#E3A044 28px 42px);z-index:3}
+
+  /* EMBER — candlelight dark */
+  .emb{background:radial-gradient(140% 100% at 30% 0%,#3A1F0A 0%,#1A0F05 70%);color:#FFE5B8;font-family:'Fraunces',serif}
+  .emb .lab{color:#B89268;font-family:'Space Grotesk',system-ui;font-weight:600}
+  .emb .name{font-style:italic;font-weight:500;color:#fff}
+  .emb .btn-pri{background:linear-gradient(180deg,#FFB24C 0%,#E38A2C 100%);color:#1A0F05;padding:12px 20px;border-radius:12px;font-weight:700;font-family:'Space Grotesk',system-ui;box-shadow:0 0 24px rgba(255,178,76,.3)}
+  .emb .btn-sec{background:transparent;color:#FFB24C;border:1px solid rgba(255,178,76,.35);padding:11px 19px;border-radius:12px;font-family:'Space Grotesk',system-ui;font-weight:600}
+  .emb .blob{width:220px;height:220px;background:#E38A2C;bottom:-80px;right:-40px;opacity:.35;border-radius:50%}
+
+  /* =========================================================== */
+  /* INSPIRED · inspired-by but remixed */
+  /* =========================================================== */
+  /* CONFETTI — Party.app energy: violet + acid yellow */
+  .conf{background:#1A0F3A;color:#fff;font-family:'Unbounded',system-ui;border:1px solid #2D1A5C}
+  .conf .lab{color:#C7A3FF;letter-spacing:.2em;font-family:'JetBrains Mono',monospace;font-weight:500}
+  .conf .name{font-weight:800;letter-spacing:-.03em;color:#fff}
+  .conf .bal{color:#FFF100}
+  .conf .btn-pri{background:#FFF100;color:#1A0F3A;padding:14px 22px;border-radius:12px;font-weight:800;font-family:'Unbounded',system-ui;font-size:12px;text-transform:uppercase;letter-spacing:.04em;box-shadow:0 4px 0 #B8AD00,0 0 32px rgba(255,241,0,.25)}
+  .conf .btn-pri:hover{transform:translateY(1px);box-shadow:0 2px 0 #B8AD00,0 0 32px rgba(255,241,0,.25)}
+  .conf .btn-sec{background:#2D1A5C;color:#C7A3FF;padding:14px 22px;border-radius:12px;font-weight:700;font-family:'Unbounded',system-ui;font-size:12px;text-transform:uppercase;letter-spacing:.04em;box-shadow:0 4px 0 #1A0F3A}
+  .conf::after{content:"";position:absolute;inset:0;background:
+    radial-gradient(circle 2px at 15% 25%,#FFF100 50%,transparent 51%),
+    radial-gradient(circle 2px at 85% 15%,#FF6BD6 50%,transparent 51%),
+    radial-gradient(circle 2px at 75% 80%,#00E5FF 50%,transparent 51%),
+    radial-gradient(circle 2px at 25% 75%,#FFF100 50%,transparent 51%),
+    radial-gradient(circle 1.5px at 55% 40%,#fff 50%,transparent 51%);
+    pointer-events:none;z-index:1;opacity:.9}
+
+  /* WARP — Zora energy: iridescent gradient on black */
+  .warp{background:#000;color:#fff;font-family:'JetBrains Mono',monospace;border:1px solid #1a1a1a;position:relative}
+  .warp .lab{color:#999;letter-spacing:.18em}
+  .warp .name{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;font-size:26px;letter-spacing:-.01em}
+  .warp .bal{font-family:'Instrument Serif',serif;font-weight:400;background:linear-gradient(90deg,#00E5FF 0%,#FF6BD6 50%,#FFEC3D 100%);background-clip:text;-webkit-background-clip:text;color:transparent;letter-spacing:-.03em}
+  .warp .btn-pri{background:linear-gradient(90deg,#00E5FF 0%,#FF6BD6 50%,#FFEC3D 100%);color:#000;padding:12px 20px;border-radius:999px;font-weight:600;font-family:'JetBrains Mono',monospace}
+  .warp .btn-sec{background:transparent;color:#fff;border:1px solid #333;padding:11px 19px;border-radius:999px;font-family:'JetBrains Mono',monospace;font-weight:500}
+  .warp::before{content:"";position:absolute;top:-40px;right:-40px;width:180px;height:180px;border-radius:50%;background:conic-gradient(from 180deg,#00E5FF,#FF6BD6,#FFEC3D,#00E5FF);filter:blur(40px);opacity:.5;z-index:1}
+
+  /* CASHTAG — Cash App energy: pure black + electric green */
+  .cash{background:#000;color:#fff;font-family:'Unbounded',system-ui}
+  .cash .lab{color:#00D632;letter-spacing:.2em;font-weight:500}
+  .cash .name{font-weight:800;letter-spacing:-.02em;color:#fff}
+  .cash .bal{font-weight:800;font-size:44px;color:#fff;letter-spacing:-.04em}
+  .cash .delta{color:#00D632;font-weight:500}
+  .cash .btn-pri{background:#00D632;color:#000;padding:16px 24px;border-radius:999px;font-weight:700;font-family:'Unbounded',system-ui;font-size:14px;width:100%;justify-content:center}
+  .cash .btn-sec{background:#1a1a1a;color:#fff;padding:16px 24px;border-radius:999px;font-weight:700;font-family:'Unbounded',system-ui;font-size:14px;width:100%;justify-content:center}
+  .cash .btnrow{flex-direction:column;gap:8px}
+
+  /* CASHTAG LIGHT — same energy, light */
+  .cashL{background:#F0F0F0;color:#000;font-family:'Unbounded',system-ui}
+  .cashL .lab{color:#008A20;letter-spacing:.2em;font-weight:500}
+  .cashL .name{font-weight:800;letter-spacing:-.02em;color:#000}
+  .cashL .bal{font-weight:800;font-size:44px;color:#000;letter-spacing:-.04em}
+  .cashL .delta{color:#008A20;font-weight:500}
+  .cashL .btn-pri{background:#00D632;color:#000;padding:16px 24px;border-radius:999px;font-weight:700;font-family:'Unbounded',system-ui;font-size:14px;width:100%;justify-content:center}
+  .cashL .btn-sec{background:#fff;color:#000;padding:16px 24px;border-radius:999px;font-weight:700;font-family:'Unbounded',system-ui;font-size:14px;width:100%;justify-content:center;border:1px solid #D4D4D4}
+  .cashL .btnrow{flex-direction:column;gap:8px}
+
+  /* =========================================================== */
+  /* EXPRESSIVE · experimental */
+  /* =========================================================== */
+  /* NEON — terminal CRT */
+  .neon{background:#080A0E;color:#E8FF5C;font-family:'JetBrains Mono',monospace;border:1px solid rgba(232,255,92,.2);position:relative}
+  .neon .lab{color:#7A8FA0}
+  .neon .name{font-weight:500;color:#fff;font-size:18px}
+  .neon .bal{font-family:'VT323',monospace;font-size:52px;color:#E8FF5C;text-shadow:0 0 18px rgba(232,255,92,.5);line-height:1}
+  .neon .delta{color:#7A8FA0}
+  .neon .btn-pri{background:#E8FF5C;color:#080A0E;padding:11px 16px;border-radius:2px;font-weight:700;font-family:'JetBrains Mono',monospace;letter-spacing:.02em;font-size:12px}
+  .neon .btn-sec{background:transparent;color:#E8FF5C;border:1px solid #E8FF5C;padding:10px 15px;border-radius:2px;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600}
+  .neon::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0 3px,rgba(232,255,92,.04) 3px 4px);pointer-events:none;z-index:1}
+
+  /* KIOSK — brutalist magazine */
+  .kiosk{background:#FFFFFF;color:#000;font-family:'Syne',system-ui;border:3px solid #000}
+  .kiosk .lab{font-weight:700;color:#000}
+  .kiosk .name{font-size:28px;font-weight:800;text-transform:uppercase;letter-spacing:-.01em}
+  .kiosk .bal{font-weight:800;font-size:46px;letter-spacing:-.03em}
+  .kiosk .delta{font-weight:700}
+  .kiosk .btn-pri{background:#000;color:#F7FF2D;padding:14px 22px;border-radius:0;font-weight:800;text-transform:uppercase;letter-spacing:.04em;font-family:'Syne',system-ui}
+  .kiosk .btn-sec{background:#F7FF2D;color:#000;padding:14px 22px;border-radius:0;font-weight:800;text-transform:uppercase;letter-spacing:.04em;font-family:'Syne',system-ui}
+  .kiosk::before{content:"N° 04";position:absolute;top:14px;right:-40px;background:#F7FF2D;color:#000;padding:4px 48px;transform:rotate(35deg);font-weight:800;font-size:11px;letter-spacing:.2em;z-index:3}
+
+  /* TIDE — ocean serif */
+  .tide{background:linear-gradient(180deg,#0A2E4F 0%,#114E7B 100%);color:#E8F4FF;font-family:'Instrument Serif',serif}
+  .tide .lab{font-family:'Space Grotesk',system-ui;color:#99C5E8}
+  .tide .name{font-size:28px;font-style:italic;color:#fff;font-weight:400}
+  .tide .btn-pri{background:#66D7FF;color:#0A2E4F;padding:12px 20px;border-radius:999px;font-weight:700;font-family:'Space Grotesk',system-ui}
+  .tide .btn-sec{background:rgba(255,255,255,.12);color:#fff;padding:12px 20px;border-radius:999px;font-family:'Space Grotesk',system-ui;font-weight:600;backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.2)}
+  .tide .blob{width:300px;height:300px;background:#66D7FF;top:-120px;right:-120px;opacity:.2;border-radius:50%}
+
+  /* PIXELDUST — 8-bit retro */
+  .pix{background:#1a1035;color:#fff;font-family:'VT323',monospace;image-rendering:pixelated;border:3px solid #FF3D9A;border-radius:0}
+  .pix .lab{font-family:'VT323',monospace;color:#00F0FF;font-size:12px;letter-spacing:.1em}
+  .pix .name{font-family:'VT323',monospace;font-size:28px;color:#FFEC3D}
+  .pix .bal{font-family:'VT323',monospace;font-size:52px;color:#00F0FF;line-height:1}
+  .pix .delta{font-family:'VT323',monospace;color:#FF3D9A;font-size:14px}
+  .pix .btn-pri{background:#FF3D9A;color:#fff;padding:10px 20px;border-radius:0;font-family:'VT323',monospace;font-size:16px;font-weight:400;letter-spacing:.05em;box-shadow:4px 4px 0 #FFEC3D}
+  .pix .btn-sec{background:#00F0FF;color:#1a1035;padding:10px 20px;border-radius:0;font-family:'VT323',monospace;font-size:16px;font-weight:400;letter-spacing:.05em;box-shadow:4px 4px 0 #FFEC3D}
+  .pix::before{content:"";position:absolute;inset:0;background-image:
+    linear-gradient(rgba(0,240,255,.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,240,255,.05) 1px,transparent 1px);
+    background-size:8px 8px;pointer-events:none;z-index:1}
+
+  /* BOTANICA — moss + terracotta, editorial */
+  .bot{background:#EEEAE0;color:#2D3A24;font-family:'Fraunces',serif;border:1px solid #DDD6C4}
+  .bot .lab{color:#6B7A52;font-family:'Bricolage Grotesque',system-ui}
+  .bot .name{font-style:italic;font-weight:400}
+  .bot .bal{color:#2D3A24;font-weight:500}
+  .bot .btn-pri{background:#B85D3C;color:#fff;padding:12px 20px;border-radius:4px;font-weight:600;font-family:'Bricolage Grotesque',system-ui}
+  .bot .btn-sec{background:#fff;color:#2D3A24;padding:12px 20px;border-radius:4px;border:1px solid #D4CCB8;font-weight:600;font-family:'Bricolage Grotesque',system-ui}
+  .bot::after{content:"❦";position:absolute;top:18px;right:22px;font-size:20px;color:#B85D3C;z-index:2}
+
+  /* HOLO — holographic foil */
+  .holo{background:linear-gradient(135deg,#FFB5D8 0%,#B5D4FF 25%,#B5FFD4 50%,#FFF5B5 75%,#FFB5D8 100%);color:#2A1F3D;font-family:'Outfit',system-ui;position:relative}
+  .holo .lab{color:#5A3F7D;font-weight:700}
+  .holo .name{font-weight:800;letter-spacing:-.02em;color:#2A1F3D}
+  .holo .bal{color:#2A1F3D;font-weight:700}
+  .holo .btn-pri{background:#2A1F3D;color:#fff;padding:12px 20px;border-radius:14px;font-weight:700}
+  .holo .btn-sec{background:rgba(255,255,255,.7);color:#2A1F3D;padding:12px 20px;border-radius:14px;backdrop-filter:blur(8px);font-weight:700;border:1px solid rgba(255,255,255,.9)}
+  .holo::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(135deg,rgba(255,255,255,.3) 0 3px,transparent 3px 7px);pointer-events:none;z-index:1;opacity:.4}
+
+  /* MONO-BRUT — all-mono, margin-paper */
+  .brut{background:#F5F4F1;color:#111;font-family:'Major Mono Display',monospace;border:1px dashed #111}
+  .brut .lab{font-family:'IBM Plex Mono',monospace;letter-spacing:.15em;color:#666;font-weight:500}
+  .brut .name{font-family:'Major Mono Display',monospace;font-size:20px;text-transform:lowercase}
+  .brut .bal{font-family:'IBM Plex Mono',monospace;font-weight:600}
+  .brut .delta{font-family:'IBM Plex Mono',monospace}
+  .brut .btn-pri{background:#111;color:#F5F4F1;padding:12px 20px;border-radius:0;font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:12px;letter-spacing:.05em}
+  .brut .btn-sec{background:transparent;color:#111;border:1px dashed #111;padding:11px 19px;border-radius:0;font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:12px;letter-spacing:.05em}
+  .brut::before{content:"";position:absolute;left:14px;top:14px;right:14px;bottom:14px;border:1px solid #111;z-index:1;pointer-events:none;opacity:.1}
+
+  /* SUNSET — Robinhood-meets-dawn warm */
+  .sun{background:linear-gradient(180deg,#FFB99A 0%,#FF6E8A 50%,#C93F8F 100%);color:#fff;font-family:'Outfit',system-ui}
+  .sun .lab{color:rgba(255,255,255,.9);font-weight:600}
+  .sun .name{color:#fff;font-weight:700}
+  .sun .bal{color:#fff;font-weight:800;letter-spacing:-.03em}
+  .sun .btn-pri{background:#fff;color:#C93F8F;padding:12px 20px;border-radius:16px;font-weight:800}
+  .sun .btn-sec{background:rgba(255,255,255,.2);color:#fff;padding:12px 20px;border-radius:16px;font-weight:700;backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.35)}
+
+  /* DOTMATRIX — receipt-printer aesthetic */
+  .dot{background:#FFFBF0;color:#1a1a1a;font-family:'Doto','JetBrains Mono',monospace;border:1px solid #1a1a1a}
+  .dot .lab{font-family:'IBM Plex Mono',monospace;letter-spacing:.18em;font-weight:500}
+  .dot .name{font-family:'Doto',monospace;font-weight:700;font-size:26px;letter-spacing:.02em}
+  .dot .bal{font-family:'Doto',monospace;font-weight:700;font-size:52px;letter-spacing:.02em}
+  .dot .delta{font-family:'IBM Plex Mono',monospace}
+  .dot .btn-pri{background:#1a1a1a;color:#FFFBF0;padding:12px 20px;border-radius:0;font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:12px;letter-spacing:.05em;text-transform:uppercase}
+  .dot .btn-sec{background:#FFFBF0;color:#1a1a1a;padding:11px 19px;border-radius:0;font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:12px;letter-spacing:.05em;text-transform:uppercase;border:1px solid #1a1a1a}
+  .dot::before{content:"* * *";position:absolute;top:12px;left:22px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.4em;z-index:2}
+  .dot .inner{padding-top:34px}
+
+  /* section framework */
+  .tier{margin:44px 0 20px}
+  .tier h2{font-family:var(--font-display);font-size:28px;margin:0 0 4px;letter-spacing:-.01em;font-weight:400}
+  .tier h2 em{color:#4A7A3F;font-style:italic}
+  .tier .tierSub{font-size:13px;color:var(--muted);max-width:560px;line-height:1.5;margin:0 0 22px;font-family:var(--font-mono)}
+  .tier .tag{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;background:#141613;color:#D4F24B;font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px;font-weight:600}
+
+  /* caption under each card */
+  .unit{display:flex;flex-direction:column}
+  .caption{display:flex;justify-content:space-between;align-items:baseline;margin-top:10px;padding:0 4px;font-family:var(--font-mono);font-size:11px;color:var(--muted)}
+  .caption b{color:var(--ink);font-weight:600}
+
+  /* footer row */
+  .footstrip{display:flex;justify-content:space-between;align-items:center;padding:18px 22px;background:#fff;border-radius:14px;border:1px solid var(--rule);font-family:var(--font-mono);font-size:12px;color:var(--muted);margin-top:40px;flex-wrap:wrap;gap:12px}
+  .swatches{display:flex;gap:4px;flex-wrap:wrap}
+  .swatch{width:20px;height:20px;border-radius:6px;border:1px solid rgba(0,0,0,.08)}
+</style></head>
+<body data-theme="lore-light">
+<div class="page">
+
+  <div class="kicker"><span class="dot"></span> Lore · Playground skins</div>
+  <h1>Eighteen ways to <em>wear the same vault</em>.</h1>
+  <p class="sub">Each skin remaps Lore's tokens — palette, type, radius, shadow, gradient, button shape, motion. Same bones underneath, so any flow or component drops in clean. Hover a card to feel the micro-motion. Tap to try it in the Playground.</p>
+  <div class="hint">⚡ <span>Playground delighter · try any skin, mix + match, B-line to extremes</span></div>
+
+  <!-- ═══════════════════ TIER 1: CLASSICS ═══════════════════ -->
+  <div class="tier">
+    <span class="tag">Tier 01 · Classics</span>
+    <h2>The Lore <em>house</em></h2>
+    <p class="tierSub">Always on. Paper, charcoal, chartreuse — with and without gradients. The safe starting point every Playground remix builds from.</p>
+  </div>
+
+  <div class="grid">
+    <div class="unit">
+      <div class="card hearth">
+        <div class="meta"><span class="pill" style="background:#1A120A;color:#F2EADB">Default</span></div>
+        <div class="inner">
+          <div>
+            <div class="lab">Hearth · light flat</div>
+            <h3 class="name">Main account</h3>
+            <div class="bal">$12,480.<span style="opacity:.5">22</span></div>
+            <div class="delta">+$1,240 · 11% this week</div>
+          </div>
+          <div class="btnrow"><a class="btn btn-pri">Send</a><a class="btn btn-sec">Receive</a></div>
+        </div>
+      </div>
+      <div class="caption"><span><b>Hearth</b> · warm paper + graphite</span><span>Fraunces</span></div>
+    </div>
+
+    <div class="unit">
+      <div class="card hearthg">
+        <div class="blob"></div>
+        <div class="meta"><span class="pill" style="background:#1A120A;color:#F2EADB">Glow</span></div>
+        <div class="inner">
+          <div>
+            <div class="lab">Hearth · light gradient</div>
+            <h3 class="name">Main account</h3>
+            <div class="bal">$12,480.<span style="opacity:.5">22</span></div>
+            <div class="delta">+$1,240 · 11% this week</div>
+          </div>
+          <div class="btnrow"><a class="btn btn-pri">Send</a><a class="btn btn-sec">Receive</a></div>
+        </div>
+      </div>
+      <div class="caption"><span><b>Hearth Glow</b> · paper + chartreuse bloom</span><span>Fraunces</span></div>
+    </div>
+
+    <div class="unit">
+      <div class="card mid">
+        <div class="meta"><span class="pill" style="background:#D4F24B;color:#0E1410">Pro</span></div>
+        <div class="inner">
+          <div>
+            <div class="lab">Midnight · dark flat</div>
+            <h3 class="name">Total balance</h3>
+            <div class="bal">$12,480.<span style="opacity:.5">22</span></div>
+            <div class="delta">+$1,240 · 11% this week</div>
+          </div>
+          <div class="btnrow"><a class="btn btn-pri">Send →</a><a class="btn btn-sec">Receive</a></div>
+        </div>
+      </div>
+      <div class="caption"><span><b>Midnight</b> · chartreuse on charcoal</span><span>Space Grotesk</span></div>
+    </div>
+
+    <div class="unit">
+      <div class="card midg">
+        <div class="blob"></div>
+        <div class="meta"><span class="pill" style="background:#D4F24B;color:#0E1410">Aurora</span></div>
+        <div class="inner">
+          <div>
+            <div class="lab">Midnight · dark gradient</div>
+            <h3 class="name">Total balance</h3>
+            <div class="bal">$12,480.<span style="opacity:.5">22</span></div>
+            <div class="delta">+$1,240 · 11% this week</div>
+          </div>
+          <div class="btnrow"><a class="btn btn-pri">Send →</a><a class="btn btn-sec">Receive</a></div>
+        </div>
+      </div>
+      <div class="caption"><span><b>Midnight Aurora</b> · moss-glow dark</span><span>Space Grotesk</span></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ TIER 2: POLISHED ═══════════════════ -->
+  <div class="tier">
+    <span class="tag">Tier 02 · Polished</span>
+    <h2>Institutional <em>confidence</em></h2>
+    <p class="tierSub">For users who want a bank that feels like a bank — just a very well-designed one. Compliance vibes, hard edges, restrained accents.</p>
+  </div>
+
+  <div class="grid">
+    <div class="unit">
+      <div class="card cham">
+        <div class="meta"><span class="pill" style="background:#1846F0;color:#fff">FCA</span></div>
+        <div class="inner">
+          <div>
+            <div class="lab">Champagne</div>
+            <h3 class="name">Current</h3>
+            <div class="bal">£12,480.<span style="opacity:.5">22</span></div>
+            <div class="delta">+£1,240 this week</div>
+          </div>
+          <div class="btnrow"><a class="btn btn-pri">Transfer</a><a class="btn btn-sec">Statements</a></div>
+        </div>
+      </div>
+      <div class="caption"><span><b>Champagne</b> · cream + ultramarine</span><span>Archivo</span></div>
+    </div>
+
+    <div class="unit">
+      <div class="card noir">
+        <div class="meta"><span class="pill" style="background:#14171C;color:#8FB4FF">Pro</span></div>
+        <div class="inner">
+          <div>
+            <div class="lab">Noir · flat</div>
+            <h3 class="name">Portfolio</h3>
+            <div class="bal">$12,480.<span style="opacity:.5">22</span></div>
+            <div class="delta" style="color:#4ADE80">↑ +$1,240 · 11.0%</div>
+          </div>
+          <div class="btnrow"><a class="btn btn-pri">Buy</a><a class="btn btn-sec">Sell</a></div>
+        </div>
+      </div>
+      <div class="caption"><span><b>Noir</b> · pure black + electric</span><span>Space Grotesk</span></div>
+    </div>
+
+    <div class="unit">
+      <div class="card noirg">
+        <div class="meta"><span class="pill" style="background:#14171C;color:#8FB4FF">Glow</span></div>
+        <div class="inner">
+          <div>
+            <div class="lab">Noir · gradient</div>
+            <h3 class="name">Portfolio</h3>
+            <div class="bal">$12,480.<span style="opacity:.5">22</span></div>
+            <div class="delta" style="color:#4ADE80">↑ +$1,240 · 11.0%</div>
+          </div>
+          <div class="btnrow"><a class="btn btn-pri">Buy</a><a class="btn btn-sec">Sell</a></div>
+        </div>
+      </div>
+      <div class="caption"><span><b>Noir Blur</b> · deep-space glow</span><span>Space Grotesk</span></div>
+    </div>
+
+    <div class="unit">
+      <div class="card gard">
+        <div class="meta"><span class="pill" style="background:#00A303;color:#fff">Live</span></div>
+        <div class="inner">
+          <div>
+            <div class="lab">Garden</div>
+            <h3 class="name">Investments</h3>
+            <div class="bal">$12,480.<span style="opacity:.5">22</span></div>
+            <div class="delta" style="color:#00A303">↑ +$1,240 · 11%</div>
+          </div>
+          <div class="btnrow"><a class="btn btn-pri">Trade</a><a class="btn btn-sec">Watchlist</a></div>
+        </div>
+      </div>
+      <div class="caption"><span><b>Garden</b> · chlorophyll light</span><span>Outfit</span></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ TIER 3: PLAYFUL ═══════════════════ -->
+  <div class="tier">
+    <span class="tag">Tier 03 · Playful</span>
+    <h2>Social &amp; <em>warm</em></h2>
+    <p class="tierSub">Friendlier edges, candy colors, tactile gradients. The skins that say "banking can be fun" without tipping into chaos.</p>
+  </div>
+
+  <div class="grid">
+    <div class="unit">
+      <div class="card pop">
+        <div class="meta"><span class="pill" style="background:rgba(255,255,255,.25);color:#fff;backdrop-filter:blur(8px)">HOT</span></div>
+        <div class="inner">
+          <div>
+            <div class="lab">Popsicle</div>
+            <h3 class="name">Saldo</h3>
+            <div class="bal">R$12.480</div>
+            <div class="delta">+R$1.240 · 11%</div>
+          </div>
+          <div class="btnrow"><a class="btn btn-pri">Pagar</a><a class="btn btn-sec">Receber</a></div>
+        </div>
+      </div>
+      <div class="caption"><span><b>Popsicle</b> · sunset confetti</span><span>Outfit</span></div>
+    </div>
+
+    <div class="unit">
+      <div class="card mal">
+        <div class="meta"><span class="pill" style="background:rgba(255,255,255,.7);color:#3A2154;backdrop-filter:blur(10px)">✦ Soft</span></div>
+        <div class="inner">
+          <div>
+            <div class="lab">Mallow</div>
+            <h3 class="name">Squad pool</h3>
+            <div class="bal">$12,480</div>
+            <div class="delta">4 friends · last +$240</div>
+          </div>
+          <div class="btnrow"><a class="btn btn-pri">Chip in</a><a class="btn btn-sec">See all</a></div>
+        </div>
+      </div>
+      <div class="caption"><span><b>Mallow</b> · pastel dream</span><span>DM Serif Display</span></div>
+    </div>
+
+    <div class="unit">
+      <div class="card baz">
+        <div class="meta"><span class="pill" style="background:#0F766E;color:#F4E8D6">Open</span></div>
+        <div class="inner">
+          <div>
+            <div class="lab">Bazaar</div>
+            <h3 class="name">Wallet</h3>
+            <div class="bal">₹12,480</div>
+            <div class="delta" style="color:#8B5A3C">+₹1,240 · 14 trades</div>
+          </div>
+          <div class="btnrow"><a class="btn btn-pri">Trade</a><a class="btn btn-sec">Hold</a></div>
+        </div>
+      </div>
+      <div class="caption"><span><b>Bazaar</b> · market terracotta</span><span>Archivo</span></div>
+    </div>
+
+    <div class="unit">
+      <div class="card sun">
+        <div class="meta"><span class="pill" style="background:rgba(255,255,255,.25);color:#fff;backdrop-filter:blur(8px)">☀</span></div>
+        <div class="inner">
+          <div>
+            <div class="lab">Sunset</div>
+            <h3 class="name">Gains today</h3>
+            <div class="bal">+$1,240</div>
+            <div class="delta">Portfolio · $42,480</div>
+          </div>
+          <div class="btnrow"><a class="btn btn-pri">Trade</a><a class="btn btn-sec">Share</a></div>
+        </div>
+      </div>
+      <div class="caption"><span><b>Sunset</b> · dawn-to-dusk gradient</span><span>Outfit</span></div>
+    </div>
+
+    <div class="unit">
+      <div class="card emb">
+        <div class="blob"></div>
+        <div class="meta"><span class="pill" style="background:rgba(255,178,76,.2);color:#FFB24C;border:1px solid rgba(255,178,76,.3)">Candlelit</span></div>
+        <div class="inner">
+          <div>
+            <div class="lab">Ember</div>
+            <h3 class="name">Treasury</h3>
+            <div class="bal">$12,480</div>
+            <div class="delta">+$1,240 this week</div>
+          </div>
+          <div class="btnrow"><a class="btn btn-pri">Send</a><a class="btn btn-sec">Stake</a></div>
+        </div>
+      </div>
+      <div class="caption"><span><b>Ember</b> · candlelight serif</span><span>Fraunces</span></div>
+    </div>
+
+    <div class="unit">
+      <div class="card bot">
+        <div class="meta"></div>
+        <div class="inner">
+          <div>
+            <div class="lab">Botanica</div>
+            <h3 class="name">Passbook</h3>
+            <div class="bal">$12,480</div>
+            <div class="delta" style="color:#6B7A52">+$1,240 · 11%</div>
+          </div>
+          <div class="btnrow"><a class="btn btn-pri">Send</a><a class="btn btn-sec">History</a></div>
+        </div>
+      </div>
+      <div class="caption"><span><b>Botanica</b> · moss + terracotta editorial</span><span>Fraunces / Bricolage</span></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ TIER 4: INSPIRED ═══════════════════ -->
+  <div class="tier">
+    <span class="tag">Tier 04 · Inspired remixes</span>
+    <h2>Crypto-native <em>cousins</em></h2>
+    <p class="tierSub">Built from the DNA of Party · Zora · Cash App. Not clones — reinterpretations of the energy each brand gives off. Great anchor points for Playground users who already have a vibe in mind.</p>
+  </div>
+
+  <div class="grid">
+    <div class="unit">
+      <div class="card conf">
+        <div class="meta"><span class="pill" style="background:#FFF100;color:#1A0F3A">🎉 Live</span></div>
+        <div class="inner">
+          <div>
+            <div class="lab">Confetti · party vibe</div>
+            <h3 class="name">The Degens</h3>
+            <div class="bal">12.48 ETH</div>
+            <div class="delta" style="color:#C7A3FF">8 members · 11 proposals</div>
+          </div>
+          <div class="btnrow"><a class="btn btn-pri">Propose</a><a class="btn btn-sec">Vote</a></div>
+        </div>
+      </div>
+      <div class="caption"><span><b>Confetti</b> · violet + acid, beveled</span><span>Unbounded</span></div>
+    </div>
+
+    <div class="unit">
+      <div class="card warp">
+        <div class="meta"><span class="pill" style="background:#111;color:#fff;border:1px solid #333">v4</span></div>
+        <div class="inner">
+          <div>
+            <div class="lab">WARP · editorial onchain</div>
+            <h3 class="name">Untitled collection</h3>
+            <div class="bal">12,480.22</div>
+            <div class="delta" style="color:#999">usd · 4 chains · ↗ 11%</div>
+          </div>
+          <div class="btnrow"><a class="btn btn-pri">Mint</a><a class="btn btn-sec">Collect</a></div>
+        </div>
+      </div>
+      <div class="caption"><span><b>Warp</b> · iridescent on black</span><span>Instrument Serif / JetBrains</span></div>
+    </div>
+
+    <div class="unit">
+      <div class="card cash">
+        <div class="meta"><span class="pill" style="background:#00D632;color:#000">$lore</span></div>
+        <div class="inner">
+          <div>
+            <div class="lab">Cashtag · dark</div>
+            <h3 class="name">Balance</h3>
+            <div class="bal">$12,480</div>
+            <div class="delta">+$1,240 today</div>
+          </div>
+          <div class="btnrow"><a class="btn btn-pri">Pay</a><a class="btn btn-sec">Request</a></div>
+        </div>
+      </div>
+      <div class="caption"><span><b>Cashtag</b> · black + electric green</span><span>Unbounded</span></div>
+    </div>
+
+    <div class="unit">
+      <div class="card cashL">
+        <div class="meta"><span class="pill" style="background:#00D632;color:#000">$lore</span></div>
+        <div class="inner">
+          <div>
+            <div class="lab">Cashtag · light</div>
+            <h3 class="name">Balance</h3>
+            <div class="bal">$12,480</div>
+            <div class="delta">+$1,240 today</div>
+          </div>
+          <div class="btnrow"><a class="btn btn-pri">Pay</a><a class="btn btn-sec">Request</a></div>
+        </div>
+      </div>
+      <div class="caption"><span><b>Cashtag Light</b> · same energy, inverted</span><span>Unbounded</span></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ TIER 5: EXPRESSIVE ═══════════════════ -->
+  <div class="tier">
+    <span class="tag">Tier 05 · Expressive</span>
+    <h2>For the <em>risk-takers</em></h2>
+    <p class="tierSub">Full-send skins. These are the ones that make the Playground worth sharing. Brutalist, retro-pixel, CRT, holographic — not for every user but great signal.</p>
+  </div>
+
+  <div class="grid">
+    <div class="unit">
+      <div class="card neon">
+        <div class="meta"><span class="pill" style="background:rgba(232,255,92,.15);color:#E8FF5C;border:1px solid rgba(232,255,92,.4)">v0.4.2</span></div>
+        <div class="inner">
+          <div>
+            <div class="lab">Neon</div>
+            <h3 class="name">&gt; wallet.balance</h3>
+            <div class="bal">12480.22</div>
+            <div class="delta">// +1240.00 / 7d</div>
+          </div>
+          <div class="btnrow"><a class="btn btn-pri">./send</a><a class="btn btn-sec">./recv</a></div>
+        </div>
+      </div>
+      <div class="caption"><span><b>Neon</b> · CRT terminal</span><span>VT323 / JetBrains</span></div>
+    </div>
+
+    <div class="unit">
+      <div class="card kiosk">
+        <div class="meta"></div>
+        <div class="inner">
+          <div>
+            <div class="lab">Kiosk</div>
+            <h3 class="name">Issue 04 — Wallet</h3>
+            <div class="bal">$12,480</div>
+            <div class="delta">+$1,240 / WEEK 03</div>
+          </div>
+          <div class="btnrow"><a class="btn btn-pri">Buy now</a><a class="btn btn-sec">Subscribe</a></div>
+        </div>
+      </div>
+      <div class="caption"><span><b>Kiosk</b> · brutalist newsstand</span><span>Syne</span></div>
+    </div>
+
+    <div class="unit">
+      <div class="card tide">
+        <div class="blob"></div>
+        <div class="meta"><span class="pill" style="background:rgba(255,255,255,.15);color:#fff;backdrop-filter:blur(8px)">Flow</span></div>
+        <div class="inner">
+          <div>
+            <div class="lab">Tide</div>
+            <h3 class="name">Reserve</h3>
+            <div class="bal">$12,480</div>
+            <div class="delta">+$1,240 · high tide</div>
+          </div>
+          <div class="btnrow"><a class="btn btn-pri">Move</a><a class="btn btn-sec">Chart</a></div>
+        </div>
+      </div>
+      <div class="caption"><span><b>Tide</b> · ocean serif</span><span>Instrument Serif</span></div>
+    </div>
+
+    <div class="unit">
+      <div class="card pix">
+        <div class="meta"><span class="pill" style="background:#FF3D9A;color:#fff;font-family:'VT323',monospace;font-size:12px;letter-spacing:.1em;border-radius:0">QUEST</span></div>
+        <div class="inner">
+          <div>
+            <div class="lab">PixelDust</div>
+            <h3 class="name">LV 42 · WALLET</h3>
+            <div class="bal">12480 G</div>
+            <div class="delta">+1240 EXP / 7D</div>
+          </div>
+          <div class="btnrow"><a class="btn btn-pri">Send ♥</a><a class="btn btn-sec">Map</a></div>
+        </div>
+      </div>
+      <div class="caption"><span><b>PixelDust</b> · 8-bit quest</span><span>VT323</span></div>
+    </div>
+
+    <div class="unit">
+      <div class="card holo">
+        <div class="meta"><span class="pill" style="background:#2A1F3D;color:#fff">Holo</span></div>
+        <div class="inner">
+          <div>
+            <div class="lab">Iridescent</div>
+            <h3 class="name">Vault</h3>
+            <div class="bal">$12,480</div>
+            <div class="delta">+$1,240 · shiny day</div>
+          </div>
+          <div class="btnrow"><a class="btn btn-pri">Send</a><a class="btn btn-sec">Collect</a></div>
+        </div>
+      </div>
+      <div class="caption"><span><b>Iridescent</b> · holographic foil</span><span>Outfit</span></div>
+    </div>
+
+    <div class="unit">
+      <div class="card brut">
+        <div class="meta"></div>
+        <div class="inner">
+          <div>
+            <div class="lab">mono-brut</div>
+            <h3 class="name">wallet_01</h3>
+            <div class="bal">$12,480.22</div>
+            <div class="delta">+$1,240 / 7d</div>
+          </div>
+          <div class="btnrow"><a class="btn btn-pri">send</a><a class="btn btn-sec">receive</a></div>
+        </div>
+      </div>
+      <div class="caption"><span><b>Mono-Brut</b> · dashed margin paper</span><span>Major Mono / Plex Mono</span></div>
+    </div>
+
+    <div class="unit">
+      <div class="card dot">
+        <div class="meta"></div>
+        <div class="inner">
+          <div>
+            <div class="lab">Receipt — 04/17</div>
+            <h3 class="name">DAILY TOTAL</h3>
+            <div class="bal">$12,480</div>
+            <div class="delta">+$1,240.00 (11%)</div>
+          </div>
+          <div class="btnrow"><a class="btn btn-pri">Print</a><a class="btn btn-sec">Save</a></div>
+        </div>
+      </div>
+      <div class="caption"><span><b>DotMatrix</b> · receipt printer</span><span>Doto / Plex Mono</span></div>
+    </div>
+  </div>
+
+  <div class="footstrip">
+    <div><b style="color:var(--ink);font-weight:700">lore.theme.set(<span style="color:#4A7A3F">'cashtag'</span>)</b> — swap at runtime, no rebuild · 18 built-in skins · token-compatible</div>
+    <div class="swatches">
+      <span class="swatch" style="background:#F2EADB"></span>
+      <span class="swatch" style="background:#0E1410"></span>
+      <span class="swatch" style="background:linear-gradient(135deg,#F6E4B8,#EBDAB6)"></span>
+      <span class="swatch" style="background:radial-gradient(circle at 100% 0%,#2A3F2D,#0E1410)"></span>
+      <span class="swatch" style="background:#F7F5EF"></span>
+      <span class="swatch" style="background:#050608"></span>
+      <span class="swatch" style="background:#F6FBEF"></span>
+      <span class="swatch" style="background:linear-gradient(135deg,#FF2D87,#FFB545)"></span>
+      <span class="swatch" style="background:linear-gradient(135deg,#E5D4FF,#FFEDC4)"></span>
+      <span class="swatch" style="background:#F4E8D6"></span>
+      <span class="swatch" style="background:linear-gradient(180deg,#FFB99A,#C93F8F)"></span>
+      <span class="swatch" style="background:radial-gradient(circle at 30% 30%,#3A1F0A,#1A0F05)"></span>
+      <span class="swatch" style="background:#EEEAE0"></span>
+      <span class="swatch" style="background:#1A0F3A"></span>
+      <span class="swatch" style="background:conic-gradient(from 180deg,#00E5FF,#FF6BD6,#FFEC3D,#00E5FF)"></span>
+      <span class="swatch" style="background:#00D632"></span>
+      <span class="swatch" style="background:#080A0E"></span>
+      <span class="swatch" style="background:#fff;border:2px solid #000"></span>
+      <span class="swatch" style="background:linear-gradient(180deg,#0A2E4F,#114E7B)"></span>
+      <span class="swatch" style="background:#1a1035"></span>
+      <span class="swatch" style="background:linear-gradient(135deg,#FFB5D8,#B5D4FF,#FFF5B5)"></span>
+      <span class="swatch" style="background:#F5F4F1;border:1px dashed #111"></span>
+      <span class="swatch" style="background:#FFFBF0;border:1px solid #111"></span>
+    </div>
+  </div>
+
+</div>
+<script src="theme-switcher.js" defer></script>
+</body></html>

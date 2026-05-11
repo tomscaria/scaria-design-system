@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<link rel="stylesheet" href="theme-switcher.css"/>
+<style>
+  body{margin:0;background:var(--bg);padding:60px 20px 24px;font-family:var(--font-sans);color:var(--fg);min-height:100vh}
+  .tier{margin-bottom:20px}
+  h4{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--fg-3);margin:0 0 10px;font-family:var(--font-mono);font-weight:600}
+  .row{display:grid;grid-template-columns:repeat(7,1fr);gap:10px}
+  .sw{border-radius:var(--r-md);aspect-ratio:1;border:1px solid var(--line)}
+  .lab{font-size:10px;color:var(--fg-3);margin-top:4px;font-family:var(--font-mono);text-align:center}
+</style></head><body data-theme="lore-light">
+<div class="tier">
+  <h4>Theme brand tokens</h4>
+  <div class="row">
+    <div><div class="sw" style="background:var(--brand)"></div><div class="lab">brand</div></div>
+    <div><div class="sw" style="background:var(--brand-hover)"></div><div class="lab">brand-hover</div></div>
+    <div><div class="sw" style="background:var(--accent)"></div><div class="lab">accent</div></div>
+    <div><div class="sw" style="background:var(--accent-deep)"></div><div class="lab">accent-deep</div></div>
+    <div><div class="sw" style="background:var(--accent-soft)"></div><div class="lab">accent-soft</div></div>
+    <div><div class="sw" style="background:var(--bg-inverted,var(--fg))"></div><div class="lab">inverted</div></div>
+    <div><div class="sw" style="background:var(--accent-fg)"></div><div class="lab">accent-fg</div></div>
+  </div>
+</div>
+<div class="tier">
+  <h4>Lore house palette (always available)</h4>
+  <div class="row">
+    <div><div class="sw" style="background:var(--p-parchment)"></div><div class="lab">parchment</div></div>
+    <div><div class="sw" style="background:var(--p-chartreuse)"></div><div class="lab">chartreuse</div></div>
+    <div><div class="sw" style="background:var(--p-chartreuse-deep)"></div><div class="lab">chartreuse-deep</div></div>
+    <div><div class="sw" style="background:var(--p-graphite)"></div><div class="lab">graphite</div></div>
+    <div><div class="sw" style="background:var(--p-moss)"></div><div class="lab">moss</div></div>
+    <div><div class="sw" style="background:var(--p-slate)"></div><div class="lab">slate</div></div>
+    <div><div class="sw" style="background:var(--p-rune)"></div><div class="lab">rune</div></div>
+  </div>
+</div>
+<script src="theme-switcher.js" defer></script>
+</body></html>

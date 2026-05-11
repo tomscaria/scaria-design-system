@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>Container &amp; Layout primitives · Lore</title>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<link rel="stylesheet" href="theme-switcher.css"/>
+<link rel="stylesheet" href="_primitives.css"/>
+<style>
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font-sans);min-height:100vh;padding:72px 0 80px}
+h1{font-family:var(--font-display,var(--font-sans));font-size:40px;letter-spacing:-.02em;margin:0 0 8px;font-weight:500}
+h2{font-family:var(--font-sans);font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-3);margin:40px 0 14px}
+h3{font-family:var(--font-sans);font-size:16px;font-weight:600;margin:0 0 6px;letter-spacing:-.01em}
+p{margin:0;color:var(--fg-2);font-size:14px;line-height:1.55;max-width:64ch}
+.lede{color:var(--fg-2);font-size:15px;line-height:1.6;max-width:72ch;margin-bottom:8px}
+code{font-family:var(--font-mono);font-size:12px;background:var(--bg-3);padding:1px 6px;border-radius:4px;color:var(--fg)}
+pre{font-family:var(--font-mono);font-size:11.5px;line-height:1.6;background:var(--bg-3);border:1px solid var(--line-2);border-radius:8px;padding:12px 14px;overflow-x:auto;color:var(--fg-2);margin:8px 0 0}
+.eyebrow{font-family:var(--font-mono);font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--fg-3);margin-bottom:4px}
+.tag{display:inline-flex;align-items:center;gap:4px;padding:3px 7px;background:var(--bg-3);border:1px solid var(--line);border-radius:4px;font-family:var(--font-mono);font-size:10px;color:var(--fg-2);font-weight:500}
+.demo{position:relative;background:var(--bg-3);border:1px dashed var(--line);border-radius:8px;padding:14px;min-height:60px;overflow:hidden}
+.demo-label{position:absolute;top:6px;right:8px;font-family:var(--font-mono);font-size:9px;color:var(--fg-3);text-transform:uppercase;letter-spacing:.1em}
+.vis{background:color-mix(in oklab,var(--brand) 8%,transparent);border:1px dashed color-mix(in oklab,var(--brand) 50%,transparent);border-radius:4px;padding:6px 10px;font-family:var(--font-mono);font-size:11px;color:var(--fg-2)}
+.ruler{display:grid;grid-template-columns:repeat(10,1fr);gap:8px;margin-top:8px}
+.ruler .rtk{background:var(--bg-3);border:1px solid var(--line-2);border-radius:6px;padding:10px 8px;text-align:center}
+.ruler .rtk .size{height:20px;background:color-mix(in oklab,var(--brand) 20%,transparent);border-radius:3px;margin-bottom:6px}
+.ruler .rtk .nm{font-family:var(--font-mono);font-size:10px;color:var(--fg-2);font-weight:600}
+.ruler .rtk .px{font-family:var(--font-mono);font-size:9px;color:var(--fg-3)}
+</style></head>
+<body>
+
+<div class="center" data-max="xl">
+  <div class="stack" data-gap="lg">
+
+    <div class="stack" data-gap="xs">
+      <div class="eyebrow">Primitives · structural</div>
+      <h1>Container &amp; Layout</h1>
+      <p class="lede">
+        Two atoms that wrap every other primitive. <b>Surface</b> owns visuals (background, border, padding, radius). <b>Layout</b> primitives (Stack / Row / Grid / Split / Center) own geometry (gap, direction, alignment). They never overlap in theory — but Surface has an <b>escape hatch</b> (<code>data-layout</code>) for the most common pattern: a bordered box that also arranges its children.
+      </p>
+    </div>
+
+    <!-- spacing ruler -->
+    <div>
+      <h2>Spacing scale</h2>
+      <p>One 4px-based ruler across the system. Both padding and gap sample from it.</p>
+      <div class="ruler">
+        <div class="rtk"><div class="size" style="height:4px"></div><div class="nm">hair</div><div class="px">4</div></div>
+        <div class="rtk"><div class="size" style="height:8px"></div><div class="nm">xs</div><div class="px">8</div></div>
+        <div class="rtk"><div class="size" style="height:12px"></div><div class="nm">sm</div><div class="px">12</div></div>
+        <div class="rtk"><div class="size" style="height:16px"></div><div class="nm">md</div><div class="px">16</div></div>
+        <div class="rtk"><div class="size" style="height:20px"></div><div class="nm">md-lg</div><div class="px">20</div></div>
+        <div class="rtk"><div class="size" style="height:24px"></div><div class="nm">lg</div><div class="px">24</div></div>
+        <div class="rtk"><div class="size" style="height:32px"></div><div class="nm">xl</div><div class="px">32</div></div>
+        <div class="rtk"><div class="size" style="height:40px"></div><div class="nm">2xl</div><div class="px">40</div></div>
+        <div class="rtk"><div class="size" style="height:56px"></div><div class="nm">3xl</div><div class="px">56</div></div>
+        <div class="rtk"><div class="size" style="height:80px"></div><div class="nm">4xl</div><div class="px">80</div></div>
+      </div>
+    </div>
+
+    <!-- surface -->
+    <div>
+      <h2>Surface · the container primitive</h2>
+      <p>Three orthogonal knobs: <code>data-elev</code> · <code>data-pad</code> · <code>data-radius</code>. Every card, panel, button group, modal, and list item is a surface underneath.</p>
+
+      <h3 style="margin-top:24px">Elevations</h3>
+      <div class="grid" data-cols="3" data-gap="md">
+        <div class="stack" data-gap="xs"><div class="surface" data-elev="surface" data-pad="md"><div class="vis">surface · page bg</div></div><code>data-elev="surface"</code></div>
+        <div class="stack" data-gap="xs"><div class="surface" data-elev="raised" data-pad="md"><div class="vis">raised · bg-2 + line</div></div><code>data-elev="raised"</code></div>
+        <div class="stack" data-gap="xs"><div class="surface" data-elev="overlay" data-pad="md"><div class="vis">overlay · bg-3 + shadow</div></div><code>data-elev="overlay"</code></div>
+        <div class="stack" data-gap="xs"><div class="surface" data-elev="sunken" data-pad="md"><div class="vis">sunken · inputs / wells</div></div><code>data-elev="sunken"</code></div>
+        <div class="stack" data-gap="xs"><div class="surface" data-elev="outlined" data-pad="md"><div class="vis">outlined · transparent</div></div><code>data-elev="outlined"</code></div>
+        <div class="stack" data-gap="xs"><div class="surface" data-elev="brand" data-pad="md"><div class="vis" style="background:color-mix(in oklab,#fff 18%,transparent);border-color:color-mix(in oklab,#fff 30%,transparent);color:inherit">brand · action surface</div></div><code>data-elev="brand"</code></div>
+      </div>
+
+      <h3 style="margin-top:32px">Padding scale</h3>
+      <div class="stack" data-gap="sm">
+        <div class="surface" data-elev="raised" data-pad="xs"><div class="vis">pad=xs · 8px</div></div>
+        <div class="surface" data-elev="raised" data-pad="sm"><div class="vis">pad=sm · 12px</div></div>
+        <div class="surface" data-elev="raised" data-pad="md"><div class="vis">pad=md · 16px</div></div>
+        <div class="surface" data-elev="raised" data-pad="lg"><div class="vis">pad=lg · 24px</div></div>
+        <div class="surface" data-elev="raised" data-pad="xl"><div class="vis">pad=xl · 32px</div></div>
+      </div>
+
+      <h3 style="margin-top:32px">Nesting contract</h3>
+      <p>A surface inside another, without its own <code>data-pad</code>, auto-compacts one step. Prevents compounding whitespace.</p>
+      <div class="surface" data-elev="raised" data-pad="lg">
+        <div class="stack" data-gap="sm">
+          <code>outer · pad=lg (24)</code>
+          <div class="surface" data-elev="sunken"><div class="vis">inner · auto-compacts to sm (12)</div></div>
+          <div class="surface" data-elev="sunken" data-pad="lg"><div class="vis">inner · pad=lg explicit → stays 24</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ESCAPE HATCH -->
+    <div>
+      <h2>Surface · escape hatch</h2>
+      <p>The 80% case is <i>"a bordered box that stacks its kids with a gap"</i>. Rather than force two elements, Surface accepts <code>data-layout="stack|row|grid|split"</code> + <code>data-gap</code>. The surface becomes a layout parent <i>in addition to</i> its visuals. No separate wrapper needed.</p>
+
+      <div class="grid" data-cols="2" data-gap="md" style="margin-top:12px">
+        <div class="stack" data-gap="xs">
+          <div class="tag">two elements (strict)</div>
+          <pre>&lt;div class="surface" data-elev="raised" data-pad="md"&gt;
+  &lt;div class="stack" data-gap="sm"&gt;
+    &lt;div&gt;A&lt;/div&gt;&lt;div&gt;B&lt;/div&gt;&lt;div&gt;C&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+        </div>
+        <div class="stack" data-gap="xs">
+          <div class="tag">one element (fused)</div>
+          <pre>&lt;div class="surface" data-elev="raised"
+     data-pad="md" data-layout="stack" data-gap="sm"&gt;
+  &lt;div&gt;A&lt;/div&gt;&lt;div&gt;B&lt;/div&gt;&lt;div&gt;C&lt;/div&gt;
+&lt;/div&gt;</pre>
+        </div>
+      </div>
+
+      <h3 style="margin-top:24px">All four fused variants</h3>
+      <div class="grid" data-cols="2" data-gap="md">
+        <div class="surface" data-elev="raised" data-pad="md" data-layout="stack" data-gap="sm">
+          <div class="vis">layout=stack</div><div class="vis">gap=sm</div><div class="vis">three kids</div>
+        </div>
+        <div class="surface" data-elev="raised" data-pad="md" data-layout="row" data-gap="sm" data-justify="between">
+          <div class="vis">layout=row</div><div class="vis">justify=between</div><div class="vis">chip</div>
+        </div>
+        <div class="surface" data-elev="raised" data-pad="md" data-layout="grid" data-gap="sm" style="--cols:3">
+          <div class="vis">1</div><div class="vis">2</div><div class="vis">3</div><div class="vis">4</div><div class="vis">5</div><div class="vis">6</div>
+        </div>
+        <div class="surface" data-elev="raised" data-pad="md" data-layout="split">
+          <div class="vis">label · fluid</div><div class="vis">value</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- layout -->
+    <div>
+      <h2>Layout primitives</h2>
+      <p>Pure geometry, no visuals. When you only need to arrange, not to draw, use these standalone.</p>
+
+      <h3 style="margin-top:24px">Stack · Row · Grid · Split · Center · Inline</h3>
+      <pre>&lt;div class="stack" data-gap="md"&gt;…&lt;/div&gt;
+&lt;div class="row"   data-gap="sm" data-justify="between"&gt;…&lt;/div&gt;
+&lt;div class="grid"  data-cols="3" data-gap="md"&gt;…&lt;/div&gt;
+&lt;div class="split"&gt;&lt;span&gt;Label&lt;/span&gt;&lt;span&gt;Value&lt;/span&gt;&lt;/div&gt;
+&lt;div class="center" data-max="xl"&gt;…&lt;/div&gt;</pre>
+
+      <div class="demo" style="margin-top:12px">
+        <span class="demo-label">row · justify=between</span>
+        <div class="row" data-justify="between" data-gap="sm">
+          <div class="vis">A</div><div class="vis">B</div><div class="vis">C</div><div class="vis">D</div>
+        </div>
+      </div>
+      <div class="demo" style="margin-top:8px">
+        <span class="demo-label">grid · cols=4</span>
+        <div class="grid" data-cols="4" data-gap="md">
+          <div class="vis">1</div><div class="vis">2</div><div class="vis">3</div><div class="vis">4</div>
+        </div>
+      </div>
+      <div class="demo" style="margin-top:8px">
+        <span class="demo-label">split · fluid left · fixed right</span>
+        <div class="split"><div class="vis" style="width:100%">fluid</div><div class="vis">fixed</div></div>
+      </div>
+    </div>
+
+    <!-- composition -->
+    <div>
+      <h2>Composition · the three forms</h2>
+      <p>Same visual, three authoring styles — pick the one with the least noise for your case.</p>
+
+      <div class="grid" data-cols="3" data-gap="md">
+
+        <div class="stack" data-gap="xs">
+          <div class="tag">strict (Surface + Stack)</div>
+          <div class="surface" data-elev="raised" data-pad="lg">
+            <div class="stack" data-gap="md">
+              <div class="eyebrow">Total</div>
+              <div class="vis" style="font-size:24px">$42,840</div>
+              <div class="vis" style="font-family:var(--font-mono);font-size:11px">+11.1% · 30d</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stack" data-gap="xs">
+          <div class="tag">fused (Surface as Stack)</div>
+          <div class="surface" data-elev="raised" data-pad="lg" data-layout="stack" data-gap="md">
+            <div class="eyebrow">Total</div>
+            <div class="vis" style="font-size:24px">$42,840</div>
+            <div class="vis" style="font-family:var(--font-mono);font-size:11px">+11.1% · 30d</div>
+          </div>
+        </div>
+
+        <div class="stack" data-gap="xs">
+          <div class="tag">nested composition</div>
+          <div class="surface" data-elev="raised" data-pad="sm" data-layout="stack" data-gap="hair">
+            <div class="surface" data-elev="surface" data-pad="sm"><div class="vis">list row</div></div>
+            <div class="surface" data-elev="surface" data-pad="sm"><div class="vis">list row</div></div>
+            <div class="surface" data-elev="surface" data-pad="sm"><div class="vis">list row</div></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- rules -->
+    <div>
+      <h2>Rules</h2>
+      <div class="grid" data-cols="2" data-gap="md">
+        <div class="surface" data-elev="raised" data-pad="md" data-layout="stack" data-gap="sm">
+          <div style="color:var(--success);font-weight:600;font-size:13px">✓ Do</div>
+          <ul style="margin:0;padding-left:18px;color:var(--fg-2);font-size:13px;line-height:1.7">
+            <li>Fuse via <code>data-layout</code> when a surface's only job is to hold a gap'd list.</li>
+            <li>Use a separate layout primitive when the inner structure has its own logic (tabs, split headers).</li>
+            <li>Pair <code>pad</code> and <code>radius</code> from the same tier.</li>
+            <li>Let nesting auto-compact — don't set inner pad unless you want a specific exception.</li>
+          </ul>
+        </div>
+        <div class="surface" data-elev="raised" data-pad="md" data-layout="stack" data-gap="sm">
+          <div style="color:var(--danger);font-weight:600;font-size:13px">✕ Don't</div>
+          <ul style="margin:0;padding-left:18px;color:var(--fg-2);font-size:13px;line-height:1.7">
+            <li>Stack three elevations visually — two layers max.</li>
+            <li>Use raw flex/grid inline styles. Always sample the scale via the primitive.</li>
+            <li>Mix two layout modes on one element (no <code>data-layout="stack"</code> AND a child <code>.row</code> wrapping everything).</li>
+            <li>Apply <code>data-radius="xl"</code> to <code>pad="xs"</code> containers.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="theme-switcher.js" defer></script>
+</body></html>

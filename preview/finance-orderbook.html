@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>Finance · Order Book · Lore</title>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<link rel="stylesheet" href="theme-switcher.css"/>
+<link rel="stylesheet" href="_preview-base.css"/>
+<link rel="stylesheet" href="_primitives.css"/>
+<style>
+  .ob{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line-2)}
+  .ob .col{background:var(--bg-2);padding:10px 12px}
+  .ob .ohdr{display:grid;grid-template-columns:1fr 1fr 1fr;font-family:var(--font-mono);font-size:10px;color:var(--fg-3);text-transform:uppercase;letter-spacing:.08em;padding-bottom:6px;border-bottom:1px solid var(--line-2)}
+  .ob .lvl{position:relative;display:grid;grid-template-columns:1fr 1fr 1fr;font-family:var(--font-mono);font-size:11px;padding:3px 0;font-variant-numeric:tabular-nums slashed-zero;cursor:default}
+  .ob .lvl:hover{background:color-mix(in oklab,var(--fg) 4%,transparent)}
+  .ob .lvl .bar{position:absolute;top:0;bottom:0;right:0;background:color-mix(in oklab,var(--success) 16%,transparent);z-index:0;border-radius:2px}
+  .ob .col.ask .lvl .bar{background:color-mix(in oklab,var(--danger) 14%,transparent);left:0;right:auto}
+  .ob .lvl > *{position:relative;z-index:1}
+  .ob .p{color:var(--success);font-weight:600}
+  .ob .col.ask .p{color:var(--danger)}
+  .ob .mid{grid-column:span 2;text-align:center;padding:10px;background:var(--bg-3);font-family:var(--font-mono);font-size:13px;border-top:1px solid var(--line-2);border-bottom:1px solid var(--line-2)}
+</style></head><body data-theme="lore-light">
+
+<section>
+  <h4>Order book · ETH/USDC</h4>
+  <div class="card flush">
+    <div class="ob">
+      <div class="col ask">
+        <div class="ohdr"><span>Price</span><span>Size</span><span>Total</span></div>
+        <div class="lvl"><span class="bar" style="width:22%"></span><span class="p">3,132.40</span><span>2.14</span><span>6,703</span></div>
+        <div class="lvl"><span class="bar" style="width:48%"></span><span class="p">3,131.80</span><span>5.08</span><span>15,909</span></div>
+        <div class="lvl"><span class="bar" style="width:32%"></span><span class="p">3,131.20</span><span>3.22</span><span>10,082</span></div>
+        <div class="lvl"><span class="bar" style="width:66%"></span><span class="p">3,130.40</span><span>7.10</span><span>22,225</span></div>
+        <div class="lvl"><span class="bar" style="width:40%"></span><span class="p">3,129.80</span><span>4.22</span><span>13,208</span></div>
+      </div>
+      <div class="mid">Spread <b class="mono">0.60</b> · 3,129.20</div>
+      <div class="col">
+        <div class="ohdr"><span>Price</span><span>Size</span><span>Total</span></div>
+        <div class="lvl"><span class="bar" style="width:58%"></span><span class="p">3,128.60</span><span>6.24</span><span>19,522</span></div>
+        <div class="lvl"><span class="bar" style="width:38%"></span><span class="p">3,128.00</span><span>3.88</span><span>12,136</span></div>
+        <div class="lvl"><span class="bar" style="width:72%"></span><span class="p">3,127.40</span><span>7.92</span><span>24,769</span></div>
+        <div class="lvl"><span class="bar" style="width:44%"></span><span class="p">3,126.80</span><span>4.60</span><span>14,383</span></div>
+        <div class="lvl"><span class="bar" style="width:20%"></span><span class="p">3,126.20</span><span>1.94</span><span>6,065</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="theme-switcher.js" defer></script>
+</body></html>

@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>Theme contrast audit · Lore</title>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  body{margin:0;background:#0b0c0a;color:#eee;font-family:ui-monospace,'Aeonik Mono',monospace;font-size:11px;padding:20px;line-height:1.4}
+  h1{font-family:'Aeonik','Inter',sans-serif;font-size:20px;margin:0 0 4px;color:#D4F24B}
+  .lede{color:#888;font-size:12px;margin-bottom:18px;max-width:720px;font-family:'Aeonik',sans-serif;line-height:1.5}
+  .legend{display:inline-flex;gap:10px;margin-bottom:16px;background:#1a1a1a;padding:6px 10px;border-radius:6px;font-size:10px;align-items:center}
+  .legend b{color:#fff;font-weight:500}
+  .sw{width:10px;height:10px;border-radius:2px;display:inline-block;vertical-align:middle;margin-right:4px}
+  .ok{background:#34d17a}
+  .warn{background:#ffb340}
+  .fail{background:#ff4466}
+  .n{color:#666}
+
+  .theme-block{background:#141412;border:1px solid #222;border-radius:10px;padding:14px 16px 16px;margin-bottom:14px}
+  .theme-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid #222}
+  .theme-name{font-family:'Aeonik','Inter',sans-serif;font-size:15px;font-weight:500;color:#eee}
+  .theme-meta{font-size:10px;color:#888}
+
+  /* the probe frame — rendered in the actual theme so we can getComputedStyle */
+  .probe{position:absolute;visibility:hidden;pointer-events:none;width:0;height:0;overflow:hidden}
+
+  .pairs{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:6px}
+  .pair{display:grid;grid-template-columns:14px 1fr auto auto;align-items:center;gap:8px;padding:6px 8px;background:#0e0e0c;border:1px solid #1e1e1e;border-radius:6px;font-size:10px}
+  .pair .label{color:#aaa;font-family:ui-monospace,monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+  .pair .ratio{font-family:ui-monospace,monospace;font-weight:600;font-size:10px;color:#ddd;text-align:right}
+  .pair .tag{font-size:8.5px;padding:1px 5px;border-radius:3px;font-weight:600;letter-spacing:.05em}
+  .pair.ok .tag{background:rgba(52,209,122,.15);color:#34d17a}
+  .pair.warn .tag{background:rgba(255,179,64,.18);color:#ffb340}
+  .pair.fail .tag{background:rgba(255,68,102,.2);color:#ff4466}
+  .pair.ok .dot{background:#34d17a}
+  .pair.warn .dot{background:#ffb340}
+  .pair.fail .dot{background:#ff4466}
+  .dot{width:8px;height:8px;border-radius:999px}
+
+  /* live sample so we see the actual rendered text */
+  .sample{grid-column:1/-1;margin-top:4px;padding:6px 10px;border-radius:4px;font-family:'Aeonik','Inter',sans-serif;font-size:12px;font-weight:500;border:1px solid;display:flex;justify-content:space-between;align-items:center}
+  .sample .sample-t{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .sample .sample-r{font-size:9px;opacity:.6;font-family:ui-monospace,monospace}
+
+  .summary{background:#1a1a1a;border:1px solid #333;border-radius:8px;padding:12px 14px;margin-bottom:18px;font-size:11px}
+  .summary h3{font-family:'Aeonik',sans-serif;font-size:13px;margin:0 0 8px;color:#eee;font-weight:500}
+  .summary .row{display:flex;gap:20px}
+  .summary .stat{display:flex;flex-direction:column}
+  .summary .stat b{font-family:ui-monospace,monospace;font-size:20px;font-weight:500}
+  .summary .stat .lbl{font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:#888;margin-top:2px}
+
+  .filter{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
+  .filter button{background:#1a1a1a;border:1px solid #333;color:#aaa;padding:5px 10px;border-radius:4px;font-family:ui-monospace,monospace;font-size:10px;cursor:pointer}
+  .filter button.on{background:#D4F24B;color:#000;border-color:#D4F24B}
+
+  body.hide-ok .pair.ok{display:none}
+  body.hide-warn .pair.warn{display:none}
+  body.only-fail .pair:not(.fail){display:none}
+</style></head>
+<body>
+
+<h1>Theme contrast audit</h1>
+<p class="lede">
+  Scans every theme's semantic tokens for text/background collisions.
+  Each row shows a foreground paired with a background it's likely to sit on, the measured WCAG contrast ratio, and a live rendered sample. Aim for <b>4.5+ for body text, 3.0+ for large text and non-text UI</b>. Rows mark <b>FAIL</b> below 3.0, <b>WARN</b> 3.0–4.5, <b>OK</b> 4.5+.
+</p>
+
+<div class="summary" id="summary">
+  <h3>Summary</h3>
+  <div class="row">
+    <div class="stat"><b id="stOk">—</b><span class="lbl">Ok (≥4.5)</span></div>
+    <div class="stat"><b id="stWarn" style="color:#ffb340">—</b><span class="lbl">Warn (3–4.5)</span></div>
+    <div class="stat"><b id="stFail" style="color:#ff4466">—</b><span class="lbl">Fail (&lt;3)</span></div>
+    <div class="stat"><b id="stTotal">—</b><span class="lbl">Total checks</span></div>
+    <div class="stat"><b id="stThemes">—</b><span class="lbl">Themes</span></div>
+  </div>
+</div>
+
+<div class="filter">
+  <button data-f="all" class="on">All</button>
+  <button data-f="hide-ok">Hide OK</button>
+  <button data-f="hide-warn">Hide OK + WARN</button>
+  <button data-f="only-fail">Fails only</button>
+</div>
+
+<div class="legend">
+  <span><span class="sw ok"></span><b>OK</b> · ≥ 4.5 : 1</span>
+  <span><span class="sw warn"></span><b>WARN</b> · 3.0 – 4.5</span>
+  <span><span class="sw fail"></span><b>FAIL</b> · &lt; 3.0</span>
+</div>
+
+<div id="out"></div>
+
+<!-- off-screen probe: setAttribute theme, read CSS vars -->
+<div class="probe" id="probe"></div>
+
+<script>
+const THEMES = [
+  'lore-light','lore-dark',
+  'nubank-light','nubank-dark',
+  'revolut-light','revolut-dark',
+  'robinhood-light','robinhood-dark',
+  'coinbase-light','coinbase-dark',
+  'champagne','noir','garden','popsicle','mallow','bazaar',
+  'ember','confetti','warp','cashtag','neon','kiosk',
+  'tide','pixeldust','botanica','holo','monobrut','dotmatrix','sunset'
+];
+
+// The pairs we actually care about — foreground × expected background.
+// Keys are CSS var names; we resolve both sides per theme.
+const PAIRS = [
+  // Primary text on surfaces
+  ['--fg','--bg','Body text on page'],
+  ['--fg','--bg-2','Body text on card'],
+  ['--fg','--bg-3','Body text on raised'],
+  ['--fg-2','--bg','Secondary on page'],
+  ['--fg-2','--bg-2','Secondary on card'],
+  ['--fg-3','--bg','Tertiary on page'],
+  ['--fg-3','--bg-2','Tertiary on card'],
+  // Brand + accent
+  ['--brand','--bg','Brand text on page'],
+  ['--brand','--bg-2','Brand text on card'],
+  ['--brand-fg','--brand','Button label on brand'],
+  ['--accent','--bg','Accent on page'],
+  ['--accent','--bg-2','Accent on card'],
+  ['--accent-fg','--accent','Label on accent'],
+  // Semantic
+  ['--success','--bg','Success on page'],
+  ['--success','--bg-2','Success on card'],
+  ['--danger','--bg','Danger on page'],
+  ['--danger','--bg-2','Danger on card'],
+  ['--warning','--bg','Warning on page'],
+  ['--warning','--bg-2','Warning on card'],
+  ['--info','--bg','Info on page'],
+  ['--info','--bg-2','Info on card'],
+  // Lines visible against bg? (checked separately — borders don't need 4.5 but should reach 1.4+)
+  ['--line','--bg','Line vs page (border, 1.4+ ok)',true],
+  ['--line-2','--bg-2','Line vs card (border, 1.4+ ok)',true],
+];
+
+// Parse a CSS color of any form into {r,g,b} 0-1
+function parseColor(str){
+  // use a throwaway element
+  const d=document.createElement('div');
+  d.style.color=str;
+  document.body.appendChild(d);
+  const c=getComputedStyle(d).color;
+  document.body.removeChild(d);
+  const m=c.match(/rgba?\(([^)]+)\)/);
+  if(!m) return null;
+  const [r,g,b,a=1]=m[1].split(',').map(x=>parseFloat(x));
+  return {r:r/255,g:g/255,b:b/255,a:parseFloat(a)};
+}
+function lin(c){return c<=0.03928?c/12.92:Math.pow((c+0.055)/1.055,2.4);}
+function lum(rgb){if(!rgb) return 0;return 0.2126*lin(rgb.r)+0.7152*lin(rgb.g)+0.0722*lin(rgb.b);}
+// alpha-over-bg composite (when fg has alpha)
+function composite(fg,bg){
+  const a=fg.a;
+  return {r:fg.r*a+bg.r*(1-a),g:fg.g*a+bg.g*(1-a),b:fg.b*a+bg.b*(1-a),a:1};
+}
+function ratio(fgRaw,bgRaw){
+  if(!fgRaw||!bgRaw) return null;
+  const bg={...bgRaw,a:1};
+  const fg=fgRaw.a<1?composite(fgRaw,bg):fgRaw;
+  const L1=lum(fg), L2=lum(bg);
+  const [hi,lo]=L1>L2?[L1,L2]:[L2,L1];
+  return (hi+0.05)/(lo+0.05);
+}
+
+function resolveVar(host,name){
+  const v=getComputedStyle(host).getPropertyValue(name).trim();
+  if(!v) return null;
+  return parseColor(v);
+}
+
+const out=document.getElementById('out');
+const probe=document.getElementById('probe');
+let totOk=0,totWarn=0,totFail=0;
+
+// pretty theme name
+function pretty(t){
+  return t.split('-').map(s=>s[0].toUpperCase()+s.slice(1)).join(' ');
+}
+
+THEMES.forEach(theme=>{
+  // Make a probe with this theme applied
+  const host=document.createElement('div');
+  host.setAttribute('data-theme',theme);
+  probe.appendChild(host);
+
+  let ok=0,warn=0,fail=0;
+  const block=document.createElement('div');
+  block.className='theme-block';
+  block.innerHTML=`<div class="theme-head"><div class="theme-name">${pretty(theme)}</div><div class="theme-meta" data-counts></div></div><div class="pairs"></div>`;
+  const pairsEl=block.querySelector('.pairs');
+  const metaEl=block.querySelector('[data-counts]');
+
+  PAIRS.forEach(([fgV,bgV,label,isBorder])=>{
+    const fg=resolveVar(host,fgV);
+    const bg=resolveVar(host,bgV);
+    const r=ratio(fg,bg);
+    if(r==null) return;
+    // thresholds: borders need only 1.4, UI text 3.0 / 4.5
+    let cls='fail', tag='FAIL';
+    if(isBorder){
+      if(r>=1.4){cls='ok';tag='OK';}
+      else if(r>=1.2){cls='warn';tag='WARN';}
+    } else {
+      if(r>=4.5){cls='ok';tag='OK';}
+      else if(r>=3.0){cls='warn';tag='WARN';}
+    }
+    if(cls==='ok') ok++; else if(cls==='warn') warn++; else fail++;
+
+    const fgC=`rgba(${[fg.r,fg.g,fg.b].map(x=>Math.round(x*255)).join(',')},${fg.a})`;
+    const bgC=`rgb(${[bg.r,bg.g,bg.b].map(x=>Math.round(x*255)).join(',')})`;
+
+    const row=document.createElement('div');
+    row.className='pair '+cls;
+    row.innerHTML=`
+      <span class="dot"></span>
+      <span class="label">${fgV} on ${bgV} · <span class="n">${label}</span></span>
+      <span class="ratio">${r.toFixed(2)}:1</span>
+      <span class="tag">${tag}</span>
+      <span class="sample" style="background:${bgC};color:${fgC};border-color:${bgC}">
+        <span class="sample-t">Aa — The quick brown fox jumps</span>
+        <span class="sample-r">${fgV} · ${bgV}</span>
+      </span>`;
+    pairsEl.appendChild(row);
+  });
+
+  metaEl.innerHTML=`
+    <span style="color:#34d17a">${ok} ok</span>
+    <span style="color:#ffb340;margin-left:8px">${warn} warn</span>
+    <span style="color:#ff4466;margin-left:8px">${fail} fail</span>`;
+
+  out.appendChild(block);
+  totOk+=ok; totWarn+=warn; totFail+=fail;
+});
+
+document.getElementById('stOk').textContent=totOk;
+document.getElementById('stWarn').textContent=totWarn;
+document.getElementById('stFail').textContent=totFail;
+document.getElementById('stTotal').textContent=totOk+totWarn+totFail;
+document.getElementById('stThemes').textContent=THEMES.length;
+
+// filter buttons
+document.querySelectorAll('.filter button').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('.filter button').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on');
+    document.body.classList.remove('hide-ok','hide-warn','only-fail');
+    const f=b.dataset.f;
+    if(f==='hide-ok') document.body.classList.add('hide-ok');
+    else if(f==='hide-warn'){document.body.classList.add('hide-ok');document.body.classList.add('hide-warn');}
+    else if(f==='only-fail') document.body.classList.add('only-fail');
+  });
+});
+</script>
+</body></html>

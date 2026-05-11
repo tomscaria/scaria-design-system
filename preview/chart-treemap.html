@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>Chart · Treemap · Lore</title>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<link rel="stylesheet" href="theme-switcher.css"/>
+<link rel="stylesheet" href="_preview-base.css"/>
+<style>
+  .tm{display:grid;gap:3px;width:100%;aspect-ratio:2/1;grid-template-columns:repeat(10,1fr);grid-template-rows:repeat(5,1fr);position:relative}
+  .tm .t{border-radius:4px;padding:8px;display:flex;flex-direction:column;justify-content:space-between;font-family:var(--font-mono);font-size:10px;overflow:hidden;min-width:0;cursor:pointer;position:relative;transition:transform .14s ease, filter .14s ease, z-index 0s .14s}
+  .tm .t b{font-family:var(--font-sans);font-weight:600;font-size:13px}
+  .tm .t:hover{transform:scale(1.03);filter:brightness(1.08) saturate(1.1);z-index:2;transition:transform .14s ease, filter .14s ease}
+  .tm-u{background:#4EAE4E;color:#0a1a0a}
+  .tm-d{background:#E14B4B;color:#fff}
+  .tm-f{background:var(--fg-3);color:var(--bg-2);opacity:.55}
+  .tm .t:hover.tm-f{opacity:.85}
+</style></head><body data-theme="lore-light">
+
+<section>
+  <h4>Treemap · portfolio · hover a tile</h4>
+  <div class="card pad-lg">
+    <div class="tm" id="tm">
+      <div class="t tm-u" style="grid-column:span 6;grid-row:span 5" data-tip="ETH · 28% · +4.2% 24h · $12,003"><div>ETH · 28%</div><b>+4.2%</b></div>
+      <div class="t tm-u" style="grid-column:span 2;grid-row:span 3" data-tip="aUSDC · 18% · +0.1% 24h · $7,711">aUSDC · 18%<b>+0.1%</b></div>
+      <div class="t tm-d" style="grid-column:span 2;grid-row:span 3" data-tip="BTC · 14% · −1.1% 24h · $5,998">BTC · 14%<b>−1.1%</b></div>
+      <div class="t tm-u" style="grid-column:span 2;grid-row:span 2" data-tip="SOL · 9% · +6.1% 24h · $3,855">SOL · 9%<b>+6.1%</b></div>
+      <div class="t tm-d" style="grid-column:span 2;grid-row:span 2" data-tip="LINK · 7% · −2.8% 24h · $2,998">LINK · 7%<b>−2.8%</b></div>
+      <div class="t tm-u" style="grid-column:span 2;grid-row:span 2" data-tip="UNI · 6% · +0.8% 24h · $2,570">UNI · 6%<b>+0.8%</b></div>
+      <div class="t tm-u" style="grid-column:span 2;grid-row:span 2" data-tip="PEPE · 5% · +12% 24h · $2,142">PEPE · 5%<b>+12%</b></div>
+      <div class="t tm-f" style="grid-column:span 2;grid-row:span 2" data-tip="AAVE · 4% · ±0% 24h · $1,714">AAVE · 4%<b>±0</b></div>
+      <div class="t tm-d" style="grid-column:span 2;grid-row:span 2" data-tip="cbETH · 4% · −0.2% 24h · $1,714">cbETH · 4%<b>−0.2%</b></div>
+      <div class="t tm-f" style="grid-column:span 2;grid-row:span 2" data-tip="DAI · 3% · ±0% 24h · $1,285">DAI · 3%<b>±0</b></div>
+      <div class="t tm-u" style="grid-column:span 2;grid-row:span 2" data-tip="OP · 2% · +1.4% 24h · $857">OP · 2%<b>+1.4%</b></div>
+    </div>
+    <div class="tt" id="tmTip"></div>
+  </div>
+</section>
+
+<script>
+(()=>{
+  const wrap=document.getElementById('tm'),tip=document.getElementById('tmTip'),card=wrap.parentElement;
+  wrap.querySelectorAll('.t').forEach(t=>{
+    t.addEventListener('mousemove',e=>{
+      const r=card.getBoundingClientRect();
+      tip.innerHTML='<b>'+t.dataset.tip.split(' · ')[0]+'</b><span class="dim">'+t.dataset.tip.split(' · ').slice(1).join(' · ')+'</span>';
+      tip.style.left=(e.clientX-r.left)+'px';
+      tip.style.top=(e.clientY-r.top-8)+'px';
+      tip.classList.add('on');
+    });
+    t.addEventListener('mouseleave',()=>tip.classList.remove('on'));
+  });
+})();
+</script>
+<script src="theme-switcher.js" defer></script>
+</body></html>

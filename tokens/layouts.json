@@ -1,0 +1,2491 @@
+{
+  "$schema": "lore-ds-layouts-v1",
+  "$generated": "2026-05-02",
+  "$source": "design_handoff_marketing_and_decks/decks/Lore Deck Primitives.html",
+  "$notes": [
+    "All coordinates in inches, on a 13.333 × 7.5in canvas (1920 × 1080 logical px @ 144 dpi).",
+    "Color/font keys reference tokens.json (themes.<theme>.color.<key>, typography.family_<x>, typography.scale_pt.<key>).",
+    "`region.kind` is the python-pptx primitive: text | rect | line | image | placeholder | shape (with shape.type).",
+    "`region.binds_to` names the data slot a renderer will fill (e.g. 'title','kpi[].value'). null = decorative.",
+    "Single-theme export: only 'lore' resolves. Adding a sibling theme later only requires adding it under tokens.themes and providing assets/corner_mark_<theme>.png; layout color references are theme-agnostic."
+  ],
+  "$conventions": {
+    "vrail": "0.667in wide column at left edge, full height. Default fill: bg_primary, border-right 0.014in divider_strong. Inner text: rotated -90°, font=mono, size=micro, color=text_primary, padded 1.39in from top.",
+    "frame": "0.222in inset rectangle, 0.014in border (divider_strong), bg=bg_surface unless theme is dark.",
+    "chrome": "Top/bottom horizontal bands inside frame: 0.4in × 0.28in pad, mono micro CAPS, 0.014in border-bottom (top chrome) or border-top (bottom chrome).",
+    "page_number_default": {
+      "left_in": 12.6,
+      "top_in": 7.05,
+      "width_in": 0.6,
+      "height_in": 0.25,
+      "font": "mono",
+      "size": "micro",
+      "color": "text_muted",
+      "align": "right"
+    },
+    "corner_mark_default": {
+      "left_in": 12.7,
+      "top_in": 6.7,
+      "width_in": 0.4,
+      "height_in": 0.4,
+      "shape": "circle",
+      "fill": "text_primary",
+      "label": "LORE",
+      "label_color": "accent_primary",
+      "label_font": "mono",
+      "label_size": "micro"
+    }
+  },
+  "layouts": {
+    "01_cover": {
+      "description": "Cover index — large grid of section titles with eyebrow numbers, all-on-parchment.",
+      "background": "bg_surface",
+      "regions": {
+        "wordmark": {
+          "kind": "text",
+          "left_in": 0.6,
+          "top_in": 0.5,
+          "width_in": 4,
+          "height_in": 0.4,
+          "font": "mono",
+          "size": "eyebrow",
+          "color": "text_primary",
+          "binds_to": "wordmark",
+          "default": "LORE — DECK PRIMITIVES"
+        },
+        "title": {
+          "kind": "text",
+          "left_in": 0.6,
+          "top_in": 1.1,
+          "width_in": 9,
+          "height_in": 1.6,
+          "font": "display",
+          "size": "display",
+          "weight": "bold",
+          "color": "text_primary",
+          "binds_to": "title"
+        },
+        "subtitle": {
+          "kind": "text",
+          "left_in": 0.6,
+          "top_in": 2.85,
+          "width_in": 9,
+          "height_in": 0.6,
+          "font": "sans",
+          "size": "body_lg",
+          "color": "text_secondary",
+          "binds_to": "subtitle"
+        },
+        "index_grid": {
+          "kind": "placeholder",
+          "left_in": 0.6,
+          "top_in": 3.6,
+          "width_in": 12.1,
+          "height_in": 3.2,
+          "binds_to": "sections[]",
+          "schema": {
+            "number": "string",
+            "label": "string"
+          },
+          "layout": "grid",
+          "columns": 4,
+          "row_gap_in": 0.25,
+          "col_gap_in": 0.4
+        },
+        "footer": {
+          "kind": "text",
+          "left_in": 0.6,
+          "top_in": 7.05,
+          "width_in": 6,
+          "height_in": 0.25,
+          "font": "mono",
+          "size": "micro",
+          "color": "text_muted",
+          "binds_to": "footer"
+        }
+      }
+    },
+    "02_title_a": {
+      "description": "Vertical chartreuse rail (rotated company name) + center-vertical headline on parchment.",
+      "background": "bg_primary",
+      "regions": {
+        "rail": {
+          "kind": "rect",
+          "left_in": 0,
+          "top_in": 0,
+          "width_in": 0.667,
+          "height_in": 7.5,
+          "fill": "accent_primary",
+          "border_right_pt": 2,
+          "border_color": "divider_strong"
+        },
+        "rail_label": {
+          "kind": "text",
+          "left_in": 0.1,
+          "top_in": 1.1,
+          "width_in": 0.5,
+          "height_in": 5.3,
+          "rotation": -90,
+          "font": "mono",
+          "size": "eyebrow",
+          "color": "text_primary",
+          "binds_to": "rail_label",
+          "default": "Your Company Name Here"
+        },
+        "title": {
+          "kind": "text",
+          "left_in": 1.1,
+          "top_in": 2.4,
+          "width_in": 11.5,
+          "height_in": 1.8,
+          "font": "display",
+          "size": "display",
+          "weight": "bold",
+          "color": "text_primary",
+          "binds_to": "title"
+        },
+        "subtitle": {
+          "kind": "text",
+          "left_in": 1.1,
+          "top_in": 4.4,
+          "width_in": 11.5,
+          "height_in": 1,
+          "font": "sans",
+          "size": "h3",
+          "color": "text_secondary",
+          "binds_to": "subtitle"
+        },
+        "footer": {
+          "kind": "text",
+          "left_in": 1.1,
+          "top_in": 7.05,
+          "width_in": 6,
+          "height_in": 0.25,
+          "font": "mono",
+          "size": "micro",
+          "color": "text_muted",
+          "binds_to": "footer"
+        }
+      }
+    },
+    "03_title_b": {
+      "description": "Inverted: chartreuse field with graphite rail, parchment card 56% width on right.",
+      "background": "accent_primary",
+      "regions": {
+        "rail": {
+          "kind": "rect",
+          "left_in": 0,
+          "top_in": 0,
+          "width_in": 0.667,
+          "height_in": 7.5,
+          "fill": "text_primary"
+        },
+        "rail_label": {
+          "kind": "text",
+          "left_in": 0.1,
+          "top_in": 1.1,
+          "width_in": 0.5,
+          "height_in": 5.3,
+          "rotation": -90,
+          "font": "mono",
+          "size": "eyebrow",
+          "color": "accent_primary",
+          "binds_to": "rail_label"
+        },
+        "card": {
+          "kind": "rect",
+          "left_in": 5.7,
+          "top_in": 0.45,
+          "width_in": 7.2,
+          "height_in": 6.6,
+          "fill": "bg_primary",
+          "border_pt": 1.5,
+          "border_color": "text_primary"
+        },
+        "title": {
+          "kind": "text",
+          "left_in": 6.1,
+          "top_in": 1,
+          "width_in": 6.5,
+          "height_in": 3.5,
+          "font": "display",
+          "size": "display",
+          "weight": "bold",
+          "color": "text_primary",
+          "binds_to": "title"
+        },
+        "subtitle": {
+          "kind": "text",
+          "left_in": 6.1,
+          "top_in": 5,
+          "width_in": 6.5,
+          "height_in": 1.5,
+          "font": "sans",
+          "size": "body_lg",
+          "color": "text_secondary",
+          "binds_to": "subtitle"
+        }
+      }
+    },
+    "04_agenda_type": {
+      "description": "Staggered list — agenda items as numbered display lines, indented progressively.",
+      "background": "bg_muted",
+      "regions": {
+        "rail": {
+          "kind": "rect",
+          "left_in": 0,
+          "top_in": 0,
+          "width_in": 0.667,
+          "height_in": 7.5,
+          "fill": "bg_primary",
+          "border_right_pt": 2,
+          "border_color": "divider_strong"
+        },
+        "rail_label": {
+          "kind": "text",
+          "left_in": 0.1,
+          "top_in": 1.1,
+          "width_in": 0.5,
+          "height_in": 5.3,
+          "rotation": -90,
+          "font": "mono",
+          "size": "eyebrow",
+          "color": "text_primary",
+          "binds_to": "rail_label",
+          "default": "Agenda"
+        },
+        "list": {
+          "kind": "placeholder",
+          "left_in": 1.1,
+          "top_in": 1,
+          "width_in": 11.5,
+          "height_in": 5.5,
+          "binds_to": "items[]",
+          "schema": {
+            "number": "string",
+            "label": "string"
+          },
+          "layout": "staggered_list",
+          "row_height_in": 0.65,
+          "indent_step_in": 0.4,
+          "font": "display",
+          "size": "h1",
+          "color": "text_primary"
+        },
+        "footer": {
+          "kind": "text",
+          "left_in": 1.1,
+          "top_in": 7.05,
+          "width_in": 6,
+          "height_in": 0.25,
+          "font": "mono",
+          "size": "micro",
+          "color": "text_muted",
+          "binds_to": "footer"
+        }
+      }
+    },
+    "05_agenda_grid": {
+      "description": "Agenda as a 2×N card grid with eyebrow + label + description.",
+      "background": "bg_primary",
+      "regions": {
+        "header": {
+          "kind": "text",
+          "left_in": 0.6,
+          "top_in": 0.55,
+          "width_in": 11.5,
+          "height_in": 0.5,
+          "font": "mono",
+          "size": "eyebrow",
+          "color": "text_muted",
+          "binds_to": "eyebrow",
+          "default": "AGENDA"
+        },
+        "title": {
+          "kind": "text",
+          "left_in": 0.6,
+          "top_in": 1.1,
+          "width_in": 11.5,
+          "height_in": 0.9,
+          "font": "display",
+          "size": "h1",
+          "weight": "bold",
+          "color": "text_primary",
+          "binds_to": "title"
+        },
+        "grid": {
+          "kind": "placeholder",
+          "left_in": 0.6,
+          "top_in": 2.4,
+          "width_in": 12.1,
+          "height_in": 4.4,
+          "binds_to": "cards[]",
+          "schema": {
+            "number": "string",
+            "label": "string",
+            "body": "string"
+          },
+          "layout": "grid",
+          "columns": 2,
+          "row_gap_in": 0.3,
+          "col_gap_in": 0.4,
+          "card_fill": "bg_surface",
+          "card_border_pt": 1,
+          "card_border_color": "divider"
+        }
+      }
+    },
+    "06_section_opener": {
+      "description": "Dark slide with rail + giant numeral on right.",
+      "background": "bg_inverted",
+      "fg": "text_inverted",
+      "regions": {
+        "rail": {
+          "kind": "rect",
+          "left_in": 0,
+          "top_in": 0,
+          "width_in": 0.667,
+          "height_in": 7.5,
+          "fill": "accent_primary_soft"
+        },
+        "rail_label": {
+          "kind": "text",
+          "left_in": 0.1,
+          "top_in": 1.1,
+          "width_in": 0.5,
+          "height_in": 5.3,
+          "rotation": -90,
+          "font": "mono",
+          "size": "eyebrow",
+          "color": "text_primary",
+          "binds_to": "rail_label"
+        },
+        "section_no": {
+          "kind": "text",
+          "left_in": 7,
+          "top_in": 0.6,
+          "width_in": 5.7,
+          "height_in": 4,
+          "font": "display",
+          "size_pt": 240,
+          "weight": "bold",
+          "color": "accent_primary",
+          "align": "right",
+          "binds_to": "section_number"
+        },
+        "section_label": {
+          "kind": "text",
+          "left_in": 0.9,
+          "top_in": 5.5,
+          "width_in": 11.5,
+          "height_in": 1.3,
+          "font": "display",
+          "size": "display",
+          "weight": "bold",
+          "color": "text_inverted",
+          "binds_to": "section_title"
+        }
+      }
+    },
+    "07_speaker_intro": {
+      "description": "Frame with portrait left, biographical text right, footer chrome.",
+      "background": "bg_muted",
+      "regions": {
+        "frame": {
+          "kind": "rect",
+          "left_in": 0.222,
+          "top_in": 0.222,
+          "width_in": 12.889,
+          "height_in": 7.056,
+          "fill": "bg_surface",
+          "border_pt": 1.5,
+          "border_color": "divider_strong"
+        },
+        "portrait": {
+          "kind": "image",
+          "left_in": 0.5,
+          "top_in": 0.5,
+          "width_in": 6,
+          "height_in": 6.5,
+          "binds_to": "portrait_url",
+          "fallback_fill": "divider"
+        },
+        "eyebrow": {
+          "kind": "text",
+          "left_in": 7,
+          "top_in": 0.9,
+          "width_in": 5.7,
+          "height_in": 0.4,
+          "font": "mono",
+          "size": "eyebrow",
+          "color": "text_muted",
+          "binds_to": "eyebrow"
+        },
+        "name": {
+          "kind": "text",
+          "left_in": 7,
+          "top_in": 1.5,
+          "width_in": 5.7,
+          "height_in": 1.4,
+          "font": "display",
+          "size": "h1",
+          "weight": "bold",
+          "color": "text_primary",
+          "binds_to": "name"
+        },
+        "role": {
+          "kind": "text",
+          "left_in": 7,
+          "top_in": 2.9,
+          "width_in": 5.7,
+          "height_in": 0.5,
+          "font": "sans",
+          "size": "body_lg",
+          "color": "text_secondary",
+          "binds_to": "role"
+        },
+        "bio": {
+          "kind": "text",
+          "left_in": 7,
+          "top_in": 3.6,
+          "width_in": 5.7,
+          "height_in": 3,
+          "font": "sans",
+          "size": "body",
+          "color": "text_secondary",
+          "binds_to": "bio"
+        }
+      }
+    },
+    "08_big_numbers_3up": {
+      "description": "Three full-height columns, each with a giant figure + caption. Column tints alternate (warm/parch/cool).",
+      "background": "bg_primary",
+      "regions": {
+        "columns": {
+          "kind": "placeholder",
+          "left_in": 0,
+          "top_in": 0,
+          "width_in": 13.333,
+          "height_in": 7.5,
+          "binds_to": "stats[3]",
+          "schema": {
+            "value": "string",
+            "unit": "string",
+            "label": "string",
+            "tint": "enum:warm|parch|cool"
+          },
+          "layout": "row_3_full_bleed",
+          "tint_warm": "semantic_warning_soft",
+          "tint_parch": "bg_primary",
+          "tint_cool": "accent_tertiary_soft",
+          "value_font": "display",
+          "value_size_pt": 180,
+          "label_font": "mono",
+          "label_size": "eyebrow"
+        }
+      }
+    },
+    "09_big_numbers_6up": {
+      "description": "6-up grid of figures inside a frame; each cell has a top-left corner flag (small triangle).",
+      "background": "bg_muted",
+      "regions": {
+        "frame": {
+          "kind": "rect",
+          "left_in": 0.222,
+          "top_in": 0.222,
+          "width_in": 12.889,
+          "height_in": 7.056,
+          "fill": "bg_surface",
+          "border_pt": 1.5,
+          "border_color": "divider_strong"
+        },
+        "chrome_top": {
+          "kind": "text",
+          "left_in": 0.4,
+          "top_in": 0.45,
+          "width_in": 12.5,
+          "height_in": 0.4,
+          "font": "mono",
+          "size": "eyebrow",
+          "color": "text_muted",
+          "binds_to": "chrome",
+          "border_bottom_pt": 1
+        },
+        "grid": {
+          "kind": "placeholder",
+          "left_in": 0.4,
+          "top_in": 1,
+          "width_in": 12.5,
+          "height_in": 5.8,
+          "binds_to": "stats[6]",
+          "schema": {
+            "value": "string",
+            "label": "string",
+            "flag": "string"
+          },
+          "layout": "grid",
+          "columns": 3,
+          "rows": 2,
+          "value_font": "display",
+          "value_size_pt": 96,
+          "label_font": "mono",
+          "label_size": "eyebrow",
+          "flag_shape": "triangle",
+          "flag_color": "accent_primary"
+        }
+      }
+    },
+    "10_highlights": {
+      "description": "Two columns of numbered list rows: highlights + lowlights.",
+      "background": "bg_primary",
+      "regions": {
+        "frame": {
+          "kind": "rect",
+          "left_in": 0.222,
+          "top_in": 0.222,
+          "width_in": 12.889,
+          "height_in": 7.056,
+          "fill": "bg_surface",
+          "border_pt": 1.5,
+          "border_color": "divider_strong"
+        },
+        "chrome_top": {
+          "kind": "text",
+          "left_in": 0.222,
+          "top_in": 0.222,
+          "width_in": 12.889,
+          "height_in": 0.5,
+          "font": "mono",
+          "size": "eyebrow",
+          "color": "text_primary",
+          "align": "center",
+          "binds_to": "chrome",
+          "default": "HIGHLIGHTS / LOWLIGHTS",
+          "border_bottom_pt": 1
+        },
+        "left_col": {
+          "kind": "placeholder",
+          "left_in": 0.5,
+          "top_in": 1,
+          "width_in": 6,
+          "height_in": 5.8,
+          "binds_to": "highlights[]",
+          "schema": {
+            "number": "string",
+            "title": "string",
+            "body": "string"
+          },
+          "layout": "numbered_list"
+        },
+        "right_col": {
+          "kind": "placeholder",
+          "left_in": 6.833,
+          "top_in": 1,
+          "width_in": 6,
+          "height_in": 5.8,
+          "binds_to": "lowlights[]",
+          "schema": {
+            "number": "string",
+            "title": "string",
+            "body": "string"
+          },
+          "layout": "numbered_list"
+        },
+        "divider": {
+          "kind": "line",
+          "x1_in": 6.667,
+          "y1_in": 1,
+          "x2_in": 6.667,
+          "y2_in": 6.8,
+          "stroke_pt": 1,
+          "color": "divider"
+        }
+      }
+    },
+    "11_updates_status": {
+      "description": "Frame with chromed rows: each row has Objective | Owner | Status pill | Update text.",
+      "background": "bg_primary",
+      "regions": {
+        "frame": {
+          "kind": "rect",
+          "left_in": 0.222,
+          "top_in": 0.222,
+          "width_in": 12.889,
+          "height_in": 7.056,
+          "fill": "bg_surface",
+          "border_pt": 1.5,
+          "border_color": "divider_strong"
+        },
+        "chrome_top": {
+          "kind": "text",
+          "left_in": 0.222,
+          "top_in": 0.222,
+          "width_in": 12.889,
+          "height_in": 0.5,
+          "font": "mono",
+          "size": "eyebrow",
+          "color": "text_primary",
+          "align": "center",
+          "binds_to": "chrome",
+          "default": "UPDATES",
+          "border_bottom_pt": 1
+        },
+        "header_row": {
+          "kind": "placeholder",
+          "left_in": 0.5,
+          "top_in": 1,
+          "width_in": 12.333,
+          "height_in": 0.4,
+          "layout": "table_header",
+          "columns": [
+            {
+              "label": "Objective",
+              "width_in": 4.5
+            },
+            {
+              "label": "Owner",
+              "width_in": 1.6
+            },
+            {
+              "label": "Status",
+              "width_in": 1.6
+            },
+            {
+              "label": "Update",
+              "width_in": 4.6
+            }
+          ]
+        },
+        "rows": {
+          "kind": "placeholder",
+          "left_in": 0.5,
+          "top_in": 1.5,
+          "width_in": 12.333,
+          "height_in": 5.3,
+          "binds_to": "rows[]",
+          "schema": {
+            "objective": "string",
+            "owner": "string",
+            "status": "enum:on_track|at_risk|off_track|done",
+            "update": "string"
+          },
+          "layout": "table_rows",
+          "row_height_in": 0.7,
+          "status_pill": {
+            "on_track": {
+              "fill": "semantic_positive_soft",
+              "fg": "semantic_positive"
+            },
+            "at_risk": {
+              "fill": "semantic_warning_soft",
+              "fg": "semantic_warning"
+            },
+            "off_track": {
+              "fill": "semantic_negative_soft",
+              "fg": "semantic_negative"
+            },
+            "done": {
+              "fill": "accent_primary_soft",
+              "fg": "text_primary"
+            }
+          }
+        }
+      }
+    },
+    "12_objectives_2x2": {
+      "description": "2x2 grid of objective cards, each with a stoplight indicator.",
+      "background": "bg_primary",
+      "regions": {
+        "frame": {
+          "kind": "rect",
+          "left_in": 0.222,
+          "top_in": 0.222,
+          "width_in": 12.889,
+          "height_in": 7.056,
+          "fill": "bg_surface",
+          "border_pt": 1.5,
+          "border_color": "divider_strong"
+        },
+        "chrome_top": {
+          "kind": "text",
+          "left_in": 0.222,
+          "top_in": 0.222,
+          "width_in": 12.889,
+          "height_in": 0.5,
+          "font": "mono",
+          "size": "eyebrow",
+          "color": "text_primary",
+          "align": "center",
+          "binds_to": "chrome",
+          "default": "OBJECTIVES",
+          "border_bottom_pt": 1
+        },
+        "grid": {
+          "kind": "placeholder",
+          "left_in": 0.5,
+          "top_in": 1,
+          "width_in": 12.333,
+          "height_in": 5.8,
+          "binds_to": "objectives[4]",
+          "schema": {
+            "title": "string",
+            "body": "string",
+            "status": "enum:green|yellow|red"
+          },
+          "layout": "grid",
+          "columns": 2,
+          "rows": 2,
+          "gap_in": 0.3,
+          "card_fill": "bg_elevated",
+          "card_border_pt": 1,
+          "card_border_color": "divider",
+          "stoplight_position": "top_right"
+        }
+      }
+    },
+    "13_objectives_3col": {
+      "description": "3-column objectives list with bullets.",
+      "background": "bg_primary",
+      "regions": {
+        "frame": {
+          "kind": "rect",
+          "left_in": 0.222,
+          "top_in": 0.222,
+          "width_in": 12.889,
+          "height_in": 7.056,
+          "fill": "bg_surface",
+          "border_pt": 1.5,
+          "border_color": "divider_strong"
+        },
+        "chrome_top": {
+          "kind": "text",
+          "left_in": 0.222,
+          "top_in": 0.222,
+          "width_in": 12.889,
+          "height_in": 0.5,
+          "font": "mono",
+          "size": "eyebrow",
+          "color": "text_primary",
+          "align": "center",
+          "binds_to": "chrome",
+          "default": "OBJECTIVES"
+        },
+        "columns": {
+          "kind": "placeholder",
+          "left_in": 0.5,
+          "top_in": 1,
+          "width_in": 12.333,
+          "height_in": 5.8,
+          "binds_to": "columns[3]",
+          "schema": {
+            "title": "string",
+            "bullets": "string[]"
+          },
+          "layout": "columns",
+          "count": 3,
+          "gap_in": 0.4
+        }
+      }
+    },
+    "14_results_bars_h": {
+      "description": "Horizontal bar pairs (goal vs actual) with delta annotations.",
+      "background": "bg_primary",
+      "chart_type": "bar_horizontal_paired",
+      "regions": {
+        "frame": {
+          "kind": "rect",
+          "left_in": 0.222,
+          "top_in": 0.222,
+          "width_in": 12.889,
+          "height_in": 7.056,
+          "fill": "bg_surface",
+          "border_pt": 1.5,
+          "border_color": "divider_strong"
+        },
+        "chrome_top": {
+          "kind": "text",
+          "left_in": 0.222,
+          "top_in": 0.222,
+          "width_in": 12.889,
+          "height_in": 0.5,
+          "font": "mono",
+          "size": "eyebrow",
+          "color": "text_primary",
+          "align": "center",
+          "binds_to": "chrome",
+          "default": "RESULTS"
+        },
+        "chart": {
+          "kind": "placeholder",
+          "left_in": 0.6,
+          "top_in": 1,
+          "width_in": 12.1,
+          "height_in": 5.8,
+          "binds_to": "rows[]",
+          "schema": {
+            "label": "string",
+            "goal": "number",
+            "actual": "number"
+          },
+          "layout": "bar_horizontal_paired",
+          "goal_color": "divider",
+          "actual_color": "accent_primary"
+        }
+      }
+    },
+    "15_bar_chart_v": {
+      "description": "Vertical bar chart with split chrome (title + subhead) and labeled axes.",
+      "background": "bg_muted",
+      "chart_type": "bar_vertical",
+      "regions": {
+        "frame": {
+          "kind": "rect",
+          "left_in": 0.222,
+          "top_in": 0.222,
+          "width_in": 12.889,
+          "height_in": 7.056,
+          "fill": "bg_surface",
+          "border_pt": 1.5,
+          "border_color": "divider_strong"
+        },
+        "chrome_top": {
+          "kind": "placeholder",
+          "left_in": 0.222,
+          "top_in": 0.222,
+          "width_in": 12.889,
+          "height_in": 0.5,
+          "layout": "chrome_split",
+          "left_text_binds": "chrome_left",
+          "right_text_binds": "chrome_right"
+        },
+        "title": {
+          "kind": "text",
+          "left_in": 0.6,
+          "top_in": 0.9,
+          "width_in": 12.1,
+          "height_in": 0.9,
+          "font": "display",
+          "size": "h1",
+          "weight": "bold",
+          "color": "text_primary",
+          "binds_to": "title"
+        },
+        "chart": {
+          "kind": "placeholder",
+          "left_in": 0.6,
+          "top_in": 2,
+          "width_in": 12.1,
+          "height_in": 4.6,
+          "binds_to": "series",
+          "schema": {
+            "categories": "string[]",
+            "values": "number[]"
+          },
+          "layout": "bar_vertical",
+          "color": "accent_primary",
+          "axis_color": "text_secondary"
+        },
+        "footnote": {
+          "kind": "text",
+          "left_in": 0.6,
+          "top_in": 6.7,
+          "width_in": 12.1,
+          "height_in": 0.3,
+          "font": "mono",
+          "size": "micro",
+          "color": "text_muted",
+          "binds_to": "source"
+        }
+      }
+    },
+    "16_bar_chart_stacked": {
+      "description": "Stacked vertical bars + side legend.",
+      "background": "bg_primary",
+      "chart_type": "bar_stacked",
+      "regions": {
+        "rail": {
+          "kind": "rect",
+          "left_in": 0,
+          "top_in": 0,
+          "width_in": 0.667,
+          "height_in": 7.5,
+          "fill": "bg_primary",
+          "border_right_pt": 2,
+          "border_color": "divider_strong"
+        },
+        "rail_label": {
+          "kind": "text",
+          "left_in": 0.1,
+          "top_in": 1.1,
+          "width_in": 0.5,
+          "height_in": 5.3,
+          "rotation": -90,
+          "font": "mono",
+          "size": "eyebrow",
+          "color": "text_primary",
+          "binds_to": "rail_label"
+        },
+        "title": {
+          "kind": "text",
+          "left_in": 1,
+          "top_in": 0.6,
+          "width_in": 11.5,
+          "height_in": 0.9,
+          "font": "display",
+          "size": "h1",
+          "weight": "bold",
+          "color": "text_primary",
+          "binds_to": "title"
+        },
+        "chart": {
+          "kind": "placeholder",
+          "left_in": 1,
+          "top_in": 1.8,
+          "width_in": 8.5,
+          "height_in": 5,
+          "binds_to": "series",
+          "schema": {
+            "categories": "string[]",
+            "stacks": [
+              {
+                "label": "string",
+                "values": "number[]"
+              }
+            ]
+          },
+          "layout": "bar_stacked"
+        },
+        "legend": {
+          "kind": "placeholder",
+          "left_in": 9.8,
+          "top_in": 1.8,
+          "width_in": 3,
+          "height_in": 5,
+          "binds_to": "series.stacks",
+          "layout": "legend_vertical"
+        }
+      }
+    },
+    "17_timeline_milestones": {
+      "description": "Horizontal timeline with year ticks and metric callouts.",
+      "background": "bg_primary",
+      "regions": {
+        "rail": {
+          "kind": "rect",
+          "left_in": 0,
+          "top_in": 0,
+          "width_in": 0.667,
+          "height_in": 7.5,
+          "fill": "bg_primary",
+          "border_right_pt": 2,
+          "border_color": "divider_strong"
+        },
+        "rail_label": {
+          "kind": "text",
+          "left_in": 0.1,
+          "top_in": 1.1,
+          "width_in": 0.5,
+          "height_in": 5.3,
+          "rotation": -90,
+          "font": "mono",
+          "size": "eyebrow",
+          "color": "text_primary",
+          "binds_to": "rail_label"
+        },
+        "title": {
+          "kind": "text",
+          "left_in": 1,
+          "top_in": 0.6,
+          "width_in": 11.5,
+          "height_in": 0.9,
+          "font": "display",
+          "size": "h1",
+          "weight": "bold",
+          "color": "text_primary",
+          "binds_to": "title"
+        },
+        "axis": {
+          "kind": "line",
+          "x1_in": 1,
+          "y1_in": 4.5,
+          "x2_in": 12.7,
+          "y2_in": 4.5,
+          "stroke_pt": 1.5,
+          "color": "divider_strong"
+        },
+        "milestones": {
+          "kind": "placeholder",
+          "left_in": 1,
+          "top_in": 2.2,
+          "width_in": 11.7,
+          "height_in": 4.5,
+          "binds_to": "milestones[]",
+          "schema": {
+            "year": "string",
+            "metric": "string",
+            "label": "string",
+            "side": "enum:above|below"
+          },
+          "layout": "timeline_horizontal",
+          "tick_color": "text_primary",
+          "callout_font": "display",
+          "callout_size": "h2"
+        }
+      }
+    },
+    "18_timeline_zigzag": {
+      "description": "Zigzag year blocks alternating above/below an axis.",
+      "background": "bg_muted",
+      "regions": {
+        "frame": {
+          "kind": "rect",
+          "left_in": 0.222,
+          "top_in": 0.222,
+          "width_in": 12.889,
+          "height_in": 7.056,
+          "fill": "bg_surface",
+          "border_pt": 1.5,
+          "border_color": "divider_strong"
+        },
+        "chrome_top": {
+          "kind": "text",
+          "left_in": 0.4,
+          "top_in": 0.4,
+          "width_in": 12.5,
+          "height_in": 0.5,
+          "font": "mono",
+          "size": "eyebrow",
+          "color": "text_muted",
+          "binds_to": "subhead"
+        },
+        "blocks": {
+          "kind": "placeholder",
+          "left_in": 0.5,
+          "top_in": 1.2,
+          "width_in": 12.333,
+          "height_in": 5.6,
+          "binds_to": "blocks[]",
+          "schema": {
+            "year": "string",
+            "title": "string",
+            "body": "string"
+          },
+          "layout": "zigzag",
+          "block_fill": "bg_elevated",
+          "block_border_color": "divider"
+        }
+      }
+    },
+    "19_matrix_2x2": {
+      "description": "Strategy matrix — 2x2 quadrants with axis labels and items per cell.",
+      "background": "bg_muted",
+      "regions": {
+        "frame": {
+          "kind": "rect",
+          "left_in": 0.222,
+          "top_in": 0.222,
+          "width_in": 12.889,
+          "height_in": 7.056,
+          "fill": "bg_surface",
+          "border_pt": 1.5,
+          "border_color": "divider_strong"
+        },
+        "title": {
+          "kind": "text",
+          "left_in": 0.5,
+          "top_in": 0.5,
+          "width_in": 12.333,
+          "height_in": 0.7,
+          "font": "display",
+          "size": "h1",
+          "weight": "bold",
+          "color": "text_primary",
+          "binds_to": "title"
+        },
+        "y_axis_top": {
+          "kind": "text",
+          "left_in": 0.5,
+          "top_in": 1.4,
+          "width_in": 4,
+          "height_in": 0.3,
+          "font": "mono",
+          "size": "eyebrow",
+          "color": "text_muted",
+          "binds_to": "axis.y_top"
+        },
+        "y_axis_bottom": {
+          "kind": "text",
+          "left_in": 0.5,
+          "top_in": 6.5,
+          "width_in": 4,
+          "height_in": 0.3,
+          "font": "mono",
+          "size": "eyebrow",
+          "color": "text_muted",
+          "binds_to": "axis.y_bottom"
+        },
+        "x_axis_left": {
+          "kind": "text",
+          "left_in": 4,
+          "top_in": 6.95,
+          "width_in": 4,
+          "height_in": 0.3,
+          "font": "mono",
+          "size": "eyebrow",
+          "color": "text_muted",
+          "binds_to": "axis.x_left"
+        },
+        "x_axis_right": {
+          "kind": "text",
+          "left_in": 8.5,
+          "top_in": 6.95,
+          "width_in": 4,
+          "height_in": 0.3,
+          "font": "mono",
+          "size": "eyebrow",
+          "color": "text_muted",
+          "binds_to": "axis.x_right",
+          "align": "right"
+        },
+        "quadrants": {
+          "kind": "placeholder",
+          "left_in": 4,
+          "top_in": 1.7,
+          "width_in": 8.5,
+          "height_in": 5.2,
+          "binds_to": "quadrants[4]",
+          "schema": {
+            "label": "string",
+            "items": "string[]"
+          },
+          "layout": "grid_2x2",
+          "cell_border_pt": 1,
+          "cell_border_color": "divider",
+          "cell_fill": "bg_primary"
+        }
+      }
+    },
+    "20_quote": {
+      "description": "Full-bleed display quote, attribution below.",
+      "background": "bg_muted",
+      "regions": {
+        "frame": {
+          "kind": "rect",
+          "left_in": 0.222,
+          "top_in": 0.222,
+          "width_in": 12.889,
+          "height_in": 7.056,
+          "fill": "bg_surface",
+          "border_pt": 1.5,
+          "border_color": "divider_strong"
+        },
+        "quote": {
+          "kind": "text",
+          "left_in": 1.5,
+          "top_in": 1.8,
+          "width_in": 10.3,
+          "height_in": 3.5,
+          "font": "display",
+          "size": "h1",
+          "color": "text_primary",
+          "align": "center",
+          "binds_to": "quote"
+        },
+        "attribution": {
+          "kind": "text",
+          "left_in": 1.5,
+          "top_in": 5.5,
+          "width_in": 10.3,
+          "height_in": 0.5,
+          "font": "mono",
+          "size": "caption",
+          "color": "text_muted",
+          "align": "center",
+          "binds_to": "attribution"
+        }
+      }
+    },
+    "21_qa_display": {
+      "description": "Q&A — full-bleed type on tinted background.",
+      "background": "semantic_positive_soft",
+      "regions": {
+        "rail": {
+          "kind": "rect",
+          "left_in": 0,
+          "top_in": 0,
+          "width_in": 0.667,
+          "height_in": 7.5,
+          "fill": "text_primary"
+        },
+        "rail_label": {
+          "kind": "text",
+          "left_in": 0.1,
+          "top_in": 1.1,
+          "width_in": 0.5,
+          "height_in": 5.3,
+          "rotation": -90,
+          "font": "mono",
+          "size": "eyebrow",
+          "color": "bg_primary",
+          "binds_to": "rail_label"
+        },
+        "qa": {
+          "kind": "text",
+          "left_in": 1.1,
+          "top_in": 0.6,
+          "width_in": 11.5,
+          "height_in": 5.5,
+          "font": "display",
+          "size_pt": 200,
+          "weight": "bold",
+          "color": "text_primary",
+          "binds_to": "qa_text",
+          "default": "Q&A"
+        },
+        "footer": {
+          "kind": "text",
+          "left_in": 1.1,
+          "top_in": 6.4,
+          "width_in": 11.5,
+          "height_in": 0.5,
+          "font": "sans",
+          "size": "body_lg",
+          "color": "text_secondary",
+          "binds_to": "footer"
+        }
+      }
+    },
+    "22_poll": {
+      "description": "Audience poll — section tab top + centered question + 2-4 vote bars.",
+      "background": "bg_muted",
+      "regions": {
+        "tab": {
+          "kind": "rect",
+          "left_in": 0.5,
+          "top_in": 0.4,
+          "width_in": 2.5,
+          "height_in": 0.4,
+          "fill": "accent_primary",
+          "border_pt": 1.5,
+          "border_color": "text_primary"
+        },
+        "tab_text": {
+          "kind": "text",
+          "left_in": 0.5,
+          "top_in": 0.4,
+          "width_in": 2.5,
+          "height_in": 0.4,
+          "font": "mono",
+          "size": "eyebrow",
+          "color": "text_primary",
+          "align": "center",
+          "binds_to": "section_label"
+        },
+        "question": {
+          "kind": "text",
+          "left_in": 1.5,
+          "top_in": 1.5,
+          "width_in": 10.3,
+          "height_in": 1.4,
+          "font": "display",
+          "size": "h1",
+          "weight": "bold",
+          "color": "text_primary",
+          "align": "center",
+          "binds_to": "question"
+        },
+        "options": {
+          "kind": "placeholder",
+          "left_in": 2.5,
+          "top_in": 3.5,
+          "width_in": 8.3,
+          "height_in": 3.2,
+          "binds_to": "options[]",
+          "schema": {
+            "label": "string",
+            "votes": "number"
+          },
+          "layout": "vote_bars",
+          "bar_color": "accent_primary",
+          "track_color": "divider_subtle"
+        }
+      }
+    },
+    "23_image_caption": {
+      "description": "Left caption column + right image (60/40 split).",
+      "background": "bg_primary",
+      "regions": {
+        "rail": {
+          "kind": "rect",
+          "left_in": 0,
+          "top_in": 0,
+          "width_in": 0.667,
+          "height_in": 7.5,
+          "fill": "semantic_positive_soft",
+          "border_right_pt": 2,
+          "border_color": "divider_strong"
+        },
+        "rail_label": {
+          "kind": "text",
+          "left_in": 0.1,
+          "top_in": 1.1,
+          "width_in": 0.5,
+          "height_in": 5.3,
+          "rotation": -90,
+          "font": "mono",
+          "size": "eyebrow",
+          "color": "text_primary",
+          "binds_to": "rail_label"
+        },
+        "eyebrow": {
+          "kind": "text",
+          "left_in": 1,
+          "top_in": 0.8,
+          "width_in": 4.2,
+          "height_in": 0.4,
+          "font": "mono",
+          "size": "eyebrow",
+          "color": "text_muted",
+          "binds_to": "eyebrow"
+        },
+        "title": {
+          "kind": "text",
+          "left_in": 1,
+          "top_in": 1.4,
+          "width_in": 4.2,
+          "height_in": 1.5,
+          "font": "display",
+          "size": "h2",
+          "weight": "bold",
+          "color": "text_primary",
+          "binds_to": "title"
+        },
+        "body": {
+          "kind": "text",
+          "left_in": 1,
+          "top_in": 3.2,
+          "width_in": 4.2,
+          "height_in": 3.6,
+          "font": "sans",
+          "size": "body",
+          "color": "text_secondary",
+          "binds_to": "body"
+        },
+        "image": {
+          "kind": "image",
+          "left_in": 5.4,
+          "top_in": 0,
+          "width_in": 7.933,
+          "height_in": 7.5,
+          "binds_to": "image_url",
+          "fallback_fill": "divider"
+        }
+      }
+    },
+    "24_rapid_framework": {
+      "description": "FigJam-style canvas with role pills (R/A/P/I/D) and arrows.",
+      "background": "bg_muted",
+      "regions": {
+        "canvas": {
+          "kind": "rect",
+          "left_in": 0.4,
+          "top_in": 0.4,
+          "width_in": 12.533,
+          "height_in": 6.7,
+          "fill": "bg_surface",
+          "border_pt": 1.5,
+          "border_color": "divider",
+          "dot_grid": true,
+          "grid_color": "divider_subtle",
+          "grid_step_in": 0.167
+        },
+        "title": {
+          "kind": "text",
+          "left_in": 0.6,
+          "top_in": 0.6,
+          "width_in": 12,
+          "height_in": 0.4,
+          "font": "mono",
+          "size": "eyebrow",
+          "color": "text_primary",
+          "binds_to": "title",
+          "default": "RAPID DECISION-MAKING FRAMEWORK"
+        },
+        "pills": {
+          "kind": "placeholder",
+          "left_in": 0.6,
+          "top_in": 1.5,
+          "width_in": 12,
+          "height_in": 5,
+          "binds_to": "pills[]",
+          "schema": {
+            "role": "string",
+            "person": "string",
+            "x_in": "number",
+            "y_in": "number"
+          },
+          "layout": "free_position_pills",
+          "pill_fill": "accent_primary_soft",
+          "pill_border_color": "text_primary"
+        },
+        "arrows": {
+          "kind": "placeholder",
+          "binds_to": "arrows[]",
+          "schema": {
+            "from_pill": "number",
+            "to_pill": "number",
+            "label": "string"
+          },
+          "layout": "arrows",
+          "stroke_pt": 1,
+          "color": "text_primary"
+        }
+      }
+    },
+    "25_decision_framework": {
+      "description": "Two-pane canvas: left criteria list, right weighted-decision table.",
+      "background": "bg_muted",
+      "regions": {
+        "canvas": {
+          "kind": "rect",
+          "left_in": 0.4,
+          "top_in": 0.4,
+          "width_in": 12.533,
+          "height_in": 6.7,
+          "fill": "bg_surface",
+          "border_pt": 1.5,
+          "border_color": "divider",
+          "dot_grid": true
+        },
+        "left": {
+          "kind": "placeholder",
+          "left_in": 0.7,
+          "top_in": 0.8,
+          "width_in": 5,
+          "height_in": 6,
+          "binds_to": "criteria[]",
+          "schema": {
+            "label": "string",
+            "weight": "number"
+          },
+          "layout": "list_with_weights"
+        },
+        "right": {
+          "kind": "placeholder",
+          "left_in": 6,
+          "top_in": 0.8,
+          "width_in": 6.7,
+          "height_in": 6,
+          "binds_to": "options[]",
+          "schema": {
+            "name": "string",
+            "scores": "number[]",
+            "total": "number"
+          },
+          "layout": "decision_table"
+        }
+      }
+    },
+    "27_decision_tree": {
+      "description": "Decision tree on dot-grid canvas.",
+      "background": "bg_muted",
+      "regions": {
+        "canvas": {
+          "kind": "rect",
+          "left_in": 0.4,
+          "top_in": 0.4,
+          "width_in": 12.533,
+          "height_in": 6.7,
+          "fill": "bg_surface",
+          "border_pt": 1.5,
+          "border_color": "divider",
+          "dot_grid": true
+        },
+        "title": {
+          "kind": "text",
+          "left_in": 0.7,
+          "top_in": 0.6,
+          "width_in": 6,
+          "height_in": 0.4,
+          "font": "mono",
+          "size": "eyebrow",
+          "color": "semantic_positive",
+          "binds_to": "title",
+          "default": "DECISION TREE"
+        },
+        "nodes": {
+          "kind": "placeholder",
+          "binds_to": "nodes[]",
+          "schema": {
+            "id": "string",
+            "label": "string",
+            "kind": "enum:question|outcome",
+            "x_in": "number",
+            "y_in": "number"
+          },
+          "layout": "tree_nodes",
+          "node_fill": "bg_elevated",
+          "node_border_color": "text_primary"
+        },
+        "edges": {
+          "kind": "placeholder",
+          "binds_to": "edges[]",
+          "schema": {
+            "from_id": "string",
+            "to_id": "string",
+            "label": "string"
+          },
+          "layout": "tree_edges",
+          "stroke_pt": 1,
+          "color": "text_primary"
+        }
+      }
+    },
+    "28_mindmap": {
+      "description": "Radial mindmap on dot-grid canvas.",
+      "background": "bg_muted",
+      "regions": {
+        "canvas": {
+          "kind": "rect",
+          "left_in": 0.4,
+          "top_in": 0.4,
+          "width_in": 12.533,
+          "height_in": 6.7,
+          "fill": "bg_surface",
+          "border_pt": 1.5,
+          "border_color": "divider",
+          "dot_grid": true
+        },
+        "title": {
+          "kind": "text",
+          "left_in": 0.7,
+          "top_in": 0.6,
+          "width_in": 6,
+          "height_in": 0.4,
+          "font": "mono",
+          "size": "eyebrow",
+          "color": "semantic_info",
+          "binds_to": "title",
+          "default": "MIND MAP"
+        },
+        "center": {
+          "kind": "placeholder",
+          "binds_to": "center",
+          "schema": {
+            "label": "string"
+          },
+          "layout": "mindmap_center",
+          "fill": "accent_primary"
+        },
+        "nodes": {
+          "kind": "placeholder",
+          "binds_to": "branches[]",
+          "schema": {
+            "label": "string",
+            "children": "string[]"
+          },
+          "layout": "mindmap_radial"
+        }
+      }
+    },
+    "29_persona": {
+      "description": "Persona card — bio block + traits + quotes.",
+      "background": "bg_muted",
+      "regions": {
+        "canvas": {
+          "kind": "rect",
+          "left_in": 0.4,
+          "top_in": 0.4,
+          "width_in": 12.533,
+          "height_in": 6.7,
+          "fill": "bg_surface",
+          "border_pt": 1.5,
+          "border_color": "divider",
+          "dot_grid": true
+        },
+        "title": {
+          "kind": "text",
+          "left_in": 0.7,
+          "top_in": 0.6,
+          "width_in": 6,
+          "height_in": 0.4,
+          "font": "mono",
+          "size": "eyebrow",
+          "color": "text_primary",
+          "binds_to": "title",
+          "default": "BASIC INFORMATION"
+        },
+        "portrait": {
+          "kind": "image",
+          "left_in": 0.7,
+          "top_in": 1.2,
+          "width_in": 2.5,
+          "height_in": 2.5,
+          "binds_to": "portrait_url",
+          "fallback_fill": "divider"
+        },
+        "name": {
+          "kind": "text",
+          "left_in": 3.5,
+          "top_in": 1.2,
+          "width_in": 4,
+          "height_in": 0.7,
+          "font": "display",
+          "size": "h2",
+          "weight": "bold",
+          "color": "text_primary",
+          "binds_to": "name"
+        },
+        "tagline": {
+          "kind": "text",
+          "left_in": 3.5,
+          "top_in": 2,
+          "width_in": 4,
+          "height_in": 1.5,
+          "font": "sans",
+          "size": "body",
+          "color": "text_secondary",
+          "binds_to": "tagline"
+        },
+        "traits": {
+          "kind": "placeholder",
+          "left_in": 7.8,
+          "top_in": 1.2,
+          "width_in": 5,
+          "height_in": 3,
+          "binds_to": "traits[]",
+          "schema": {
+            "label": "string",
+            "value": "number"
+          },
+          "layout": "trait_bars"
+        },
+        "quotes": {
+          "kind": "placeholder",
+          "left_in": 0.7,
+          "top_in": 4,
+          "width_in": 12.1,
+          "height_in": 2.8,
+          "binds_to": "quotes[]",
+          "schema": {
+            "text": "string"
+          },
+          "layout": "quote_strip"
+        }
+      }
+    },
+    "30_gantt": {
+      "description": "Gantt chart with month columns and task rows.",
+      "background": "bg_muted",
+      "regions": {
+        "canvas": {
+          "kind": "rect",
+          "left_in": 0.4,
+          "top_in": 0.4,
+          "width_in": 12.533,
+          "height_in": 6.7,
+          "fill": "bg_surface",
+          "border_pt": 1.5,
+          "border_color": "divider",
+          "dot_grid": true
+        },
+        "title": {
+          "kind": "text",
+          "left_in": 0.7,
+          "top_in": 0.6,
+          "width_in": 6,
+          "height_in": 0.4,
+          "font": "mono",
+          "size": "eyebrow",
+          "color": "semantic_info",
+          "binds_to": "title",
+          "default": "TIMELINE"
+        },
+        "header": {
+          "kind": "placeholder",
+          "left_in": 0.7,
+          "top_in": 1.2,
+          "width_in": 12.1,
+          "height_in": 0.4,
+          "binds_to": "months",
+          "schema": "string[]",
+          "layout": "gantt_header"
+        },
+        "tasks": {
+          "kind": "placeholder",
+          "left_in": 0.7,
+          "top_in": 1.7,
+          "width_in": 12.1,
+          "height_in": 5,
+          "binds_to": "tasks[]",
+          "schema": {
+            "label": "string",
+            "owner": "string",
+            "start": "number",
+            "end": "number",
+            "color": "string"
+          },
+          "layout": "gantt_rows",
+          "default_color": "accent_primary"
+        }
+      }
+    },
+    "31_venn": {
+      "description": "Three-circle Venn with intersection labels.",
+      "background": "bg_muted",
+      "regions": {
+        "canvas": {
+          "kind": "rect",
+          "left_in": 0.4,
+          "top_in": 0.4,
+          "width_in": 12.533,
+          "height_in": 6.7,
+          "fill": "bg_surface",
+          "border_pt": 1.5,
+          "border_color": "divider",
+          "dot_grid": true
+        },
+        "title": {
+          "kind": "text",
+          "left_in": 0.7,
+          "top_in": 0.6,
+          "width_in": 6,
+          "height_in": 0.4,
+          "font": "mono",
+          "size": "eyebrow",
+          "color": "semantic_info",
+          "binds_to": "title",
+          "default": "THREE GROUPS"
+        },
+        "circles": {
+          "kind": "placeholder",
+          "left_in": 2.5,
+          "top_in": 1.2,
+          "width_in": 8.3,
+          "height_in": 5.5,
+          "binds_to": "groups[3]",
+          "schema": {
+            "label": "string",
+            "color": "string"
+          },
+          "layout": "venn_3",
+          "opacity": 0.55
+        },
+        "labels": {
+          "kind": "placeholder",
+          "binds_to": "intersections",
+          "schema": {
+            "AB": "string",
+            "BC": "string",
+            "AC": "string",
+            "ABC": "string"
+          },
+          "layout": "venn_labels"
+        }
+      }
+    },
+    "32_exec_summary": {
+      "description": "Hero headline + KPI strip + 3 colored column cards + next-steps row.",
+      "background": "bg_muted",
+      "regions": {
+        "canvas": {
+          "kind": "rect",
+          "left_in": 0.4,
+          "top_in": 0.4,
+          "width_in": 12.533,
+          "height_in": 6.7,
+          "fill": "bg_surface",
+          "border_pt": 1.5,
+          "border_color": "divider"
+        },
+        "headline": {
+          "kind": "text",
+          "left_in": 0.7,
+          "top_in": 0.7,
+          "width_in": 12,
+          "height_in": 1.2,
+          "font": "display",
+          "size": "h1",
+          "weight": "bold",
+          "color": "text_primary",
+          "binds_to": "headline"
+        },
+        "kpi_strip": {
+          "kind": "placeholder",
+          "left_in": 0.7,
+          "top_in": 2.2,
+          "width_in": 12,
+          "height_in": 1,
+          "binds_to": "kpis[]",
+          "schema": {
+            "label": "string",
+            "value": "string",
+            "delta": "string"
+          },
+          "layout": "kpi_strip",
+          "max_count": 4,
+          "value_font": "display",
+          "value_size": "h2"
+        },
+        "columns": {
+          "kind": "placeholder",
+          "left_in": 0.7,
+          "top_in": 3.5,
+          "width_in": 12,
+          "height_in": 2.4,
+          "binds_to": "columns[3]",
+          "schema": {
+            "title": "string",
+            "body": "string",
+            "tint": "enum:positive|warning|info"
+          },
+          "layout": "row_3",
+          "tint_positive": "semantic_positive_soft",
+          "tint_warning": "semantic_warning_soft",
+          "tint_info": "accent_tertiary_soft"
+        },
+        "next_steps": {
+          "kind": "placeholder",
+          "left_in": 0.7,
+          "top_in": 6.1,
+          "width_in": 12,
+          "height_in": 0.8,
+          "binds_to": "next_steps[]",
+          "schema": {
+            "label": "string",
+            "owner": "string",
+            "due": "string"
+          },
+          "layout": "row_pills"
+        }
+      }
+    },
+    "33a_ai_workflow_today": {
+      "description": "Header + 2-column workflow board (today).",
+      "background": "bg_muted",
+      "regions": {
+        "canvas": {
+          "kind": "rect",
+          "left_in": 0.4,
+          "top_in": 0.4,
+          "width_in": 12.533,
+          "height_in": 6.7,
+          "fill": "bg_surface",
+          "border_pt": 1.5,
+          "border_color": "divider"
+        },
+        "title": {
+          "kind": "text",
+          "left_in": 0.7,
+          "top_in": 0.6,
+          "width_in": 8,
+          "height_in": 0.5,
+          "font": "display",
+          "size": "h2",
+          "weight": "bold",
+          "color": "text_primary",
+          "binds_to": "title"
+        },
+        "label": {
+          "kind": "text",
+          "left_in": 9,
+          "top_in": 0.7,
+          "width_in": 3.7,
+          "height_in": 0.4,
+          "font": "mono",
+          "size": "eyebrow",
+          "color": "text_muted",
+          "align": "right",
+          "binds_to": "phase_label",
+          "default": "PART 1 · TODAY"
+        },
+        "columns": {
+          "kind": "placeholder",
+          "left_in": 0.7,
+          "top_in": 1.5,
+          "width_in": 12,
+          "height_in": 5.4,
+          "binds_to": "columns[2]",
+          "schema": {
+            "title": "string",
+            "items": "string[]"
+          },
+          "layout": "kanban_columns"
+        }
+      }
+    },
+    "33b_ai_workflow_plan": {
+      "description": "Header + 2-column workflow board (plan & measurement).",
+      "background": "bg_muted",
+      "regions": {
+        "canvas": {
+          "kind": "rect",
+          "left_in": 0.4,
+          "top_in": 0.4,
+          "width_in": 12.533,
+          "height_in": 6.7,
+          "fill": "bg_surface",
+          "border_pt": 1.5,
+          "border_color": "divider"
+        },
+        "title": {
+          "kind": "text",
+          "left_in": 0.7,
+          "top_in": 0.6,
+          "width_in": 8,
+          "height_in": 0.5,
+          "font": "display",
+          "size": "h2",
+          "weight": "bold",
+          "color": "text_primary",
+          "binds_to": "title"
+        },
+        "label": {
+          "kind": "text",
+          "left_in": 9,
+          "top_in": 0.7,
+          "width_in": 3.7,
+          "height_in": 0.4,
+          "font": "mono",
+          "size": "eyebrow",
+          "color": "text_muted",
+          "align": "right",
+          "binds_to": "phase_label",
+          "default": "PART 2 · PLAN & MEASUREMENT"
+        },
+        "columns": {
+          "kind": "placeholder",
+          "left_in": 0.7,
+          "top_in": 1.5,
+          "width_in": 12,
+          "height_in": 5.4,
+          "binds_to": "columns[2]",
+          "schema": {
+            "title": "string",
+            "items": "string[]"
+          },
+          "layout": "kanban_columns"
+        }
+      }
+    },
+    "34_closing": {
+      "description": "Closing slide — chartreuse-soft background, centered thank-you.",
+      "background": "accent_primary_soft",
+      "regions": {
+        "rail": {
+          "kind": "rect",
+          "left_in": 0,
+          "top_in": 0,
+          "width_in": 0.667,
+          "height_in": 7.5,
+          "fill": "text_primary"
+        },
+        "rail_label": {
+          "kind": "text",
+          "left_in": 0.1,
+          "top_in": 1.1,
+          "width_in": 0.5,
+          "height_in": 5.3,
+          "rotation": -90,
+          "font": "mono",
+          "size": "eyebrow",
+          "color": "accent_primary",
+          "binds_to": "rail_label",
+          "default": "See you next week"
+        },
+        "thanks": {
+          "kind": "text",
+          "left_in": 1,
+          "top_in": 2.5,
+          "width_in": 11.5,
+          "height_in": 2.5,
+          "font": "display",
+          "size": "display",
+          "weight": "bold",
+          "color": "text_primary",
+          "align": "center",
+          "binds_to": "title",
+          "default": "Thank you."
+        },
+        "subtitle": {
+          "kind": "text",
+          "left_in": 1,
+          "top_in": 5,
+          "width_in": 11.5,
+          "height_in": 0.8,
+          "font": "sans",
+          "size": "body_lg",
+          "color": "text_secondary",
+          "align": "center",
+          "binds_to": "subtitle"
+        }
+      }
+    },
+    "36_target_markets": {
+      "description": "Dark slide with 3 region cards + totals bar.",
+      "background": "bg_inverted",
+      "fg": "text_inverted",
+      "regions": {
+        "frame": {
+          "kind": "rect",
+          "left_in": 0.222,
+          "top_in": 0.222,
+          "width_in": 12.889,
+          "height_in": 7.056,
+          "fill": null,
+          "fill_resolve": {
+            "lore": "#1D201C"
+          },
+          "border_pt": 1.5,
+          "border_color": "text_inverted"
+        },
+        "chrome_top": {
+          "kind": "placeholder",
+          "left_in": 0.222,
+          "top_in": 0.222,
+          "width_in": 12.889,
+          "height_in": 0.5,
+          "layout": "chrome_split",
+          "left_text_binds": "chrome_left",
+          "right_text_binds": "chrome_right",
+          "color": "text_inverted"
+        },
+        "title": {
+          "kind": "text",
+          "left_in": 0.5,
+          "top_in": 0.9,
+          "width_in": 12.333,
+          "height_in": 0.9,
+          "font": "display",
+          "size": "h1",
+          "weight": "bold",
+          "color": "text_inverted",
+          "binds_to": "title"
+        },
+        "regions": {
+          "kind": "placeholder",
+          "left_in": 0.5,
+          "top_in": 2,
+          "width_in": 12.333,
+          "height_in": 4,
+          "binds_to": "regions[3]",
+          "schema": {
+            "name": "string",
+            "tam": "string",
+            "stats": "string[]"
+          },
+          "layout": "row_3",
+          "card_fill": "bg_elevated",
+          "card_border_color": "divider"
+        },
+        "totals": {
+          "kind": "placeholder",
+          "left_in": 0.5,
+          "top_in": 6.2,
+          "width_in": 12.333,
+          "height_in": 0.7,
+          "binds_to": "totals",
+          "schema": {
+            "label": "string",
+            "value": "string"
+          },
+          "layout": "totals_bar",
+          "fill": "accent_primary",
+          "fg": "text_primary"
+        }
+      }
+    },
+    "37_competitive_landscape": {
+      "description": "2x2 positioning matrix with logo dots.",
+      "background": "bg_primary",
+      "regions": {
+        "frame": {
+          "kind": "rect",
+          "left_in": 0.222,
+          "top_in": 0.222,
+          "width_in": 12.889,
+          "height_in": 7.056,
+          "fill": "bg_surface",
+          "border_pt": 1.5,
+          "border_color": "divider_strong"
+        },
+        "title": {
+          "kind": "text",
+          "left_in": 0.5,
+          "top_in": 0.5,
+          "width_in": 12.333,
+          "height_in": 0.7,
+          "font": "display",
+          "size": "h1",
+          "weight": "bold",
+          "color": "text_primary",
+          "binds_to": "title"
+        },
+        "matrix": {
+          "kind": "placeholder",
+          "left_in": 1.5,
+          "top_in": 1.5,
+          "width_in": 11,
+          "height_in": 5.5,
+          "binds_to": "competitors[]",
+          "schema": {
+            "name": "string",
+            "x": "number",
+            "y": "number",
+            "is_us": "boolean"
+          },
+          "layout": "scatter_2d",
+          "axis_color": "text_secondary",
+          "us_color": "accent_primary",
+          "them_color": "text_secondary"
+        },
+        "x_axis_lo": {
+          "kind": "text",
+          "left_in": 1.5,
+          "top_in": 7.05,
+          "width_in": 4,
+          "height_in": 0.3,
+          "font": "mono",
+          "size": "eyebrow",
+          "color": "text_muted",
+          "binds_to": "axis.x_lo"
+        },
+        "x_axis_hi": {
+          "kind": "text",
+          "left_in": 8.5,
+          "top_in": 7.05,
+          "width_in": 4,
+          "height_in": 0.3,
+          "font": "mono",
+          "size": "eyebrow",
+          "color": "text_muted",
+          "binds_to": "axis.x_hi",
+          "align": "right"
+        },
+        "y_axis_hi": {
+          "kind": "text",
+          "left_in": 0.5,
+          "top_in": 1.5,
+          "width_in": 1,
+          "height_in": 0.3,
+          "font": "mono",
+          "size": "eyebrow",
+          "color": "text_muted",
+          "binds_to": "axis.y_hi"
+        },
+        "y_axis_lo": {
+          "kind": "text",
+          "left_in": 0.5,
+          "top_in": 6.7,
+          "width_in": 1,
+          "height_in": 0.3,
+          "font": "mono",
+          "size": "eyebrow",
+          "color": "text_muted",
+          "binds_to": "axis.y_lo"
+        }
+      }
+    },
+    "38_chart_area": {
+      "description": "Area chart — portfolio value over time.",
+      "background": "bg_primary",
+      "chart_type": "area",
+      "regions": {
+        "frame": {
+          "kind": "rect",
+          "left_in": 0.222,
+          "top_in": 0.222,
+          "width_in": 12.889,
+          "height_in": 7.056,
+          "fill": "bg_surface",
+          "border_pt": 1.5,
+          "border_color": "divider_strong"
+        },
+        "chrome_top": {
+          "kind": "placeholder",
+          "left_in": 0.222,
+          "top_in": 0.222,
+          "width_in": 12.889,
+          "height_in": 0.5,
+          "layout": "chrome_split"
+        },
+        "title": {
+          "kind": "text",
+          "left_in": 0.5,
+          "top_in": 0.9,
+          "width_in": 8,
+          "height_in": 0.7,
+          "font": "display",
+          "size": "h1",
+          "weight": "bold",
+          "color": "text_primary",
+          "binds_to": "title"
+        },
+        "kpis": {
+          "kind": "placeholder",
+          "left_in": 8.5,
+          "top_in": 0.9,
+          "width_in": 4.3,
+          "height_in": 0.7,
+          "binds_to": "kpis[]",
+          "schema": {
+            "label": "string",
+            "value": "string"
+          },
+          "layout": "kpi_inline"
+        },
+        "chart": {
+          "kind": "placeholder",
+          "left_in": 0.5,
+          "top_in": 1.9,
+          "width_in": 12.333,
+          "height_in": 4.8,
+          "binds_to": "series",
+          "schema": {
+            "x": "string[]",
+            "y": "number[]"
+          },
+          "layout": "area_chart",
+          "fill": "accent_primary",
+          "stroke_pt": 1.5,
+          "fill_opacity": 0.35
+        }
+      }
+    },
+    "39_chart_donut": {
+      "description": "Donut chart with legend.",
+      "background": "bg_primary",
+      "chart_type": "donut",
+      "regions": {
+        "frame": {
+          "kind": "rect",
+          "left_in": 0.222,
+          "top_in": 0.222,
+          "width_in": 12.889,
+          "height_in": 7.056,
+          "fill": "bg_surface",
+          "border_pt": 1.5,
+          "border_color": "divider_strong"
+        },
+        "title": {
+          "kind": "text",
+          "left_in": 0.5,
+          "top_in": 0.7,
+          "width_in": 12.333,
+          "height_in": 0.7,
+          "font": "display",
+          "size": "h1",
+          "weight": "bold",
+          "color": "text_primary",
+          "binds_to": "title"
+        },
+        "donut": {
+          "kind": "placeholder",
+          "left_in": 1,
+          "top_in": 1.7,
+          "width_in": 5,
+          "height_in": 5,
+          "binds_to": "slices[]",
+          "schema": {
+            "label": "string",
+            "value": "number"
+          },
+          "layout": "donut",
+          "inner_ratio": 0.6,
+          "palette": "series_palette"
+        },
+        "legend": {
+          "kind": "placeholder",
+          "left_in": 6.5,
+          "top_in": 1.7,
+          "width_in": 6.3,
+          "height_in": 5,
+          "binds_to": "slices[]",
+          "layout": "legend_table",
+          "columns": [
+            "color",
+            "label",
+            "value",
+            "percent"
+          ]
+        }
+      }
+    },
+    "40_chart_candlestick": {
+      "description": "Candlestick trading chart with volume strip.",
+      "background": "bg_primary",
+      "chart_type": "candlestick",
+      "regions": {
+        "frame": {
+          "kind": "rect",
+          "left_in": 0.222,
+          "top_in": 0.222,
+          "width_in": 12.889,
+          "height_in": 7.056,
+          "fill": "bg_surface",
+          "border_pt": 1.5,
+          "border_color": "divider_strong"
+        },
+        "chrome_top": {
+          "kind": "placeholder",
+          "left_in": 0.222,
+          "top_in": 0.222,
+          "width_in": 12.889,
+          "height_in": 0.5,
+          "layout": "chrome_split"
+        },
+        "title": {
+          "kind": "text",
+          "left_in": 0.5,
+          "top_in": 0.9,
+          "width_in": 12.333,
+          "height_in": 0.7,
+          "font": "display",
+          "size": "h1",
+          "weight": "bold",
+          "color": "text_primary",
+          "binds_to": "title"
+        },
+        "candles": {
+          "kind": "placeholder",
+          "left_in": 0.5,
+          "top_in": 1.9,
+          "width_in": 12.333,
+          "height_in": 3.8,
+          "binds_to": "ohlc[]",
+          "schema": {
+            "t": "string",
+            "o": "number",
+            "h": "number",
+            "l": "number",
+            "c": "number"
+          },
+          "layout": "candlestick",
+          "up_color": "semantic_positive",
+          "down_color": "semantic_negative"
+        },
+        "volume": {
+          "kind": "placeholder",
+          "left_in": 0.5,
+          "top_in": 5.9,
+          "width_in": 12.333,
+          "height_in": 0.9,
+          "binds_to": "volume[]",
+          "schema": "number[]",
+          "layout": "bar_thin",
+          "color": "text_muted"
+        }
+      }
+    },
+    "41_chart_treemap": {
+      "description": "Treemap of holdings — variable-size tiles colored by performance.",
+      "background": "bg_primary",
+      "chart_type": "treemap",
+      "regions": {
+        "frame": {
+          "kind": "rect",
+          "left_in": 0.222,
+          "top_in": 0.222,
+          "width_in": 12.889,
+          "height_in": 7.056,
+          "fill": "bg_surface",
+          "border_pt": 1.5,
+          "border_color": "divider_strong"
+        },
+        "title": {
+          "kind": "text",
+          "left_in": 0.5,
+          "top_in": 0.7,
+          "width_in": 12.333,
+          "height_in": 0.7,
+          "font": "display",
+          "size": "h1",
+          "weight": "bold",
+          "color": "text_primary",
+          "binds_to": "title"
+        },
+        "treemap": {
+          "kind": "placeholder",
+          "left_in": 0.5,
+          "top_in": 1.7,
+          "width_in": 12.333,
+          "height_in": 5.2,
+          "binds_to": "tiles[]",
+          "schema": {
+            "label": "string",
+            "value": "number",
+            "perf": "number"
+          },
+          "layout": "treemap",
+          "perf_color_scale": {
+            "negative": "semantic_negative",
+            "neutral": "divider",
+            "positive": "semantic_positive"
+          }
+        }
+      }
+    },
+    "42_chart_line": {
+      "description": "Multi-series line chart with legend.",
+      "background": "bg_primary",
+      "chart_type": "line",
+      "regions": {
+        "frame": {
+          "kind": "rect",
+          "left_in": 0.222,
+          "top_in": 0.222,
+          "width_in": 12.889,
+          "height_in": 7.056,
+          "fill": "bg_surface",
+          "border_pt": 1.5,
+          "border_color": "divider_strong"
+        },
+        "chrome_top": {
+          "kind": "placeholder",
+          "left_in": 0.222,
+          "top_in": 0.222,
+          "width_in": 12.889,
+          "height_in": 0.5,
+          "layout": "chrome_split"
+        },
+        "title": {
+          "kind": "text",
+          "left_in": 0.5,
+          "top_in": 0.9,
+          "width_in": 12.333,
+          "height_in": 0.7,
+          "font": "display",
+          "size": "h1",
+          "weight": "bold",
+          "color": "text_primary",
+          "binds_to": "title"
+        },
+        "chart": {
+          "kind": "placeholder",
+          "left_in": 0.5,
+          "top_in": 1.9,
+          "width_in": 9.5,
+          "height_in": 4.8,
+          "binds_to": "series[]",
+          "schema": {
+            "label": "string",
+            "x": "string[]",
+            "y": "number[]"
+          },
+          "layout": "line_multi",
+          "stroke_pt": 1.5,
+          "palette": "series_palette"
+        },
+        "legend": {
+          "kind": "placeholder",
+          "left_in": 10.3,
+          "top_in": 1.9,
+          "width_in": 2.5,
+          "height_in": 4.8,
+          "binds_to": "series[]",
+          "layout": "legend_vertical"
+        }
+      }
+    }
+  }
+}

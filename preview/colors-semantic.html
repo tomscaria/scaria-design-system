@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<link rel="stylesheet" href="theme-switcher.css"/>
+<style>
+  body{margin:0;background:var(--bg);padding:60px 16px 16px;font-family:var(--font-sans);color:var(--fg);min-height:100vh}
+  h4{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--fg-3);margin:0 0 8px;font-family:var(--font-mono);font-weight:600}
+  .scale{display:grid;grid-template-columns:70px repeat(9,1fr);gap:3px;margin-bottom:6px;align-items:center}
+  .sw{height:22px;border-radius:var(--r-xs)}
+  .name{font-size:11px;color:var(--fg-2);font-family:var(--font-mono)}
+  .role-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
+  .role{padding:12px;border-radius:var(--r-md);border:1px solid var(--line);background:var(--bg-2)}
+  .role .bar{height:6px;border-radius:3px;margin-bottom:8px}
+  .role .t{font-size:11px;font-family:var(--font-mono);color:var(--fg-2)}
+  .role .v{font-size:10px;color:var(--fg-3);font-family:var(--font-mono)}
+</style></head><body data-theme="lore-light">
+<h4>Semantic roles (per theme)</h4>
+<div class="role-row">
+  <div class="role"><div class="bar" style="background:var(--success)"></div><div class="t">success</div><div class="v">moss / green</div></div>
+  <div class="role"><div class="bar" style="background:var(--info)"></div><div class="t">info</div><div class="v">slate / blue</div></div>
+  <div class="role"><div class="bar" style="background:var(--warn)"></div><div class="t">warn</div><div class="v">clay / amber</div></div>
+  <div class="role"><div class="bar" style="background:var(--danger)"></div><div class="t">danger</div><div class="v">red</div></div>
+</div>
+
+<h4>Raw primitive ramps (always available)</h4>
+<div class="scale"><div class="name">red</div><div class="sw" style="background:var(--p-red-100)"></div><div class="sw" style="background:var(--p-red-200)"></div><div class="sw" style="background:var(--p-red-300)"></div><div class="sw" style="background:var(--p-red-400)"></div><div class="sw" style="background:var(--p-red-500)"></div><div class="sw" style="background:var(--p-red-600)"></div><div class="sw" style="background:var(--p-red-700)"></div><div class="sw" style="background:var(--p-red-800)"></div><div class="sw" style="background:var(--p-red-900)"></div></div>
+<div class="scale"><div class="name">orange</div><div class="sw" style="background:var(--p-orange-100)"></div><div class="sw" style="background:var(--p-orange-200)"></div><div class="sw" style="background:var(--p-orange-300)"></div><div class="sw" style="background:var(--p-orange-400)"></div><div class="sw" style="background:var(--p-orange-500)"></div><div class="sw" style="background:var(--p-orange-600)"></div><div class="sw" style="background:var(--p-orange-700)"></div><div class="sw" style="background:var(--p-orange-800)"></div><div class="sw" style="background:var(--p-orange-900)"></div></div>
+<div class="scale"><div class="name">yellow</div><div class="sw" style="background:var(--p-yellow-100)"></div><div class="sw" style="background:var(--p-yellow-200)"></div><div class="sw" style="background:var(--p-yellow-300)"></div><div class="sw" style="background:var(--p-yellow-400)"></div><div class="sw" style="background:var(--p-yellow-500)"></div><div class="sw" style="background:var(--p-yellow-600)"></div><div class="sw" style="background:var(--p-yellow-700)"></div><div class="sw" style="background:var(--p-yellow-800)"></div><div class="sw" style="background:var(--p-yellow-900)"></div></div>
+<div class="scale"><div class="name">green</div><div class="sw" style="background:var(--p-green-100)"></div><div class="sw" style="background:var(--p-green-200)"></div><div class="sw" style="background:var(--p-green-300)"></div><div class="sw" style="background:var(--p-green-400)"></div><div class="sw" style="background:var(--p-green-500)"></div><div class="sw" style="background:var(--p-green-600)"></div><div class="sw" style="background:var(--p-green-700)"></div><div class="sw" style="background:var(--p-green-800)"></div><div class="sw" style="background:var(--p-green-900)"></div></div>
+<div class="scale"><div class="name">blue</div><div class="sw" style="background:var(--p-blue-100)"></div><div class="sw" style="background:var(--p-blue-200)"></div><div class="sw" style="background:var(--p-blue-300)"></div><div class="sw" style="background:var(--p-blue-400)"></div><div class="sw" style="background:var(--p-blue-500)"></div><div class="sw" style="background:var(--p-blue-600)"></div><div class="sw" style="background:var(--p-blue-700)"></div><div class="sw" style="background:var(--p-blue-800)"></div><div class="sw" style="background:var(--p-blue-900)"></div></div>
+<div class="scale"><div class="name">indigo</div><div class="sw" style="background:var(--p-indigo-100)"></div><div class="sw" style="background:var(--p-indigo-200)"></div><div class="sw" style="background:var(--p-indigo-300)"></div><div class="sw" style="background:var(--p-indigo-400)"></div><div class="sw" style="background:var(--p-indigo-500)"></div><div class="sw" style="background:var(--p-indigo-600)"></div><div class="sw" style="background:var(--p-indigo-700)"></div><div class="sw" style="background:var(--p-indigo-800)"></div><div class="sw" style="background:var(--p-indigo-900)"></div></div>
+<div class="scale"><div class="name">purple</div><div class="sw" style="background:var(--p-purple-100)"></div><div class="sw" style="background:var(--p-purple-200)"></div><div class="sw" style="background:var(--p-purple-300)"></div><div class="sw" style="background:var(--p-purple-400)"></div><div class="sw" style="background:var(--p-purple-500)"></div><div class="sw" style="background:var(--p-purple-600)"></div><div class="sw" style="background:var(--p-purple-700)"></div><div class="sw" style="background:var(--p-purple-800)"></div><div class="sw" style="background:var(--p-purple-900)"></div></div>
+<div class="scale"><div class="name">pink</div><div class="sw" style="background:var(--p-pink-100)"></div><div class="sw" style="background:var(--p-pink-200)"></div><div class="sw" style="background:var(--p-pink-300)"></div><div class="sw" style="background:var(--p-pink-400)"></div><div class="sw" style="background:var(--p-pink-500)"></div><div class="sw" style="background:var(--p-pink-600)"></div><div class="sw" style="background:var(--p-pink-700)"></div><div class="sw" style="background:var(--p-pink-800)"></div><div class="sw" style="background:var(--p-pink-900)"></div></div>
+<script src="theme-switcher.js" defer></script>
+</body></html>

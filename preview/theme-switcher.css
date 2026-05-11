@@ -1,0 +1,27 @@
+/* Shared theme-switcher used across all design-system preview pages.
+   Renders a floating row of theme chips top-right of the page.
+   Pages add data-theme to <body>, switcher updates it live. */
+.theme-switch{
+  position:fixed;top:14px;right:14px;z-index:1000;
+  display:flex;gap:4px;align-items:center;flex-wrap:wrap;justify-content:flex-end;
+  max-width:calc(100vw - 28px);
+  padding:6px;background:rgba(255,255,255,.85);backdrop-filter:blur(14px);
+  border:1px solid rgba(0,0,0,.08);border-radius:999px;
+  box-shadow:0 8px 24px -8px rgba(0,0,0,.15);
+  font-family:ui-monospace,Menlo,monospace;font-size:10px;
+}
+.theme-switch-label{
+  padding:4px 8px 4px 10px;color:#666;letter-spacing:.1em;text-transform:uppercase;font-weight:600;
+}
+.theme-switch button{
+  appearance:none;border:1px solid transparent;background:transparent;
+  padding:5px 10px;border-radius:999px;font:inherit;cursor:pointer;color:#333;
+  display:inline-flex;align-items:center;gap:5px;transition:all .15s;
+}
+.theme-switch button:hover{background:rgba(0,0,0,.05)}
+.theme-switch button[aria-current="true"]{background:#141613;color:#D4F24B;border-color:#141613}
+.theme-switch .dot{width:8px;height:8px;border-radius:999px;border:1px solid rgba(0,0,0,.15);flex-shrink:0}
+@media (prefers-color-scheme: dark){
+  .theme-switch{background:rgba(20,22,19,.9);border-color:rgba(255,255,255,.1)}
+  .theme-switch-label,.theme-switch button{color:#ccc}
+}

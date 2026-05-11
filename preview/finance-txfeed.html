@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>Finance · Tx Feed · Lore</title>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<link rel="stylesheet" href="theme-switcher.css"/>
+<link rel="stylesheet" href="_preview-base.css"/>
+<link rel="stylesheet" href="_primitives.css"/>
+<style>
+  .tx-hdr{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line);background:var(--bg-3)}
+  .tx-hdr h5{margin:0;font-size:13px;font-weight:600}
+  .tx{display:grid;grid-template-columns:36px 1fr auto auto;gap:12px;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line-2)}
+  .tx:last-child{border-bottom:none}
+  .tx .ico{width:36px;height:36px;border-radius:999px;background:var(--bg-3);display:flex;align-items:center;justify-content:center;color:var(--fg-2)}
+  .tx .ico svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .tx .ico.in{background:color-mix(in oklab,var(--success) 15%,var(--bg-3));color:var(--success)}
+  .tx .ico.out{background:color-mix(in oklab,var(--danger) 12%,var(--bg-3));color:var(--danger)}
+  .tx .ico.swap{background:color-mix(in oklab,var(--info) 15%,var(--bg-3));color:var(--info)}
+  .tx .ico.yield{background:color-mix(in oklab,var(--accent) 25%,var(--bg-3));color:var(--accent-deep,var(--fg))}
+  .tx .who{font-size:14px;font-weight:500;color:var(--fg);line-height:1.2}
+  .tx .sub{font-size:11px;color:var(--fg-3);font-family:var(--font-mono);margin-top:3px}
+  .tx .amt{font-family:var(--font-mono);font-variant-numeric:tabular-nums slashed-zero;font-size:14px;font-weight:500;text-align:right}
+  .tx .time{font-family:var(--font-mono);font-size:11px;color:var(--fg-3);text-align:right}
+  .day{padding:10px 16px 4px;font-family:var(--font-mono);font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:var(--fg-3);background:var(--bg-2)}
+</style></head><body data-theme="lore-light">
+
+<section>
+  <h4>Transaction feed · grouped by day</h4>
+  <div class="card flush">
+    <div class="tx-hdr"><h5>Activity</h5><span class="mono muted" style="font-size:11px">14 this month</span></div>
+    <div class="day">Today · Apr 20</div>
+    <div class="tx">
+      <div class="ico in"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H9M17 7V15"/></svg></div>
+      <div><div class="who">From @mira</div><div class="sub">Rent · memo: Apr + utilities</div></div>
+      <div class="amt pos">+$1,200.00</div>
+      <div class="time">9:42 AM</div>
+    </div>
+    <div class="tx">
+      <div class="ico swap"><svg viewBox="0 0 24 24"><path d="M7 16L3 20M3 20L7 24M3 20H17M17 8L21 4M21 4L17 0M21 4H7"/></svg></div>
+      <div><div class="who">Swap · ETH → USDC</div><div class="sub">Uniswap v4 · 0.42 ETH · rate 3,128</div></div>
+      <div class="amt">1,313.76 USDC</div>
+      <div class="time">8:10 AM</div>
+    </div>
+    <div class="tx">
+      <div class="ico yield"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 7l-5-5-5 5"/></svg></div>
+      <div><div class="who">Yield · aUSDC</div><div class="sub">Aave v3 · 0.014% / day · auto-compound</div></div>
+      <div class="amt pos">+$0.42</div>
+      <div class="time">06:00</div>
+    </div>
+    <div class="day">Yesterday · Apr 19</div>
+    <div class="tx">
+      <div class="ico out"><svg viewBox="0 0 24 24"><path d="M17 7L7 17M7 17H15M7 17V9"/></svg></div>
+      <div><div class="who">To Whole Foods</div><div class="sub">Card · MCC 5411 · Mission St</div></div>
+      <div class="amt neg">−$84.20</div>
+      <div class="time">6:41 PM</div>
+    </div>
+    <div class="tx">
+      <div class="ico out"><svg viewBox="0 0 24 24"><path d="M17 7L7 17M7 17H15M7 17V9"/></svg></div>
+      <div><div class="who">To 0x5b0f…4e0A</div><div class="sub">Base · gas $0.003 · txn 0x8a…71f</div></div>
+      <div class="amt neg">−250.00 USDC</div>
+      <div class="time">2:11 PM</div>
+    </div>
+    <div class="tx">
+      <div class="ico in"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H9M17 7V15"/></svg></div>
+      <div><div class="who">Payroll · Framework Ventures</div><div class="sub">Direct deposit · biweekly</div></div>
+      <div class="amt pos">+$4,820.00</div>
+      <div class="time">9:00 AM</div>
+    </div>
+  </div>
+</section>
+
+<script src="theme-switcher.js" defer></script>
+</body></html>

@@ -1,0 +1,988 @@
+/* ============================================================
+   Lore Design System — Colors & Type
+   ------------------------------------------------------------
+   Lore is a "launch a global bank in a day" platform — SDKs +
+   UI for stablecoin neobanks, onchain finance, community ETFs,
+   Save/Spend/Send/Invest tabs. This file is the single source
+   of truth for color + type tokens across all themes.
+   ============================================================ */
+
+/* ---------- FONTS ---------- */
+
+/* Geist (Vercel, open source) — required for [data-theme="insto"].
+   Loaded via Google Fonts CDN by default. To self-host: download
+   Geist.woff2 and Geist-Mono.woff2 to fonts/, then replace this
+   @import with @font-face declarations matching the Aeonik pattern. */
+@import url("https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap");
+
+@font-face {
+  font-family: "Aeonik";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("fonts/Aeonik-Regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Aeonik";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("fonts/Aeonik-Medium.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Aeonik";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("fonts/Aeonik-Bold.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Aeonik Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("fonts/AeonikMono-Regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Aeonik Mono";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("fonts/AeonikMono-Medium.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Lock Serif";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("fonts/LockSerif-Regular.woff2") format("woff2");
+}
+
+/* ---------- ABSOLUTE PALETTE (from Prysm DS) ---------- */
+:root {
+  --p-white: #ffffff;
+  --p-black: #040303;
+
+  --p-gray-050: #FBF9F8;
+  --p-gray-100: #F6F3F2;
+  --p-gray-200: #DFDDDB;
+  --p-gray-300: #D0CBC9;
+  --p-gray-400: #AFA8A5;
+  --p-gray-500: #8C8684;
+  --p-gray-600: #6F6A68;
+  --p-gray-700: #4F4C4A;
+  --p-gray-800: #363433;
+  --p-gray-900: #191817;
+  --p-gray-950: #100E0C;
+
+  /* Lore signature — CHARTREUSE-forward fintech direction.
+     Lore Chartreuse is the hero accent. Parchment stays as a calm
+     warm canvas, but ember is demoted to historical; chartreuse +
+     graphite carry the fintech weight. */
+  --p-parchment: #F1ECE0;
+  --p-parchment-dim: #E5DFD0;
+  --p-chartreuse: #D4F24B;       /* Lore chartreuse — primary accent */
+  --p-chartreuse-hover: #C2E232;
+  --p-chartreuse-deep: #9BBD1C;   /* on-light legible variant */
+  --p-chartreuse-soft: #EEF9C4;
+  --p-graphite: #141613;          /* near-black with green undertone */
+  --p-graphite-2: #1D201C;
+  --p-moss: #3B5A2E;              /* deep forest — success/savings */
+  --p-moss-soft: #C8D9B5;
+  --p-slate: #3E4B55;             /* cool slate — links, info */
+  --p-slate-soft: #C5D0D8;
+  --p-rune: #2D3558;              /* inked navy-violet — governance */
+  --p-rune-soft: #BFC5DB;
+  --p-clay: #B85C3A;              /* muted terracotta — warnings only */
+  --p-ash: #0A0B09;               /* true near-black */
+
+  /* Semantic palette from Prysm (kept for crypto-native flows) */
+  --p-red-100:#fdf0ef; --p-red-200:#fad6d3; --p-red-300:#f8bbb5;
+  --p-red-400:#f58d80; --p-red-500:#ea5633; --p-red-600:#bb4227;
+  --p-red-700:#892f19; --p-red-800:#671900; --p-red-900:#350900;
+
+  --p-orange-100:#fdf0eb; --p-orange-200:#fad7c6; --p-orange-300:#f7be9d;
+  --p-orange-400:#ec964b; --p-orange-500:#c27528; --p-orange-600:#965d2e;
+  --p-orange-700:#6d431f; --p-orange-800:#4d2d13; --p-orange-900:#271406;
+
+  --p-yellow-100:#f9f3d1; --p-yellow-200:#ece08c; --p-yellow-300:#d9cc6f;
+  --p-yellow-400:#b8ac4b; --p-yellow-500:#93893a; --p-yellow-600:#746c2c;
+  --p-yellow-700:#544e1f; --p-yellow-800:#3a3513; --p-yellow-900:#1b1906;
+
+  --p-green-100:#ebf5ee; --p-green-200:#c7e6d0; --p-green-300:#97d9ac;
+  --p-green-400:#55bd7e; --p-green-500:#3b985f; --p-green-600:#1d7a45;
+  --p-green-700:#125831; --p-green-800:#0a3e21; --p-green-900:#031e0d;
+
+  --p-blue-100:#edf3fe; --p-blue-200:#cce0fc; --p-blue-300:#abcdfa;
+  --p-blue-400:#6faef0; --p-blue-500:#318cd5; --p-blue-600:#256fab;
+  --p-blue-700:#184f7a; --p-blue-800:#0e3858; --p-blue-900:#041a2c;
+
+  --p-indigo-100:#f2f2fc; --p-indigo-200:#dbdcf8; --p-indigo-300:#c5c7f2;
+  --p-indigo-400:#a0a3ee; --p-indigo-500:#787de7; --p-indigo-600:#545bde;
+  --p-indigo-700:#343cb5; --p-indigo-800:#232982; --p-indigo-900:#0e1145;
+
+  --p-purple-100:#f7f0ff; --p-purple-200:#e9d8f9; --p-purple-300:#ddbef5;
+  --p-purple-400:#c994ee; --p-purple-500:#b861e6; --p-purple-600:#9d3bcc;
+  --p-purple-700:#722996; --p-purple-800:#511b6c; --p-purple-900:#290a38;
+
+  --p-pink-100:#fcf0f5; --p-pink-200:#f6d6e3; --p-pink-300:#f0bcd3;
+  --p-pink-400:#e88eb8; --p-pink-500:#e1519e; --p-pink-600:#b33e7e;
+  --p-pink-700:#842b5a; --p-pink-800:#5e1c40; --p-pink-900:#300a1e;
+}
+
+/* ---------- SEMANTIC TOKENS: LORE LIGHT (default) ---------- */
+:root, [data-theme="lore-light"] {
+  /* Surfaces */
+  --bg: var(--p-parchment);
+  --bg-2: #F8F4EA;       /* raised card */
+  --bg-3: #FFFFFF;       /* modal / floating */
+  --bg-inverted: var(--p-graphite);
+  --bg-muted: var(--p-parchment-dim);
+
+  /* Foreground */
+  --fg: var(--p-graphite);
+  --fg-2: #3A3D36;
+  --fg-3: #6B6E64;
+  --fg-muted: #9A9D92;
+  --fg-inverted: var(--p-parchment);
+
+  /* Lines */
+  --line: #D5CEB9;
+  --line-2: #E4DDC7;
+  --line-strong: var(--p-graphite);
+
+  /* Brand — graphite is the primary action surface;
+     chartreuse is the hero accent used on dark surfaces,
+     hover states, focus rings, and data emphasis. */
+  --brand: var(--p-graphite);
+  --brand-hover: #262821;
+  --brand-fg: var(--p-chartreuse);
+  --accent: var(--p-chartreuse);
+  --accent-hover: var(--p-chartreuse-hover);
+  --accent-deep: var(--p-chartreuse-deep);
+  --accent-soft: var(--p-chartreuse-soft);
+  --accent-fg: var(--p-graphite);
+
+  /* Ember retained as a legacy/historical token for slow migration */
+  --p-ember: #B85C3A;
+  --p-ember-focus: #8F3F22;
+
+  /* Semantic */
+  --success: var(--p-moss);
+  --success-soft: var(--p-moss-soft);
+  --info: var(--p-slate);
+  --info-soft: var(--p-slate-soft);
+  --warn: var(--p-clay);
+  --warn-soft: #F1D3C2;
+  --danger: var(--p-red-600);
+  --danger-soft: var(--p-red-200);
+  --governance: var(--p-rune);
+  --governance-soft: var(--p-rune-soft);
+
+  /* Elevation / shadow — warm, low-contrast */
+  --shadow-xs: 0 1px 2px rgba(40, 25, 10, 0.04);
+  --shadow-sm: 0 1px 2px rgba(40, 25, 10, 0.05), 0 2px 4px rgba(40, 25, 10, 0.04);
+  --shadow-md: 0 2px 6px rgba(40, 25, 10, 0.06), 0 6px 16px rgba(40, 25, 10, 0.06);
+  --shadow-lg: 0 4px 12px rgba(40, 25, 10, 0.08), 0 16px 40px rgba(40, 25, 10, 0.10);
+  --shadow-xl: 0 8px 24px rgba(40, 25, 10, 0.10), 0 32px 80px rgba(40, 25, 10, 0.12);
+
+  /* Radii */
+  --r-xs: 4px;
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-xl: 24px;
+  --r-pill: 999rem;
+
+  /* Spacing scale (px) — keep the Prysm Sp* system */
+  --sp-1: 1px;   --sp-2: 2px;   --sp-3: 3px;   --sp-4: 4px;
+  --sp-8: 8px;   --sp-12: 12px; --sp-16: 16px; --sp-20: 20px;
+  --sp-24: 24px; --sp-32: 32px; --sp-40: 40px; --sp-48: 48px;
+  --sp-56: 56px; --sp-64: 64px; --sp-72: 72px; --sp-80: 80px;
+  --sp-96: 96px; --sp-128: 128px;
+
+  /* Type */
+  --font-sans: "Aeonik", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: "Aeonik Mono", ui-monospace, Menlo, Monaco, "Cascadia Mono", "Roboto Mono", "Courier New", monospace;
+  --font-display: "Lock Serif", "Aeonik", ui-serif, Georgia, serif;
+
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-bold: 700;
+
+  --lh-body: 1.5;
+  --lh-header: 1.2;
+}
+
+/* ---------- LORE DARK ---------- */
+[data-theme="lore-dark"] {
+  --bg: var(--p-graphite);
+  --bg-2: #1A1D18;
+  --bg-3: #242720;
+  --bg-inverted: var(--p-parchment);
+  --bg-muted: #101210;
+
+  --fg: #F1ECE0;
+  --fg-2: #C3C7B8;
+  --fg-3: #8B8F82;
+  --fg-muted: #5C5F55;
+  --fg-inverted: var(--p-graphite);
+
+  --line: #2C2F28;
+  --line-2: #1E211C;
+  --line-strong: #F1ECE0;
+
+  --brand: var(--p-chartreuse);
+  --brand-hover: var(--p-chartreuse-hover);
+  --brand-fg: var(--p-graphite);
+  --accent: var(--p-chartreuse);
+  --accent-hover: var(--p-chartreuse-hover);
+  --accent-deep: var(--p-chartreuse-deep);
+  --accent-soft: #2F3A15;
+  --accent-fg: var(--p-graphite);
+
+  --success: #8FB47D;
+  --success-soft: #1F2E17;
+  --info: #8FA3AE;
+  --info-soft: #1C2830;
+  --warn: #D98666;
+  --warn-soft: #3B1F13;
+  --danger: #F58D80;
+  --danger-soft: #4A1D14;
+  --governance: #9BA3C5;
+  --governance-soft: #1E2340;
+
+  --shadow-xs: 0 1px 2px rgba(0,0,0,.5);
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.6), 0 2px 4px rgba(0,0,0,.5);
+  --shadow-md: 0 2px 6px rgba(0,0,0,.5), 0 6px 16px rgba(0,0,0,.5);
+  --shadow-lg: 0 4px 12px rgba(0,0,0,.6), 0 16px 40px rgba(0,0,0,.55);
+  --shadow-xl: 0 8px 24px rgba(0,0,0,.7), 0 32px 80px rgba(0,0,0,.6);
+}
+
+/* ---------- LORE INSTITUTIONAL ("insto") ----------
+   The institutional sibling of lore-light. Built for investor-facing
+   surfaces — teaser sites, fund-manager dashboards, capital-allocator
+   pitch decks. Inspired by Superstate (FundOS) and Zerohash: warm
+   off-white background, soft-black foreground, gold accent, blue
+   focus ring, saturated red destructive.
+
+   Typography: Geist (Vercel, open-source via Google Fonts) replaces
+   Aeonik for the "Bloomberg terminal × onchain native" register.
+   Aeonik fallback retained so projects without Geist render correctly.
+
+   Use when: audience is institutional (VC partners, asset managers,
+   fund operators) and the brand voice is calm + claims-require-proof.
+   Don't use for retail consumer apps — use lore-light instead.
+
+   Companion patterns (documented in `themes/insto-notes.md`):
+   - White-fill SVGs need Tailwind `invert` filter on this theme
+   - Modal overlays use foreground/40 + backdrop-blur, not black/80
+   - Hero pattern: dual-prototype (fund-manager console + investor phone)
+   - Audience separation via tile grid, not tabs
+   - Inline appendices with `<details>`, single-URL diligence */
+[data-theme="insto"],
+[data-theme="institutional"] {
+  /* Typography — Geist with Aeonik fallback */
+  --font-sans: "Geist", "Aeonik", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "Geist Mono", "Aeonik Mono", ui-monospace, Menlo, Monaco, "Cascadia Mono", "Roboto Mono", monospace;
+  --font-display: "Geist", "Aeonik", ui-sans-serif, sans-serif;
+
+  /* Surfaces — warm off-white hierarchy, flat cards (Superstate pattern) */
+  --bg: #FFFFFF;
+  --bg-2: #FFFFFF;
+  --bg-3: #FFFFFF;
+  --bg-inverted: #1F1F1F;
+  --bg-muted: #F3F1EE;       /* warm grey-300 */
+
+  /* Foreground — soft-black, never pure black */
+  --fg: #1F1F1F;
+  --fg-2: #373737;
+  --fg-3: #767676;
+  --fg-muted: #9CA3A0;
+  --fg-inverted: #FFFFFF;
+
+  /* Lines — neutral grey */
+  --line: #D7D7D7;
+  --line-2: #EDF0EE;
+  --line-strong: #1F1F1F;
+
+  /* Brand — dark CTA (Superstate "Register" button) */
+  --brand: #1F1F1F;
+  --brand-hover: #000000;
+  --brand-fg: #FFFFFF;
+
+  /* Accent — warm gold (Superstate FundOS accent) */
+  --accent: #C2AA84;         /* gold-500 */
+  --accent-hover: #6D5E46;   /* gold-700 */
+  --accent-deep: #484238;    /* gold-900 */
+  --accent-soft: #F5ECDA;    /* gold-300 — badge/chip bg */
+  --accent-fg: #1F1F1F;      /* soft-black on gold passes AA */
+
+  /* Semantic */
+  --success: #4F5A48;
+  --success-soft: #DDE7D2;
+  --info: #517AB7;           /* link-blue + focus ring */
+  --info-soft: #DFECFD;
+  --warn: #B89C51;
+  --warn-soft: #F8EBC9;
+  --danger: #C82929;         /* saturated red, legible as text */
+  --danger-soft: #F8F1F1;
+
+  /* Radii — 8px default matches Superstate / Tailwind 0.5rem */
+  --r-xs: 4px;
+  --r-sm: 6px;
+  --r-md: 8px;
+  --r-lg: 12px;
+  --r-xl: 16px;
+  --r-pill: 999rem;
+
+  /* Shadows — subtle, institutional (no glow effects) */
+  --shadow-xs: 0 1px 2px rgba(0,0,0,.04);
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.05), 0 1px 3px rgba(0,0,0,.04);
+  --shadow-md: 0 2px 6px rgba(0,0,0,.06), 0 4px 12px rgba(0,0,0,.04);
+  --shadow-lg: 0 4px 12px rgba(0,0,0,.08), 0 12px 32px rgba(0,0,0,.08);
+  --shadow-xl: 0 8px 24px rgba(0,0,0,.10), 0 24px 64px rgba(0,0,0,.10);
+}
+
+/* ---------- PRIMITIVE PREVIEW (Inter, neutral) ----------
+   Use when demonstrating raw primitives in a brand-agnostic way. */
+[data-theme="primitive"] {
+  --font-sans: "Inter", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-display: "Inter", ui-sans-serif, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Monaco, "Courier New", monospace;
+  --bg: #FFFFFF;
+  --bg-2: #F7F7F8;
+  --bg-3: #FFFFFF;
+  --bg-muted: #F2F2F3;
+  --fg: #0A0A0A;
+  --fg-2: #404040;
+  --fg-3: #737373;
+  --fg-muted: #A3A3A3;
+  --line: #E5E5E5;
+  --line-2: #F0F0F0;
+  --brand: #0A0A0A;
+  --brand-hover: #262626;
+  --brand-fg: #FFFFFF;
+  --accent: #0A0A0A;
+  --r-xs: 4px; --r-sm: 6px; --r-md: 8px; --r-lg: 10px; --r-xl: 14px;
+}
+
+/* ---------- THEME: NUBANK (purple, playful) ---------- */
+/* Default 'nubank' aliased to nubank-light for back-compat */
+[data-theme="nubank"],
+[data-theme="nubank-light"] {
+  --font-sans: "Inter", "Aeonik", sans-serif;
+  --font-display: "Inter", sans-serif;
+  --bg: #F6F2FA;
+  --bg-2: #FFFFFF;
+  --bg-3: #F0E6F8;
+  --bg-muted: #F9F5FC;
+  --fg: #1A001E;
+  --fg-2: #4A1F58;
+  --fg-3: #7A5A8A;
+  --fg-inverted: #FFFFFF;
+  --line: #E8DCF2;
+  --brand: #8A05BE;
+  --brand-hover: #6F0499;
+  --brand-fg: #FFFFFF;
+  --accent: #FFDD00;
+  --success: #00A86B;
+  --danger: #E6002B;
+  --r-sm: 12px; --r-md: 16px; --r-lg: 24px; --r-xl: 32px;
+}
+[data-theme="nubank-dark"] {
+  --font-sans: "Inter", "Aeonik", sans-serif;
+  --font-display: "Inter", sans-serif;
+  --bg: #1A001E;
+  --bg-2: #2A0D32;
+  --bg-3: #3A1A45;
+  --bg-muted: #150018;
+  --fg: #FFFFFF;
+  --fg-2: #E8D3F5;
+  --fg-3: #A885C0;
+  --fg-inverted: #1A001E;
+  --line: #3A1A45;
+  --brand: #C96AFF;
+  --brand-hover: #D98AFF;
+  --brand-fg: #1A001E;
+  --accent: #FFDD00;
+  --success: #00D084;
+  --danger: #FF4060;
+  --info: #7FA8FF;
+  --r-sm: 12px; --r-md: 16px; --r-lg: 24px; --r-xl: 32px;
+}
+
+/* ---------- THEME: REVOLUT (premium) ---------- */
+[data-theme="revolut"],
+[data-theme="revolut-dark"] {
+  --font-sans: "Inter", sans-serif;
+  --font-display: "Inter", sans-serif;
+  --bg: #000000;
+  --bg-2: #111111;
+  --bg-3: #1B1B1B;
+  --bg-muted: #0A0A0A;
+  --fg: #FFFFFF;
+  --fg-2: #B3B3B3;
+  --fg-3: #8A8A8A;
+  --line: #222222;
+  --brand: #4D94FF;
+  --brand-hover: #77ADFF;
+  --brand-fg: #000000;
+  --accent: #4D94FF;
+  --success: #00D084;
+  --danger: #FF4F4F;
+  --info: #7FB0FF;
+  --r-sm: 8px; --r-md: 12px; --r-lg: 16px; --r-xl: 20px;
+}
+[data-theme="revolut-light"] {
+  --font-sans: "Inter", sans-serif;
+  --font-display: "Inter", sans-serif;
+  --bg: #FFFFFF;
+  --bg-2: #F7F8FA;
+  --bg-3: #EEF0F4;
+  --bg-muted: #FAFBFC;
+  --fg: #000000;
+  --fg-2: #4B5560;
+  --fg-3: #6B7380;
+  --line: #E3E6EC;
+  --brand: #0666EB;
+  --brand-hover: #0552C2;
+  --brand-fg: #FFFFFF;
+  --accent: #0666EB;
+  --success: #047A4C;
+  --danger: #C22C2C;
+  --r-sm: 8px; --r-md: 12px; --r-lg: 16px; --r-xl: 20px;
+}
+
+/* ---------- THEME: ROBINHOOD (green, data-dense) ---------- */
+[data-theme="robinhood"],
+[data-theme="robinhood-dark"] {
+  --font-sans: "Inter", sans-serif;
+  --font-display: "Inter", sans-serif;
+  --bg: #0B0F0C;
+  --bg-2: #121714;
+  --bg-3: #1A201C;
+  --bg-muted: #0F1511;
+  --fg: #F7F7F7;
+  --fg-2: #B9C0BC;
+  --fg-3: #8E9793;
+  --line: #1F2622;
+  --brand: #00C805;
+  --brand-hover: #00E006;
+  --brand-fg: #0B0F0C;
+  --accent: #00C805;
+  --success: #00C805;
+  --danger: #FF5000;
+  --info: #7FB4FF;
+  --r-sm: 4px; --r-md: 6px; --r-lg: 8px; --r-xl: 12px;
+}
+[data-theme="robinhood-light"] {
+  --font-sans: "Inter", sans-serif;
+  --font-display: "Inter", sans-serif;
+  --bg: #FFFFFF;
+  --bg-2: #F7F8F7;
+  --bg-3: #EFF2EF;
+  --bg-muted: #FAFBFA;
+  --fg: #0B0F0C;
+  --fg-2: #5A615D;
+  --fg-3: #6A716E;
+  --line: #E3E6E3;
+  --brand: #00751E;
+  --brand-hover: #005E19;
+  --brand-fg: #FFFFFF;
+  --accent: #00751E;
+  --success: #00751E;
+  --danger: #C23A00;
+  --r-sm: 4px; --r-md: 6px; --r-lg: 8px; --r-xl: 12px;
+}
+
+/* ---------- THEME: COINBASE (blue, trust) ---------- */
+[data-theme="coinbase"],
+[data-theme="coinbase-light"] {
+  --font-sans: "Inter", sans-serif;
+  --font-display: "Inter", sans-serif;
+  --bg: #FFFFFF;
+  --bg-2: #F9FAFB;
+  --bg-3: #FFFFFF;
+  --bg-muted: #F0F3F9;
+  --fg: #0A0B0D;
+  --fg-2: #5B616E;
+  --fg-3: #6B7280;
+  --line: #DDE1E9;
+  --brand: #0052FF;
+  --brand-hover: #0040CC;
+  --brand-fg: #FFFFFF;
+  --accent: #0052FF;
+  --success: #037A47;
+  --danger: #C11D2A;
+  --r-sm: 4px; --r-md: 8px; --r-lg: 12px; --r-xl: 16px;
+}
+[data-theme="coinbase-dark"] {
+  --font-sans: "Inter", sans-serif;
+  --font-display: "Inter", sans-serif;
+  --bg: #0A0B0D;
+  --bg-2: #13151A;
+  --bg-3: #1C1F26;
+  --bg-muted: #0F1116;
+  --fg: #FFFFFF;
+  --fg-2: #B1B5BD;
+  --fg-3: #6B7280;
+  --line: #1F2430;
+  --brand: #1A6BFF;
+  --brand-hover: #4788FF;
+  --brand-fg: #FFFFFF;
+  --accent: #1A6BFF;
+  --success: #05B169;
+  --danger: #FF4F4F;
+  --info: #7FB0FF;
+  --r-sm: 4px; --r-md: 8px; --r-lg: 12px; --r-xl: 16px;
+}
+
+/* ============================================================
+   SEMANTIC ELEMENT STYLES
+   Applied to raw html elements when an ancestor carries
+   class="lore-type" or the root has data-theme set.
+   ============================================================ */
+.lore-type, [data-theme] {
+  font-family: var(--font-sans);
+  color: var(--fg);
+  font-variant-ligatures: no-contextual;
+  font-feature-settings: "ss01", "ss07";
+  font-variant-numeric: tabular-nums slashed-zero;
+}
+.lore-type h1, .t-display-lg {
+  font-family: var(--font-display);
+  font-size: 66px; line-height: var(--lh-header); font-weight: var(--fw-bold);
+  letter-spacing: -0.02em; color: var(--fg);
+}
+.lore-type h2, .t-display-md {
+  font-family: var(--font-display);
+  font-size: 52px; line-height: var(--lh-header); font-weight: var(--fw-bold);
+  letter-spacing: -0.015em; color: var(--fg);
+}
+.t-display-sm {
+  font-family: var(--font-display);
+  font-size: 40px; line-height: var(--lh-header); font-weight: var(--fw-bold);
+  letter-spacing: -0.01em;
+}
+.t-display-xs {
+  font-family: var(--font-display);
+  font-size: 32px; line-height: var(--lh-header); font-weight: var(--fw-bold);
+}
+.lore-type h3, .t-header-xl {
+  font-size: 32px; line-height: var(--lh-header); font-weight: var(--fw-bold);
+  font-family: var(--font-sans); letter-spacing: -0.01em;
+}
+.lore-type h4, .t-header-lg {
+  font-size: 28px; line-height: var(--lh-header); font-weight: var(--fw-bold);
+}
+.lore-type h5, .t-header-md {
+  font-size: 25px; line-height: var(--lh-header); font-weight: var(--fw-bold);
+}
+.t-header-sm {
+  font-size: 22px; line-height: var(--lh-header); font-weight: var(--fw-bold);
+}
+.t-header-xs {
+  font-size: 20px; line-height: var(--lh-header); font-weight: var(--fw-bold);
+}
+.t-header-caps {
+  font-size: 12px; font-weight: var(--fw-bold);
+  text-transform: uppercase; letter-spacing: 0.075em;
+  color: var(--fg-3);
+}
+.lore-type p, .t-body-md {
+  font-size: 16px; line-height: var(--lh-body); font-weight: var(--fw-regular);
+  color: var(--fg-2);
+}
+.t-body-lg { font-size: 18px; line-height: var(--lh-body); }
+.t-body-sm { font-size: 14px; line-height: var(--lh-body); }
+.t-body-xs { font-size: 12px; line-height: var(--lh-body); }
+
+.lore-type code, .t-mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums slashed-zero;
+  font-feature-settings: "ss01";
+}
+.t-numeric {
+  font-variant-numeric: tabular-nums slashed-zero;
+  font-feature-settings: "ss01";
+}
+
+.lore-type a {
+  color: var(--info);
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+.lore-type a:hover { color: var(--brand); }
+
+/* ============================================================
+   EXPRESSIVE THEMES — Playground skins
+   Each defines surfaces, fg, brand, accent, line, radii, fonts,
+   and shadow so any page that uses tokens re-skins itself.
+   ============================================================ */
+
+/* CHAMPAGNE — institutional cream + ultramarine */
+[data-theme="champagne"]{
+  --font-sans:'Archivo',system-ui,sans-serif;
+  --font-display:'Archivo',system-ui,sans-serif;
+  --font-mono:'IBM Plex Mono',ui-monospace,monospace;
+  --bg:#F7F5EF; --bg-2:#FFFFFF; --bg-3:#FFFFFF; --bg-muted:#EEEBE1;
+  --fg:#0B1540; --fg-2:#3B4470; --fg-3:#4D568C; --fg-muted:#8088A8;
+  --line:#E6E2D6; --line-2:#EFEBDF; --line-strong:#0B1540;
+  --brand:#1846F0; --brand-hover:#0F33C0; --brand-fg:#fff;
+  --accent:#1846F0; --accent-deep:#0F33C0; --accent-soft:#E4EBFF; --accent-fg:#fff;
+  --success:#0F8A5A; --info:#1846F0; --warn:#C07A00; --danger:#C02020;
+  --r-xs:2px; --r-sm:4px; --r-md:6px; --r-lg:8px; --r-xl:12px; --r-pill:999px;
+  --shadow-xs:0 1px 2px rgba(11,21,64,.06);
+  --shadow-sm:0 1px 3px rgba(11,21,64,.08),0 2px 6px rgba(11,21,64,.04);
+  --shadow-md:0 4px 12px rgba(11,21,64,.10),0 1px 3px rgba(11,21,64,.06);
+  --shadow-lg:0 12px 32px rgba(11,21,64,.12),0 4px 12px rgba(11,21,64,.08);
+  --shadow-xl:0 24px 60px rgba(11,21,64,.16),0 8px 20px rgba(11,21,64,.10);
+}
+
+/* NOIR — pure black + electric blue */
+[data-theme="noir"]{
+  --font-sans:'Space Grotesk',system-ui,sans-serif;
+  --font-display:'Space Grotesk',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,monospace;
+  --bg:#050608; --bg-2:#0B0D11; --bg-3:#14171C; --bg-muted:#08090C;
+  --fg:#fff; --fg-2:#B8BCC6; --fg-3:#6F7583; --fg-muted:#464B57; --fg-inverted:#050608;
+  --line:#14171C; --line-2:#1E232B; --line-strong:#8FB4FF;
+  --brand:#0052FF; --brand-hover:#2F6EFF; --brand-fg:#fff;
+  --accent:#0052FF; --accent-deep:#0040CC; --accent-soft:rgba(0,82,255,.15); --accent-fg:#fff;
+  --success:#00D084; --info:#5B8EFF; --warn:#FFB547; --danger:#FF4F4F;
+  --r-xs:2px; --r-sm:6px; --r-md:8px; --r-lg:12px; --r-xl:16px; --r-pill:999px;
+  --shadow-xs:0 1px 2px rgba(0,82,255,.2);
+  --shadow-sm:0 2px 8px rgba(0,82,255,.15);
+  --shadow-md:0 8px 24px -6px rgba(0,82,255,.3),0 2px 8px rgba(0,0,0,.4);
+  --shadow-lg:0 16px 48px -8px rgba(0,82,255,.35),0 8px 24px rgba(0,0,0,.5);
+  --shadow-xl:0 32px 80px -16px rgba(0,82,255,.4),0 16px 48px rgba(0,0,0,.6);
+}
+
+/* GARDEN — green chlorophyll light */
+[data-theme="garden"]{
+  --font-sans:'Outfit',system-ui,sans-serif;
+  --font-display:'Outfit',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,monospace;
+  --bg:#F6FBEF; --bg-2:#FFFFFF; --bg-3:#FFFFFF; --bg-muted:#EEF5E3;
+  --fg:#0A1F12; --fg-2:#2E4A2A; --fg-3:#4A7A3F; --fg-muted:#8BA37F;
+  --line:#DEE9CD; --line-2:#E8F0D9; --line-strong:#00A303;
+  --brand:#00A303; --brand-hover:#008803; --brand-fg:#fff;
+  --accent:#00A303; --accent-deep:#006A02; --accent-soft:#D9ECCF; --accent-fg:#fff;
+  --success:#00A303; --info:#0F766E; --warn:#C07A00; --danger:#E04200;
+  --r-xs:6px; --r-sm:10px; --r-md:14px; --r-lg:18px; --r-xl:24px; --r-pill:999px;
+  --shadow-xs:0 1px 2px rgba(10,31,18,.05);
+  --shadow-sm:0 2px 6px rgba(0,163,3,.08);
+  --shadow-md:0 6px 16px rgba(0,163,3,.12),0 2px 6px rgba(10,31,18,.06);
+  --shadow-lg:0 16px 40px rgba(0,163,3,.15),0 8px 20px rgba(10,31,18,.08);
+  --shadow-xl:0 32px 80px rgba(0,163,3,.18),0 16px 40px rgba(10,31,18,.10);
+}
+
+/* POPSICLE — sunset gradient */
+[data-theme="popsicle"]{
+  --font-sans:'Outfit',system-ui,sans-serif;
+  --font-display:'Outfit',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,monospace;
+  --bg:linear-gradient(135deg,#FF2D87 0%,#FF7A3D 60%,#FFB545 100%);
+  --bg-2:rgba(255,255,255,.18); --bg-3:rgba(255,255,255,.28); --bg-muted:rgba(255,255,255,.12);
+  --fg:#fff; --fg-2:rgba(255,255,255,.9); --fg-3:rgba(255,255,255,.75); --fg-muted:rgba(255,255,255,.55); --fg-inverted:#C01566;
+  --line:rgba(255,255,255,.25); --line-2:rgba(255,255,255,.15); --line-strong:#fff;
+  --brand:#fff; --brand-hover:#FFE9F1; --brand-fg:#C01566;
+  --accent:#FFF100; --accent-deep:#fff; --accent-soft:rgba(255,255,255,.22); --accent-fg:#C01566;
+  --success:#7FFFB5; --info:#fff; --warn:#FFEC3D; --danger:#fff;
+  --r-xs:8px; --r-sm:12px; --r-md:18px; --r-lg:24px; --r-xl:32px; --r-pill:999px;
+  --shadow-xs:0 2px 6px rgba(192,21,102,.15);
+  --shadow-sm:0 4px 12px rgba(192,21,102,.18);
+  --shadow-md:0 8px 24px rgba(192,21,102,.25),0 2px 8px rgba(0,0,0,.08);
+  --shadow-lg:0 16px 48px rgba(192,21,102,.30),0 8px 24px rgba(0,0,0,.12);
+  --shadow-xl:0 32px 96px rgba(192,21,102,.35),0 16px 48px rgba(0,0,0,.15);
+}
+
+/* MALLOW — pastel dream */
+[data-theme="mallow"]{
+  --font-sans:'Outfit',system-ui,sans-serif;
+  --font-display:'DM Serif Display',serif;
+  --font-mono:'IBM Plex Mono',monospace;
+  --bg:linear-gradient(135deg,#E5D4FF 0%,#FFD4E5 50%,#FFEDC4 100%);
+  --bg-2:rgba(255,255,255,.6); --bg-3:#fff; --bg-muted:rgba(255,255,255,.4);
+  --fg:#3A2154; --fg-2:#5A3C7D; --fg-3:#6B3FB5; --fg-muted:#9878B8; --fg-inverted:#fff;
+  --line:rgba(107,63,181,.2); --line-2:rgba(107,63,181,.1); --line-strong:#6B3FB5;
+  --brand:#6B3FB5; --brand-hover:#532C8F; --brand-fg:#fff;
+  --accent:#6B3FB5; --accent-deep:#532C8F; --accent-soft:rgba(255,255,255,.65); --accent-fg:#fff;
+  --success:#3F9E74; --info:#6B3FB5; --warn:#D28842; --danger:#C44B6B;
+  --r-xs:10px; --r-sm:16px; --r-md:24px; --r-lg:32px; --r-xl:40px; --r-pill:999px;
+  --shadow-xs:0 2px 8px rgba(107,63,181,.08);
+  --shadow-sm:0 4px 16px rgba(107,63,181,.10);
+  --shadow-md:0 12px 32px rgba(107,63,181,.15),0 4px 12px rgba(255,212,229,.3);
+  --shadow-lg:0 24px 60px rgba(107,63,181,.18),0 12px 32px rgba(255,212,229,.35);
+  --shadow-xl:0 48px 120px rgba(107,63,181,.22),0 24px 60px rgba(255,212,229,.4);
+}
+
+/* BAZAAR — market terracotta */
+[data-theme="bazaar"]{
+  --font-sans:'Archivo',system-ui,sans-serif;
+  --font-display:'Archivo',system-ui,sans-serif;
+  --font-mono:'IBM Plex Mono',monospace;
+  --bg:#F4E8D6; --bg-2:#FFF5E5; --bg-3:#FFFAF0; --bg-muted:#EBDFC8;
+  --fg:#3C1810; --fg-2:#6B3B26; --fg-3:#8B5A3C; --fg-muted:#B09477;
+  --line:#D4BFA1; --line-2:#E3D4B7; --line-strong:#3C1810;
+  --brand:#C5442B; --brand-hover:#A33620; --brand-fg:#FFF5E5;
+  --accent:#0F766E; --accent-deep:#0B5950; --accent-soft:#C8E4DF; --accent-fg:#fff;
+  --success:#0F766E; --info:#8B5A3C; --warn:#E3A044; --danger:#C5442B;
+  --r-xs:0; --r-sm:2px; --r-md:4px; --r-lg:6px; --r-xl:8px; --r-pill:0;
+  --shadow-xs:1px 1px 0 rgba(60,24,16,.1);
+  --shadow-sm:2px 2px 0 rgba(60,24,16,.12);
+  --shadow-md:4px 4px 0 rgba(60,24,16,.15),0 2px 6px rgba(60,24,16,.08);
+  --shadow-lg:6px 6px 0 rgba(60,24,16,.18),0 8px 20px rgba(60,24,16,.10);
+  --shadow-xl:8px 8px 0 rgba(60,24,16,.2),0 16px 40px rgba(60,24,16,.12);
+}
+
+/* EMBER — candlelight dark */
+[data-theme="ember"]{
+  --font-sans:'Space Grotesk',system-ui,sans-serif;
+  --font-display:'Fraunces',serif;
+  --font-mono:'JetBrains Mono',monospace;
+  --bg:radial-gradient(140% 100% at 30% 0%,#3A1F0A 0%,#1A0F05 70%);
+  --bg-2:#2A180A; --bg-3:#3A1F0A; --bg-muted:#1A0F05;
+  --fg:#FFE5B8; --fg-2:#E8C795; --fg-3:#B89268; --fg-muted:#8B6B4A; --fg-inverted:#1A0F05;
+  --line:#4A2E15; --line-2:#3A1F0A; --line-strong:#FFB24C;
+  --brand:#FFB24C; --brand-hover:#FFC773; --brand-fg:#1A0F05;
+  --accent:#FFB24C; --accent-deep:#E38A2C; --accent-soft:rgba(255,178,76,.15); --accent-fg:#1A0F05;
+  --success:#9FC971; --info:#C7A67F; --warn:#FFB24C; --danger:#E8744F;
+  --r-xs:4px; --r-sm:8px; --r-md:12px; --r-lg:16px; --r-xl:20px; --r-pill:999px;
+  --shadow-xs:0 1px 2px rgba(0,0,0,.5);
+  --shadow-sm:0 2px 6px rgba(255,178,76,.1),0 2px 4px rgba(0,0,0,.5);
+  --shadow-md:0 0 24px rgba(255,178,76,.15),0 6px 16px rgba(0,0,0,.5);
+  --shadow-lg:0 0 48px rgba(255,178,76,.25),0 16px 40px rgba(0,0,0,.6);
+  --shadow-xl:0 0 96px rgba(255,178,76,.3),0 32px 80px rgba(0,0,0,.7);
+}
+
+/* CONFETTI — Party.app violet + acid */
+[data-theme="confetti"]{
+  --font-sans:'Unbounded',system-ui,sans-serif;
+  --font-display:'Unbounded',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+  --bg:#1A0F3A; --bg-2:#2D1A5C; --bg-3:#3B2378; --bg-muted:#110727;
+  --fg:#fff; --fg-2:#D6C7FF; --fg-3:#C7A3FF; --fg-muted:#8E7DB8; --fg-inverted:#1A0F3A;
+  --line:#2D1A5C; --line-2:#1F1144; --line-strong:#FFF100;
+  --brand:#FFF100; --brand-hover:#FFF833; --brand-fg:#1A0F3A;
+  --accent:#FFF100; --accent-deep:#D4CA00; --accent-soft:rgba(255,241,0,.12); --accent-fg:#1A0F3A;
+  --success:#7FFFB5; --info:#C7A3FF; --warn:#FFF100; --danger:#FF6BD6;
+  --r-xs:6px; --r-sm:10px; --r-md:12px; --r-lg:18px; --r-xl:24px; --r-pill:999px;
+  --shadow-xs:0 2px 0 #0F0725;
+  --shadow-sm:0 4px 0 #0F0725,0 2px 8px rgba(255,241,0,.15);
+  --shadow-md:0 6px 0 #0F0725,0 0 32px rgba(255,241,0,.2);
+  --shadow-lg:0 8px 0 #0F0725,0 0 64px rgba(255,241,0,.25);
+  --shadow-xl:0 12px 0 #0F0725,0 0 96px rgba(255,241,0,.3);
+}
+
+/* WARP — Zora iridescent on black */
+[data-theme="warp"]{
+  --font-sans:'JetBrains Mono',ui-monospace,monospace;
+  --font-display:'Instrument Serif',serif;
+  --font-mono:'JetBrains Mono',ui-monospace,monospace;
+  --bg:#000; --bg-2:#0A0A0A; --bg-3:#141414; --bg-muted:#050505;
+  --fg:#fff; --fg-2:#B8B8B8; --fg-3:#999; --fg-muted:#555; --fg-inverted:#000;
+  --line:#1A1A1A; --line-2:#0D0D0D; --line-strong:#fff;
+  --brand:#FF6BD6; --brand-hover:#FF8FDF; --brand-fg:#000;
+  --accent:#00E5FF; --accent-deep:#00B3C7; --accent-soft:rgba(255,107,214,.15); --accent-fg:#000;
+  --success:#00E5AA; --info:#00E5FF; --warn:#FFEC3D; --danger:#FF6BD6;
+  --r-xs:4px; --r-sm:8px; --r-md:12px; --r-lg:999px; --r-xl:999px; --r-pill:999px;
+  --shadow-xs:0 0 0 1px rgba(255,107,214,.2);
+  --shadow-sm:0 4px 16px rgba(255,107,214,.15);
+  --shadow-md:0 8px 32px rgba(255,107,214,.25),0 0 0 1px rgba(0,229,255,.1);
+  --shadow-lg:0 16px 64px rgba(255,107,214,.3),0 0 40px rgba(255,236,61,.1);
+  --shadow-xl:0 32px 128px rgba(255,107,214,.35),0 0 80px rgba(0,229,255,.15);
+}
+
+/* CASHTAG — Cash App black + electric green */
+[data-theme="cashtag"]{
+  --font-sans:'Unbounded',system-ui,sans-serif;
+  --font-display:'Unbounded',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+  --bg:#000; --bg-2:#1a1a1a; --bg-3:#262626; --bg-muted:#0a0a0a;
+  --fg:#fff; --fg-2:#B8B8B8; --fg-3:#00D632; --fg-muted:#666; --fg-inverted:#000;
+  --line:#1a1a1a; --line-2:#262626; --line-strong:#00D632;
+  --brand:#00D632; --brand-hover:#00F53A; --brand-fg:#000;
+  --accent:#00D632; --accent-deep:#00A828; --accent-soft:rgba(0,214,50,.15); --accent-fg:#000;
+  --success:#00D632; --info:#fff; --warn:#FFB547; --danger:#FF4F4F;
+  --r-xs:12px; --r-sm:16px; --r-md:24px; --r-lg:32px; --r-xl:40px; --r-pill:999px;
+  --shadow-xs:0 1px 2px rgba(0,0,0,.6);
+  --shadow-sm:0 2px 8px rgba(0,214,50,.1);
+  --shadow-md:0 8px 24px rgba(0,214,50,.15),0 4px 12px rgba(0,0,0,.6);
+  --shadow-lg:0 16px 48px rgba(0,214,50,.2),0 16px 40px rgba(0,0,0,.7);
+  --shadow-xl:0 32px 96px rgba(0,214,50,.25),0 32px 80px rgba(0,0,0,.8);
+}
+
+/* NEON — CRT terminal */
+[data-theme="neon"]{
+  --font-sans:'JetBrains Mono',ui-monospace,monospace;
+  --font-display:'VT323',monospace;
+  --font-mono:'JetBrains Mono',ui-monospace,monospace;
+  --bg:#080A0E; --bg-2:#0F1318; --bg-3:#161B22; --bg-muted:#05070A;
+  --fg:#E8FF5C; --fg-2:#B8C547; --fg-3:#7A8FA0; --fg-muted:#4B5968; --fg-inverted:#080A0E;
+  --line:rgba(232,255,92,.15); --line-2:rgba(232,255,92,.08); --line-strong:#E8FF5C;
+  --brand:#E8FF5C; --brand-hover:#F0FF80; --brand-fg:#080A0E;
+  --accent:#E8FF5C; --accent-deep:#B8C547; --accent-soft:rgba(232,255,92,.1); --accent-fg:#080A0E;
+  --success:#5CFF8F; --info:#5CFFEC; --warn:#FFD85C; --danger:#FF5C6B;
+  --r-xs:0; --r-sm:1px; --r-md:2px; --r-lg:3px; --r-xl:4px; --r-pill:999px;
+  --shadow-xs:0 0 2px rgba(232,255,92,.3);
+  --shadow-sm:0 0 8px rgba(232,255,92,.2),0 0 2px rgba(232,255,92,.5);
+  --shadow-md:0 0 16px rgba(232,255,92,.3),0 0 4px rgba(232,255,92,.6);
+  --shadow-lg:0 0 32px rgba(232,255,92,.35),0 0 8px rgba(232,255,92,.7);
+  --shadow-xl:0 0 64px rgba(232,255,92,.4),0 0 16px rgba(232,255,92,.8);
+}
+
+/* KIOSK — brutalist newsstand */
+[data-theme="kiosk"]{
+  --font-sans:'Syne',system-ui,sans-serif;
+  --font-display:'Syne',system-ui,sans-serif;
+  --font-mono:'IBM Plex Mono',monospace;
+  --bg:#fff; --bg-2:#F7FF2D; --bg-3:#fff; --bg-muted:#F4F4F4;
+  --fg:#000; --fg-2:#333; --fg-3:#666; --fg-muted:#999;
+  --line:#000; --line-2:#ddd; --line-strong:#000;
+  --brand:#000; --brand-hover:#333; --brand-fg:#F7FF2D;
+  --accent:#F7FF2D; --accent-deep:#D4DB1E; --accent-soft:#FFFEB8; --accent-fg:#000;
+  --success:#006B2C; --info:#000; --warn:#FF6B00; --danger:#CF0000;
+  --r-xs:0; --r-sm:0; --r-md:0; --r-lg:0; --r-xl:0; --r-pill:0;
+  --shadow-xs:2px 2px 0 #000;
+  --shadow-sm:4px 4px 0 #000;
+  --shadow-md:6px 6px 0 #000;
+  --shadow-lg:8px 8px 0 #000;
+  --shadow-xl:12px 12px 0 #000;
+}
+
+/* TIDE — ocean serif */
+[data-theme="tide"]{
+  --font-sans:'Space Grotesk',system-ui,sans-serif;
+  --font-display:'Instrument Serif',serif;
+  --font-mono:'JetBrains Mono',monospace;
+  --bg:linear-gradient(180deg,#0A2E4F 0%,#114E7B 100%);
+  --bg-2:rgba(255,255,255,.08); --bg-3:rgba(255,255,255,.14); --bg-muted:rgba(0,0,0,.15);
+  --fg:#E8F4FF; --fg-2:#C5DEF0; --fg-3:#99C5E8; --fg-muted:#66889E; --fg-inverted:#0A2E4F;
+  --line:rgba(255,255,255,.15); --line-2:rgba(255,255,255,.08); --line-strong:#66D7FF;
+  --brand:#66D7FF; --brand-hover:#99E2FF; --brand-fg:#0A2E4F;
+  --accent:#66D7FF; --accent-deep:#33A8D0; --accent-soft:rgba(102,215,255,.15); --accent-fg:#0A2E4F;
+  --success:#66FFB5; --info:#66D7FF; --warn:#FFD36B; --danger:#FF8B8B;
+  --r-xs:4px; --r-sm:10px; --r-md:16px; --r-lg:20px; --r-xl:28px; --r-pill:999px;
+  --shadow-xs:0 1px 2px rgba(0,20,40,.2);
+  --shadow-sm:0 4px 12px rgba(0,20,40,.25);
+  --shadow-md:0 12px 32px rgba(0,20,40,.3),0 4px 12px rgba(102,215,255,.1);
+  --shadow-lg:0 24px 64px rgba(0,20,40,.35),0 12px 32px rgba(102,215,255,.12);
+  --shadow-xl:0 48px 128px rgba(0,20,40,.4),0 24px 64px rgba(102,215,255,.15);
+}
+
+/* PIXELDUST — 8-bit */
+[data-theme="pixeldust"]{
+  --font-sans:'VT323',monospace;
+  --font-display:'VT323',monospace;
+  --font-mono:'VT323',monospace;
+  --bg:#1a1035; --bg-2:#2A1E4A; --bg-3:#3B2D66; --bg-muted:#120A26;
+  --fg:#fff; --fg-2:#FFEC3D; --fg-3:#00F0FF; --fg-muted:#8879A8; --fg-inverted:#1a1035;
+  --line:#FF3D9A; --line-2:#3B2D66; --line-strong:#FFEC3D;
+  --brand:#FF3D9A; --brand-hover:#FF70B8; --brand-fg:#fff;
+  --accent:#FFEC3D; --accent-deep:#D4C52F; --accent-soft:rgba(255,236,61,.12); --accent-fg:#1a1035;
+  --success:#00F0FF; --info:#00F0FF; --warn:#FFEC3D; --danger:#FF3D9A;
+  --r-xs:0; --r-sm:0; --r-md:0; --r-lg:0; --r-xl:0; --r-pill:0;
+  --shadow-xs:2px 2px 0 #FFEC3D;
+  --shadow-sm:3px 3px 0 #FFEC3D;
+  --shadow-md:4px 4px 0 #FFEC3D,8px 8px 0 #FF3D9A;
+  --shadow-lg:6px 6px 0 #FFEC3D,12px 12px 0 #FF3D9A;
+  --shadow-xl:8px 8px 0 #FFEC3D,16px 16px 0 #FF3D9A;
+}
+
+/* BOTANICA — moss + terracotta editorial */
+[data-theme="botanica"]{
+  --font-sans:'Bricolage Grotesque',system-ui,sans-serif;
+  --font-display:'Fraunces',serif;
+  --font-mono:'IBM Plex Mono',monospace;
+  --bg:#EEEAE0; --bg-2:#F5F1E7; --bg-3:#fff; --bg-muted:#E5E0D3;
+  --fg:#2D3A24; --fg-2:#4A5A3F; --fg-3:#6B7A52; --fg-muted:#9AA782;
+  --line:#DDD6C4; --line-2:#E8E2D2; --line-strong:#2D3A24;
+  --brand:#B85D3C; --brand-hover:#9A4A2E; --brand-fg:#fff;
+  --accent:#2D3A24; --accent-deep:#1A2214; --accent-soft:#D8DFC9; --accent-fg:#EEEAE0;
+  --success:#5A7A3F; --info:#3C5F7A; --warn:#B85D3C; --danger:#A03030;
+  --r-xs:2px; --r-sm:4px; --r-md:6px; --r-lg:10px; --r-xl:16px; --r-pill:999px;
+  --shadow-xs:0 1px 2px rgba(45,58,36,.06);
+  --shadow-sm:0 2px 6px rgba(45,58,36,.08);
+  --shadow-md:0 4px 16px rgba(45,58,36,.10),0 1px 4px rgba(184,93,60,.05);
+  --shadow-lg:0 12px 32px rgba(45,58,36,.12),0 4px 12px rgba(184,93,60,.08);
+  --shadow-xl:0 24px 64px rgba(45,58,36,.15),0 12px 32px rgba(184,93,60,.1);
+}
+
+/* HOLO — holographic foil */
+[data-theme="holo"]{
+  --font-sans:'Outfit',system-ui,sans-serif;
+  --font-display:'Outfit',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+  --bg:linear-gradient(135deg,#FFB5D8 0%,#B5D4FF 25%,#B5FFD4 50%,#FFF5B5 75%,#FFB5D8 100%);
+  --bg-2:rgba(255,255,255,.55); --bg-3:rgba(255,255,255,.75); --bg-muted:rgba(255,255,255,.3);
+  --fg:#2A1F3D; --fg-2:#4A3F5D; --fg-3:#5A3F7D; --fg-muted:#8878A8; --fg-inverted:#fff;
+  --line:rgba(42,31,61,.15); --line-2:rgba(42,31,61,.08); --line-strong:#2A1F3D;
+  --brand:#2A1F3D; --brand-hover:#453560; --brand-fg:#fff;
+  --accent:#2A1F3D; --accent-deep:#100A1D; --accent-soft:rgba(255,255,255,.7); --accent-fg:#fff;
+  --success:#3F8A6B; --info:#2A1F3D; --warn:#C08A3F; --danger:#B83F5F;
+  --r-xs:8px; --r-sm:12px; --r-md:16px; --r-lg:22px; --r-xl:28px; --r-pill:999px;
+  --shadow-xs:0 2px 4px rgba(42,31,61,.08);
+  --shadow-sm:0 4px 12px rgba(42,31,61,.10);
+  --shadow-md:0 8px 24px rgba(181,213,255,.4),0 4px 12px rgba(255,181,216,.3);
+  --shadow-lg:0 16px 48px rgba(181,213,255,.5),0 8px 24px rgba(255,181,216,.4);
+  --shadow-xl:0 32px 96px rgba(181,213,255,.6),0 16px 48px rgba(255,181,216,.5);
+}
+
+/* MONO-BRUT — dashed margin paper */
+[data-theme="monobrut"]{
+  --font-sans:'IBM Plex Mono',ui-monospace,monospace;
+  --font-display:'Major Mono Display',monospace;
+  --font-mono:'IBM Plex Mono',ui-monospace,monospace;
+  --bg:#F5F4F1; --bg-2:#FFFFFF; --bg-3:#FFFFFF; --bg-muted:#E8E6E0;
+  --fg:#111; --fg-2:#444; --fg-3:#666; --fg-muted:#999;
+  --line:#111; --line-2:#ccc; --line-strong:#111;
+  --brand:#111; --brand-hover:#333; --brand-fg:#F5F4F1;
+  --accent:#111; --accent-deep:#000; --accent-soft:#E5E3DE; --accent-fg:#F5F4F1;
+  --success:#2A6B2A; --info:#111; --warn:#C08A3F; --danger:#B83030;
+  --r-xs:0; --r-sm:0; --r-md:0; --r-lg:0; --r-xl:0; --r-pill:0;
+  --shadow-xs:none; --shadow-sm:none;
+  --shadow-md:0 0 0 1px #111;
+  --shadow-lg:0 0 0 1px #111,4px 4px 0 #111;
+  --shadow-xl:0 0 0 1px #111,8px 8px 0 #111;
+}
+
+/* DOTMATRIX — receipt printer */
+[data-theme="dotmatrix"]{
+  --font-sans:'IBM Plex Mono',monospace;
+  --font-display:'Doto',monospace;
+  --font-mono:'IBM Plex Mono',monospace;
+  --bg:#FFFBF0; --bg-2:#FFFDF5; --bg-3:#fff; --bg-muted:#F5EFDD;
+  --fg:#1a1a1a; --fg-2:#444; --fg-3:#666; --fg-muted:#999;
+  --line:#1a1a1a; --line-2:#D8D0B8; --line-strong:#1a1a1a;
+  --brand:#1a1a1a; --brand-hover:#000; --brand-fg:#FFFBF0;
+  --accent:#1a1a1a; --accent-deep:#000; --accent-soft:#F0E8D0; --accent-fg:#FFFBF0;
+  --success:#2A6B2A; --info:#1a1a1a; --warn:#B88A2A; --danger:#B83030;
+  --r-xs:0; --r-sm:0; --r-md:0; --r-lg:0; --r-xl:0; --r-pill:0;
+  --shadow-xs:none; --shadow-sm:1px 1px 0 #1a1a1a;
+  --shadow-md:2px 2px 0 #1a1a1a;
+  --shadow-lg:3px 3px 0 #1a1a1a;
+  --shadow-xl:5px 5px 0 #1a1a1a;
+}
+
+/* SUNSET — dawn-to-dusk */
+[data-theme="sunset"]{
+  --font-sans:'Outfit',system-ui,sans-serif;
+  --font-display:'Outfit',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+  --bg:linear-gradient(180deg,#FFB99A 0%,#FF6E8A 50%,#C93F8F 100%);
+  --bg-2:rgba(255,255,255,.15); --bg-3:rgba(255,255,255,.25); --bg-muted:rgba(0,0,0,.1);
+  --fg:#fff; --fg-2:rgba(255,255,255,.9); --fg-3:rgba(255,255,255,.75); --fg-muted:rgba(255,255,255,.55); --fg-inverted:#C93F8F;
+  --line:rgba(255,255,255,.25); --line-2:rgba(255,255,255,.12); --line-strong:#fff;
+  --brand:#fff; --brand-hover:#FFECF2; --brand-fg:#C93F8F;
+  --accent:#fff; --accent-deep:#FFECF2; --accent-soft:rgba(255,255,255,.25); --accent-fg:#C93F8F;
+  --success:#A8FFC5; --info:#fff; --warn:#FFE08C; --danger:#FFC5C5;
+  --r-xs:8px; --r-sm:12px; --r-md:16px; --r-lg:22px; --r-xl:28px; --r-pill:999px;
+  --shadow-xs:0 2px 4px rgba(201,63,143,.15);
+  --shadow-sm:0 4px 12px rgba(201,63,143,.2);
+  --shadow-md:0 8px 24px rgba(201,63,143,.25),0 2px 8px rgba(255,110,138,.15);
+  --shadow-lg:0 16px 48px rgba(201,63,143,.3),0 8px 24px rgba(255,110,138,.2);
+  --shadow-xl:0 32px 96px rgba(201,63,143,.35),0 16px 48px rgba(255,110,138,.25);
+}
+

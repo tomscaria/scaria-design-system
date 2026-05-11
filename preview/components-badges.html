@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<link rel="stylesheet" href="theme-switcher.css"/>
+<style>
+  /* ============================================================
+     BADGES — theme-agnostic.
+     - All fills/text reference tokens. Works across every theme.
+     - Geometry uses a grid: the mark occupies a fixed column, so
+       left/right optical padding stays equal at any chip height.
+     ============================================================ */
+  body{margin:0;background:var(--bg);padding:64px 20px 24px;font-family:var(--font-sans);color:var(--fg);font-size:14px;min-height:100vh}
+  section{margin-bottom:22px}
+  h4{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--fg-3);margin:0 0 12px;font-weight:600;font-family:var(--font-mono)}
+  .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .rowlabel{font-size:11px;color:var(--fg-3);margin-right:6px;font-family:var(--font-mono);min-width:72px}
+
+  /* STATUS pill — tokenized across themes ----------------------- */
+  .badge{
+    display:inline-flex;align-items:center;gap:6px;
+    height:26px;padding:0 12px;border-radius:var(--r-pill);
+    font-size:12px;font-weight:500;line-height:1;white-space:nowrap;
+    background:var(--bg-3);color:var(--fg-2);
+    border:1px solid var(--line);
+  }
+  .b-accent{background:var(--accent-soft);color:var(--accent-deep);border-color:transparent}
+  .b-success{background:color-mix(in oklab,var(--success) 16%,var(--bg));color:var(--success);border-color:transparent}
+  .b-warn   {background:color-mix(in oklab,var(--warn)    18%,var(--bg));color:var(--warn);border-color:transparent}
+  .b-danger {background:color-mix(in oklab,var(--danger)  14%,var(--bg));color:var(--danger);border-color:transparent}
+  .b-info   {background:color-mix(in oklab,var(--info)    16%,var(--bg));color:var(--info);border-color:transparent}
+  .b-gov    {background:color-mix(in oklab,var(--brand)   14%,var(--bg));color:var(--brand);border-color:transparent}
+  .dot{width:6px;height:6px;border-radius:999px;background:currentColor;flex-shrink:0}
+  .pulse{position:relative}
+  .pulse::after{content:'';position:absolute;inset:-3px;border-radius:999px;border:1.5px solid currentColor;opacity:.4;animation:p 1.6s ease-out infinite}
+  @keyframes p{0%{transform:scale(.6);opacity:.6}100%{transform:scale(1.8);opacity:0}}
+
+  /* CHAIN icon chip — tokenized surface ------------------------ */
+  .chain{width:24px;height:24px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;
+    background:var(--bg-2);border:1px solid var(--line);overflow:hidden;position:relative}
+  .chain img{width:16px;height:16px;display:block}
+  .chain[title]:hover::before{
+    content:attr(title);position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);
+    background:var(--fg);color:var(--bg);font-size:11px;padding:3px 8px;border-radius:var(--r-xs);
+    white-space:nowrap;font-weight:500;pointer-events:none;z-index:10;font-family:var(--font-mono)}
+  .chain-stack{display:inline-flex}
+  .chain-stack .chain{margin-left:-6px;box-shadow:0 0 0 2px var(--bg)}
+  .chain-stack .chain:first-child{margin-left:0}
+  .chain-more{background:var(--bg-3);font-family:var(--font-mono);font-size:9px;font-weight:600;color:var(--fg-2)}
+
+  /* ADDRESS chip — grid cells keep padding symmetric ----------- */
+  .addr{
+    display:inline-grid;
+    grid-template-columns:18px 1fr 18px;
+    align-items:center;gap:8px;
+    height:28px;padding:0 10px;
+    border-radius:var(--r-pill);
+    background:var(--bg-2);border:1px solid var(--line);
+    font-family:var(--font-mono);font-size:12px;color:var(--fg-2);
+    cursor:pointer;transition:all .15s;user-select:none;
+  }
+  .addr:hover{border-color:var(--fg-3);color:var(--fg)}
+  .addr .av{width:18px;height:18px;border-radius:999px;background:conic-gradient(from 137deg,var(--accent),var(--brand),var(--accent-deep),var(--accent))}
+  .addr .av-ens{background:conic-gradient(from 90deg,var(--info),var(--brand),var(--accent),var(--info))}
+  .addr .copy{display:inline-flex;align-items:center;justify-content:center;opacity:.55;transition:opacity .15s}
+  .addr:hover .copy{opacity:1}
+  .addr .copy svg{width:12px;height:12px}
+  .addr.copied{color:var(--success);border-color:var(--success)}
+
+  /* POSITION chip — grid geometry keeps the mark cap concentric -
+     Left/right padding are EQUAL (12px). The mark sits in its own
+     column; the row auto-flows after. No visual ’drift’ per theme. */
+  .pos{
+    display:inline-flex;align-items:center;gap:10px;
+    height:34px;padding:0 14px;
+    border-radius:var(--r-pill);
+    background:var(--bg-2);border:1px solid var(--line);
+    font-size:13px;font-weight:500;color:var(--fg);line-height:1;white-space:nowrap;
+  }
+  .pos .mark{
+    width:22px;height:22px;flex:0 0 22px;
+    border-radius:999px;
+    display:inline-grid;place-items:center;overflow:hidden;
+    background:var(--bg-3);
+  }
+  .pos .mark img{width:20px;height:20px;display:block}
+  .pos .mark.sq{border-radius:6px}
+  .pos .mark.sq img{border-radius:4px}
+  .pos .meta{display:flex;flex-direction:column;gap:2px;min-width:0}
+  .pos .name{font-size:13px;line-height:1.15}
+  .pos .sub{font-size:10px;color:var(--fg-3);line-height:1;font-family:var(--font-mono);letter-spacing:.02em}
+  .pos .val{font-family:var(--font-mono);font-size:12px;color:var(--fg-2);font-variant-numeric:tabular-nums}
+
+  /* data tags — tokenized */
+  .tag{font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 7px;border-radius:var(--r-xs);font-family:var(--font-mono)}
+  .tag-long{background:color-mix(in oklab,var(--success) 18%,var(--bg));color:var(--success)}
+  .tag-short{background:color-mix(in oklab,var(--danger) 16%,var(--bg));color:var(--danger)}
+  .tag-yes{background:color-mix(in oklab,var(--success) 18%,var(--bg));color:var(--success)}
+  .tag-no{background:color-mix(in oklab,var(--danger) 16%,var(--bg));color:var(--danger)}
+  .tag-apy{background:var(--accent-soft);color:var(--accent-deep)}
+  .tag-lev{background:var(--bg-3);color:var(--fg-2)}
+
+  .pos-sm{height:26px;padding:0 12px;font-size:12px;gap:8px}
+  .pos-sm .mark{width:16px;height:16px;flex-basis:16px}
+  .pos-sm .mark img{width:14px;height:14px}
+  .pos-lg{height:42px;padding:0 18px;font-size:14px;gap:12px}
+  .pos-lg .mark{width:28px;height:28px;flex-basis:28px}
+  .pos-lg .mark img{width:24px;height:24px}
+
+  /* LOGO-LEAD chip — same geometry, with a tiny Lore spiral in
+     the mark slot. Each variant is a slight riff on the canonical
+     mark (rotation, ground treatment, mono vs chartreuse). */
+  .pos .lore{background:var(--accent);display:grid;place-items:center}
+  .pos .lore svg{width:16px;height:16px}
+  .pos-sm .lore svg{width:12px;height:12px}
+  .pos-lg .lore svg{width:20px;height:20px}
+  .pos .lore.ink{background:var(--fg)}
+  .pos .lore.bare{background:transparent}
+  .pos .lore.ring{background:var(--bg-3);box-shadow:inset 0 0 0 1px var(--accent)}
+</style></head><body data-theme="lore-light">
+
+<section>
+  <h4>Status · semantic pill</h4>
+  <div class="row">
+    <span class="badge"><span class="dot" style="color:var(--fg-3)"></span>Draft</span>
+    <span class="badge b-accent pulse"><span class="dot"></span>Active</span>
+    <span class="badge b-success">Confirmed</span>
+    <span class="badge b-warn">Pending 2 / 3 signers</span>
+    <span class="badge b-danger">Failed · nonce too low</span>
+    <span class="badge b-info">Queued</span>
+    <span class="badge b-gov">Proposal</span>
+  </div>
+</section>
+
+<section>
+  <h4>Chains · icon-only, 24px</h4>
+  <div class="row">
+    <span class="chain" title="Ethereum"><img src="../assets/icons/svg/chain/ethereum.svg"/></span>
+    <span class="chain" title="Base"><img src="../assets/icons/svg/chain/base.svg"/></span>
+    <span class="chain" title="Solana"><img src="../assets/icons/svg/chain/solana.svg"/></span>
+    <span class="chain" title="Polygon"><img src="../assets/icons/svg/chain/polygon.svg"/></span>
+    <span class="chain" title="Optimism"><img src="../assets/icons/svg/chain/optimism.svg"/></span>
+    <span class="chain" title="Arbitrum"><img src="../assets/icons/svg/chain/arbitrum.svg"/></span>
+    <span class="chain" title="Avalanche"><img src="../assets/icons/svg/chain/avalanche.svg"/></span>
+    <span class="rowlabel" style="margin-left:12px">stacked</span>
+    <span class="chain-stack">
+      <span class="chain" title="Ethereum"><img src="../assets/icons/svg/chain/ethereum.svg"/></span>
+      <span class="chain" title="Base"><img src="../assets/icons/svg/chain/base.svg"/></span>
+      <span class="chain" title="Solana"><img src="../assets/icons/svg/chain/solana.svg"/></span>
+      <span class="chain chain-more">+4</span>
+    </span>
+  </div>
+</section>
+
+<section>
+  <h4>Addresses · click to copy</h4>
+  <div class="row">
+    <span class="addr" data-full="0x5b0f7a8c3e4d29b16f98a0e5d2c1b4a3e8f9c4e0A">
+      <span class="av"></span><span class="hex">0x5b0f…4e0A</span>
+      <span class="copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span>
+    </span>
+    <span class="addr" data-full="henry.lore.eth">
+      <span class="av av-ens"></span><span class="hex" style="font-family:var(--font-sans)">henry.lore.eth</span>
+      <span class="copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span>
+    </span>
+    <span class="addr" data-full="0xcaf391b2e8d47a0c5b9f3e1d6a8c2b4e7f0a9d1c">
+      <span class="av" style="background:conic-gradient(from 45deg,var(--info),var(--brand),var(--danger),var(--info))"></span><span class="hex">0xcaf3…9d1c</span>
+      <span class="copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span>
+    </span>
+  </div>
+</section>
+
+<section>
+  <h4>Positions · one chip, any claim</h4>
+
+  <div class="row" style="margin-bottom:10px">
+    <span class="rowlabel">Tokens</span>
+    <span class="pos"><span class="mark"><img src="../assets/icons/svg/token/usdc.svg"/></span><span class="meta"><span class="name">USDC</span><span class="sub">USD Coin</span></span><span class="val">8,420.12</span></span>
+    <span class="pos"><span class="mark"><img src="../assets/icons/svg/token/eth.svg"/></span><span class="meta"><span class="name">ETH</span><span class="sub">Ethereum</span></span><span class="val">0.842</span></span>
+    <span class="pos"><span class="mark"><img src="../assets/icons/svg/token/btc.svg"/></span><span class="meta"><span class="name">WBTC</span><span class="sub">Wrapped BTC</span></span><span class="val">0.012</span></span>
+    <span class="pos"><span class="mark"><img src="../assets/icons/svg/token/sol.svg"/></span><span class="meta"><span class="name">SOL</span><span class="sub">Solana</span></span><span class="val">6.2</span></span>
+    <span class="pos"><span class="mark"><img src="../assets/icons/svg/token/dai.svg"/></span><span class="meta"><span class="name">DAI</span><span class="sub">MakerDAO</span></span><span class="val">1,020.00</span></span>
+  </div>
+
+  <div class="row" style="margin-bottom:10px">
+    <span class="rowlabel">Yield</span>
+    <span class="pos"><span class="mark sq"><img src="../assets/icons/svg/position/yield.svg"/></span><span class="meta"><span class="name">USDC · Aave v3</span><span class="sub">supply · Ethereum</span></span><span class="tag tag-apy">5.24% APY</span></span>
+    <span class="pos"><span class="mark sq"><img src="../assets/icons/svg/position/yield.svg"/></span><span class="meta"><span class="name">USDC · Morpho</span><span class="sub">Base</span></span><span class="tag tag-apy">6.81% APY</span></span>
+    <span class="pos"><span class="mark sq"><img src="../assets/icons/svg/position/staked.svg"/></span><span class="meta"><span class="name">stETH</span><span class="sub">Lido · staked</span></span><span class="tag tag-apy">3.12% APY</span></span>
+  </div>
+
+  <div class="row" style="margin-bottom:10px">
+    <span class="rowlabel">Perps</span>
+    <span class="pos"><span class="mark sq"><img src="../assets/icons/svg/position/perp.svg"/></span><span class="meta"><span class="name">ETH-PERP</span><span class="sub">Hyperliquid</span></span><span class="tag tag-long">Long</span><span class="tag tag-lev">5×</span></span>
+    <span class="pos"><span class="mark sq"><img src="../assets/icons/svg/position/perp.svg"/></span><span class="meta"><span class="name">SOL-PERP</span><span class="sub">dYdX</span></span><span class="tag tag-short">Short</span><span class="tag tag-lev">2×</span></span>
+    <span class="pos"><span class="mark sq"><img src="../assets/icons/svg/position/lp.svg"/></span><span class="meta"><span class="name">USDC / ETH 0.05%</span><span class="sub">Uni v3 · Arbitrum</span></span><span class="tag tag-apy">12.4% APR</span></span>
+  </div>
+
+  <div class="row" style="margin-bottom:10px">
+    <span class="rowlabel">Markets</span>
+    <span class="pos"><span class="mark sq"><img src="../assets/icons/svg/position/prediction.svg"/></span><span class="meta"><span class="name">Fed cuts in June?</span><span class="sub">Polymarket</span></span><span class="tag tag-yes">Yes</span><span class="val">@ ¢64</span></span>
+    <span class="pos"><span class="mark sq"><img src="../assets/icons/svg/position/prediction.svg"/></span><span class="meta"><span class="name">BTC &gt; $120k EOY</span><span class="sub">Kalshi</span></span><span class="tag tag-no">No</span><span class="val">@ ¢38</span></span>
+  </div>
+
+  <div class="row" style="margin-bottom:10px">
+    <span class="rowlabel">NFT · Fund</span>
+    <span class="pos"><span class="mark sq"><img src="../assets/icons/svg/position/nft.svg"/></span><span class="meta"><span class="name">Azuki #4821</span><span class="sub">floor 6.2 ETH</span></span></span>
+    <span class="pos"><span class="mark sq"><img src="../assets/icons/svg/position/vault.svg"/></span><span class="meta"><span class="name">North Star ETF</span><span class="sub">Squad · 12 members</span></span><span class="val">4.8%</span></span>
+    <span class="pos"><span class="mark sq"><img src="../assets/icons/svg/position/fund.svg"/></span><span class="meta"><span class="name">Ondo USDY</span><span class="sub">closed-end · T-bills</span></span><span class="tag tag-apy">5.15%</span></span>
+  </div>
+</section>
+
+<section>
+  <h4>Lore-lead variants · small logo riffs in the mark slot</h4>
+  <p style="font-size:11px;color:var(--fg-3);font-family:var(--font-mono);max-width:680px;line-height:1.55;margin:-6px 0 12px">Six slight variations on the canonical mark, all legal in product. Useful when a chip wants to read “this is Lore-native” — vault chips, rewards, account labels. Tokenized so ground color shifts per theme.</p>
+  <div class="row" style="gap:10px">
+    <!-- 1. canonical round -->
+    <span class="pos"><span class="mark lore">
+      <svg viewBox="0 0 500 500"><g transform="rotate(-6 250 260)"><g transform="translate(25 25) scale(.9)"><path d="M260 430c-115 0-200-74-200-168 0-52 72-73 163-73 69 0 117 25 117 61 0 23-47 48-85 48-17 0-23-6-23-14 0-20 43-39 43-59 0-9-8-13-22-13-55 0-165 47-165 81 0 23 58 40 149 40 96 0 154-31 154-91s-62-94-162-94c-50 0-89 11-121 27-16 9-24 5-24-10 0-60 68-111 148-111 104 0 187 84 187 186 0 103-78 189-173 189Z" fill="var(--accent-fg)"/></g></g></svg>
+    </span><span class="meta"><span class="name">Lore</span><span class="sub">primary · round</span></span></span>
+
+    <!-- 2. squircle -->
+    <span class="pos"><span class="mark sq lore">
+      <svg viewBox="0 0 500 500"><g transform="rotate(-6 250 260)"><g transform="translate(25 25) scale(.9)"><path d="M260 430c-115 0-200-74-200-168 0-52 72-73 163-73 69 0 117 25 117 61 0 23-47 48-85 48-17 0-23-6-23-14 0-20 43-39 43-59 0-9-8-13-22-13-55 0-165 47-165 81 0 23 58 40 149 40 96 0 154-31 154-91s-62-94-162-94c-50 0-89 11-121 27-16 9-24 5-24-10 0-60 68-111 148-111 104 0 187 84 187 186 0 103-78 189-173 189Z" fill="var(--accent-fg)"/></g></g></svg>
+    </span><span class="meta"><span class="name">Squad vault</span><span class="sub">squircle · app-icon</span></span></span>
+
+    <!-- 3. reversed (mono on fg) -->
+    <span class="pos"><span class="mark lore ink">
+      <svg viewBox="0 0 500 500"><g transform="rotate(-6 250 260)"><g transform="translate(25 25) scale(.9)"><path d="M260 430c-115 0-200-74-200-168 0-52 72-73 163-73 69 0 117 25 117 61 0 23-47 48-85 48-17 0-23-6-23-14 0-20 43-39 43-59 0-9-8-13-22-13-55 0-165 47-165 81 0 23 58 40 149 40 96 0 154-31 154-91s-62-94-162-94c-50 0-89 11-121 27-16 9-24 5-24-10 0-60 68-111 148-111 104 0 187 84 187 186 0 103-78 189-173 189Z" fill="var(--accent)"/></g></g></svg>
+    </span><span class="meta"><span class="name">Rewards</span><span class="sub">ink · reverse</span></span></span>
+
+    <!-- 4. outline-only, no ground -->
+    <span class="pos"><span class="mark lore bare">
+      <svg viewBox="0 0 500 500"><g transform="rotate(-6 250 260)"><g transform="translate(25 25) scale(.9)"><path d="M260 430c-115 0-200-74-200-168 0-52 72-73 163-73 69 0 117 25 117 61 0 23-47 48-85 48-17 0-23-6-23-14 0-20 43-39 43-59 0-9-8-13-22-13-55 0-165 47-165 81 0 23 58 40 149 40 96 0 154-31 154-91s-62-94-162-94c-50 0-89 11-121 27-16 9-24 5-24-10 0-60 68-111 148-111 104 0 187 84 187 186 0 103-78 189-173 189Z" fill="none" stroke="var(--fg)" stroke-width="28" stroke-linejoin="round"/></g></g></svg>
+    </span><span class="meta"><span class="name">Linked account</span><span class="sub">outline · 3rd-party</span></span></span>
+
+    <!-- 5. ring (subtle) -->
+    <span class="pos"><span class="mark lore ring">
+      <svg viewBox="0 0 500 500"><g transform="rotate(-6 250 260)"><g transform="translate(25 25) scale(.9)"><path d="M260 430c-115 0-200-74-200-168 0-52 72-73 163-73 69 0 117 25 117 61 0 23-47 48-85 48-17 0-23-6-23-14 0-20 43-39 43-59 0-9-8-13-22-13-55 0-165 47-165 81 0 23 58 40 149 40 96 0 154-31 154-91s-62-94-162-94c-50 0-89 11-121 27-16 9-24 5-24-10 0-60 68-111 148-111 104 0 187 84 187 186 0 103-78 189-173 189Z" fill="var(--fg)"/></g></g></svg>
+    </span><span class="meta"><span class="name">Savings pot</span><span class="sub">ring · secondary</span></span></span>
+
+    <!-- 6. untilted upright spiral -->
+    <span class="pos"><span class="mark lore">
+      <svg viewBox="0 0 500 500"><g transform="translate(25 25) scale(.9)"><path d="M260 430c-115 0-200-74-200-168 0-52 72-73 163-73 69 0 117 25 117 61 0 23-47 48-85 48-17 0-23-6-23-14 0-20 43-39 43-59 0-9-8-13-22-13-55 0-165 47-165 81 0 23 58 40 149 40 96 0 154-31 154-91s-62-94-162-94c-50 0-89 11-121 27-16 9-24 5-24-10 0-60 68-111 148-111 104 0 187 84 187 186 0 103-78 189-173 189Z" fill="var(--accent-fg)"/></g></svg>
+    </span><span class="meta"><span class="name">Core · serif</span><span class="sub">upright · formal</span></span></span>
+  </div>
+</section>
+
+<section>
+  <h4>Sizes · sm / md / lg</h4>
+  <div class="row">
+    <span class="rowlabel">USDC</span>
+    <span class="pos pos-sm"><span class="mark"><img src="../assets/icons/svg/token/usdc.svg"/></span>USDC<span class="val">8,420</span></span>
+    <span class="pos"><span class="mark"><img src="../assets/icons/svg/token/usdc.svg"/></span>USDC<span class="val">8,420.12</span></span>
+    <span class="pos pos-lg"><span class="mark"><img src="../assets/icons/svg/token/usdc.svg"/></span><span class="meta"><span class="name">USDC</span><span class="sub">USD Coin · Base</span></span><span class="val">8,420.12</span></span>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll('.addr').forEach(el=>{
+    el.addEventListener('click',async()=>{
+      const full = el.dataset.full || el.querySelector('.hex').textContent;
+      try{ await navigator.clipboard.writeText(full); }catch(e){}
+      const hex = el.querySelector('.hex');
+      const original = hex.textContent;
+      el.classList.add('copied');
+      hex.textContent = 'copied';
+      setTimeout(()=>{ el.classList.remove('copied'); hex.textContent = original; }, 1200);
+    });
+  });
+</script>
+<script src="theme-switcher.js" defer></script>
+</body></html>

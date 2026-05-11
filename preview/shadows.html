@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<link rel="stylesheet" href="theme-switcher.css"/>
+<style>
+  body{margin:0;background:var(--bg);padding:60px 24px 24px;font-family:var(--font-sans);color:var(--fg);min-height:100vh}
+  h4{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--fg-3);margin:0 0 12px;font-family:var(--font-mono);font-weight:600}
+  section{margin-bottom:32px}
+  .row{display:flex;gap:22px;flex-wrap:wrap;padding:10px 4px}
+  .b{width:110px;height:72px;background:var(--bg-3);border-radius:var(--r-md);display:flex;align-items:flex-end;justify-content:center;padding-bottom:6px;font-family:var(--font-mono);font-size:10px;color:var(--fg-3);border:1px solid var(--line-2)}
+  .note{font-family:var(--font-mono);font-size:11px;color:var(--fg-3);max-width:580px;line-height:1.5;margin:-4px 0 14px}
+  .grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+  .tile{aspect-ratio:1.4;background:var(--bg-3);border:1px solid var(--line-2);border-radius:var(--r-lg);padding:12px;display:flex;flex-direction:column;justify-content:space-between;font-family:var(--font-mono);font-size:10px;color:var(--fg-3)}
+</style></head><body data-theme="lore-light">
+
+<section>
+  <h4>Elevation · this theme</h4>
+  <p class="note">Each theme defines its own shadow tone. Paper themes use warm amber-brown diffusion; dark themes use accent-tinted glows; brutalist themes use hard offset drops; gradient themes cast color-matched washes. Switch theme to compare — same five tokens, dramatically different character.</p>
+  <div class="row">
+    <div class="b" style="box-shadow:var(--shadow-xs)">xs</div>
+    <div class="b" style="box-shadow:var(--shadow-sm)">sm · card</div>
+    <div class="b" style="box-shadow:var(--shadow-md)">md · popover</div>
+    <div class="b" style="box-shadow:var(--shadow-lg)">lg · modal</div>
+    <div class="b" style="box-shadow:var(--shadow-xl)">xl · hero</div>
+  </div>
+</section>
+
+<section>
+  <h4>Shadow character map · xl at-a-glance</h4>
+  <p class="note">Five themes shown side-by-side so you can feel each personality. Hover any to preview at its native scale.</p>
+  <div class="grid">
+    <div class="tile" style="background:#F2EADB;color:#5C4A33;border-color:#E8DFC8;box-shadow:0 32px 80px rgba(40,25,10,.12),0 8px 24px rgba(40,25,10,.10)"><span>Hearth</span><span>warm paper</span></div>
+    <div class="tile" style="background:#050608;color:#8FB4FF;border-color:#14171C;box-shadow:0 32px 80px -16px rgba(0,82,255,.4),0 16px 48px rgba(0,0,0,.6)"><span>Noir</span><span>electric glow</span></div>
+    <div class="tile" style="background:#FFF;color:#000;border:2px solid #000;border-radius:0;box-shadow:12px 12px 0 #000"><span>Kiosk</span><span>hard offset</span></div>
+    <div class="tile" style="background:#1A0F3A;color:#FFF100;border-color:#2D1A5C;box-shadow:0 12px 0 #0F0725,0 0 96px rgba(255,241,0,.3)"><span>Confetti</span><span>sticker bevel</span></div>
+    <div class="tile" style="background:linear-gradient(135deg,#FFB5D8,#B5D4FF,#FFF5B5);color:#2A1F3D;border-color:rgba(42,31,61,.1);box-shadow:0 32px 96px rgba(181,213,255,.6),0 16px 48px rgba(255,181,216,.5)"><span>Holo</span><span>rainbow wash</span></div>
+    <div class="tile" style="background:#080A0E;color:#E8FF5C;border-color:rgba(232,255,92,.2);border-radius:0;box-shadow:0 0 64px rgba(232,255,92,.4),0 0 16px rgba(232,255,92,.8)"><span>Neon</span><span>CRT bloom</span></div>
+    <div class="tile" style="background:#F4E8D6;color:#3C1810;border-color:#D4BFA1;border-radius:4px;box-shadow:8px 8px 0 rgba(60,24,16,.2),0 16px 40px rgba(60,24,16,.12)"><span>Bazaar</span><span>printers drop</span></div>
+    <div class="tile" style="background:#000;color:#00D632;border-color:#1a1a1a;border-radius:32px;box-shadow:0 32px 96px rgba(0,214,50,.25),0 32px 80px rgba(0,0,0,.8)"><span>Cashtag</span><span>electric halo</span></div>
+    <div class="tile" style="background:radial-gradient(140% 100% at 30% 0%,#3A1F0A,#1A0F05);color:#FFB24C;border-color:#4A2E15;box-shadow:0 0 96px rgba(255,178,76,.3),0 32px 80px rgba(0,0,0,.7)"><span>Ember</span><span>candle bloom</span></div>
+    <div class="tile" style="background:#F5F4F1;color:#111;border:1px dashed #111;border-radius:0;box-shadow:0 0 0 1px #111,8px 8px 0 #111"><span>Mono-Brut</span><span>photocopy</span></div>
+  </div>
+</section>
+
+<script src="theme-switcher.js" defer></script>
+</body></html>

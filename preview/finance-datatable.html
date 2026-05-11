@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>Finance · Data Table · Lore</title>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<link rel="stylesheet" href="theme-switcher.css"/>
+<link rel="stylesheet" href="_preview-base.css"/>
+<link rel="stylesheet" href="_primitives.css"/>
+<style>
+  table.tbl{width:100%;border-collapse:collapse;font-size:13px}
+  .tbl th{text-align:left;font-weight:500;font-family:var(--font-mono);font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--fg-3);padding:10px 12px;border-bottom:1px solid var(--line);background:var(--bg-3)}
+  .tbl th.r,.tbl td.r{text-align:right}
+  .tbl td{padding:12px;border-bottom:1px solid var(--line-2);font-family:var(--font-mono);font-variant-numeric:tabular-nums slashed-zero}
+  .tbl tr:last-child td{border-bottom:none}
+  .tbl tr:hover td{background:color-mix(in oklab,var(--fg) 3%,var(--bg-2))}
+  .tbl .nm{font-family:var(--font-sans);font-weight:500;color:var(--fg)}
+  .pos{color:var(--success)}
+</style></head><body data-theme="lore-light">
+
+<section>
+  <h4>Data table · yield vaults</h4>
+  <div class="card flush">
+    <table class="tbl">
+      <thead><tr><th>Vault</th><th class="r">TVL</th><th class="r">APY 7d</th><th class="r">APY 30d</th><th class="r">Risk</th><th class="r">Chain</th></tr></thead>
+      <tbody>
+        <tr><td class="nm">Aave v3 · USDC</td><td class="r">$4.82B</td><td class="r pos">5.24%</td><td class="r pos">5.08%</td><td class="r">A+</td><td class="r">Base</td></tr>
+        <tr><td class="nm">Morpho Blue · WETH</td><td class="r">$1.20B</td><td class="r pos">4.12%</td><td class="r pos">3.98%</td><td class="r">A</td><td class="r">Ethereum</td></tr>
+        <tr><td class="nm">Compound v3 · USDbC</td><td class="r">$620M</td><td class="r pos">3.90%</td><td class="r pos">4.02%</td><td class="r">A</td><td class="r">Base</td></tr>
+        <tr><td class="nm">Spark · sDAI</td><td class="r">$2.10B</td><td class="r pos">8.00%</td><td class="r pos">7.90%</td><td class="r">A+</td><td class="r">Ethereum</td></tr>
+        <tr><td class="nm">Pendle PT-sUSDe</td><td class="r">$340M</td><td class="r pos">12.4%</td><td class="r pos">11.8%</td><td class="r muted">B</td><td class="r">Arbitrum</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<script src="theme-switcher.js" defer></script>
+</body></html>
