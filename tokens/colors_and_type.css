@@ -83,7 +83,7 @@
   --p-parchment-dim: #E5DFD0;
   --p-chartreuse: #D4F24B;       /* Lore chartreuse — primary accent */
   --p-chartreuse-hover: #C2E232;
-  --p-chartreuse-deep: #9BBD1C;   /* on-light legible variant */
+  --p-chartreuse-deep: #56730D;   /* on-light legible variant — 4.7:1 vs parchment (WCAG AA) */
   --p-chartreuse-soft: #EEF9C4;
   --p-graphite: #141613;          /* near-black with green undertone */
   --p-graphite-2: #1D201C;
@@ -128,6 +128,34 @@
   --p-pink-100:#fcf0f5; --p-pink-200:#f6d6e3; --p-pink-300:#f0bcd3;
   --p-pink-400:#e88eb8; --p-pink-500:#e1519e; --p-pink-600:#b33e7e;
   --p-pink-700:#842b5a; --p-pink-800:#5e1c40; --p-pink-900:#300a1e;
+}
+
+/* ---------- MOTION TOKENS (theme-agnostic) ----------
+   Brand-tokenized motion. Same source-of-truth as
+   lore_deck/exports/tokens.json → themes.lore.motion.
+   The PPTX exporter forces final state during DOM walk,
+   so any animation built on these tokens exports cleanly. */
+:root {
+  --ease-lore:      cubic-bezier(.2, .8, .2, 1);
+  --ease-out-back:  cubic-bezier(.34, 1.56, .64, 1);
+  --ease-in-quart:  cubic-bezier(.5, 0, .75, 0);
+  --dur-instant:    120ms;
+  --dur-quick:      220ms;
+  --dur-medium:     360ms;
+  --dur-slow:       600ms;
+  --stagger-step:   70ms;
+}
+
+/* Reduced motion — collapse all timed motion to instant.
+   Applies to anything that references the motion tokens above. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-instant: 0ms;
+    --dur-quick:   0ms;
+    --dur-medium:  0ms;
+    --dur-slow:    0ms;
+    --stagger-step: 0ms;
+  }
 }
 
 /* ---------- SEMANTIC TOKENS: LORE LIGHT (default) ---------- */
