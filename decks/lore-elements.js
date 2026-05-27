@@ -448,6 +448,10 @@
       const data = this._parseData();
       if (!Array.isArray(data) || data.length === 0) return;
 
+      // Clear the JSON text immediately and show a loading state — this way
+      // the raw data never flashes if d3 takes time (or hangs under file://).
+      this.innerHTML = `<div style="padding:24px;color:var(--text-muted, #6B6E64);font-family:var(--family-mono, monospace);font-size:11px;letter-spacing:0.14em;text-transform:uppercase">Loading chart…</div>`;
+
       let d3;
       try { d3 = await loadD3(); }
       catch (e) { this._renderStatic(data); return; }
@@ -572,14 +576,31 @@
         : points;
       const labeled = sortedForLabels.slice(0, maxLabels);
 
-      const labelNodes = labeled.map(p => ({
-        x: p.x, y: p.y - p.r - 6,
-        targetX: p.x, targetY: p.y - p.r - 6,
-        width: (p.label || "").length * 6.4 + 8,
-        height: 14,
-        label: p.label,
-        _point: p,
-      }));
+      // Smart initial placement: label goes ABOVE the bubble by default,
+      // but BELOW if the bubble is near the top of the chart (otherwise
+      // the label clips outside the SVG viewBox).
+      const labelPadTop = 12;
+      const labelPadBottom = 6;
+      const labelPadSide = 4;
+      const labelNodes = labeled.map(p => {
+        const labelW = (p.label || "").length * 6.4 + 8;
+        const labelH = 14;
+        // Default: place above. If above clips, place below.
+        let initialY = p.y - p.r - 6;
+        if (initialY < labelH / 2 + labelPadTop) {
+          initialY = p.y + p.r + 12;
+        }
+        return {
+          x: p.x,
+          y: initialY,
+          targetX: p.x,
+          targetY: initialY,
+          width: labelW,
+          height: labelH,
+          label: p.label,
+          _point: p,
+        };
+      });
 
       if (collision === "force" && labelNodes.length > 1) {
         const sim = d3.forceSimulation(labelNodes)
@@ -587,7 +608,17 @@
           .force("y", d3.forceY(d => d.targetY).strength(0.3))
           .force("collide", d3.forceCollide(d => Math.max(d.width, d.height) / 2 + 4))
           .stop();
-        for (let i = 0; i < 140; i++) sim.tick();
+        // Run ticks AND clamp labels to inner chart bounds each iteration
+        // so the force can't push a label outside the visible area.
+        for (let i = 0; i < 180; i++) {
+          sim.tick();
+          for (const ln of labelNodes) {
+            ln.x = Math.max(ln.width / 2 + labelPadSide,
+                           Math.min(iw - ln.width / 2 - labelPadSide, ln.x));
+            ln.y = Math.max(ln.height / 2 + labelPadTop,
+                           Math.min(ih - labelPadBottom, ln.y));
+          }
+        }
       }
 
       const labelsG = svgEl("g");
@@ -690,6 +721,7 @@
 
       const slide = this.closest("[data-deck-active]")
         || this.closest("[data-slide]")
+        || this.closest(".slide")
         || this.parentElement;
       if (!slide) return;
       const target = slide.querySelector(targetSel);
@@ -698,10 +730,24 @@
         return;
       }
 
-      const slideRect = slide.getBoundingClientRect();
-      const tRect = target.getBoundingClientRect();
-      const tx = tRect.left - slideRect.left + tRect.width / 2;
-      const ty = tRect.top - slideRect.top + tRect.height / 2;
+      // Use offset-based positioning instead of getBoundingClientRect to
+      // get coordinates in the slide's INTERNAL (un-scaled) coordinate
+      // system. getBoundingClientRect returns scaled viewport pixels which
+      // double-scales when the slide itself has a transform: scale(...).
+      const offsetWithin = (el, ancestor) => {
+        let x = 0, y = 0, node = el;
+        while (node && node !== ancestor && node !== document.body) {
+          x += node.offsetLeft;
+          y += node.offsetTop;
+          node = node.offsetParent;
+        }
+        return { x, y };
+      };
+      const tPos = offsetWithin(target, slide);
+      const tx = tPos.x + target.offsetWidth / 2;
+      const ty = tPos.y + target.offsetHeight / 2;
+      const slideW = slide.offsetWidth;
+      const slideH = slide.offsetHeight;
 
       let lx, ly, anchor;
       switch (position) {
@@ -725,12 +771,12 @@
 
       this.style.left = "0px";
       this.style.top = "0px";
-      this.style.width = `${slideRect.width}px`;
-      this.style.height = `${slideRect.height}px`;
+      this.style.width = `${slideW}px`;
+      this.style.height = `${slideH}px`;
 
       const svg = svgEl("svg", {
-        width: slideRect.width,
-        height: slideRect.height,
+        width: slideW,
+        height: slideH,
       });
       svg.style.position = "absolute";
       svg.style.inset = "0";
