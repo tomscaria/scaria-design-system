@@ -52,11 +52,19 @@
     fn._host = host;
     enterHooks.add(fn);
     wireStage();
-    // Also fire once on init if the host is in the active slide already.
+    // Fire init for hosts in the active slide (deck-stage case) OR
+    // any host in a [data-deck-active]/[data-slide]/.slide container
+    // (standalone HTML case — no deck-stage wrapper).
     requestAnimationFrame(() => {
       const stage = document.querySelector("deck-stage");
-      const active = stage && stage.querySelector("[data-deck-active]");
-      if (active && active.contains(host)) fn({ slide: active, reason: "init" });
+      if (stage) {
+        const active = stage.querySelector("[data-deck-active]");
+        if (active && active.contains(host)) fn({ slide: active, reason: "init" });
+        return;
+      }
+      // Standalone: no deck-stage. Find nearest slide-like container and fire.
+      const slide = host.closest("[data-deck-active], [data-slide], .slide") || document.body;
+      fn({ slide, reason: "init-standalone" });
     });
   }
 
@@ -354,6 +362,442 @@
   }
   customElements.define("lore-spotlight", LoreSpotlight);
 
+  // ── shared d3 loader (lazy CDN ESM) ──────────────────────────────
+  // d3-force + d3-scale + d3-array loaded on-demand from esm.sh.
+  // Cached on first use; subsequent <lore-scatter>/<lore-callout> instances
+  // await the same promise. Safe to import from a classic-script context
+  // because dynamic import() works regardless of how the host script is loaded.
+  let _d3Modules = null;
+  let _d3Loading = null;
+  async function loadD3() {
+    if (_d3Modules) return _d3Modules;
+    if (_d3Loading) return _d3Loading;
+    _d3Loading = (async () => {
+      try {
+        const [force, scale, array] = await Promise.all([
+          import("https://esm.sh/d3-force@3"),
+          import("https://esm.sh/d3-scale@4"),
+          import("https://esm.sh/d3-array@3"),
+        ]);
+        _d3Modules = {
+          forceSimulation: force.forceSimulation,
+          forceX: force.forceX,
+          forceY: force.forceY,
+          forceCollide: force.forceCollide,
+          scaleLinear: scale.scaleLinear,
+          scaleOrdinal: scale.scaleOrdinal,
+          extent: array.extent,
+        };
+        return _d3Modules;
+      } catch (e) {
+        console.warn("[lore-elements] d3 modules failed to load — scatter/callout will render statically", e);
+        _d3Loading = null;
+        throw e;
+      }
+    })();
+    return _d3Loading;
+  }
+
+  // ── <lore-scatter> ───────────────────────────────────────────────
+  // Scatter plot with d3-force label collision avoidance.
+  // <lore-scatter
+  //   data='[{name,x,y,size,color}, ...]'
+  //   x-key="x" y-key="y" size-key="size" label-key="name" color-by="color"
+  //   x-label="EASE" y-label="IMPACT"
+  //   x-min="0" x-max="10" y-min="0" y-max="10"   (optional, autocomputed if omitted)
+  //   collision="force"  max-labels="8"  height="480">
+  // </lore-scatter>
+  //
+  // Honors token contract: axes use --family-mono, dots use lore palette,
+  // labels respect max-labels cap (editorial restraint per design-critique 6a).
+  const SVG_NS = "http://www.w3.org/2000/svg";
+
+  function svgEl(name, attrs = {}) {
+    const el = document.createElementNS(SVG_NS, name);
+    for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v);
+    return el;
+  }
+
+  class LoreScatter extends HTMLElement {
+    static get observedAttributes() {
+      return [
+        "data", "x-key", "y-key", "size-key", "label-key", "color-by",
+        "x-label", "y-label", "collision", "height",
+        "x-min", "x-max", "y-min", "y-max", "max-labels",
+      ];
+    }
+    connectedCallback() {
+      if (this._wired) return;
+      this._wired = true;
+      this.style.display = "block";
+      this.style.position = "relative";
+      this.style.width = this.style.width || "100%";
+      // Defer real render until slide enters or now if no stage exists
+      onSlideEnter(this, () => this._render());
+    }
+    _parseData() {
+      const raw = (this.getAttribute("data") || this.textContent || "").trim();
+      if (!raw) return null;
+      try { return JSON.parse(raw); }
+      catch (e) {
+        console.warn("[lore-scatter] invalid data JSON", e);
+        return null;
+      }
+    }
+    async _render() {
+      const data = this._parseData();
+      if (!Array.isArray(data) || data.length === 0) return;
+
+      let d3;
+      try { d3 = await loadD3(); }
+      catch (e) { this._renderStatic(data); return; }
+
+      const xKey = this.getAttribute("x-key") || "x";
+      const yKey = this.getAttribute("y-key") || "y";
+      const sizeKey = this.getAttribute("size-key");
+      const labelKey = this.getAttribute("label-key") || "label";
+      const colorBy = this.getAttribute("color-by");
+      const xLabel = this.getAttribute("x-label") || xKey;
+      const yLabel = this.getAttribute("y-label") || yKey;
+      const collision = this.getAttribute("collision") || "force";
+      const maxLabels = parseInt(this.getAttribute("max-labels") || "8", 10);
+
+      const rect = this.getBoundingClientRect();
+      const width = Math.max(rect.width || 800, 320);
+      const height = parseInt(this.getAttribute("height") || "480", 10);
+      const margin = { top: 24, right: 48, bottom: 56, left: 64 };
+      const iw = width - margin.left - margin.right;
+      const ih = height - margin.top - margin.bottom;
+
+      const xExt = this.hasAttribute("x-min") && this.hasAttribute("x-max")
+        ? [parseFloat(this.getAttribute("x-min")), parseFloat(this.getAttribute("x-max"))]
+        : d3.extent(data, d => +d[xKey]);
+      const yExt = this.hasAttribute("y-min") && this.hasAttribute("y-max")
+        ? [parseFloat(this.getAttribute("y-min")), parseFloat(this.getAttribute("y-max"))]
+        : d3.extent(data, d => +d[yKey]);
+      const sExt = sizeKey ? d3.extent(data, d => +d[sizeKey]) : [10, 10];
+
+      const xScale = d3.scaleLinear().domain(xExt).nice().range([0, iw]);
+      const yScale = d3.scaleLinear().domain(yExt).nice().range([ih, 0]);
+      const rScale = d3.scaleLinear().domain(sExt).range([8, 28]);
+
+      // Token-aligned palette (matches series_palette_extended in tokens.json)
+      const palette = [
+        "#D4F24B", "#3B5A2E", "#3E4B55", "#2D3558",
+        "#B85C3A", "#BB4227", "#9BBD1C", "#5E7A4E",
+        "#5A6B75", "#4A5278", "#D88B6A", "#D67960",
+      ];
+      const categories = colorBy
+        ? Array.from(new Set(data.map(d => d[colorBy])))
+        : [];
+      const colorScale = colorBy
+        ? d3.scaleOrdinal(palette).domain(categories)
+        : () => palette[0];
+
+      const svg = svgEl("svg", {
+        width, height,
+        viewBox: `0 0 ${width} ${height}`,
+      });
+      svg.style.maxWidth = "100%";
+      svg.style.height = "auto";
+      svg.style.fontFamily = "var(--family-sans, Aeonik, system-ui)";
+
+      const g = svgEl("g", { transform: `translate(${margin.left}, ${margin.top})` });
+      svg.appendChild(g);
+
+      const axisColor = "var(--text-muted, #6B6E64)";
+      const axisFont = "var(--family-mono, 'Aeonik Mono', ui-monospace, monospace)";
+
+      // X axis
+      const xAxisG = svgEl("g", { transform: `translate(0, ${ih})` });
+      xAxisG.appendChild(svgEl("line", { x1: 0, x2: iw, y1: 0, y2: 0, stroke: axisColor, "stroke-width": 0.75 }));
+      for (const t of xScale.ticks(5)) {
+        const tg = svgEl("g", { transform: `translate(${xScale(t)}, 0)` });
+        tg.appendChild(svgEl("line", { y2: 4, stroke: axisColor }));
+        const txt = svgEl("text", { y: 18, "text-anchor": "middle", "font-family": axisFont, "font-size": 11, fill: axisColor });
+        txt.textContent = t;
+        tg.appendChild(txt);
+        xAxisG.appendChild(tg);
+      }
+      const xLab = svgEl("text", { x: iw / 2, y: 44, "text-anchor": "middle", "font-family": axisFont, "font-size": 10, fill: axisColor, "letter-spacing": "0.14em" });
+      xLab.textContent = xLabel.toUpperCase();
+      xAxisG.appendChild(xLab);
+      g.appendChild(xAxisG);
+
+      // Y axis
+      const yAxisG = svgEl("g");
+      yAxisG.appendChild(svgEl("line", { x1: 0, x2: 0, y1: 0, y2: ih, stroke: axisColor, "stroke-width": 0.75 }));
+      for (const t of yScale.ticks(5)) {
+        const tg = svgEl("g", { transform: `translate(0, ${yScale(t)})` });
+        tg.appendChild(svgEl("line", { x2: -4, stroke: axisColor }));
+        const txt = svgEl("text", { x: -8, y: 4, "text-anchor": "end", "font-family": axisFont, "font-size": 11, fill: axisColor });
+        txt.textContent = t;
+        tg.appendChild(txt);
+        yAxisG.appendChild(tg);
+      }
+      const yLab = svgEl("text", {
+        transform: `translate(-44, ${ih / 2}) rotate(-90)`,
+        "text-anchor": "middle", "font-family": axisFont, "font-size": 10,
+        fill: axisColor, "letter-spacing": "0.14em",
+      });
+      yLab.textContent = yLabel.toUpperCase();
+      yAxisG.appendChild(yLab);
+      g.appendChild(yAxisG);
+
+      // Dots
+      const dotsG = svgEl("g");
+      const points = data.map(d => ({
+        x: xScale(+d[xKey]),
+        y: yScale(+d[yKey]),
+        r: sizeKey ? rScale(+d[sizeKey]) : 10,
+        color: colorScale(d[colorBy]),
+        label: d[labelKey],
+        data: d,
+      }));
+      for (const p of points) {
+        const c = svgEl("circle", {
+          cx: p.x, cy: p.y, r: 0,
+          fill: p.color, "fill-opacity": 0.85,
+          stroke: "var(--bg-primary, #F1ECE0)", "stroke-width": 1.5,
+        });
+        c.style.transition = "r 480ms cubic-bezier(.2,.8,.2,1)";
+        dotsG.appendChild(c);
+        p._circle = c;
+      }
+      g.appendChild(dotsG);
+
+      // Labels with collision (top maxLabels by size, else first N)
+      const sortedForLabels = sizeKey
+        ? [...points].sort((a, b) => (+b.data[sizeKey]) - (+a.data[sizeKey]))
+        : points;
+      const labeled = sortedForLabels.slice(0, maxLabels);
+
+      const labelNodes = labeled.map(p => ({
+        x: p.x, y: p.y - p.r - 6,
+        targetX: p.x, targetY: p.y - p.r - 6,
+        width: (p.label || "").length * 6.4 + 8,
+        height: 14,
+        label: p.label,
+        _point: p,
+      }));
+
+      if (collision === "force" && labelNodes.length > 1) {
+        const sim = d3.forceSimulation(labelNodes)
+          .force("x", d3.forceX(d => d.targetX).strength(0.5))
+          .force("y", d3.forceY(d => d.targetY).strength(0.3))
+          .force("collide", d3.forceCollide(d => Math.max(d.width, d.height) / 2 + 4))
+          .stop();
+        for (let i = 0; i < 140; i++) sim.tick();
+      }
+
+      const labelsG = svgEl("g");
+      for (const ln of labelNodes) {
+        const dx = ln.x - ln.targetX, dy = ln.y - ln.targetY;
+        const moved = Math.sqrt(dx * dx + dy * dy) > 8;
+        if (moved) {
+          const line = svgEl("line", {
+            x1: ln.targetX, y1: ln.targetY + 4,
+            x2: ln.x, y2: ln.y + 4,
+            stroke: "var(--text-muted, #6B6E64)", "stroke-width": 0.5,
+            opacity: 0,
+          });
+          line.style.transition = "opacity 400ms cubic-bezier(.2,.8,.2,1)";
+          labelsG.appendChild(line);
+          ln._line = line;
+        }
+        const t = svgEl("text", {
+          x: ln.x, y: ln.y,
+          "text-anchor": "middle",
+          "font-family": "var(--family-sans, Aeonik, system-ui)",
+          "font-size": 11,
+          "font-weight": 500,
+          fill: "var(--text-primary, #141613)",
+          opacity: 0,
+        });
+        t.style.transition = "opacity 400ms cubic-bezier(.2,.8,.2,1)";
+        t.textContent = ln.label;
+        labelsG.appendChild(t);
+        ln._text = t;
+      }
+      g.appendChild(labelsG);
+
+      this.innerHTML = "";
+      this.appendChild(svg);
+
+      // Animate in: dots first, then labels
+      requestAnimationFrame(() => {
+        for (const p of points) p._circle.setAttribute("r", p.r);
+        setTimeout(() => {
+          for (const ln of labelNodes) {
+            ln._text.setAttribute("opacity", 1);
+            if (ln._line) ln._line.setAttribute("opacity", 0.6);
+          }
+        }, 320);
+      });
+    }
+    _renderStatic(data) {
+      // d3 failed to load — render a minimal fallback so the slide doesn't crash
+      this.innerHTML = `<div style="padding:24px;color:var(--text-muted, #6B6E64);font-family:var(--family-mono, monospace);font-size:12px;border:1px dashed currentColor;border-radius:4px">[lore-scatter] D3 modules failed to load. Check console.</div>`;
+    }
+    forceFinal() {
+      // For PPTX export — render synchronously without animation
+      const data = this._parseData();
+      if (data && !this.querySelector("svg")) this._render();
+    }
+  }
+  customElements.define("lore-scatter", LoreScatter);
+
+  // ── <lore-callout> ──────────────────────────────────────────────
+  // Annotation box connected to a target element by a leader line.
+  // <lore-callout target="#bubble-3" position="top-right" offset="32"
+  //               variant="accent" label="$7.7M risk-weighted"></lore-callout>
+  //
+  // Positioning is relative to the nearest [data-deck-active] slide;
+  // the callout overlays the slide and uses absolute SVG coordinates.
+  // Variants: default, accent, warn (token-aligned colors).
+  class LoreCallout extends HTMLElement {
+    static get observedAttributes() {
+      return ["target", "position", "offset", "label", "variant"];
+    }
+    connectedCallback() {
+      if (this._wired) return;
+      this._wired = true;
+      this.style.display = "block";
+      this.style.position = "absolute";
+      this.style.inset = "0";
+      this.style.pointerEvents = "none";
+      this.style.zIndex = "5";
+      onSlideEnter(this, () => this._render());
+      // Re-render on resize (target positions change with viewport)
+      if (!this._ro) {
+        this._ro = new ResizeObserver(() => {
+          if (this._rendered) this._render();
+        });
+        const slide = this.closest("[data-deck-active]") || this.parentElement;
+        if (slide) this._ro.observe(slide);
+      }
+    }
+    disconnectedCallback() {
+      if (this._ro) { this._ro.disconnect(); this._ro = null; }
+    }
+    _render() {
+      const targetSel = this.getAttribute("target");
+      const position = this.getAttribute("position") || "top-right";
+      const offset = parseInt(this.getAttribute("offset") || "32", 10);
+      const label = this.getAttribute("label") || (this.textContent || "").trim();
+      const variant = this.getAttribute("variant") || "default";
+      if (!targetSel || !label) return;
+
+      const slide = this.closest("[data-deck-active]")
+        || this.closest("[data-slide]")
+        || this.parentElement;
+      if (!slide) return;
+      const target = slide.querySelector(targetSel);
+      if (!target) {
+        console.warn(`[lore-callout] target not found in slide: ${targetSel}`);
+        return;
+      }
+
+      const slideRect = slide.getBoundingClientRect();
+      const tRect = target.getBoundingClientRect();
+      const tx = tRect.left - slideRect.left + tRect.width / 2;
+      const ty = tRect.top - slideRect.top + tRect.height / 2;
+
+      let lx, ly, anchor;
+      switch (position) {
+        case "top-left":     lx = tx - offset; ly = ty - offset; anchor = "end"; break;
+        case "bottom-right": lx = tx + offset; ly = ty + offset; anchor = "start"; break;
+        case "bottom-left":  lx = tx - offset; ly = ty + offset; anchor = "end"; break;
+        case "top":          lx = tx;          ly = ty - offset; anchor = "middle"; break;
+        case "bottom":       lx = tx;          ly = ty + offset; anchor = "middle"; break;
+        case "left":         lx = tx - offset; ly = ty;          anchor = "end"; break;
+        case "right":        lx = tx + offset; ly = ty;          anchor = "start"; break;
+        case "top-right":
+        default:             lx = tx + offset; ly = ty - offset; anchor = "start";
+      }
+
+      const palettes = {
+        default: { stroke: "var(--text-secondary, #3A3D36)", fill: "var(--text-primary, #141613)", bg: "var(--bg-elevated, #FFFFFF)" },
+        accent:  { stroke: "var(--accent-primary-deep, #9BBD1C)", fill: "var(--text-primary, #141613)", bg: "var(--accent-primary-soft, #EEF9C4)" },
+        warn:    { stroke: "var(--semantic-warning, #B85C3A)", fill: "var(--text-primary, #141613)", bg: "var(--semantic-warning-soft, #F1D3C2)" },
+      };
+      const c = palettes[variant] || palettes.default;
+
+      this.style.left = "0px";
+      this.style.top = "0px";
+      this.style.width = `${slideRect.width}px`;
+      this.style.height = `${slideRect.height}px`;
+
+      const svg = svgEl("svg", {
+        width: slideRect.width,
+        height: slideRect.height,
+      });
+      svg.style.position = "absolute";
+      svg.style.inset = "0";
+      svg.style.overflow = "visible";
+
+      const dot = svgEl("circle", {
+        cx: tx, cy: ty, r: 3, fill: c.stroke, opacity: 0,
+      });
+      dot.style.transition = "opacity 360ms cubic-bezier(.2,.8,.2,1)";
+      svg.appendChild(dot);
+
+      const line = svgEl("line", {
+        x1: tx, y1: ty, x2: lx, y2: ly,
+        stroke: c.stroke, "stroke-width": 1, opacity: 0,
+      });
+      line.style.transition = "opacity 360ms cubic-bezier(.2,.8,.2,1) 80ms";
+      svg.appendChild(line);
+
+      const labelLen = label.length;
+      const lineCount = Math.max(1, Math.ceil(labelLen / 26));
+      const w = Math.min(280, Math.max(120, labelLen * 6.4 + 24));
+      const h = lineCount * 16 + 14;
+      let fx;
+      if (anchor === "start") fx = lx;
+      else if (anchor === "end") fx = lx - w;
+      else fx = lx - w / 2;
+      let fy = ly < ty ? ly - h : ly;
+
+      const fo = svgEl("foreignObject", {
+        x: fx, y: fy, width: w, height: h, opacity: 0,
+      });
+      fo.style.transition = "opacity 360ms cubic-bezier(.2,.8,.2,1) 160ms";
+
+      const box = document.createElement("div");
+      box.style.background = c.bg;
+      box.style.color = c.fill;
+      box.style.border = `1px solid ${c.stroke}`;
+      box.style.borderRadius = "4px";
+      box.style.padding = "6px 10px";
+      box.style.fontFamily = "var(--family-sans, Aeonik, system-ui)";
+      box.style.fontSize = "12px";
+      box.style.lineHeight = "1.3";
+      box.style.fontWeight = "500";
+      box.style.boxShadow = "0 2px 8px rgba(20,22,19,0.08)";
+      box.style.boxSizing = "border-box";
+      box.textContent = label;
+      fo.appendChild(box);
+      svg.appendChild(fo);
+
+      this.innerHTML = "";
+      this.appendChild(svg);
+      this._rendered = true;
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          dot.setAttribute("opacity", 1);
+          line.setAttribute("opacity", 1);
+          fo.setAttribute("opacity", 1);
+        });
+      });
+    }
+    forceFinal() {
+      if (!this._rendered) this._render();
+    }
+  }
+  customElements.define("lore-callout", LoreCallout);
+
   // ── public API for the PPTX exporter ───────────────────────────────
   window.__loreElements = {
     forceFinalEverywhere() {
@@ -367,6 +811,12 @@
         if (typeof el.forceFinal === "function") el.forceFinal();
       }
       for (const el of document.querySelectorAll("lore-typewriter")) {
+        if (typeof el.forceFinal === "function") el.forceFinal();
+      }
+      for (const el of document.querySelectorAll("lore-scatter")) {
+        if (typeof el.forceFinal === "function") el.forceFinal();
+      }
+      for (const el of document.querySelectorAll("lore-callout")) {
         if (typeof el.forceFinal === "function") el.forceFinal();
       }
       // Reveal all build steps.
