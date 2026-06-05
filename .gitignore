@@ -1,3 +1,2 @@
-node_modules/
-.DS_Store
-*.log
+# Exceeds GitHub 100MB limit — kept local-only for reference
+inspo/screencapture-brasshands-*.pdf
