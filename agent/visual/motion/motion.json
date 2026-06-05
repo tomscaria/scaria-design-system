@@ -1,0 +1,125 @@
+{
+  "$schema": "https://lore-design-system.tomscaria.com/schemas/motion.json",
+  "name": "Lore motion system",
+  "version": "0.1.0",
+  "source": "Codified from docs/brand/MOTION_SYSTEM.md (Lore brand-authoritative motion doc)",
+  "purpose_gate": {
+    "rule": "Every motion element must satisfy at least one of: orientation, proof, delight. If none — remove it.",
+    "purposes": {
+      "orientation": "Where am I in the story? (e.g. Snap-Step scroll locks)",
+      "proof": "Show product behavior (e.g. chart line drawing in)",
+      "delight": "Subtle polish (e.g. hero card float)"
+    }
+  },
+  "primitives": {
+    "float": {
+      "description": "Subtle vertical drift or parallax on hero objects. Ambient.",
+      "framer_motion": {
+        "animate": { "y": [0, -8, 0] },
+        "transition": { "duration": 6, "repeat": "Infinity", "ease": "easeInOut" }
+      }
+    },
+    "snap_step": {
+      "description": "Scroll locks briefly at key beats. One snap = one idea.",
+      "framer_motion": {
+        "initial": { "opacity": 0 },
+        "whileInView": { "opacity": 1 },
+        "viewport": { "once": true, "amount": 0.6 },
+        "transition": { "duration": 0.6 }
+      }
+    },
+    "reveal": {
+      "description": "Fade in + slight rise (8–16px) + optional blur-to-sharp.",
+      "framer_motion": {
+        "initial": { "opacity": 0, "y": 16, "filter": "blur(4px)" },
+        "whileInView": { "opacity": 1, "y": 0, "filter": "blur(0px)" },
+        "viewport": { "once": true },
+        "transition": { "duration": 0.4, "ease": [0.25, 0.46, 0.45, 0.94] }
+      }
+    },
+    "trace": {
+      "description": "Chart lines draw in; numbers count up; skeleton → real data. Provides credibility.",
+      "framer_motion_path": {
+        "initial": { "pathLength": 0 },
+        "whileInView": { "pathLength": 1 },
+        "viewport": { "once": true },
+        "transition": { "duration": 1.2, "ease": "easeOut" }
+      }
+    },
+    "magnet": {
+      "description": "Subtle magnetic pull on hover/touch; firm press feedback. Interaction confidence.",
+      "framer_motion": {
+        "whileHover": { "scale": 1.03 },
+        "whileTap": { "scale": 0.97 },
+        "transition": { "type": "spring", "stiffness": 400, "damping": 17 }
+      }
+    },
+    "glow_pulse": {
+      "description": "Soft accent-color glow on active cards, selected tabs, primary CTA. Never continuous everywhere.",
+      "framer_motion": {
+        "animate": {
+          "boxShadow": [
+            "0 0 0px hsl(var(--accent) / 0)",
+            "0 0 20px hsl(var(--accent) / 0.15)",
+            "0 0 0px hsl(var(--accent) / 0)"
+          ]
+        },
+        "transition": { "duration": 2.5, "repeat": "Infinity", "ease": "easeInOut" }
+      }
+    }
+  },
+  "timing": {
+    "durations_ms": {
+      "micro": { "min": 120, "max": 180, "default": 150, "usage": "Button hover, tab switch" },
+      "entry": { "min": 300, "max": 450, "default": 400, "usage": "Scroll-triggered fade-in" },
+      "scene": { "min": 500, "max": 700, "default": 600, "usage": "Stage tab change, snap-step" }
+    },
+    "easing": {
+      "spring_default": { "type": "spring", "stiffness": 400, "damping": 25, "usage": "Interactions, CTA" },
+      "spring_soft": { "type": "spring", "stiffness": 260, "damping": 20, "usage": "Float, ambient" },
+      "ease_out": { "cubic_bezier": [0.25, 0.46, 0.45, 0.94], "usage": "Reveal entries" },
+      "linear": { "usage": "Never use as primary easing" }
+    },
+    "stagger_max_ms": 120
+  },
+  "budget_per_page": {
+    "float_ambient": 2,
+    "snap_step_scroll": 3,
+    "glow_pulse_active": 3,
+    "trace_chart": 2,
+    "magnet_cta": "unlimited",
+    "reveal_entry": "unlimited",
+    "reduction_priority": [
+      "Decorative Float → reduce to 1",
+      "Extra Glow Pulse → limit to primary CTA only",
+      "Additional Snap-Steps → merge scenes",
+      "Trace → static chart fallback"
+    ]
+  },
+  "viewport_rules": {
+    "viewport_once": true,
+    "viewport_amount_tall": 0.3,
+    "viewport_amount_compact": 0.6,
+    "scroll_direction": "vertical_only",
+    "reduced_motion": "Respect prefers-reduced-motion. Disable Float, Glow Pulse, Trace. Keep Reveal as instant opacity."
+  },
+  "anti_patterns": [
+    "Continuous spinning loaders as decoration",
+    "Parallax on every section",
+    "Bounce easing",
+    "Slow (>700ms) transitions",
+    "Multiple competing focal animations per section",
+    "Glow on every card simultaneously",
+    "Animation re-trigger on scroll-up (use viewport.once: true)"
+  ],
+  "per_theme_overrides_path": "themes/<theme>/motion.json",
+  "css_var_contract": {
+    "--motion-duration-micro": "150ms",
+    "--motion-duration-entry": "400ms",
+    "--motion-duration-scene": "600ms",
+    "--motion-ease-interaction": "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+    "--motion-ease-reveal": "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+    "--motion-ease-ambient": "ease-in-out",
+    "note": "Themes override these vars in agent/themes/<theme>/colors_and_type.css. Consumers read them via var() in CSS or via the motion.css helpers below."
+  }
+}

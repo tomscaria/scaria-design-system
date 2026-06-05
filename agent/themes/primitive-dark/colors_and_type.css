@@ -1,0 +1,38 @@
+/* ============================================================
+   Primitive Dark — STUB.
+   Inversion of primitive. Brand-neutral, Inter-based dark theme.
+   Defer values until primitive is widely used.
+   ============================================================ */
+
+[data-theme="primitive-dark"] {
+  /* Inherits the primitive type scale + spacing + motion;
+     overrides surface + foreground only. Author the rest when needed. */
+  --bg: hsl(0 0% 4%);
+  --bg-2: hsl(0 0% 7%);
+  --bg-3: hsl(0 0% 10%);
+  --bg-muted: hsl(0 0% 6%);
+  --bg-inverted: hsl(0 0% 100%);
+
+  --fg: hsl(0 0% 96%);
+  --fg-2: hsl(0 0% 75%);
+  --fg-3: hsl(0 0% 55%);
+  --fg-muted: hsl(0 0% 36%);
+  --fg-inverted: hsl(0 0% 4%);
+
+  --line: hsl(0 0% 15%);
+  --line-2: hsl(0 0% 10%);
+  --line-strong: hsl(0 0% 96%);
+
+  --brand: hsl(0 0% 96%);
+  --brand-hover: hsl(0 0% 85%);
+  --brand-fg: hsl(0 0% 4%);
+
+  --accent: hsl(0 0% 96%);
+  --accent-hover: hsl(0 0% 85%);
+  --accent-deep: hsl(0 0% 100%);
+  --accent-soft: hsl(0 0% 12%);
+  --accent-fg: hsl(0 0% 4%);
+
+  /* TODO: type scale + motion + spacing + radii + shadow.
+     Pattern from primitive applies; copy when ready. */
+}

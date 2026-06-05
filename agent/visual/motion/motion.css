@@ -1,0 +1,71 @@
+/* ============================================================
+   Lore motion — CSS helpers
+   Source of truth: ./motion.json
+   Themes override the --motion-* vars in agent/themes/<theme>/colors_and_type.css.
+   ============================================================ */
+
+/* Default values — themes override per data-theme block. */
+:root {
+  --motion-duration-micro: 150ms;
+  --motion-duration-entry: 400ms;
+  --motion-duration-scene: 600ms;
+  --motion-ease-interaction: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --motion-ease-reveal: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --motion-ease-ambient: ease-in-out;
+}
+
+/* ---------- KEYFRAMES (the six primitives) ---------- */
+
+@keyframes m-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+
+@keyframes m-reveal {
+  from { opacity: 0; transform: translateY(16px); filter: blur(4px); }
+  to   { opacity: 1; transform: translateY(0);    filter: blur(0); }
+}
+
+@keyframes m-trace {
+  from { stroke-dashoffset: var(--m-trace-length, 1000); }
+  to   { stroke-dashoffset: 0; }
+}
+
+@keyframes m-glow-pulse {
+  0%, 100% { box-shadow: 0 0  0px hsl(var(--accent) / 0); }
+  50%      { box-shadow: 0 0 20px hsl(var(--accent) / 0.15); }
+}
+
+/* ---------- UTILITY CLASSES ---------- */
+
+.m-float        { animation: m-float 6s var(--motion-ease-ambient) infinite; }
+.m-reveal       { animation: m-reveal var(--motion-duration-entry) var(--motion-ease-reveal) both; }
+.m-glow-pulse   { animation: m-glow-pulse 2.5s var(--motion-ease-ambient) infinite; }
+
+.m-magnet {
+  transition:
+    transform var(--motion-duration-micro) var(--motion-ease-interaction),
+    box-shadow var(--motion-duration-micro) var(--motion-ease-interaction);
+}
+.m-magnet:hover  { transform: scale(1.03); }
+.m-magnet:active { transform: scale(0.97); }
+
+.m-snap-step {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+.m-snap-container {
+  scroll-snap-type: y mandatory;
+  overflow-y: auto;
+}
+
+/* ---------- REDUCED MOTION ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .m-float,
+  .m-glow-pulse { animation: none; }
+  .m-reveal     { animation: none; opacity: 1; transform: none; filter: none; }
+  .m-magnet     { transition: none; }
+  .m-magnet:hover,
+  .m-magnet:active { transform: none; }
+}

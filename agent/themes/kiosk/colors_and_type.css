@@ -1,0 +1,99 @@
+/* ============================================================
+   Kiosk — brutalist newsstand.
+   Sharp corners, electric yellow accent, hard-edge shadows,
+   Syne for display. Restored from earlier expressive themes.
+   Use for raw, anti-design surfaces — pricing pages,
+   one-pagers, statements of intent.
+   ============================================================ */
+
+[data-theme="kiosk"] {
+  /* ---------- COLOR ---------- */
+  --bg: hsl(0 0% 100%);
+  --bg-2: hsl(63 100% 58%);            /* the famous yellow */
+  --bg-3: hsl(0 0% 100%);
+  --bg-muted: hsl(0 0% 96%);
+  --bg-inverted: hsl(0 0% 0%);
+
+  --fg: hsl(0 0% 0%);
+  --fg-2: hsl(0 0% 20%);
+  --fg-3: hsl(0 0% 40%);
+  --fg-muted: hsl(0 0% 60%);
+  --fg-inverted: hsl(63 100% 58%);
+
+  --line: hsl(0 0% 0%);                /* lines are HARD black */
+  --line-2: hsl(0 0% 87%);
+  --line-strong: hsl(0 0% 0%);
+
+  --brand: hsl(0 0% 0%);
+  --brand-hover: hsl(0 0% 20%);
+  --brand-fg: hsl(63 100% 58%);
+
+  --accent: hsl(63 100% 58%);
+  --accent-hover: hsl(63 85% 50%);
+  --accent-deep: hsl(63 100% 40%);
+  --accent-soft: hsl(63 100% 92%);
+  --accent-fg: hsl(0 0% 0%);
+
+  --success: hsl(140 100% 20%);
+  --info:    hsl(0 0% 0%);
+  --warn:    hsl(25 100% 50%);
+  --danger:  hsl(0 100% 41%);
+
+  /* ---------- TYPE (Syne display, tight, no fractional sizes) ---------- */
+  --fs-display-xl: 128px;  --lh-display-xl: 0.9;   --tracking-display-xl: -0.04em;
+  --fs-display-lg: 96px;   --lh-display-lg: 0.92;  --tracking-display-lg: -0.035em;
+  --fs-display-md: 64px;   --lh-display-md: 0.95;  --tracking-display-md: -0.03em;
+  --fs-display-sm: 48px;   --lh-display-sm: 1.0;   --tracking-display-sm: -0.025em;
+
+  --fs-header-xl: 36px;    --lh-header-xl: 1.05;   --tracking-header-xl: -0.02em;
+  --fs-header-lg: 28px;    --lh-header-lg: 1.1;    --tracking-header-lg: -0.015em;
+  --fs-header-md: 22px;    --lh-header-md: 1.2;    --tracking-header-md: -0.01em;
+  --fs-header-sm: 18px;    --lh-header-sm: 1.25;   --tracking-header-sm: 0;
+  --fs-header-caps: 14px;  --lh-header-caps: 1;    --tracking-header-caps: 0.1em;
+
+  --fs-body-lg: 20px;      --lh-body-lg: 1.5;
+  --fs-body-md: 16px;      --lh-body-md: 1.5;
+  --fs-body-sm: 14px;      --lh-body-sm: 1.4;
+  --fs-body-xs: 12px;      --lh-body-xs: 1.3;
+
+  --fw-regular: 500;       /* heavier base weight */
+  --fw-medium:  700;
+  --fw-bold:    800;
+
+  /* ---------- FONT FAMILY ---------- */
+  --font-sans: "Syne", system-ui, sans-serif;
+  --font-display: "Syne", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  /* ---------- MOTION (terse, no easing flourish) ---------- */
+  --motion-duration-micro: 80ms;
+  --motion-duration-entry: 200ms;
+  --motion-duration-scene: 350ms;
+  --motion-ease-interaction: cubic-bezier(0.2, 0, 0, 1);
+  --motion-ease-reveal:      cubic-bezier(0.2, 0, 0, 1);
+  --motion-ease-ambient:     linear;
+
+  /* ---------- SPACING (loose, generous gutters) ---------- */
+  --sp-section-y: 128px;  --sp-section-x: 48px;
+  --sp-stack-xs: 8px;  --sp-stack-sm: 16px;  --sp-stack-md: 32px;  --sp-stack-lg: 64px;  --sp-stack-xl: 96px;
+  --sp-inline-xs: 8px; --sp-inline-sm: 16px; --sp-inline-md: 24px; --sp-inline-lg: 40px;
+
+  /* ---------- RADII (NONE — brutalist) ---------- */
+  --r-xs: 0;  --r-sm: 0;  --r-md: 0;  --r-lg: 0;  --r-xl: 0;  --r-pill: 0;
+
+  /* ---------- SHADOW (hard offset, no blur) ---------- */
+  --shadow-xs: 2px 2px 0 hsl(0 0% 0%);
+  --shadow-sm: 4px 4px 0 hsl(0 0% 0%);
+  --shadow-md: 6px 6px 0 hsl(0 0% 0%);
+  --shadow-lg: 8px 8px 0 hsl(0 0% 0%);
+  --shadow-xl: 12px 12px 0 hsl(0 0% 0%);
+}
+
+[data-theme="kiosk"][data-expression="marketing"] {
+  --fs-display-xl: 180px;  --fs-display-lg: 128px;  --fs-display-md: 88px;
+  --sp-section-y: 200px;
+}
+[data-theme="kiosk"][data-expression="product"] {
+  --sp-section-y: 64px;
+  /* Brutalism in product UI is intense — most product surfaces should not use kiosk. */
+}

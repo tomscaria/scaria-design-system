@@ -1,0 +1,48 @@
+{
+  "$schema": "https://lore-design-system.tomscaria.com/schemas/component-tokens.json",
+  "component": "Button",
+  "version": "0.1.0",
+  "consumes": {
+    "color": [
+      "--brand",
+      "--brand-hover",
+      "--brand-fg",
+      "--accent",
+      "--accent-hover",
+      "--accent-fg",
+      "--bg-2",
+      "--bg-muted",
+      "--fg",
+      "--line",
+      "--danger"
+    ],
+    "type": [
+      "--fs-body-sm",
+      "--fs-body-md",
+      "--fs-body-lg",
+      "--fw-medium"
+    ],
+    "radii": ["--r-md"],
+    "motion": [
+      "--motion-duration-micro",
+      "--motion-ease-interaction"
+    ],
+    "spacing_primitive": ["--sp-8", "--sp-12", "--sp-16", "--sp-24"]
+  },
+  "variants": {
+    "intent": ["primary", "accent", "secondary", "destructive", "ghost"],
+    "size":   ["sm", "md", "lg"],
+    "fullWidth": [false, true]
+  },
+  "default_variants": { "intent": "primary", "size": "md" },
+  "accessibility": {
+    "min_contrast_label_vs_fill": 4.5,
+    "focus_ring": "--accent at 2px with 2px offset",
+    "loading_aria": "aria-busy"
+  },
+  "anti_patterns": [
+    "Multiple accent intents per visible viewport",
+    "Destructive sibling to primary in the same row",
+    "Inline override of radius or font-size"
+  ]
+}
