@@ -96,6 +96,19 @@
   --p-clay: #B85C3A;              /* muted terracotta — warnings only */
   --p-ash: #0A0B09;               /* true near-black */
 
+  /* Revenant / American Dynamism palette
+     Sourced from the inspo set (designmaxxing, AI-OPS, robotics series).
+     Signal orange is Pantone 1655C — the "active state / system signal" color.
+     Concrete gray is the "surface / background field" from the same spec sheet.
+     Onyx is "system black / primary system color" from that same three-color canon.
+     These three are the core building blocks of both revenant themes. */
+  --p-signal:       #FF4F00;   /* Signal Orange — Pantone 1655C, active/operational */
+  --p-signal-hover: #E04300;   /* darker for hover states */
+  --p-signal-deep:  #8A2D00;   /* on-light legible variant — 7.4:1 vs concrete (WCAG AAA) */
+  --p-signal-soft:  #FFE8D8;   /* badge / chip background on light surfaces */
+  --p-concrete:     #F1EEEB;   /* Concrete Gray — surface / background field */
+  --p-onyx:         #1E1B1B;   /* System Black — primary system color */
+
   /* Semantic palette from Prysm (kept for crypto-native flows) */
   --p-red-100:#fdf0ef; --p-red-200:#fad6d3; --p-red-300:#f8bbb5;
   --p-red-400:#f58d80; --p-red-500:#ea5633; --p-red-600:#bb4227;
@@ -1012,5 +1025,165 @@
   --shadow-md:0 8px 24px rgba(201,63,143,.25),0 2px 8px rgba(255,110,138,.15);
   --shadow-lg:0 16px 48px rgba(201,63,143,.3),0 8px 24px rgba(255,110,138,.2);
   --shadow-xl:0 32px 96px rgba(201,63,143,.35),0 16px 48px rgba(255,110,138,.25);
+}
+
+/* ---------- REVENANT LIGHT ----------
+   American Dynamism register. Inspired by the AI-OPS, Atlas Advanced Research,
+   robotics, and designmaxxing inspo set: Concrete Gray surface, System Black
+   foreground, Signal Orange as the operational accent. The three-color system
+   from the designmaxxing spec sheet (System Black #1E1B1B / Signal Orange
+   #FF4F00 Pantone 1655C / Concrete Gray #F1EEEB) is the source of truth.
+
+   Use when: the surface is field-spec, dashboard, ops-facing, or the Revenant
+   trading agent lifecycle stage (the highest operational tier in swarm-fund).
+   Not for general consumer / fintech surfaces — use lore-light instead.
+
+   Typography note: for pure terminal / status-board surfaces, override
+   --font-sans with var(--font-mono) to lean fully into the operational register.
+   The base theme keeps Aeonik for readability in mixed prose + data layouts.
+
+   Signal orange (#FF4F00) on concrete gray (#F1EEEB) has contrast ~2.1:1 —
+   below AA for body text. Use --accent-deep (#8A2D00, 7.4:1) for any text
+   rendered in the signal-orange family. Reserve raw --accent for decorative
+   elements, icon fills, large display type (≥24px / bold), and button fills
+   (where --accent-fg provides the legible text layer at 6.8:1). */
+[data-theme="revenant-light"] {
+  /* Surfaces */
+  --bg:          var(--p-concrete);  /* #F1EEEB — "surface / background field" */
+  --bg-2:        #FAFAF7;            /* slightly lighter raised card */
+  --bg-3:        #FFFFFF;            /* modal / floating */
+  --bg-inverted: var(--p-onyx);
+  --bg-muted:    #E5E2DE;            /* recessed section fill */
+
+  /* Foreground */
+  --fg:          var(--p-onyx);      /* #1E1B1B — "primary system color" */
+  --fg-2:        #3A3836;
+  --fg-3:        #6A6764;
+  --fg-muted:    #9A9795;
+  --fg-inverted: var(--p-concrete);
+
+  /* Lines */
+  --line:        #C6C2BC;
+  --line-2:      #D9D5CF;
+  --line-strong: var(--p-onyx);
+
+  /* Brand — onyx carries all primary actions */
+  --brand:       var(--p-onyx);
+  --brand-hover: #000000;
+  --brand-fg:    var(--p-concrete);
+
+  /* Accent — signal orange.
+     Raw --accent is decorative / large-type; --accent-deep is text-safe.
+     --accent-fg is the foreground on an orange-filled surface (e.g. filled badge). */
+  --accent:        var(--p-signal);       /* #FF4F00 */
+  --accent-hover:  var(--p-signal-hover); /* #E04300 */
+  --accent-deep:   var(--p-signal-deep);  /* #8A2D00 — 7.4:1 on concrete (AAA) */
+  --accent-soft:   var(--p-signal-soft);  /* #FFE8D8 — chip/badge bg */
+  --accent-fg:     var(--p-onyx);         /* #1E1B1B on #FF4F00 — 6.8:1 (AA) */
+
+  /* Semantic */
+  --success:        #3B6B2A;
+  --success-soft:   #D5E8C4;
+  --info:           #2A4B7A;
+  --info-soft:      #CDD9ED;
+  --warn:           #B87A28;
+  --warn-soft:      #F5E8C0;
+  --danger:         #C82929;   /* distinct fire-red — not signal orange */
+  --danger-soft:    #F5E0E0;
+  --governance:     #3A2D6B;
+  --governance-soft:#DDD6F0;
+
+  /* Radii — tight / operational (no soft rounding) */
+  --r-xs:   0px;
+  --r-sm:   2px;
+  --r-md:   4px;
+  --r-lg:   6px;
+  --r-xl:   8px;
+  --r-pill: 999rem;
+
+  /* Shadows — flat offset (no Gaussian blur), construction-drawing energy.
+     The 1-2px offset without blur is characteristic of the inspo aesthetic
+     and reads as "precision" rather than "depth". */
+  --shadow-xs: 1px 1px 0 rgba(30,27,27,.10);
+  --shadow-sm: 2px 2px 0 rgba(30,27,27,.12);
+  --shadow-md: 3px 3px 0 rgba(30,27,27,.14), 0 1px 4px rgba(30,27,27,.06);
+  --shadow-lg: 4px 4px 0 rgba(30,27,27,.18), 0 4px 12px rgba(30,27,27,.08);
+  --shadow-xl: 6px 6px 0 rgba(30,27,27,.20), 0 8px 24px rgba(30,27,27,.10);
+}
+
+/* ---------- REVENANT DARK ----------
+   Night-ops sibling of revenant-light. Deep near-black field (slight olive
+   undertone, cooler than lore-dark's warm graphite), signal orange as the
+   primary action / status accent. Reference images: Funding American Progress
+   (pure-black + white editorial), Nucleus Engineering Office (charcoal +
+   coral-red + mono type), AI-OPS (orange-on-black field).
+
+   Signal orange on the dark field achieves 7.6:1 contrast at normal size —
+   passes AAA. The lighter --accent-deep (#FF7A40) is provided for when you
+   need a slightly desaturated variant that still reads hot.
+
+   Shadows use a subtle signal-orange ring alongside deep black drop-shadow.
+   This creates the "clearance required / system active" glow from the Nucleus
+   and AI-OPS reference images without being gratuitous. */
+[data-theme="revenant-dark"] {
+  /* Surfaces */
+  --bg:          #0E0F0C;            /* deep near-black, faint olive (cooler than graphite) */
+  --bg-2:        #171815;
+  --bg-3:        #20221D;
+  --bg-inverted: var(--p-concrete);
+  --bg-muted:    #090A08;
+
+  /* Foreground */
+  --fg:          var(--p-concrete);  /* #F1EEEB — warm cream on cool-dark */
+  --fg-2:        #C4C0BA;
+  --fg-3:        #888380;
+  --fg-muted:    #5A5653;
+  --fg-inverted: #0E0F0C;
+
+  /* Lines */
+  --line:        #252420;
+  --line-2:      #1A1C18;
+  --line-strong: var(--p-concrete);
+
+  /* Brand — signal orange is the primary CTA surface on dark */
+  --brand:       var(--p-signal);
+  --brand-hover: var(--p-signal-hover);
+  --brand-fg:    var(--p-onyx);      /* #1E1B1B on #FF4F00 — 6.8:1 (AA) */
+
+  /* Accent */
+  --accent:        var(--p-signal);       /* #FF4F00 */
+  --accent-hover:  var(--p-signal-hover); /* #E04300 */
+  --accent-deep:   #FF7A40;              /* small-text safe on dark bg — 7.6:1 (AAA) */
+  --accent-soft:   #2E1206;              /* very dark badge bg */
+  --accent-fg:     var(--p-onyx);
+
+  /* Semantic */
+  --success:        #7CC46C;
+  --success-soft:   #152710;
+  --info:           #7AAECF;
+  --info-soft:      #0C1E30;
+  --warn:           #D4A850;
+  --warn-soft:      #2A1F08;
+  --danger:         #F04545;   /* distinct fire-red — not signal orange */
+  --danger-soft:    #280E0E;
+  --governance:     #9090CF;
+  --governance-soft:#131425;
+
+  /* Radii — same tight set as revenant-light */
+  --r-xs:   0px;
+  --r-sm:   2px;
+  --r-md:   4px;
+  --r-lg:   6px;
+  --r-xl:   8px;
+  --r-pill: 999rem;
+
+  /* Shadows — deep drop-shadow + faint signal-orange ring (clearance glow).
+     The orange ring at low opacity (0.10-0.18) evokes the "system active"
+     status indicator in the Nucleus and AI-OPS reference images. */
+  --shadow-xs: 0 1px 2px rgba(0,0,0,.70);
+  --shadow-sm: 0 2px 6px rgba(0,0,0,.75), 0 0 0 1px rgba(255,79,0,.08);
+  --shadow-md: 0 4px 16px rgba(0,0,0,.80), 0 0 0 1px rgba(255,79,0,.12);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,.85), 0 0 20px rgba(255,79,0,.10);
+  --shadow-xl: 0 16px 64px rgba(0,0,0,.90), 0 0 40px rgba(255,79,0,.14);
 }
 

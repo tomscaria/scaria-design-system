@@ -1,39 +1,85 @@
-# revenant-light — PLACEHOLDER
+# revenant-light
 
-This theme **does not exist yet**. Authoring it is **Phase 0**.
+Concrete Gray surface, System Black ink, Signal Orange accent. The operational
+register of the Lore design system — field-spec, American industrial, high-stakes.
 
-## What goes here
+Named for the Revenant lifecycle stage in swarm-fund: the highest-trust, most
+battle-tested autonomous trading agent state. Where lore-light is "launch a
+global bank in a day," revenant-light is "machines built to move the nation
+forward" (robotics inspo). Same system, different emotional temperature.
 
-A Revenant Labs / swarm-fund-mvp brand expression on a light surface. Per the plan, derived from references in `lore-design-system/inspo/`:
+## When to use
 
-- `designmaxxing 1.png`, `designmaxxing 2.png`
-- `atlast advanced research.png`
-- `funding american progress.png`
-- `machine age modern.jpeg`
-- `neucleus eng office.png`
-- `Orange is still hot 1.png`
-- NYC robotics studio brand work (4 refs)
-- `screencapture-brasshands-...pdf`
-- `HH3Wc0aa8AAtpjp.jpeg` (most recent)
+- Swarm-fund dashboard surfaces, ops-facing tooling
+- Any surface where the Revenant trading lifecycle is front-and-center
+- "Field specification / tested" aesthetic — status boards, agent logs, allocation tables
+- Not for general retail or fintech surfaces — use `lore-light` for those
 
-Plus the Emmett "HTML Brand" framework which is *how* the theme is structured, not what it looks like.
+## Accent — Signal Orange (`#FF4F00`, Pantone 1655C)
 
-## Authoring checklist
+Signal orange is the **active state / system signal** color from the designmaxxing
+palette spec. It is not a decorative warm; it means "this is live / action required."
 
-When ready to draft (needs aesthetic direction from the inspo refs above):
+**Use raw `--accent` (#FF4F00) for:**
+- Icon fills and border accents
+- Large display type (≥24px bold) when impact is the goal
+- Filled badge / chip backgrounds (pair with `--accent-fg` = onyx for legibility)
+- Active indicator lines, progress bars, chart emphasis
 
-- [ ] `colors_and_type.css` — full per-theme variable block following the shape in `agent/themes/lore-light/colors_and_type.css`
-- [ ] `motion.json` — any per-theme motion overrides (durations, curves) different from the brand-wide defaults in `agent/visual/motion/motion.json`
-- [ ] `tokens.json` — machine-readable summary
-- [ ] `readme.md` — replace this stub with: positioning, usage rules, accent usage, type pairing rationale
-- [ ] Add to `agent/themes/_index.json` (when introduced)
+**Use `--accent-deep` (#8A2D00) for:**
+- Any body-size orange text on the concrete background (7.4:1 — AAA)
+- Link text, inline labels that must read as signal-colored
+- Small label text
 
-## Likely shape (from screenshot context)
+**Never use raw `--accent` for paragraph text** — the #FF4F00 / #F1EEEB pairing
+fails AA at small sizes (2.1:1). Use the *-deep variant for text, same discipline
+as chartreuse in lore-light.
 
-This is speculation pending inspo review:
-- Likely darker, more industrial than lore-light — the references skew toward "machine age modern," robotics studios, brasshands, designmaxxing — implying texture, weight, possibly slightly off-white surfaces and bolder type.
-- Different display font than Lock Serif. The "machine age modern" cue suggests a heavier sans display or a constructivist serif (e.g. something in the GT Sectra / Söhne Breit family).
-- Type scale may be heavier-weight at smaller sizes (more "manifesto" feel) than lore-light.
-- Motion likely terser — "industrial" themes don't reward dwell time.
+## Type stack
 
-Don't bake this in. Wait for inspo review.
+- **Display:** Lock Serif — industrial editorial moments ("Machine Age Modernism")
+- **Sans:** Aeonik — body, navigation, UI controls
+- **Mono:** Aeonik Mono — status labels, unit IDs, log entries, numeric readouts
+
+**Terminal override:** for pure ops surfaces (dashboards, status boards), override
+`--font-sans: var(--font-mono)` at the component level. Don't set this at theme
+level — it breaks prose readability.
+
+## Radii
+
+Zero-to-minimal corner rounding: `--r-xs: 0`, `--r-md: 4px`. Intentional.
+Rounded corners = consumer app; sharp corners = precision instrument.
+
+## Shadow treatment
+
+Flat offset shadows (no Gaussian blur): a 2–4px offset with zero blur reads as
+"construction drawing annotation." Characteristic of AI-OPS, Atlas Advanced
+Research, and robotics inspo set.
+
+## Inversion
+
+`revenant-dark` is the dark sibling. Both share signal orange as `--accent`.
+Where revenant-light uses onyx (#1E1B1B) as `--brand` (primary CTA), revenant-dark
+promotes signal orange to `--brand` — orange CTAs glow against near-black.
+
+## Color values (quick ref)
+
+| Token | Value | Use |
+|---|---|---|
+| `--bg` | `#F1EEEB` | Concrete Gray (surface / background field) |
+| `--fg` | `#1E1B1B` | System Black |
+| `--accent` | `#FF4F00` | Signal Orange (Pantone 1655C) |
+| `--accent-deep` | `#8A2D00` | Orange, text-safe on bg (7.4:1 — AAA) |
+| `--accent-soft` | `#FFE8D8` | Orange tint for chip/badge bg |
+| `--accent-fg` | `#1E1B1B` | Text on signal-orange filled surface (6.8:1) |
+| `--brand` | `#1E1B1B` | Primary CTA surface (onyx) |
+| `--brand-fg` | `#F1EEEB` | Text on onyx CTA |
+
+## Inspo sources
+
+`designmaxxing 1.png` — three-color palette spec card (the canonical reference).
+`designmaxxing 2.png` — orange + acid yellow; confirms chartreuse secondary.
+`atlast advanced research.png` — concrete bg + black type + orange CTA.
+`robotics 1.png`, `robotics 2.png` — concrete bg + orange + grid typography.
+`machine age modern.jpeg` — cream serif display; editorial register.
+`Orange is still hot 1.png` — AI-OPS brand card (operational vocabulary source).

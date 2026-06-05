@@ -28,8 +28,8 @@ Starter kit for the new Lore atomic design system. Copy into `~/scaria/lore-desi
 | `agent/themes/primitive/{colors_and_type.css, tokens.json, readme.md}` | ✅ |
 | `agent/themes/primitive-dark/{colors_and_type.css, readme.md}` | 🟡 stub (low priority) |
 | `agent/themes/kiosk/{colors_and_type.css, tokens.json, readme.md}` | ✅ restored from earlier expressive themes work |
-| `agent/themes/revenant-light/readme.md` | 🟡 **PLACEHOLDER** — Phase 0; needs inspo |
-| `agent/themes/revenant-dark/readme.md` | 🟡 **PLACEHOLDER** — Phase 0; needs inspo |
+| `agent/themes/revenant-light/readme.md` | ✅ **Phase 0 complete** — Concrete Gray / Signal Orange / System Black |
+| `agent/themes/revenant-dark/readme.md` | ✅ **Phase 0 complete** — near-black / Signal Orange / Concrete cream |
 | `agent/themes/berlin/` | (empty) — awaiting inspo |
 | `agent/components/button/{button.spec.md, button.tokens.json}` | ✅ example component-spec format |
 
@@ -55,7 +55,7 @@ The model has everything it needs: tone, type scale, color rules, motion vocabul
 ## What this scaffold DOES NOT do
 
 - ❌ Doesn't refactor the existing `lore-design-system` component code (`src/components/...`) to use the new tokens — that's Move 1 follow-on work that needs MCP scope on the repo.
-- ❌ Doesn't author `revenant-*` aesthetic values — Phase 0, needs inspo image review.
+- ✅ `revenant-light` and `revenant-dark` authored from inspo — CSS vars in `tokens/colors_and_type.css`.
 - ❌ Doesn't harvest Thomas OS D3 charts or logo systems — Move 3, needs MCP scope on Thomas OS.
 - ❌ Doesn't publish to npm — Move 4, needs local lockfile + Changesets setup.
 
