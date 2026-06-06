@@ -3,229 +3,189 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Revenant — Swarm Intelligence Research Lab</title>
 <link rel="stylesheet" href="../tokens/colors_and_type.css"/>
-
+<link rel="stylesheet" href="_revenant-kit.css"/>
 <style>
-/* Real brand fonts — paths resolve from /preview/ to /fonts/ */
-@font-face{font-family:"Aeonik";font-weight:400;font-display:swap;src:url("../fonts/Aeonik-Regular.woff2") format("woff2")}
-@font-face{font-family:"Aeonik";font-weight:500;font-display:swap;src:url("../fonts/Aeonik-Medium.woff2") format("woff2")}
-@font-face{font-family:"Aeonik";font-weight:700;font-display:swap;src:url("../fonts/Aeonik-Bold.woff2") format("woff2")}
-@font-face{font-family:"Aeonik Mono";font-weight:400;font-display:swap;src:url("../fonts/AeonikMono-Regular.woff2") format("woff2")}
-@font-face{font-family:"Aeonik Mono";font-weight:500;font-display:swap;src:url("../fonts/AeonikMono-Medium.woff2") format("woff2")}
-
-:root{
-  /* Teal — the ambient swarm identity. Orange (theme --accent) stays the live signal. */
-  --swarm:        #1FD9B8;
-  --swarm-bright: #36E8CC;
-  --swarm-dim:    rgba(31,217,184,.16);
-  --sans: "Aeonik", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --mono: "Aeonik Mono", ui-monospace, Menlo, Monaco, "Roboto Mono", monospace;
-}
-
+/* Page layout only — every component comes from _revenant-kit.css.
+   Same primitives as the operational dashboard, arranged as a hero. */
 *{box-sizing:border-box}
-html,body{margin:0;height:100%}
+html,body{margin:0}
 body{
   background:
-    radial-gradient(1200px 700px at 72% 38%, rgba(31,217,184,.05), transparent 60%),
-    radial-gradient(900px 600px at 20% 60%, rgba(255,79,0,.025), transparent 55%),
-    radial-gradient(120% 120% at 50% 0%, #0E0F0C 0%, #08090A 60%, #050605 100%);
-  color:var(--fg, #F1EEEB);
-  font-family:var(--sans);
-  -webkit-font-smoothing:antialiased;
-  overflow-x:hidden;
-  min-height:100vh;
-  position:relative;
+    radial-gradient(1100px 640px at 74% 30%, rgba(255,79,0,.04), transparent 60%),
+    radial-gradient(120% 120% at 50% 0%, #14150E 0%, var(--bg) 45%, #070806 100%);
+  color:var(--fg);font-family:var(--font-prose);-webkit-font-smoothing:antialiased;
+  min-height:100vh;position:relative;overflow-x:hidden;
 }
+#net{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.85}
+.field-grid{z-index:0}
+.wrap{position:relative;z-index:3;max-width:1280px;margin:0 auto;padding:0 28px}
 
-/* Swarm constellation canvas */
-#swarm{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
-/* Edge vignette to sink the network into the field */
-.vignette{position:fixed;inset:0;z-index:1;pointer-events:none;
-  background:radial-gradient(130% 130% at 50% 45%, transparent 52%, rgba(5,6,5,.55) 78%, rgba(5,6,5,.9) 100%)}
+/* header tweaks for marketing nav */
+.sys-header{position:relative;z-index:5}
+.sys-header .left{display:flex;align-items:center;gap:34px}
 
-.wrap{position:relative;z-index:2;max-width:1280px;margin:0 auto;padding:0 40px}
-
-/* ── NAV ── */
-nav{display:flex;align-items:center;justify-content:space-between;height:84px}
-.brand{font-family:var(--mono);font-weight:500;font-size:19px;letter-spacing:.02em;color:var(--fg);text-decoration:none}
-.brand b{color:var(--swarm-bright)}
-.navlinks{display:flex;gap:30px;margin-left:46px}
-.navlinks a{font-family:var(--mono);font-size:13px;letter-spacing:.02em;color:#9A9795;text-decoration:none;display:flex;align-items:center;gap:5px;transition:color .15s}
-.navlinks a:hover{color:var(--fg)}
-.navlinks a .car{font-size:8px;opacity:.6;transform:translateY(1px)}
-.nav-right{margin-left:auto}
-.free-btn{display:inline-flex;align-items:center;gap:10px;height:44px;padding:0 20px;
-  font-family:var(--mono);font-size:13px;letter-spacing:.04em;color:var(--fg);
-  background:rgba(255,255,255,.02);border:1px solid var(--line,#252420);border-radius:10px;cursor:pointer;transition:all .15s}
-.free-btn:hover{border-color:var(--swarm);background:rgba(31,217,184,.06)}
-.free-btn .pill{font-size:9px;letter-spacing:.12em;background:var(--fg);color:#0E0F0C;padding:2px 6px;border-radius:4px;font-weight:700}
-
-/* ── HERO ── */
-.hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:48px;align-items:center;
-  min-height:calc(100vh - 84px - 64px)}
-.eyebrow{font-family:var(--mono);font-size:13px;letter-spacing:.34em;text-transform:uppercase;color:#6E6B68;margin:0 0 28px}
-h1{font-family:var(--sans);font-weight:700;font-size:clamp(40px,5vw,66px);line-height:1.04;letter-spacing:-.02em;
-  margin:0 0 30px;max-width:14ch;color:#F6F4F0}
-.lede{font-family:var(--mono);font-size:15px;line-height:1.75;color:#8C8884;max-width:46ch;margin:0 0 30px}
-.tags{font-family:var(--mono);font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:#5E5B58;line-height:2.1;margin:0 0 40px}
-.tags .arr{color:var(--swarm)}
-.tags .dot{color:#3A3835;margin:0 8px}
-
+/* HERO */
+.hero{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,.94fr);gap:54px;align-items:center;
+  min-height:calc(100vh - 57px - 56px)}
+h1.display{font-weight:700;font-size:clamp(36px,4.4vw,58px);line-height:1.05;letter-spacing:-.02em;
+  margin:26px 0 28px;max-width:15ch;color:#F6F4F0}
+.lede{font-family:var(--font-data);font-size:14.5px;line-height:1.7;color:var(--fg-3);max-width:46ch;margin:0 0 26px}
+.tags{margin:0 0 38px}
 .cta-row{display:flex;gap:10px;align-items:stretch}
-.subscribe{display:inline-flex;align-items:center;height:54px;padding:0 26px;
-  font-family:var(--mono);font-size:14px;letter-spacing:.02em;color:var(--fg);
-  background:transparent;border:1px solid #3A3835;border-radius:12px;transition:all .15s;cursor:pointer}
-.subscribe b{color:var(--swarm-bright);font-weight:500;margin-left:6px}
-.subscribe:hover{border-color:var(--swarm)}
-.copy-btn{width:54px;height:54px;display:grid;place-items:center;background:transparent;border:1px solid #3A3835;border-radius:12px;cursor:pointer;transition:all .15s;color:#9A9795}
-.copy-btn:hover{border-color:var(--swarm);color:var(--swarm)}
+.copy-btn{width:52px;height:52px;display:grid;place-items:center;background:transparent;border:1px solid var(--line);
+  border-radius:var(--r-sm);cursor:pointer;transition:all .12s;color:var(--fg-3)}
+.copy-btn:hover{border-color:var(--accent);color:var(--accent)}
 .copy-btn svg{width:17px;height:17px}
 
-/* ── DECISION CARD ── */
-.card-stage{display:flex;justify-content:center}
-.decision{position:relative;width:340px;border:1px solid rgba(31,217,184,.4);border-radius:18px;
-  background:linear-gradient(180deg, rgba(20,28,26,.9), rgba(10,16,15,.92));
-  backdrop-filter:blur(8px);padding:22px 24px 24px;
-  box-shadow:0 0 0 1px rgba(31,217,184,.05), 0 0 60px rgba(31,217,184,.18), 0 30px 80px rgba(0,0,0,.6);
-  animation:cardGlow 4.5s ease-in-out infinite}
-@keyframes cardGlow{0%,100%{box-shadow:0 0 0 1px rgba(31,217,184,.05),0 0 50px rgba(31,217,184,.14),0 30px 80px rgba(0,0,0,.6)}
-  50%{box-shadow:0 0 0 1px rgba(31,217,184,.08),0 0 78px rgba(31,217,184,.26),0 30px 80px rgba(0,0,0,.6)}}
-.decision .kicker{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--swarm);margin-bottom:18px}
-.decision .kicker .ld{width:7px;height:7px;border-radius:50%;background:var(--swarm-bright);box-shadow:0 0 8px var(--swarm)}
-.decision .sym{font-family:var(--sans);font-weight:700;font-size:30px;letter-spacing:-.01em;color:#F6F4F0;line-height:1}
-.decision .strat{font-family:var(--mono);font-size:13px;color:#7E7A76;margin:8px 0 18px}
-.decision .figs{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:15px;font-weight:500;
-  color:var(--accent-deep,#FF7A40);background:rgba(255,79,0,.07);border:1px solid rgba(255,122,64,.22);
-  border-radius:8px;padding:9px 12px;width:max-content}
-.decision .figs .sep{color:#5E5B58}
+/* right column — a dashboard mini-stack */
+.stack{display:flex;flex-direction:column;gap:14px}
+.stat-strip.s2{grid-template-columns:1fr 1fr}
+.decision .sym{font-family:var(--font-prose);font-weight:700;font-size:30px;letter-spacing:-.01em;color:#F6F4F0;line-height:1}
+.decision .strat{font-family:var(--font-data);font-size:13px;color:var(--fg-3);margin:7px 0 16px}
+.decision .figs{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-data);font-size:15px;font-weight:500;
+  color:var(--accent-deep);background:var(--accent-soft);border:1px solid var(--accent-deep);
+  border-radius:var(--r-xs);padding:9px 12px}
+.decision .figs .sep{color:var(--fg-muted)}
 
-/* ── TICKER ── */
-.ticker{position:relative;z-index:2;border-top:1px solid rgba(255,255,255,.05)}
-.ticker .wrap{display:flex;align-items:center;height:64px;font-family:var(--mono);font-size:12.5px;letter-spacing:.04em;color:#6E6B68}
-.ticker .live{width:7px;height:7px;border-radius:50%;background:var(--swarm-bright);box-shadow:0 0 8px var(--swarm);margin-right:12px;animation:blink 2.4s steps(1) infinite}
-@keyframes blink{0%,70%{opacity:1}71%,100%{opacity:.35}}
-.ticker .sep{margin:0 12px;color:#34322F}
-.ticker b{color:#9A9795;font-weight:500}
-
-/* ── ENTRANCE ── */
-.rise{opacity:0;transform:translateY(14px);animation:rise .7s cubic-bezier(.2,.7,.2,1) forwards}
-.d1{animation-delay:.05s}.d2{animation-delay:.14s}.d3{animation-delay:.24s}.d4{animation-delay:.34s}.d5{animation-delay:.44s}
-.card-stage{opacity:0;transform:translateY(20px) scale(.98);animation:rise .9s cubic-bezier(.2,.7,.2,1) .3s forwards}
-@keyframes rise{to{opacity:1;transform:none}}
-
-@media (prefers-reduced-motion: reduce){
-  .rise,.card-stage{animation:none;opacity:1;transform:none}
-  .decision{animation:none}.ticker .live{animation:none}
-}
-@media (max-width:900px){
-  .hero{grid-template-columns:1fr;gap:36px}
-  .navlinks{display:none}
-  .card-stage{justify-content:flex-start}
-}
+/* entrance */
+.rise{opacity:0;transform:translateY(12px);animation:rk-rise .65s cubic-bezier(.2,.7,.2,1) forwards}
+.d1{animation-delay:.04s}.d2{animation-delay:.12s}.d3{animation-delay:.20s}.d4{animation-delay:.28s}.d5{animation-delay:.36s}
+.stack{opacity:0;transform:translateY(16px);animation:rk-rise .8s cubic-bezier(.2,.7,.2,1) .26s forwards}
+@keyframes rk-rise{to{opacity:1;transform:none}}
+@media (prefers-reduced-motion: reduce){.rise,.stack{animation:none;opacity:1;transform:none}}
+@media (max-width:920px){.hero{grid-template-columns:1fr;gap:34px}.nav-links{display:none}}
 </style></head>
 
 <body data-theme="revenant-dark">
 
-<canvas id="swarm"></canvas>
-<div class="vignette"></div>
+<canvas id="net"></canvas>
+<div class="field-grid"></div>
+<span class="reg-mark tl"></span><span class="reg-mark tr"></span>
+<span class="reg-mark bl"></span><span class="reg-mark br"></span>
+
+<header class="sys-header">
+  <div class="left">
+    <a href="#" class="wordmark">LORE® REVENANT</a>
+    <nav class="nav-links">
+      <a class="nav-link" href="#">Our Research <span class="car">▼</span></a>
+      <a class="nav-link" href="#">Lab <span class="car">▼</span></a>
+      <a class="nav-link" href="#">Learn <span class="car">▼</span></a>
+      <a class="nav-link" href="#">Progress <span class="car">▼</span></a>
+      <a class="nav-link" href="#">About <span class="car">▼</span></a>
+    </nav>
+  </div>
+  <div class="status-row">
+    <span><span class="dot-live"></span><span class="hl">Live</span></span>
+    <span><span class="hl">Clearance</span> R6</span>
+    <a href="#" class="btn btn-outline btn-sm">Access Free Tools <span class="pill">FREE</span></a>
+  </div>
+</header>
 
 <div class="wrap">
-  <nav>
-    <a href="#" class="brand">revenant</a>
-    <div class="navlinks">
-      <a href="#">Our Research <span class="car">▼</span></a>
-      <a href="#">Lab <span class="car">▼</span></a>
-      <a href="#">Learn <span class="car">▼</span></a>
-      <a href="#">Progress <span class="car">▼</span></a>
-      <a href="#">About <span class="car">▼</span></a>
-    </div>
-    <div class="nav-right">
-      <button class="free-btn">Access Free Tools <span class="pill">FREE</span></button>
-    </div>
-  </nav>
-
   <main class="hero">
     <div class="hero-text">
-      <p class="eyebrow rise d1">Swarm Intelligence Research Lab</p>
-      <h1 class="rise d2">Swarms produce better outcomes at lower risk. Markets are where we provide empirical PnL evidence.</h1>
+      <p class="eyebrow rise d1"><span class="dot-live"></span> Swarm Intelligence Research Lab</p>
+      <h1 class="display rise d2">Swarms produce better outcomes at lower risk. Markets are where we provide empirical PnL evidence.</h1>
       <p class="lede rise d3">On onchain venues the bigger desks will not touch. The lab runs Darwinistic swarms on prediction markets and perp DEXs. The proof today is the PnL. The published PnL.</p>
       <p class="tags rise d4">
-        Collusion + deterrence patterns <span class="dot">·</span> Darwinistic evolution<br/>
-        <span class="arr">→</span> Generalizes to AI safety <span class="dot">·</span> Drug discovery
+        Collusion + deterrence patterns <span class="sep">·</span> Darwinistic evolution<br/>
+        <span class="arr">→</span> Generalizes to AI safety <span class="sep">·</span> Drug discovery
       </p>
       <div class="cta-row rise d5">
-        <button class="subscribe">Email to subscribe <b>· t@rswarm.ai</b></button>
+        <a href="mailto:t@rswarm.ai" class="btn btn-accent btn-lg">Email to subscribe · t@rswarm.ai</a>
         <button class="copy-btn" id="copy" title="Copy email">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="9" width="11" height="11" rx="1"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
         </button>
       </div>
     </div>
 
-    <div class="card-stage">
-      <div class="decision">
-        <div class="kicker"><span class="ld"></span> Decision</div>
-        <div class="sym">ETH</div>
-        <div class="strat">downside-persistence-hedge</div>
-        <div class="figs"><span>−94 bps</span><span class="sep">·</span><span>69% conf</span></div>
+    <!-- right column: the same dashboard primitives, stacked -->
+    <div class="stack">
+      <div class="stat-strip s2">
+        <div class="stat-cell accent-cell">
+          <span class="label">Published PnL</span>
+          <span class="value">+18.4%</span>
+          <span class="delta">30d · net of fees</span>
+        </div>
+        <div class="stat-cell">
+          <span class="label">Fleet Sharpe</span>
+          <span class="value">2.31</span>
+          <span class="delta pos">↑ 0.18 wk</span>
+        </div>
+        <div class="stat-cell">
+          <span class="label">Strategies</span>
+          <span class="value">48</span>
+          <span class="delta">live + canary</span>
+        </div>
+        <div class="stat-cell">
+          <span class="label">Paper Agents</span>
+          <span class="value">180</span>
+          <span class="delta">in selection</span>
+        </div>
+      </div>
+
+      <div class="panel decision">
+        <div class="panel-header">
+          <span class="panel-title">Latest Decision</span>
+          <span class="count">LIVE</span>
+        </div>
+        <div class="panel-body">
+          <div class="kicker"><span class="dot-live"></span> Decision</div>
+          <div class="sym" style="margin-top:10px">ETH</div>
+          <div class="strat">downside-persistence-hedge</div>
+          <div class="figs"><span>−94 bps</span><span class="sep">·</span><span>69% conf</span></div>
+        </div>
+      </div>
+
+      <div class="panel recessed">
+        <div class="panel-header"><span class="panel-title">Live Tape</span><span>Continuous</span></div>
+        <div class="log-row"><span class="log-ts">09:41:03Z</span><span class="log-tag signal">FILL</span><span class="log-msg">RVN-001 <span class="hl">BTC-PERP +0.42</span> @ 67,340</span></div>
+        <div class="log-row"><span class="log-ts">09:38:12Z</span><span class="log-tag ok">EXIT</span><span class="log-msg">pm-entropy-flow closed <span class="hl">+212 bps</span></span></div>
       </div>
     </div>
   </main>
 </div>
 
 <footer class="ticker">
-  <div class="wrap">
-    <span class="live"></span>
-    <b>Live</b><span class="sep">·</span>48 strategies<span class="sep">·</span>180 paper agents<span class="sep">·</span>last fill 2m ago
-  </div>
+  <span class="live"></span><b>Live</b>
+  <span class="sep">·</span>48 strategies<span class="sep">·</span>180 paper agents<span class="sep">·</span>last fill 2m ago
+  <span class="sep">·</span><span style="color:var(--fg-muted)">BUILD 2305-A</span>
 </footer>
 
 <script>
-// ── Swarm constellation ──
+// Sparse "swarm" network in the dashboard palette — muted concrete edges/nodes,
+// a few orange "active" nodes. Subtle; the field-grid carries the main atmosphere.
 (function(){
-  const c = document.getElementById('swarm'), x = c.getContext('2d');
-  let W, H, DPR = Math.min(window.devicePixelRatio || 1, 2), nodes = [];
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  function resize(){
-    W = c.width = innerWidth * DPR; H = c.height = innerHeight * DPR;
-    c.style.width = innerWidth+'px'; c.style.height = innerHeight+'px';
-    const count = Math.round(innerWidth*innerHeight/16000);
-    nodes = Array.from({length: Math.min(110, count)}, () => ({
-      x: Math.random()*W, y: Math.random()*H,
-      vx:(Math.random()-.5)*.16*DPR, vy:(Math.random()-.5)*.16*DPR,
-      r:(Math.random()*1.6+.8)*DPR
-    }));
+  const c=document.getElementById('net'), x=c.getContext('2d');
+  const DPR=Math.min(devicePixelRatio||1,2); let W,H,N=[];
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function R(){ W=c.width=innerWidth*DPR; H=c.height=innerHeight*DPR;
+    c.style.width=innerWidth+'px'; c.style.height=innerHeight+'px';
+    const n=Math.min(64, Math.round(innerWidth*innerHeight/26000));
+    N=Array.from({length:n},(_,i)=>({x:Math.random()*W,y:Math.random()*H,
+      vx:(Math.random()-.5)*.12*DPR,vy:(Math.random()-.5)*.12*DPR,
+      r:(Math.random()*1.5+.7)*DPR, hot: i%14===0}));
   }
-  const LINK = 132*DPR;
-  function frame(){
+  const L=150*DPR;
+  function F(){
     x.clearRect(0,0,W,H);
-    for(const n of nodes){
-      if(!reduce){ n.x+=n.vx; n.y+=n.vy;
-        if(n.x<0||n.x>W) n.vx*=-1; if(n.y<0||n.y>H) n.vy*=-1; }
+    for(const n of N){ if(!reduce){n.x+=n.vx;n.y+=n.vy; if(n.x<0||n.x>W)n.vx*=-1; if(n.y<0||n.y>H)n.vy*=-1;} }
+    for(let i=0;i<N.length;i++)for(let j=i+1;j<N.length;j++){
+      const a=N[i],b=N[j],d=Math.hypot(a.x-b.x,a.y-b.y);
+      if(d<L){ const o=(1-d/L)*.10;
+        x.strokeStyle='rgba(241,238,235,'+o.toFixed(3)+')'; x.lineWidth=DPR*.5;
+        x.beginPath(); x.moveTo(a.x,a.y); x.lineTo(b.x,b.y); x.stroke(); }
     }
-    for(let i=0;i<nodes.length;i++){
-      for(let j=i+1;j<nodes.length;j++){
-        const a=nodes[i], b=nodes[j], dx=a.x-b.x, dy=a.y-b.y, d=Math.hypot(dx,dy);
-        if(d<LINK){
-          const o=(1-d/LINK)*.5;
-          x.strokeStyle='rgba(31,217,184,'+o.toFixed(3)+')';
-          x.lineWidth=DPR*.6;
-          x.beginPath(); x.moveTo(a.x,a.y); x.lineTo(b.x,b.y); x.stroke();
-        }
-      }
-    }
-    for(const n of nodes){
-      x.beginPath(); x.arc(n.x,n.y,n.r,0,7);
-      x.fillStyle='rgba(54,232,204,.85)'; x.fill();
-    }
-    requestAnimationFrame(frame);
+    for(const n of N){ x.beginPath(); x.arc(n.x,n.y,n.r,0,7);
+      x.fillStyle = n.hot ? 'rgba(255,79,0,.75)' : 'rgba(241,238,235,.20)'; x.fill(); }
+    requestAnimationFrame(F);
   }
-  addEventListener('resize', resize); resize(); frame();
+  addEventListener('resize',R); R(); F();
 })();
-
-// copy email
-document.getElementById('copy').addEventListener('click', async (e)=>{
-  try{ await navigator.clipboard.writeText('t@rswarm.ai'); }catch(_){}
-  const b=e.currentTarget; b.style.borderColor='var(--swarm)'; b.style.color='var(--swarm)';
-  setTimeout(()=>{ b.style.borderColor=''; b.style.color=''; }, 900);
+document.getElementById('copy').addEventListener('click',async e=>{
+  try{await navigator.clipboard.writeText('t@rswarm.ai')}catch(_){}
+  const b=e.currentTarget; b.style.borderColor='var(--accent)'; b.style.color='var(--accent)';
+  setTimeout(()=>{b.style.borderColor='';b.style.color=''},900);
 });
 </script>
 </body></html>
