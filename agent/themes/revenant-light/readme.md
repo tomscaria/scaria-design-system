@@ -35,15 +35,27 @@ palette spec. It is not a decorative warm; it means "this is live / action requi
 fails AA at small sizes (2.1:1). Use the *-deep variant for text, same discipline
 as chartreuse in lore-light.
 
-## Type stack
+## Type stack — dual register
 
-- **Display:** Lock Serif — industrial editorial moments ("Machine Age Modernism")
-- **Sans:** Aeonik — body, navigation, UI controls
-- **Mono:** Aeonik Mono — status labels, unit IDs, log entries, numeric readouts
+The operational feel comes from **mono-in-the-data**, not mono-everywhere. None of
+the reference imagery (Atlas, Nucleus, Machine-Age) sets prose or headlines in mono;
+they confine monospace to labels, IDs, and status stamps. Revenant does the same:
 
-**Terminal override:** for pure ops surfaces (dashboards, status boards), override
-`--font-sans: var(--font-mono)` at the component level. Don't set this at theme
-level — it breaks prose readability.
+- **Mono (Aeonik Mono):** tabular numerics, unit IDs, timestamps, log lines, status
+  chrome, uppercase micro-labels — anything that reads as machine output or needs a
+  fixed-width column. Mono micro-labels sit at **10px min** (9px mono caps under-resolve).
+- **Sans (Aeonik):** prose, navigation, buttons, panel/section titles. Base body **14px**.
+- **Display (Lock Serif):** reserved for an editorial hero headline *if a surface has
+  one* — a status dashboard usually doesn't, so serif simply won't appear there.
+
+Whole-page mono was tried and rejected: monospace destroys word-shape (the cue that
+makes prose fast to read) and blows out line length — a real legibility tax on a
+surface an operator stares at for hours. See `preview/theme-revenant.html` — toggle
+**Mono·Data ↔ Mono·All** (keys `S`/`F`) to compare the two registers live.
+
+The register is a **layout decision, not a theme token** — the theme keeps
+`--font-sans`/`--font-mono`/`--font-display` identical to lore-* so components
+re-skin for free; surfaces opt into the mono register via class.
 
 ## Radii
 
@@ -72,8 +84,18 @@ promotes signal orange to `--brand` — orange CTAs glow against near-black.
 | `--accent-deep` | `#8A2D00` | Orange, text-safe on bg (7.4:1 — AAA) |
 | `--accent-soft` | `#FFE8D8` | Orange tint for chip/badge bg |
 | `--accent-fg` | `#1E1B1B` | Text on signal-orange filled surface (6.8:1) |
-| `--brand` | `#1E1B1B` | Primary CTA surface (onyx) |
+| `--brand` | `#1E1B1B` | Primary CTA surface (onyx, neutral — never orange) |
 | `--brand-fg` | `#F1EEEB` | Text on onyx CTA |
+| `--bg-muted` | `#D2CCC3` | Sidebar / recessed fill — sharpened to a perceptible 1.38:1 step |
+| `--line` | `#B7B0A7` | Primary divider — 1.86:1, a visible rule not a whisper |
+
+## Brand rule
+
+`--brand` = the strongest neutral inverse of the surface (onyx here), `--accent` =
+signal orange, reserved for ONE hero action/metric per view. Same rule in
+revenant-dark (where `--brand` becomes cream). Orange is never the brand fill —
+it would dilute the "system signal" meaning. See the dark readme for the full
+rationale and the deliberate deviation from lore-dark.
 
 ## Inspo sources
 
