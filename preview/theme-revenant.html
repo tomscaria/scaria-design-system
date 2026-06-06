@@ -1,0 +1,602 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>Revenant — Operational Preview</title>
+<link rel="stylesheet" href="../tokens/colors_and_type.css"/>
+<link rel="stylesheet" href="theme-switcher.css"/>
+<style>
+/* ── Dual register (the refined default) ──
+   Prose / nav / buttons / headings → Aeonik sans.
+   Data / IDs / timestamps / status chrome / micro-labels → Aeonik Mono.
+   Toggle [data-register="full"] to A/B against the original all-mono wall. */
+body {
+  --font-prose: "Aeonik", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-data:  "Aeonik Mono", ui-monospace, Menlo, Monaco, "Roboto Mono", monospace;
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-prose);
+  font-size: 14px;
+  line-height: 1.5;
+  min-height: 100vh;
+  padding: 0;
+}
+/* A/B: all-mono original — prose collapses onto the data face */
+body[data-register="full"] { --font-prose: var(--font-data); }
+
+/* Mono register: everything that reads as machine output or a fixed-width column */
+.sys-header, .panel-header, .section-label,
+.stat-cell .label, .stat-cell .value, .stat-cell .delta,
+thead th, tbody td, .badge, .count,
+.log-ts, .log-tag, .log-msg,
+.unit-block .unit-id, .mono {
+  font-family: var(--font-data);
+  font-variant-numeric: tabular-nums;
+}
+/* Prose register: titles, nav, buttons, wordmark stay humane */
+.wordmark, .panel-title, .nav-item, .btn, .unit-block .unit-val {
+  font-family: var(--font-prose);
+}
+
+/* ── SYSTEM HEADER ── */
+.sys-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 24px;
+  border-bottom: 1px solid var(--line);
+  background: var(--bg-2);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+.sys-header .wordmark {
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: .12em;
+  color: var(--accent);
+}
+.sys-header .status-row {
+  display: flex;
+  gap: 24px;
+  color: var(--fg-3);
+}
+.sys-header .status-row span { display: flex; align-items: center; gap: 6px; }
+.sys-header .dot-live {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent); flex-shrink: 0;
+  box-shadow: 0 0 4px var(--accent);
+}
+.sys-header .dot-off  { width: 6px; height: 6px; border-radius: 50%; background: var(--fg-muted); flex-shrink: 0; }
+.sys-header .hl { color: var(--fg); }
+.sys-header .build { color: var(--fg-muted); }
+
+/* ── LAYOUT ── */
+.shell {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  grid-template-rows: 1fr;
+  min-height: calc(100vh - 41px);
+}
+
+/* ── SIDEBAR ── */
+.sidebar {
+  border-right: 1px solid var(--line);
+  background: var(--bg-muted);
+  padding: 20px 0;
+}
+.sidebar .section-label {
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  padding: 0 16px;
+  margin: 16px 0 6px;
+}
+.sidebar .nav-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 16px;
+  color: var(--fg-2);
+  cursor: pointer;
+  font-size: 13px;
+  letter-spacing: .01em;
+  border-left: 2px solid transparent;
+  transition: all .1s;
+}
+.sidebar .nav-item:hover { background: var(--bg-2); color: var(--fg); }
+.sidebar .nav-item.active {
+  color: var(--accent);
+  border-left-color: var(--accent);
+  background: var(--accent-soft);
+}
+.sidebar .nav-item .ico {
+  font-size: 10px;
+  width: 14px;
+  text-align: center;
+  opacity: .7;
+}
+.sidebar .unit-block {
+  margin: 20px 16px 0;
+  padding: 10px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  border-radius: var(--r-sm);
+}
+.sidebar .unit-block .unit-id {
+  font-size: 9px;
+  letter-spacing: .12em;
+  color: var(--fg-muted);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.sidebar .unit-block .unit-val {
+  font-size: 11px;
+  color: var(--fg);
+}
+.sidebar .unit-block .clearance {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 9px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+  padding: 2px 6px;
+  border: 1px solid var(--accent-deep);
+}
+
+/* ── MAIN CONTENT ── */
+.main {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow: auto;
+}
+
+/* ── STAT STRIP ── */
+.stat-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  border: 1px solid var(--line);
+  background: var(--line);
+  box-shadow: var(--shadow-sm);
+}
+.stat-cell {
+  background: var(--bg-2);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.stat-cell .label {
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+.stat-cell .value {
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--fg);
+  letter-spacing: 0;          /* mono numerals are fixed-width; negative tracking collides them */
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.stat-cell .delta {
+  font-size: 10px;
+  letter-spacing: .06em;
+}
+.stat-cell .delta.pos { color: var(--success); }
+.stat-cell .delta.neg { color: var(--danger); }
+.stat-cell.accent-cell { background: var(--accent); }
+.stat-cell.accent-cell .label { color: var(--accent-fg); opacity: .8; }
+.stat-cell.accent-cell .value { color: var(--accent-fg); }
+.stat-cell.accent-cell .delta { color: var(--accent-fg); opacity: .8; }
+
+/* ── AGENT TABLE ── */
+.panel {
+  border: 1px solid var(--line);
+  background: var(--bg-2);
+  box-shadow: var(--shadow-sm);
+}
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--line);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--fg-3);
+}
+.panel-header .panel-title { color: var(--fg); font-weight: 600; }
+.panel-header .count {
+  background: var(--accent);
+  color: var(--accent-fg);
+  font-size: 9px;
+  padding: 1px 6px;
+  letter-spacing: .06em;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+thead th {
+  text-align: left;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  color: var(--fg-muted);
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--line);
+  font-weight: 600;
+}
+thead th.right { text-align: right; }
+tbody tr {
+  border-bottom: 1px solid var(--line-2);
+  transition: background .08s;
+}
+tbody tr:last-child { border-bottom: none; }
+tbody tr:hover { background: var(--bg-muted); }
+tbody td {
+  padding: 9px 16px;
+  color: var(--fg-2);
+  font-variant-numeric: tabular-nums;
+}
+tbody td.right { text-align: right; }
+tbody td.id-col { color: var(--fg); font-weight: 500; letter-spacing: .06em; }
+.badge {
+  display: inline-block;
+  font-size: 9px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border: 1px solid currentColor;
+}
+.badge.live   { color: var(--accent); border-color: var(--accent); background: var(--accent-soft); }
+.badge.canary { color: var(--warn);   border-color: var(--warn);   background: var(--warn-soft); }
+.badge.shadow { color: var(--fg-muted); border-color: var(--line-strong); }
+.badge.apex   { color: var(--success); border-color: var(--success); background: var(--success-soft); }
+.tier-bar {
+  height: 2px;
+  background: var(--line);
+  display: inline-block;
+  width: 60px;
+  vertical-align: middle;
+}
+.tier-bar-fill {
+  height: 100%;
+  background: var(--accent);
+}
+
+/* ── LOG PANEL ── */
+.log-panel {
+  border: 1px solid var(--line);
+  background: var(--bg);
+  box-shadow: var(--shadow-sm);
+}
+.log-row {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 6px 16px;
+  border-bottom: 1px solid var(--line-2);
+  font-size: 11px;
+}
+.log-row:last-child { border-bottom: none; }
+.log-row:hover { background: var(--bg-2); }
+.log-ts { color: var(--fg-muted); width: 76px; flex-shrink: 0; font-size: 11px; }
+.log-tag {
+  width: 54px;
+  flex-shrink: 0;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  text-align: right;
+}
+.log-tag.info    { color: var(--info); }
+.log-tag.ok      { color: var(--success); }
+.log-tag.warn    { color: var(--warn); }
+.log-tag.signal  { color: var(--accent); }
+.log-msg { color: var(--fg-2); flex: 1; font-size: 12px; line-height: 1.5; }
+.log-msg .hl { color: var(--accent-deep); font-weight: 500; }
+
+/* ── BUTTON ROW ── */
+.btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 34px;
+  padding: 0 14px;
+  font-family: var(--font-prose);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+  cursor: pointer;
+  border-radius: var(--r-sm);
+  transition: all .1s;
+}
+.btn-primary  { background: var(--brand);  color: var(--brand-fg);  border-color: var(--brand); }
+.btn-primary:hover { background: var(--brand-hover); border-color: var(--brand-hover); }
+.btn-accent   { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); }
+.btn-accent:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+.btn-outline  { background: transparent;   color: var(--fg);        border-color: var(--line-strong); }
+.btn-outline:hover { background: var(--bg-2); }
+.btn-ghost    { background: transparent;   color: var(--fg-3);      border-color: transparent; }
+.btn-ghost:hover { color: var(--fg); background: var(--bg-2); }
+.btn-danger   { background: transparent;   color: var(--danger);    border-color: var(--danger); }
+.btn-sm { height: 28px; padding: 0 10px; font-size: 10px; }
+
+/* ── THEME TOGGLE ── */
+.toggle-bar {
+  position: fixed; top: 10px; left: 50%; transform: translateX(-50%);
+  display: flex; gap: 1px; z-index: 100;
+  background: var(--line); border: 1px solid var(--line);
+  box-shadow: var(--shadow-md);
+}
+.toggle-bar button {
+  padding: 6px 16px;
+  font-family: "Aeonik Mono", monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  cursor: pointer;
+  border: none;
+  background: var(--bg-2);
+  color: var(--fg-2);
+  transition: all .1s;
+}
+.toggle-bar button.active { background: var(--accent); color: var(--accent-fg); font-weight: 700; }
+.toggle-bar button:hover:not(.active) { background: var(--bg-3); color: var(--fg); }
+.toggle-sep { width: 1px; align-self: stretch; background: var(--line); margin: 0 2px; }
+</style></head>
+
+<body data-theme="revenant-dark" data-register="split">
+
+<!-- Theme toggle: light / dark  +  register A/B: split (mono for data) / full (all mono) -->
+<div class="toggle-bar">
+  <button onclick="setTheme('revenant-light')" id="btn-light">Light</button>
+  <button onclick="setTheme('revenant-dark')"  id="btn-dark"  class="active">Dark</button>
+  <span class="toggle-sep"></span>
+  <button onclick="setRegister('split')" id="btn-split" class="active">Mono · Data</button>
+  <button onclick="setRegister('full')"  id="btn-full">Mono · All</button>
+</div>
+
+<!-- System header -->
+<header class="sys-header">
+  <span class="wordmark">LORE® REVENANT</span>
+  <div class="status-row">
+    <span><span class="dot-live"></span><span class="hl">ROUTING</span>: LOCKED</span>
+    <span><span class="dot-live"></span><span class="hl">FEED</span>: LIVE</span>
+    <span><span class="dot-live"></span><span class="hl">CLEARANCE</span>: R6</span>
+    <span class="build">BUILD 2305-A</span>
+  </div>
+</header>
+
+<div class="shell">
+
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <div class="section-label">Monitor</div>
+    <div class="nav-item active"><span class="ico">▪</span> Fleet</div>
+    <div class="nav-item"><span class="ico">◈</span> Agents</div>
+    <div class="nav-item"><span class="ico">⊞</span> Allocations</div>
+    <div class="nav-item"><span class="ico">↯</span> Signals</div>
+    <div class="section-label">Control</div>
+    <div class="nav-item"><span class="ico">⊕</span> Deploy</div>
+    <div class="nav-item"><span class="ico">⊗</span> Retire</div>
+    <div class="nav-item"><span class="ico">◻</span> Config</div>
+    <div class="section-label">Reports</div>
+    <div class="nav-item"><span class="ico">≡</span> Ledger</div>
+    <div class="nav-item"><span class="ico">◐</span> Cost</div>
+
+    <div class="unit-block">
+      <div class="unit-id">Operator Unit</div>
+      <div class="unit-val">tomscaria</div>
+      <div class="unit-val" style="color:var(--fg-muted);font-size:10px;margin-top:2px">NYC · U.S.A.</div>
+      <span class="clearance">Clearance R6</span>
+    </div>
+  </nav>
+
+  <!-- Main -->
+  <main class="main">
+
+    <!-- Stat strip -->
+    <div class="stat-strip">
+      <div class="stat-cell accent-cell">
+        <div class="label">Fleet NAV</div>
+        <div class="value">$1.24M</div>
+        <div class="delta pos">↑ +3.8% 24H</div>
+      </div>
+      <div class="stat-cell">
+        <div class="label">Active Agents</div>
+        <div class="value">21</div>
+        <div class="delta pos">↑ 8 canary</div>
+      </div>
+      <div class="stat-cell">
+        <div class="label">Open Positions</div>
+        <div class="value">147</div>
+        <div class="delta" style="color:var(--fg-muted)">across 9 markets</div>
+      </div>
+      <div class="stat-cell">
+        <div class="label">Apex Threshold</div>
+        <div class="value">$50K</div>
+        <div class="delta" style="color:var(--fg-muted)">0 agents gated</div>
+      </div>
+    </div>
+
+    <!-- Agent table -->
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">Agent Fleet</span>
+        <span style="display:flex;align-items:center;gap:10px">
+          <span>21 units active</span>
+          <span class="count">STATUS: LIVE</span>
+        </span>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Unit ID</th>
+            <th>Strategy</th>
+            <th>Lifecycle</th>
+            <th class="right">Capital</th>
+            <th class="right">Return</th>
+            <th class="right">Sharpe</th>
+            <th>Calibration</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="id-col">RVN-001</td>
+            <td>hl-fractal-v02</td>
+            <td><span class="badge live">Revenant</span></td>
+            <td class="right">$120,400</td>
+            <td class="right" style="color:var(--success)">+18.4%</td>
+            <td class="right">2.31</td>
+            <td><span class="tier-bar"><span class="tier-bar-fill" style="width:92%"></span></span></td>
+          </tr>
+          <tr>
+            <td class="id-col">RVN-002</td>
+            <td>pm-entropy-flow-v01</td>
+            <td><span class="badge apex">Apex</span></td>
+            <td class="right">$88,200</td>
+            <td class="right" style="color:var(--success)">+12.1%</td>
+            <td class="right">1.87</td>
+            <td><span class="tier-bar"><span class="tier-bar-fill" style="width:74%"></span></span></td>
+          </tr>
+          <tr>
+            <td class="id-col">RVN-007</td>
+            <td>hl-vol-momentum-v03</td>
+            <td><span class="badge canary">Canary</span></td>
+            <td class="right">$12,000</td>
+            <td class="right" style="color:var(--success)">+6.8%</td>
+            <td class="right">1.42</td>
+            <td><span class="tier-bar"><span class="tier-bar-fill" style="width:55%"></span></span></td>
+          </tr>
+          <tr>
+            <td class="id-col">RVN-014</td>
+            <td>ta-macd-cross-v02</td>
+            <td><span class="badge canary">Canary</span></td>
+            <td class="right">$12,000</td>
+            <td class="right" style="color:var(--danger)">−2.3%</td>
+            <td class="right">0.61</td>
+            <td><span class="tier-bar"><span class="tier-bar-fill" style="width:32%"></span></span></td>
+          </tr>
+          <tr>
+            <td class="id-col">RVN-021</td>
+            <td>pm-regime-shift-v02</td>
+            <td><span class="badge shadow">Shadow</span></td>
+            <td class="right">$0</td>
+            <td class="right" style="color:var(--fg-muted)">paper</td>
+            <td class="right" style="color:var(--fg-muted)">—</td>
+            <td><span class="tier-bar"><span class="tier-bar-fill" style="width:18%"></span></span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Log + buttons row -->
+    <div style="display:grid;grid-template-columns:1fr 260px;gap:20px;align-items:start">
+
+      <!-- System log -->
+      <div class="log-panel panel">
+        <div class="panel-header">
+          <span class="panel-title">System Log</span>
+          <span>CONTINUOUS OPERATIONAL CONTROL</span>
+        </div>
+        <div class="log-row">
+          <span class="log-ts">09:41:03Z</span>
+          <span class="log-tag signal">SIGNAL</span>
+          <span class="log-msg">RVN-001 position opened: <span class="hl">BTC-PERP +0.42</span> @ 67,340</span>
+        </div>
+        <div class="log-row">
+          <span class="log-ts">09:40:55Z</span>
+          <span class="log-tag ok">OK</span>
+          <span class="log-msg">Calibration cycle complete — fleet gap: <span class="hl">1.8pp</span></span>
+        </div>
+        <div class="log-row">
+          <span class="log-ts">09:38:12Z</span>
+          <span class="log-tag warn">WARN</span>
+          <span class="log-msg">RVN-014 consecutive_failures ≥ 3 — routed to skill-repair</span>
+        </div>
+        <div class="log-row">
+          <span class="log-ts">09:35:01Z</span>
+          <span class="log-tag info">INFO</span>
+          <span class="log-msg">Apex gate: RVN-002 30-day Sharpe 1.87 — threshold met</span>
+        </div>
+        <div class="log-row">
+          <span class="log-ts">09:30:00Z</span>
+          <span class="log-tag ok">OK</span>
+          <span class="log-msg">Morning brief dispatched — 5 skills parallel</span>
+        </div>
+      </div>
+
+      <!-- Action panel -->
+      <div class="panel" style="padding:16px;display:flex;flex-direction:column;gap:14px">
+        <div class="panel-header" style="padding:0 0 10px;margin:0 0 2px;border:none">
+          <span class="panel-title">Actions</span>
+        </div>
+        <div>
+          <div style="font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-muted);margin-bottom:8px">Lifecycle</div>
+          <div class="btn-row">
+            <button class="btn btn-accent">▲ Promote</button>
+            <button class="btn btn-outline">⊗ Retire</button>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-muted);margin-bottom:8px">Capital</div>
+          <div class="btn-row">
+            <button class="btn btn-primary">Allocate</button>
+            <button class="btn btn-ghost">Withdraw</button>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-muted);margin-bottom:8px">Ops</div>
+          <div class="btn-row">
+            <button class="btn btn-outline btn-sm">Pause all</button>
+            <button class="btn btn-danger btn-sm">Kill switch</button>
+          </div>
+        </div>
+        <div style="border-top:1px solid var(--line);padding-top:12px;font-size:10px;color:var(--fg-muted);letter-spacing:.06em;text-transform:uppercase">
+          <div style="margin-bottom:4px">Next calibration</div>
+          <div style="color:var(--fg);font-size:13px">09:00:00Z SUN</div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+function setTheme(t) {
+  document.body.dataset.theme = t;
+  document.getElementById('btn-light').classList.toggle('active', t === 'revenant-light');
+  document.getElementById('btn-dark').classList.toggle('active',  t === 'revenant-dark');
+}
+function setRegister(r) {
+  document.body.dataset.register = r;
+  document.getElementById('btn-split').classList.toggle('active', r === 'split');
+  document.getElementById('btn-full').classList.toggle('active',  r === 'full');
+}
+// Keyboard: L/D theme · S/F register
+document.addEventListener('keydown', e => {
+  if (e.key === 'l' || e.key === 'L') setTheme('revenant-light');
+  if (e.key === 'd' || e.key === 'D') setTheme('revenant-dark');
+  if (e.key === 's' || e.key === 'S') setRegister('split');
+  if (e.key === 'f' || e.key === 'F') setRegister('full');
+});
+</script>
+</body></html>

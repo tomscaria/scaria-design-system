@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "preview",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "7340", "--directory", "/Users/stew/scaria/lore-design-system"],
+      "port": 7340
+    }
+  ]
+}

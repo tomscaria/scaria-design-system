@@ -1053,33 +1053,45 @@
   --bg-2:        #FAFAF7;            /* slightly lighter raised card */
   --bg-3:        #FFFFFF;            /* modal / floating */
   --bg-inverted: var(--p-onyx);
-  --bg-muted:    #E5E2DE;            /* recessed section fill */
+  --bg-muted:    #D2CCC3;            /* recessed section fill / sidebar — sharpened so the
+                                       sidebar↔main step is perceptible: 1.38:1 vs concrete
+                                       (was #E5E2DE = 1.12:1, below the perception threshold).
+                                       Stays light so an all-day surface doesn't fight itself;
+                                       fg #1E1B1B still reads at 10.7:1 on it. */
 
   /* Foreground */
-  --fg:          var(--p-onyx);      /* #1E1B1B — "primary system color" */
+  --fg:          var(--p-onyx);      /* #1E1B1B — "primary system color" — 14.8:1 on concrete */
   --fg-2:        #3A3836;
   --fg-3:        #6A6764;
   --fg-muted:    #9A9795;
   --fg-inverted: var(--p-concrete);
 
-  /* Lines */
-  --line:        #C6C2BC;
-  --line-2:      #D9D5CF;
+  /* Lines — the region boundary does real work here (editorial-restraint: ink the rule,
+     not the fill). --line is the primary divider; --line-2 is the table hairline. */
+  --line:        #B7B0A7;            /* 1.86:1 on concrete — a visible rule, not a whisper */
+  --line-2:      #CFC9C1;            /* softer hairline inside dense tables */
   --line-strong: var(--p-onyx);
 
-  /* Brand — onyx carries all primary actions */
-  --brand:       var(--p-onyx);
+  /* Brand — neutral max-contrast ink carries primary actions; orange is NEVER the brand.
+     Revenant's rule (both light & dark): --brand = the strongest neutral inverse of the
+     surface, --accent = signal orange, reserved for ONE hero action/metric per view. This
+     deviates deliberately from lore-dark (where --brand collapses onto the accent) because
+     signal orange carries semantic load ("active state / system signal") that a pure identity
+     hue like chartreuse does not — spending it on every button would dilute the one color
+     that means "act here". */
+  --brand:       var(--p-onyx);     /* onyx fill, concrete text = 14.8:1 */
   --brand-hover: #000000;
   --brand-fg:    var(--p-concrete);
 
   /* Accent — signal orange.
      Raw --accent is decorative / large-type; --accent-deep is text-safe.
      --accent-fg is the foreground on an orange-filled surface (e.g. filled badge). */
-  --accent:        var(--p-signal);       /* #FF4F00 */
+  --accent:        var(--p-signal);       /* #FF4F00 — decorative / large-type / one hero fill */
   --accent-hover:  var(--p-signal-hover); /* #E04300 */
-  --accent-deep:   var(--p-signal-deep);  /* #8A2D00 — 7.4:1 on concrete (AAA) */
+  --accent-deep:   var(--p-signal-deep);  /* #8A2D00 — 7.4:1 on concrete (AAA) — USE FOR ORANGE TEXT */
   --accent-soft:   var(--p-signal-soft);  /* #FFE8D8 — chip/badge bg */
-  --accent-fg:     var(--p-onyx);         /* #1E1B1B on #FF4F00 — 6.8:1 (AA) */
+  --accent-fg:     var(--p-onyx);         /* #1E1B1B on #FF4F00 — 5.2:1 (AA normal). Onyx text on an
+                                             orange fill. NB: raw orange as text fails AA — use --accent-deep. */
 
   /* Semantic */
   --success:        #3B6B2A;
@@ -1118,9 +1130,16 @@
    (pure-black + white editorial), Nucleus Engineering Office (charcoal +
    coral-red + mono type), AI-OPS (orange-on-black field).
 
-   Signal orange on the dark field achieves 7.6:1 contrast at normal size —
-   passes AAA. The lighter --accent-deep (#FF7A40) is provided for when you
-   need a slightly desaturated variant that still reads hot.
+   Signal orange (#FF4F00) on the dark field measures 5.8:1 — AA at normal size,
+   AAA for large/bold. For small orange TEXT use --accent-deep (#FF7A40 = 7.4:1).
+   Do not set body copy in raw #FF4F00.
+
+   Brand vs accent: --brand is a neutral concrete-cream fill (not orange). Primary
+   CTAs read as the calm, dependable default; signal orange is reserved for exactly
+   ONE hero action/metric per view via --accent. This mirrors the Atlas reference
+   (a single orange "CONTACT US" over an otherwise inked layout) and keeps orange's
+   "system signal" meaning intact. (Note: this is a deliberate deviation from
+   lore-dark, which collapses --brand onto its accent — see revenant-light brand note.)
 
    Shadows use a subtle signal-orange ring alongside deep black drop-shadow.
    This creates the "clearance required / system active" glow from the Nucleus
@@ -1145,17 +1164,18 @@
   --line-2:      #1A1C18;
   --line-strong: var(--p-concrete);
 
-  /* Brand — signal orange is the primary CTA surface on dark */
-  --brand:       var(--p-signal);
-  --brand-hover: var(--p-signal-hover);
-  --brand-fg:    var(--p-onyx);      /* #1E1B1B on #FF4F00 — 6.8:1 (AA) */
+  /* Brand — neutral concrete-cream fill (NOT orange). Onyx text on it = 14.8:1 (AAA).
+     This is the calm default for primary actions; orange is reserved as --accent. */
+  --brand:       var(--p-concrete);  /* #F1EEEB */
+  --brand-hover: #FFFFFF;
+  --brand-fg:    var(--p-onyx);      /* #1E1B1B on #F1EEEB — 14.8:1 (AAA) */
 
-  /* Accent */
-  --accent:        var(--p-signal);       /* #FF4F00 */
+  /* Accent — signal orange, reserved for ONE hero action/metric per view. */
+  --accent:        var(--p-signal);       /* #FF4F00 — 5.8:1 on bg (AA / AAA-large) */
   --accent-hover:  var(--p-signal-hover); /* #E04300 */
-  --accent-deep:   #FF7A40;              /* small-text safe on dark bg — 7.6:1 (AAA) */
+  --accent-deep:   #FF7A40;              /* small-text-safe orange on dark bg — 7.4:1 (AAA) */
   --accent-soft:   #2E1206;              /* very dark badge bg */
-  --accent-fg:     var(--p-onyx);
+  --accent-fg:     var(--p-onyx);         /* onyx on orange fill — 5.2:1 (AA) */
 
   /* Semantic */
   --success:        #7CC46C;
