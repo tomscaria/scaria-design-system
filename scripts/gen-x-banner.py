@@ -212,13 +212,13 @@ def direction_field():
         s.append(f'<path d="{d}" fill="none" stroke="url(#flow2)" stroke-width="{wd}" '
                  f'stroke-opacity="{op}" stroke-linecap="round"/>')
 
-    # corners — concrete (revenant)
+    # corners — concrete (revenant registration marks)
     for (cx, cy) in [(34,34),(W-34,34),(34,H-34),(W-34,H-34)]:
         s.append(reg_mark(cx, cy, CONCRETE))
     s.append(crosshair(W-150, 250, CONCRETE, r=8, sw=1.4))
-    # one orange accent
-    s.append(f'<rect x="{W-300}" y="244" width="11" height="11" fill="{SIGNAL}"/>')
-    s.append(f'<line x1="{W-289}" y1="250" x2="{W-160}" y2="250" stroke="{SIGNAL}" '
+    # signal mark — pure chartreuse (single-accent system, matches the avatar)
+    s.append(f'<rect x="{W-300}" y="244" width="11" height="11" fill="{CHART}"/>')
+    s.append(f'<line x1="{W-289}" y1="250" x2="{W-160}" y2="250" stroke="{CHART}" '
              f'stroke-opacity="0.5" stroke-width="1.4"/>')
 
     s.append(f'<rect width="{W}" height="{H}" fill="url(#v2)"/>')
