@@ -149,6 +149,28 @@ thead th, tbody td, .badge, .count,
   border: 1px solid var(--accent-deep);
 }
 
+/* ── INKED INSTRUMENT BEZEL (light theme only) ──
+   Revenant's nav rail is dark chrome in BOTH modes. In light theme the sidebar
+   inverts to onyx so the nav reads as a separate instrument bezel against the
+   concrete work surface — the "dark chrome / light content" pattern from the
+   AI-OPS + Nucleus references. Scoped to the light theme; dark theme keeps its
+   own recessed sidebar. Uses a dedicated treatment, NOT the shared --bg-muted
+   token (which other recessed fills depend on). */
+[data-theme="revenant-light"] .sidebar { background: #1B1917; border-right-color: #000; }
+[data-theme="revenant-light"] .sidebar .section-label { color: rgba(241,238,235,.38); }
+[data-theme="revenant-light"] .sidebar .nav-item { color: rgba(241,238,235,.74); }
+[data-theme="revenant-light"] .sidebar .nav-item:hover { background: rgba(241,238,235,.06); color: #F1EEEB; }
+[data-theme="revenant-light"] .sidebar .nav-item.active {
+  color: var(--accent); background: rgba(255,79,0,.13); border-left-color: var(--accent);
+}
+[data-theme="revenant-light"] .sidebar .unit-block { background: #131110; border-color: #2C2926; }
+[data-theme="revenant-light"] .sidebar .unit-block .unit-id { color: rgba(241,238,235,.42); }
+[data-theme="revenant-light"] .sidebar .unit-block .unit-val { color: #F1EEEB; }
+[data-theme="revenant-light"] .sidebar .unit-block .unit-val[style] { color: rgba(241,238,235,.5) !important; }
+[data-theme="revenant-light"] .sidebar .unit-block .clearance {
+  background: rgba(255,79,0,.14); color: #FF7A40; border-color: var(--accent);
+}
+
 /* ── MAIN CONTENT ── */
 .main {
   padding: 24px;
@@ -328,15 +350,18 @@ tbody td.id-col { color: var(--fg); font-weight: 500; letter-spacing: .06em; }
   border-radius: var(--r-sm);
   transition: all .1s;
 }
-.btn-primary  { background: var(--brand);  color: var(--brand-fg);  border-color: var(--brand); }
-.btn-primary:hover { background: var(--brand-hover); border-color: var(--brand-hover); }
-.btn-accent   { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); }
+/* Button hierarchy (Atlas pattern): exactly ONE solid fill — the orange hero.
+   Everything else is an inked outline or ghost, tiered by border weight. */
+.btn-accent   { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); }   /* THE solid */
 .btn-accent:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
-.btn-outline  { background: transparent;   color: var(--fg);        border-color: var(--line-strong); }
-.btn-outline:hover { background: var(--bg-2); }
-.btn-ghost    { background: transparent;   color: var(--fg-3);      border-color: transparent; }
+.btn-primary  { background: transparent; color: var(--fg); border-color: var(--line-strong); font-weight: 700; }  /* strong outline — prominent non-hero */
+.btn-primary:hover { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.btn-outline  { background: transparent;   color: var(--fg-2);      border-color: var(--line); }     /* standard outline */
+.btn-outline:hover { background: var(--bg-2); color: var(--fg); border-color: var(--line-strong); }
+.btn-ghost    { background: transparent;   color: var(--fg-3);      border-color: transparent; }     /* tertiary */
 .btn-ghost:hover { color: var(--fg); background: var(--bg-2); }
-.btn-danger   { background: transparent;   color: var(--danger);    border-color: var(--danger); }
+.btn-danger   { background: transparent;   color: var(--danger);    border-color: var(--danger); }   /* danger outline */
+.btn-danger:hover { background: color-mix(in oklab,var(--danger) 14%,var(--bg)); }
 .btn-sm { height: 28px; padding: 0 10px; font-size: 10px; }
 
 /* ── THEME TOGGLE ── */
