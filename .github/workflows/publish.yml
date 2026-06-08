@@ -1,0 +1,47 @@
+name: Publish to GitHub Packages
+
+# Manual trigger only — IP / licensing conversation gates the first publish.
+# Once green-lit, tag with `git tag v0.1.0 && git push --tags` and re-enable
+# the `push.tags` trigger below by uncommenting.
+on:
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: "Run npm pack --dry-run instead of actually publishing"
+        type: boolean
+        required: true
+        default: true
+  # push:
+  #   tags:
+  #     - 'v*'
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@tomscaria'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Dry-run pack (inspect tarball contents)
+        run: npm pack --dry-run
+
+      - name: Publish
+        if: ${{ inputs.dry-run == false }}
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
