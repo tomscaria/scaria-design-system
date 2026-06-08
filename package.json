@@ -1,15 +1,95 @@
 {
   "name": "@tomscaria/lore-design-system",
-  "version": "1.0.0",
-  "private": true,
+  "version": "0.1.0",
   "type": "module",
-  "description": "Canonical Lore design system: tokens, fonts, brand assets, shadcn UI primitives, institutional patterns, and deck runtime. Consumed by Thomas OS, swarm-fund-mvp, lore-teaser-prea.",
+  "description": "Lore design system — tokens (colors, type, spacing), themes (lore-light/dark, revenant-light/dark, kiosk, primitive), kit CSS primitives, Tailwind preset, and thin React component wrappers. Consumed by swarm-fund-mvp, Thomas OS, lore-teaser-prea.",
+  "keywords": [
+    "design-system",
+    "lore",
+    "design-tokens",
+    "tailwind-preset",
+    "react",
+    "css-variables",
+    "themes"
+  ],
+  "author": "Tom Scaria <tomscaria@gmail.com>",
+  "license": "UNLICENSED",
+  "homepage": "https://github.com/tomscaria/lore-design-system",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomscaria/lore-design-system.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tomscaria/lore-design-system/issues"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "restricted"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./css": "./tokens/colors_and_type.css",
+    "./css/primitives": "./tokens/primitives.css",
+    "./css/kit": "./preview/_revenant-kit.css",
+    "./css/layouts": "./preview/_primitives.css",
+    "./tailwind": "./preset.js",
+    "./tokens.json": "./tokens/tokens.json",
+    "./fonts/*": "./fonts/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "src",
+    "tokens",
+    "agent/themes",
+    "agent/visual",
+    "fonts",
+    "components",
+    "preview/_primitives.css",
+    "preview/_revenant-kit.css",
+    "preset.js",
+    "README.md",
+    "LICENSE"
+  ],
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "clsx": "^2.1.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.3",
+    "react": "^18.3.1",
+    "tsup": "^8.3.0",
+    "typescript": "^5.5.4"
+  },
   "scripts": {
+    "build": "tsup",
+    "prepublishOnly": "npm run build",
+    "pack:dry": "npm pack --dry-run",
     "sync": "node scripts/sync.mjs",
     "check": "node scripts/check.mjs"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/tomscaria/lore-design-system.git"
+  "engines": {
+    "node": ">=18"
   }
 }

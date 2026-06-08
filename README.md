@@ -1,92 +1,233 @@
 # Lore Design System
 
-Canonical source of truth for everything Lore-branded across Thomas's projects: design tokens, fonts, brand assets, shadcn UI primitives, institutional component patterns, and the HTML deck runtime.
+Canonical source of truth for everything Lore-branded across Thomas's projects:
+design tokens, themes (lore-light/dark, revenant-light/dark, kiosk, primitive),
+fonts, brand assets, shadcn UI primitives, institutional component patterns,
+Tailwind preset, and a thin React component layer wrapping the kit CSS.
 
-This repo replaces 9+ drifting `design_handoff_lore` folders that lived in scattered project directories and Downloads zips. Updates flow OUT from this repo into consumers via an explicit `sync` command — no symlinks, no submodules, no automatic upgrades.
+Published privately to **GitHub Packages** as `@tomscaria/lore-design-system`.
+Consumed by `swarm-fund-mvp`, `Thomas OS`, and `lore-teaser-prea`.
+
+> **Note:** The package name `@tomscaria/lore-design-system` is a holding
+> pattern. The canonical name (and the public/private + license decisions)
+> are pending the IP conversation with Lore. See **Status** below.
+
+---
+
+## Install
+
+### 1. Configure auth (one-time, per consuming project)
+
+GitHub Packages requires a token to install private packages. Generate a
+GitHub Personal Access Token with the `read:packages` scope (or a fine-grained
+token with "Packages: Read" on this repo), then:
+
+```bash
+export NPM_GITHUB_TOKEN=ghp_xxxxxxxxxxxxxxxxx
+```
+
+Copy `.npmrc.example` from this repo into your project root as `.npmrc`
+(or merge into your existing one):
+
+```ini
+@tomscaria:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=${NPM_GITHUB_TOKEN}
+always-auth=true
+```
+
+### 2. Install the package
+
+```bash
+npm install @tomscaria/lore-design-system
+# or
+pnpm add @tomscaria/lore-design-system
+```
+
+React is a peer dependency (`>=18`) and is optional — if you only need the
+CSS / Tailwind preset, you can skip installing React.
+
+---
+
+## Usage
+
+### CSS-only (any framework, any environment)
+
+```html
+<!-- in your global CSS or HTML head -->
+<link rel="stylesheet" href="node_modules/@tomscaria/lore-design-system/tokens/colors_and_type.css">
+<link rel="stylesheet" href="node_modules/@tomscaria/lore-design-system/preview/_revenant-kit.css">
+
+<body data-theme="revenant-dark">
+  <header class="sys-header">
+    <a href="/" class="wordmark">LORE® REVENANT</a>
+  </header>
+  ...
+</body>
+```
+
+Or via JS bundler import (Vite, Next.js, esbuild, etc.):
+
+```ts
+import '@tomscaria/lore-design-system/css';        // tokens + all theme blocks
+import '@tomscaria/lore-design-system/css/kit';    // component classes
+```
+
+Switch themes by toggling the `data-theme` attribute on any ancestor element:
+
+```html
+<body data-theme="lore-light">      <!-- or lore-dark, revenant-light, revenant-dark, kiosk, primitive -->
+```
+
+### React component wrappers
+
+```tsx
+import {
+  SysHeader, LiveDot,
+  Panel, PanelHeader, PanelBody,
+  StatStrip, StatCell,
+  Button, Badge, LogRow,
+} from '@tomscaria/lore-design-system';
+import '@tomscaria/lore-design-system/css';
+import '@tomscaria/lore-design-system/css/kit';
+
+export function Dashboard() {
+  return (
+    <div data-theme="revenant-dark">
+      <SysHeader
+        wordmark="LORE® REVENANT"
+        status={<><LiveDot /> LIVE</>}
+      />
+      <StatStrip columns={4}>
+        <StatCell label="Published PnL" value="+18.4%" delta="30d net" accent />
+        <StatCell label="Fleet Sharpe"   value="2.31"   delta="↑ 0.18 wk" deltaTone="pos" />
+        <StatCell label="Strategies"     value="48"     delta="live + canary" />
+        <StatCell label="Paper Agents"   value="180"    delta="in selection" />
+      </StatStrip>
+
+      <Panel>
+        <PanelHeader title="Latest Decision" trailing={<Badge tone="live">LIVE</Badge>} />
+        <PanelBody>
+          <LogRow timestamp="09:41:03Z" tag="FILL" tone="signal"
+                  message={<>RVN-001 <span className="hl">BTC-PERP +0.42</span> @ 67,340</>} />
+        </PanelBody>
+      </Panel>
+
+      <Button variant="accent" size="lg">Subscribe</Button>
+    </div>
+  );
+}
+```
+
+**Button hierarchy** (Atlas pattern): exactly ONE `variant="accent"` per view,
+everything else tiers down through `primary` → `outline` → `ghost`.
+
+### Tailwind preset
+
+```js
+// tailwind.config.js
+const lorePreset = require('@tomscaria/lore-design-system/tailwind');
+
+module.exports = {
+  presets: [lorePreset],
+  content: ['./src/**/*.{ts,tsx}'],
+};
+```
+
+All theme colors, fontSize, spacing, and motion are exposed as Tailwind
+classes resolving to CSS variables — so they automatically adapt to whatever
+`data-theme` is active on the surrounding element.
+
+### Structured tokens (for Figma / Tokens Studio / cross-platform)
+
+```ts
+import tokens from '@tomscaria/lore-design-system/tokens.json';
+// { themes: { lore: { color: {...}, type: {...} }, ... } }
+```
+
+---
+
+## What's in the package
+
+| Path | Contents |
+|---|---|
+| `tokens/colors_and_type.css` | The 1189-line token contract — every CSS variable for every theme |
+| `tokens/primitives.css` | Spacing scale, layout primitives |
+| `tokens/tokens.json` | Structured tokens (Figma/Tokens Studio-ready format) |
+| `agent/themes/<theme>/` | Per-theme readme + CSS snapshot |
+| `agent/visual/` | Motion, spacing rhythm, type scale, color role docs |
+| `preview/_revenant-kit.css` | Component class layer (Panel, StatStrip, Button, …) |
+| `preview/_primitives.css` | Surface + layout primitives (Stack, Row, Grid, Split, …) |
+| `preset.js` | Tailwind preset |
+| `fonts/` | Aeonik (Reg/Med/Bold + Mono) + Lock Serif (woff2) |
+| `components/ui/` | 51 shadcn primitives (Button, Card, Dialog, …) — copy-paste pattern |
+| `components/insto/` | Lore institutional product components (HeroSection, FundManagerConsole, …) |
+| `dist/` | Built React wrapper layer (ESM + CJS + .d.ts) |
+| `src/` | TypeScript source for the React wrappers |
+
+---
+
+## Status
+
+This is **v0.1** — a working, installable holding pattern. Resolved before v1:
+
+- **IP / canonical name.** The package name is currently `@tomscaria/...` as a
+  placeholder. The canonical name depends on the IP conversation: if Lore owns
+  the system, it's likely `@lore/...`; if Scaria built and licenses it to
+  Lore, it stays `@tomscaria/...` or moves to `@refractor/...`.
+- **License.** Currently `UNLICENSED` — appropriate for private GitHub Packages
+  distribution, but needs a real license (MIT / Apache-2.0 / proprietary)
+  once IP is settled.
+- **Auto-publish.** The `.github/workflows/publish.yml` workflow is
+  `workflow_dispatch`-only until the first manual publish is green-lit.
+
+---
+
+## Alternative consumption: file sync (legacy)
+
+For consumers that predate the npm package or can't authenticate to GitHub
+Packages, the original `scripts/sync.mjs` flow still works:
+
+```bash
+node ~/scaria/lore-design-system/scripts/sync.mjs --target=/path/to/project --profile=<profile>
+```
+
+Profiles: `tokens`, `tokens+decks`, `tokens+components`, `full`. See
+`scripts/sync.mjs` for definitions. This copies a subset into
+`<target>/design_handoff_lore/`, stamps a `.version` file with the canonical's
+git SHA, and adds a `designSystem` block to the target's `package.json`.
+Use `node scripts/check.mjs` to scan registered consumers and report drift.
+
+The npm package is the preferred path; sync remains for back-compat.
+
+---
+
+## Develop
+
+```bash
+npm install                  # one-time
+npm run build                # build dist/ via tsup
+npm run pack:dry             # inspect what would publish
+```
+
+Preview HTML pages live in `preview/` and are served by the `.claude/launch.json`
+preview server (Python `http.server` on port 7340). The key compositional refs:
+
+- `preview/theme-revenant.html` — operational dashboard
+- `preview/revenant-marketing.html` — branded marketing hero
+- `preview/colors-*.html`, `preview/components-*.html`, etc. — per-primitive swatches
+
+---
 
 ## Provenance
 
 Consolidated 2026-05-11 from four sources:
 
 1. `~/scaria/Thomas OS/design_handoff_lore/` (Apr 27 baseline — superseded)
-2. `~/scaria/design_handoff_lore 2/` (May 11 — primary source for tokens + insto theme docs)
-3. `~/scaria/design_handoff_marketing_and_decks 2/` (May 11 — primitives.css, JSON token exports)
+2. `~/scaria/design_handoff_lore 2/` (May 11 — primary source for tokens + insto docs)
+3. `~/scaria/design_handoff_marketing_and_decks 2/` (May 11 — primitives.css, JSON exports)
 4. `~/scaria/lore-institutional/` (live Vite app — 49 shadcn primitives, 7 named insto patterns, 6 design docs, partner logos)
 
-## Structure
-
-```
-tokens/                Design tokens. The 988-line colors_and_type.css is the canonical CSS.
-fonts/                 Aeonik (Reg/Med/Bold + Mono) + LockSerif (.woff2)
-assets/
-  brand/               Lore brand marks + wordmarks
-  partners/            Partner / backer logos (Polychain, Axelar, Sui, Monad, …)
-  tokens/              Crypto + equity asset SVGs (btc, eth, sol, aapl, …)
-  icons/               UI icon set (TSX wrappers + raw SVGs)
-themes/                Theme reference (light theme convention)
-components/
-  ui/                  49 shadcn primitives (Button, Card, Dialog, …)
-  insto/               Named institutional patterns (FundManagerConsole, BentoTile, …)
-decks/                 HTML deck runtime (deck-stage.js, lore-elements.js)
-docs/                  Design docs: INSTO_THEME, INSTO_COMPONENTS, VISUAL_SYSTEM, MOTION_SYSTEM, VOICE_AND_TONE, COPY_GUIDELINES
-preview/               Standalone HTML preview pages for color/type/component swatches
-lib/                   Utilities required by components (cn helper)
-scripts/               sync.mjs, check.mjs
-```
-
-## Consume
-
-To pull this DS into a project, run:
-
-```bash
-node ~/scaria/lore-design-system/scripts/sync.mjs --target=/path/to/your/project --profile=<profile>
-```
-
-This copies the relevant subset into `<target>/design_handoff_lore/`, stamps a `.version` file with the canonical's git SHA, and adds a `designSystem` block to the target's `package.json`.
-
-### Profiles
-
-| Profile | Includes | Use for |
-|---|---|---|
-| `tokens` | `tokens/`, `fonts/`, `assets/brand/` | Minimal: a static page or a marketing site |
-| `tokens+decks` | `tokens` + `decks/` + `assets/tokens/`, `assets/icons/` | Thomas OS (HTML decks) |
-| `tokens+components` | `tokens` + `components/` + `assets/partners/` + `assets/tokens/` + `lib/` | Vite/React apps (swarm-fund-mvp, lore-institutional, future Lore apps) |
-| `full` | Everything except `preview/` | Any consumer that wants the lot |
-
-### Consumer tsconfig
-
-The `components/ui/` and `components/insto/` files import via `@/` aliases (e.g., `import { cn } from "@/lib/utils"`, `import { Button } from "@/components/ui/button"`). The canonical mirrors the lore-institutional `src/` layout exactly, so the aliases resolve cleanly if your consumer's `tsconfig.json` maps `@/*` to the synced `design_handoff_lore/*` path:
-
-```json
-{
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["design_handoff_lore/*"]
-    }
-  }
-}
-```
-
-If you already use `@/` for your own `src/`, add a second entry:
-
-```json
-"paths": {
-  "@/*": ["src/*"],
-  "@ds/*": ["design_handoff_lore/*"]
-}
-```
-
-…and rewrite the lifted components' imports to use `@ds/...` instead of `@/...`. (One-time sed across `design_handoff_lore/components/`.)
-
-## Upgrade workflow
-
-1. Edit files in this repo (`~/scaria/lore-design-system/`).
-2. Commit + push: `git commit -am "…" && git push`.
-3. Bump version + tag: `npm version patch` (or `minor`/`major`), then `git push --tags`.
-4. Re-run `sync.mjs --target=<consumer>` for each consumer that should pick up the change.
-
-Consumers don't upgrade automatically. Every `sync` is explicit. Run `node scripts/check.mjs` (no args) to scan all registered consumers and report drift.
+---
 
 ## Version policy
 
@@ -94,12 +235,3 @@ Semver:
 - **patch** — token tweak, asset replacement, docs-only edit
 - **minor** — new component, new asset category, additive change
 - **major** — breaking rename, removed component, restructured paths
-
-## Drift guards
-
-Two layers:
-
-1. **Canonical-side:** `scripts/check.mjs` walks the hard-coded `CONSUMERS` list, checks each consumer's `design_handoff_lore/.version` against the canonical, and reports any sha256 mismatches on synced files.
-2. **Thomas-OS-side:** `~/scaria/Thomas OS/scripts/check-design-system.mjs` verifies that `design_handoff_lore/tokens/colors_and_type.css` matches every `public/deck*/tokens.css`. Wired into Thomas OS's `prebuild:deck` hook so a divergent deck token fails the build loudly.
-
-Drift is detected, not auto-fixed. The fix is either re-running `sync` (canonical wins) or backporting the consumer edit into the canonical (consumer wins) and then re-syncing.

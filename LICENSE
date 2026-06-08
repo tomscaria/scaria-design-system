@@ -1,0 +1,37 @@
+Copyright (c) 2026 Tom Scaria. All rights reserved.
+
+This package is distributed privately via GitHub Packages and is not
+licensed for public use, redistribution, or modification at this time.
+
+The final license terms are pending an IP and ownership conversation
+with Lore. Until that conversation resolves and an explicit license is
+issued, this package may only be installed and used by:
+
+- Projects owned or maintained by the copyright holder (e.g. swarm-fund-mvp,
+  Thomas OS, lore-teaser-prea).
+- Other parties to whom the copyright holder has granted explicit access
+  via GitHub Packages read permissions on the lore-design-system repository.
+
+Installing this package does not grant any license to copy, modify,
+redistribute, sublicense, or use the contents outside the projects
+explicitly authorized above.
+
+For licensing inquiries, contact tomscaria@gmail.com.
+
+---
+
+UPSTREAM ATTRIBUTION
+
+This design system was built by the copyright holder while affiliated
+with Lore, and its design language is derived from Lore's brand identity.
+The "Lore" name, wordmarks, and logo marks (in assets/brand/lore-*) are
+trademarks of their respective owner(s). Inclusion of these assets in
+this package does not constitute a transfer of trademark rights.
+
+Third-party font files in fonts/ (Aeonik, Lock Serif) are licensed
+separately by their respective foundries; consult each foundry's terms
+before redistributing or embedding in public deliverables.
+
+Third-party partner logos in assets/partners/ are trademarks of their
+respective owners and are included for reference / marketing context
+only; their inclusion does not imply endorsement.

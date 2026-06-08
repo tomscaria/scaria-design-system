@@ -1,2 +1,23 @@
 # Exceeds GitHub 100MB limit — kept local-only for reference
 inspo/screencapture-brasshands-*.pdf
+
+# Build output
+dist/
+*.tsbuildinfo
+
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Editor / OS
+.DS_Store
+.vscode/
+.idea/
+
+# npm pack artifacts
+*.tgz
+
+# Logs
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*

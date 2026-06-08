@@ -22,7 +22,9 @@
     {id:'holo',         label:'Holo',      dot:'linear-gradient(135deg,#FFB5D8,#B5D4FF,#FFF5B5)'},
     {id:'monobrut',     label:'Mono',      dot:'#F5F4F1', ring:'#111'},
     {id:'dotmatrix',    label:'Dot',       dot:'#FFFBF0', ring:'#111'},
-    {id:'sunset',       label:'Sunset',    dot:'linear-gradient(180deg,#FFB99A,#C93F8F)'}
+    {id:'sunset',       label:'Sunset',    dot:'linear-gradient(180deg,#FFB99A,#C93F8F)'},
+    {id:'revenant-light',label:'Rev·L',   dot:'#F1EEEB', ring:'#FF4F00'},
+    {id:'revenant-dark', label:'Rev·D',   dot:'#0E0F0C', ring:'#FF4F00'}
   ];
   const LS_KEY = 'lore.preview.theme';
   const body = document.body;
