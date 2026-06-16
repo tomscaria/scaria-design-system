@@ -4,23 +4,32 @@
 <title>Revenant — Swarm Intelligence Research Lab</title>
 <link rel="stylesheet" href="../tokens/colors_and_type.css"/>
 <link rel="stylesheet" href="_revenant-kit.css"/>
+<link rel="stylesheet" href="_dataviz-kit.css"/>
+<link rel="stylesheet" href="theme-switcher.css"/>
 <style>
-/* Page layout only — every component comes from _revenant-kit.css.
-   Same primitives as the operational dashboard, arranged as a hero. */
+/* Page layout only — components come from _revenant-kit.css + _dataviz-kit.css.
+   Theme-aware: works under revenant-dark AND revenant-light (toggle ↘). */
 *{box-sizing:border-box}
 html,body{margin:0}
 body{
-  background:
-    radial-gradient(1100px 640px at 74% 30%, rgba(255,79,0,.04), transparent 60%),
-    radial-gradient(120% 120% at 50% 0%, #14150E 0%, var(--bg) 45%, #070806 100%);
+  background:var(--bg);
   color:var(--fg);font-family:var(--font-prose);-webkit-font-smoothing:antialiased;
   min-height:100vh;position:relative;overflow-x:hidden;
 }
+body[data-theme="revenant-dark"]{
+  background:
+    radial-gradient(1100px 640px at 78% 6%, rgba(255,79,0,.05), transparent 60%),
+    radial-gradient(120% 120% at 50% 0%, #14150E 0%, var(--bg) 45%, #070806 100%);
+}
+body[data-theme="revenant-light"]{
+  background:
+    radial-gradient(1000px 560px at 82% -4%, rgba(255,79,0,.06), transparent 55%),
+    var(--bg);
+}
+body[data-theme="revenant-light"] #net{display:none}
 #net{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.85}
 .field-grid{z-index:0}
 .wrap{position:relative;z-index:3;max-width:1280px;margin:0 auto;padding:0 28px}
-
-/* header tweaks for marketing nav */
 .sys-header{position:relative;z-index:5}
 .sys-header .left{display:flex;align-items:center;gap:34px}
 
@@ -28,7 +37,7 @@ body{
 .hero{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,.94fr);gap:54px;align-items:center;
   min-height:calc(100vh - 57px - 56px)}
 h1.display{font-weight:700;font-size:clamp(36px,4.4vw,58px);line-height:1.05;letter-spacing:-.02em;
-  margin:26px 0 28px;max-width:15ch;color:#F6F4F0}
+  margin:26px 0 28px;max-width:15ch;color:var(--fg)}
 .lede{font-family:var(--font-data);font-size:14.5px;line-height:1.7;color:var(--fg-3);max-width:46ch;margin:0 0 26px}
 .tags{margin:0 0 38px}
 .cta-row{display:flex;gap:10px;align-items:stretch}
@@ -36,16 +45,54 @@ h1.display{font-weight:700;font-size:clamp(36px,4.4vw,58px);line-height:1.05;let
   border-radius:var(--r-sm);cursor:pointer;transition:all .12s;color:var(--fg-3)}
 .copy-btn:hover{border-color:var(--accent);color:var(--accent)}
 .copy-btn svg{width:17px;height:17px}
-
-/* right column — a dashboard mini-stack */
 .stack{display:flex;flex-direction:column;gap:14px}
 .stat-strip.s2{grid-template-columns:1fr 1fr}
-.decision .sym{font-family:var(--font-prose);font-weight:700;font-size:30px;letter-spacing:-.01em;color:#F6F4F0;line-height:1}
+.decision .sym{font-family:var(--font-prose);font-weight:700;font-size:30px;letter-spacing:-.01em;color:var(--fg);line-height:1}
 .decision .strat{font-family:var(--font-data);font-size:13px;color:var(--fg-3);margin:7px 0 16px}
 .decision .figs{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-data);font-size:15px;font-weight:500;
   color:var(--accent-deep);background:var(--accent-soft);border:1px solid var(--accent-deep);
   border-radius:var(--r-xs);padding:9px 12px}
 .decision .figs .sep{color:var(--fg-muted)}
+
+/* SECTION SCAFFOLD */
+.mkt-band,.mkt-feature,.mkt-quote{position:relative;z-index:3;padding:72px 0;border-top:1px solid var(--line)}
+.band-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:34px}
+.band-head .kicker{font-size:11px}
+.band-head .band-sub{font-family:var(--font-data);font-size:11px;letter-spacing:.04em;color:var(--fg-muted);text-transform:uppercase}
+
+/* GIANT STAT BAND (Fuzy big-number register) */
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
+  border:1px solid var(--line);box-shadow:var(--shadow-sm)}
+.hero-stats .stat-hero{background:var(--bg-2);padding:26px 24px;--stat-size:clamp(40px,4.6vw,62px)}
+.hero-stats .stat-hero .cap{margin-top:8px}
+
+/* SWARM-STAIRCASE FEATURE */
+.mkt-feature{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:56px;align-items:center}
+.feat-copy h2{font-weight:700;font-size:clamp(26px,3vw,40px);line-height:1.08;letter-spacing:-.02em;margin:16px 0 18px;max-width:16ch;color:var(--fg)}
+.feat-copy .lede{margin-bottom:22px}
+.swarm-stage{position:relative;border:1px solid var(--line);background:var(--bg-2);
+  padding:14px;border-radius:var(--r-md);box-shadow:var(--shadow-md);overflow:hidden}
+.swarm-stage .swarm-field{height:300px}
+/* caption sits in the empty top-left the staircase clip leaves open */
+.swarm-stage::after{content:"FLEET · 180 AGENTS";position:absolute;left:24px;top:24px;
+  font-family:var(--font-data);font-size:10px;letter-spacing:.18em;color:var(--fg-3)}
+
+/* DATA-VIZ PANELS */
+.viz-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:14px}
+@media(max-width:960px){.viz-grid{grid-template-columns:1fr}}
+.viz-grid .panel-body{padding:18px}
+.plot{width:100%;height:auto;display:block;overflow:visible}
+.gl{stroke:var(--chart-grid);stroke-width:1;stroke-dasharray:3 4}
+
+/* QUOTE SLAB (ink block, single accent phrase) */
+.quote-slab{position:relative;background:var(--p-onyx);color:var(--p-concrete);
+  border-radius:var(--r-md);padding:56px 56px 48px;overflow:hidden;box-shadow:var(--shadow-lg)}
+.quote-slab .qmark{position:absolute;top:6px;left:30px;font-family:var(--font-display);font-size:140px;color:var(--p-signal);opacity:.22;line-height:1}
+.quote-slab p{position:relative;font-weight:700;font-size:clamp(24px,3.2vw,42px);line-height:1.18;letter-spacing:-.02em;max-width:22ch;margin:0 0 22px}
+.quote-slab .em{color:var(--p-signal)}
+.quote-slab .q-by{font-family:var(--font-data);font-size:12px;letter-spacing:.08em;color:rgba(241,238,235,.55);text-transform:uppercase}
+.quote-slab .stair-deco{position:absolute;right:-2px;top:-2px;width:280px;height:200px;opacity:.9}
+.quote-slab .stair-deco .swarm-field{height:200px}
 
 /* entrance */
 .rise{opacity:0;transform:translateY(12px);animation:rk-rise .65s cubic-bezier(.2,.7,.2,1) forwards}
@@ -53,7 +100,8 @@ h1.display{font-weight:700;font-size:clamp(36px,4.4vw,58px);line-height:1.05;let
 .stack{opacity:0;transform:translateY(16px);animation:rk-rise .8s cubic-bezier(.2,.7,.2,1) .26s forwards}
 @keyframes rk-rise{to{opacity:1;transform:none}}
 @media (prefers-reduced-motion: reduce){.rise,.stack{animation:none;opacity:1;transform:none}}
-@media (max-width:920px){.hero{grid-template-columns:1fr;gap:34px}.nav-links{display:none}}
+@media (max-width:920px){.hero{grid-template-columns:1fr;gap:34px}.nav-links{display:none}
+  .mkt-feature{grid-template-columns:1fr}.hero-stats{grid-template-columns:1fr 1fr}}
 </style></head>
 
 <body data-theme="revenant-dark">
@@ -99,36 +147,15 @@ h1.display{font-weight:700;font-size:clamp(36px,4.4vw,58px);line-height:1.05;let
       </div>
     </div>
 
-    <!-- right column: the same dashboard primitives, stacked -->
     <div class="stack">
       <div class="stat-strip s2">
-        <div class="stat-cell accent-cell">
-          <span class="label">Published PnL</span>
-          <span class="value">+18.4%</span>
-          <span class="delta">30d · net of fees</span>
-        </div>
-        <div class="stat-cell">
-          <span class="label">Fleet Sharpe</span>
-          <span class="value">2.31</span>
-          <span class="delta pos">↑ 0.18 wk</span>
-        </div>
-        <div class="stat-cell">
-          <span class="label">Strategies</span>
-          <span class="value">48</span>
-          <span class="delta">live + canary</span>
-        </div>
-        <div class="stat-cell">
-          <span class="label">Paper Agents</span>
-          <span class="value">180</span>
-          <span class="delta">in selection</span>
-        </div>
+        <div class="stat-cell accent-cell"><span class="label">Published PnL</span><span class="value">+18.4%</span><span class="delta">30d · net of fees</span></div>
+        <div class="stat-cell"><span class="label">Fleet Sharpe</span><span class="value">2.31</span><span class="delta pos">↑ 0.18 wk</span></div>
+        <div class="stat-cell"><span class="label">Strategies</span><span class="value">48</span><span class="delta">live + canary</span></div>
+        <div class="stat-cell"><span class="label">Paper Agents</span><span class="value">180</span><span class="delta">in selection</span></div>
       </div>
-
       <div class="panel decision">
-        <div class="panel-header">
-          <span class="panel-title">Latest Decision</span>
-          <span class="count">LIVE</span>
-        </div>
+        <div class="panel-header"><span class="panel-title">Latest Decision</span><span class="count">LIVE</span></div>
         <div class="panel-body">
           <div class="kicker"><span class="dot-live"></span> Decision</div>
           <div class="sym" style="margin-top:10px">ETH</div>
@@ -136,7 +163,6 @@ h1.display{font-weight:700;font-size:clamp(36px,4.4vw,58px);line-height:1.05;let
           <div class="figs"><span>−94 bps</span><span class="sep">·</span><span>69% conf</span></div>
         </div>
       </div>
-
       <div class="panel recessed">
         <div class="panel-header"><span class="panel-title">Live Tape</span><span>Continuous</span></div>
         <div class="log-row"><span class="log-ts">09:41:03Z</span><span class="log-tag signal">FILL</span><span class="log-msg">RVN-001 <span class="hl">BTC-PERP +0.42</span> @ 67,340</span></div>
@@ -144,6 +170,74 @@ h1.display{font-weight:700;font-size:clamp(36px,4.4vw,58px);line-height:1.05;let
       </div>
     </div>
   </main>
+
+  <!-- GIANT STAT BAND -->
+  <section class="mkt-band">
+    <div class="band-head"><span class="kicker"><span class="dot-live"></span> By the numbers</span><span class="band-sub">trailing 30d · net of fees</span></div>
+    <div class="hero-stats">
+      <div class="stat-hero"><div class="big">+18.4<span class="u">%</span></div><div class="cap">Published PnL</div></div>
+      <div class="stat-hero"><div class="big">2.31</div><div class="cap">Fleet Sharpe</div></div>
+      <div class="stat-hero"><div class="big">48</div><div class="cap">Live strategies</div></div>
+      <div class="stat-hero"><div class="big">180</div><div class="cap">Paper agents in selection</div></div>
+    </div>
+  </section>
+
+  <!-- SWARM-STAIRCASE FEATURE -->
+  <section class="mkt-feature">
+    <div class="feat-copy">
+      <div class="kicker"><span class="dot-live"></span> Darwinistic selection</div>
+      <h2>180 enter. The swarm keeps the 48 that survive.</h2>
+      <p class="lede">Every agent trades real venues in shadow. Conviction and realised PnL decide who graduates to live capital — the rest are culled and re-seeded. The field is the fleet: each circle one agent, resolving direction.</p>
+      <p class="tags"><span class="arr">→</span> Collusion + deterrence <span class="sep">·</span> Evolutionary pressure <span class="sep">·</span> Generalizes to AI safety</p>
+    </div>
+    <div class="feat-art">
+      <div class="swarm-stage"><div class="swarm-field clip-stair-up" id="featSwarm" style="--cols:12;--swarm-gap:3px"></div></div>
+    </div>
+  </section>
+
+  <!-- DATA-VIZ PANELS -->
+  <section class="mkt-band">
+    <div class="band-head"><span class="kicker"><span class="dot-live"></span> Live evidence</span><span class="band-sub">the proof is the published PnL</span></div>
+    <div class="viz-grid">
+      <div class="panel">
+        <div class="panel-header"><span class="panel-title">Cumulative PnL by venue</span><span>30d</span></div>
+        <div class="panel-body">
+          <svg class="plot" viewBox="0 0 600 220" preserveAspectRatio="none">
+            <line class="gl" x1="0" y1="55" x2="600" y2="55"/><line class="gl" x1="0" y1="110" x2="600" y2="110"/><line class="gl" x1="0" y1="165" x2="600" y2="165"/>
+            <path d="M0 220 L0 150 C120 150 180 138 300 112 C420 86 480 80 600 60 L600 220 Z" fill="var(--cat-1)" opacity=".9"/>
+            <path d="M0 220 L0 176 C120 176 180 170 300 156 C420 142 480 138 600 124 L600 220 Z" fill="var(--cat-2)" opacity=".9"/>
+            <path d="M0 220 L0 196 C120 196 180 194 300 186 C420 178 480 176 600 168 L600 220 Z" fill="var(--cat-3)" opacity=".92"/>
+          </svg>
+          <div class="viz-legend" style="margin-top:12px">
+            <span class="li"><span class="sw" data-cat="1"></span>Perp DEX</span>
+            <span class="li"><span class="sw" data-cat="2"></span>Prediction mkts</span>
+            <span class="li"><span class="sw" data-cat="3"></span>Spot</span>
+          </div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-header"><span class="panel-title">Strategy P&amp;L</span><span>ranked</span></div>
+        <div class="panel-body"><div class="viz-hbars" id="mHbars" style="--label-w:92px"></div></div>
+      </div>
+      <div class="panel">
+        <div class="panel-header"><span class="panel-title">Decision density</span><span>live fleet</span></div>
+        <div class="panel-body">
+          <div class="swarm-field" id="mSwarm" style="--cols:10;--swarm-gap:4px"></div>
+          <div class="viz-legend" style="margin-top:12px;color:var(--fg-muted)"><span>size &amp; hue = conviction</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUOTE SLAB -->
+  <section class="mkt-quote">
+    <div class="quote-slab">
+      <span class="qmark">&ldquo;</span>
+      <div class="stair-deco"><div class="swarm-field clip-stair-down" id="qSwarm" style="--cols:9;--swarm-gap:3px"></div></div>
+      <p>Swarms produce <span class="em">better outcomes at lower risk.</span> Markets are simply where we publish the proof.</p>
+      <div class="q-by">— Revenant Lab · field thesis 2305-A</div>
+    </div>
+  </section>
 </div>
 
 <footer class="ticker">
@@ -152,11 +246,11 @@ h1.display{font-weight:700;font-size:clamp(36px,4.4vw,58px);line-height:1.05;let
   <span class="sep">·</span><span style="color:var(--fg-muted)">BUILD 2305-A</span>
 </footer>
 
+<script src="theme-switcher.js" defer></script>
 <script>
-// Sparse "swarm" network in the dashboard palette — muted concrete edges/nodes,
-// a few orange "active" nodes. Subtle; the field-grid carries the main atmosphere.
+// Sparse "swarm" network — muted edges/nodes, a few accent-hot nodes. Dark only.
 (function(){
-  const c=document.getElementById('net'), x=c.getContext('2d');
+  const c=document.getElementById('net'); if(!c) return; const x=c.getContext('2d');
   const DPR=Math.min(devicePixelRatio||1,2); let W,H,N=[];
   const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
   function R(){ W=c.width=innerWidth*DPR; H=c.height=innerHeight*DPR;
@@ -187,5 +281,27 @@ document.getElementById('copy').addEventListener('click',async e=>{
   const b=e.currentTarget; b.style.borderColor='var(--accent)'; b.style.color='var(--accent)';
   setTimeout(()=>{b.style.borderColor='';b.style.color=''},900);
 });
+
+// swarm-glyph fillers
+const GLYPHS=['↗','↘','→','↙','↖','−','↑','↓','↗','→'];
+function fillSwarm(id,n,size,opts={}){
+  const host=document.getElementById(id); if(!host) return;
+  for(let i=0;i<n;i++){
+    let cat='',sty=`--glyph-size:${size}px`;
+    if(opts.density){ const conv=Math.random(); cat=conv>.8?1:conv>.62?2:conv>.45?3:conv>.3?4:6; sty+=`;transform:scale(${(0.5+conv*0.5).toFixed(2)})`; }
+    host.insertAdjacentHTML('beforeend',`<div class="glyph"${cat?` data-cat="${cat}"`:''} style="${sty}">${GLYPHS[(i*3+1)%GLYPHS.length]}</div>`);
+  }
+}
+fillSwarm('featSwarm',12*9,16);
+fillSwarm('mSwarm',10*4,12,{density:true});
+fillSwarm('qSwarm',9*6,11);
+
+// ranked strategy hbars
+(function(){
+  const rows=[['entropy-flow',92,'+$4.2M',1],['mean-revert',74,'+$3.1M',2],['momentum',61,'+$2.4M',3],['arb-basis',48,'+$1.8M',4],['carry',33,'+$1.1M',5]];
+  const host=document.getElementById('mHbars'); if(!host) return;
+  host.innerHTML=rows.map(([nm,v,amt,cat])=>
+    `<div class="viz-hbar" data-cat="${cat}"><span class="nm">${nm}</span><div class="track"><div class="val" style="--v:${v}"></div></div><span class="amt">${amt}</span></div>`).join('');
+})();
 </script>
 </body></html>

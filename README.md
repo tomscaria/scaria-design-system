@@ -150,12 +150,13 @@ import tokens from '@tomscaria/lore-design-system/tokens.json';
 
 | Path | Contents |
 |---|---|
-| `tokens/colors_and_type.css` | The 1189-line token contract — every CSS variable for every theme |
+| `tokens/colors_and_type.css` | The token contract — every CSS variable for every theme, incl. the categorical data-viz wheel (`--cat-1…8`, `--chart-grid/axis/track`) |
 | `tokens/primitives.css` | Spacing scale, layout primitives |
 | `tokens/tokens.json` | Structured tokens (Figma/Tokens Studio-ready format) |
 | `agent/themes/<theme>/` | Per-theme readme + CSS snapshot |
 | `agent/visual/` | Motion, spacing rhythm, type scale, color role docs |
 | `preview/_revenant-kit.css` | Component class layer (Panel, StatStrip, Button, …) |
+| `preview/_dataviz-kit.css` | Chart primitives (stacked/grouped/ranked bars, bullet, stat-hero) + geometric embellishments (swarm-glyph field, staircase, half-moons, mosaic, wave-bands) |
 | `preview/_primitives.css` | Surface + layout primitives (Stack, Row, Grid, Split, …) |
 | `preset.js` | Tailwind preset |
 | `fonts/` | Aeonik (Reg/Med/Bold + Mono) + Lock Serif (woff2) |
