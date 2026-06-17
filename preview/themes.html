@@ -1,9 +1,8 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"/>
-<title>Lore · Playground Skins</title>
+<title>Lore · Theme Gallery</title>
 <link rel="stylesheet" href="../tokens/colors_and_type.css"/>
 <link rel="stylesheet" href="theme-switcher.css"/>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Fraunces:opsz,wght,SOFT@9..144,400,50;9..144,500,50;9..144,600,50&family=Archivo:wght@400;500;700;900&family=Outfit:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Syne:wght@500;700;800&family=VT323&family=Redaction:wght@400;700&family=Rubik+Mono+One&family=Major+Mono+Display&family=Unbounded:wght@400;700;800&family=Doto:wght@400;700&family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
   :root{
     --page-bg:#EEEBE3;
@@ -32,7 +31,7 @@
   .card .inner{padding:22px;display:flex;flex-direction:column;justify-content:space-between;flex:1;position:relative;z-index:2}
   .card .meta{position:absolute;top:14px;right:14px;z-index:3;display:flex;gap:6px;align-items:center}
   .pill{padding:4px 10px;border-radius:999px;font-size:10px;font-weight:600;letter-spacing:.04em;font-family:system-ui}
-  .lab{font-size:10px;text-transform:uppercase;letter-spacing:.14em;opacity:.75;font-weight:600;font-family:'Space Grotesk',system-ui}
+  .lab{font-size:10px;text-transform:uppercase;letter-spacing:.14em;opacity:.75;font-weight:600;font-family:var(--font-sans)}
   .name{font-size:22px;margin:0;letter-spacing:-.01em}
   .bal{font-size:38px;letter-spacing:-.02em;font-variant-numeric:tabular-nums slashed-zero;margin:14px 0 4px;line-height:1}
   .delta{font-size:12px;opacity:.85}
@@ -48,29 +47,29 @@
   /* CLASSIC · Lore House (the always-on baseline) */
   /* =========================================================== */
   /* HEARTH — Lore Light flat */
-  .hearth{background:#F2EADB;color:#1A120A;font-family:'Fraunces',serif}
+  .hearth{background:#F2EADB;color:#1A120A;font-family:var(--font-display)}
   .hearth .lab{color:#5C4A33}
   .hearth .name{font-style:italic;font-weight:500}
-  .hearth .btn-pri{background:#1A120A;color:#F2EADB;padding:12px 20px;border-radius:999px;font-family:'Space Grotesk',system-ui}
-  .hearth .btn-sec{background:transparent;color:#1A120A;border:1px solid rgba(26,18,10,.22);padding:11px 19px;border-radius:999px;font-family:'Space Grotesk',system-ui}
+  .hearth .btn-pri{background:#1A120A;color:#F2EADB;padding:12px 20px;border-radius:999px;font-family:var(--font-sans)}
+  .hearth .btn-sec{background:transparent;color:#1A120A;border:1px solid rgba(26,18,10,.22);padding:11px 19px;border-radius:999px;font-family:var(--font-sans)}
 
   /* HEARTH GLOW — Lore Light gradient */
-  .hearthg{background:radial-gradient(120% 80% at 100% 0%,#F6E4B8 0%,#F2EADB 50%,#EBDAB6 100%);color:#1A120A;font-family:'Fraunces',serif}
+  .hearthg{background:radial-gradient(120% 80% at 100% 0%,#F6E4B8 0%,#F2EADB 50%,#EBDAB6 100%);color:#1A120A;font-family:var(--font-display)}
   .hearthg .lab{color:#5C4A33}
   .hearthg .name{font-style:italic;font-weight:500}
-  .hearthg .btn-pri{background:#1A120A;color:#F2EADB;padding:12px 20px;border-radius:999px;font-family:'Space Grotesk',system-ui}
-  .hearthg .btn-sec{background:rgba(255,255,255,.4);color:#1A120A;backdrop-filter:blur(8px);padding:12px 20px;border-radius:999px;font-family:'Space Grotesk',system-ui}
+  .hearthg .btn-pri{background:#1A120A;color:#F2EADB;padding:12px 20px;border-radius:999px;font-family:var(--font-sans)}
+  .hearthg .btn-sec{background:rgba(255,255,255,.4);color:#1A120A;backdrop-filter:blur(8px);padding:12px 20px;border-radius:999px;font-family:var(--font-sans)}
   .hearthg .blob{width:240px;height:240px;background:#D4F24B;top:-100px;right:-80px;opacity:.4;border-radius:50%}
 
   /* MIDNIGHT — Lore Dark flat */
-  .mid{background:#0E1410;color:#E8F5DB;font-family:'Space Grotesk',system-ui;border:1px solid #1F2A22}
+  .mid{background:#0E1410;color:#E8F5DB;font-family:var(--font-sans);border:1px solid #1F2A22}
   .mid .lab{color:#B9D09C}
   .mid .name{color:#fff;font-weight:500}
   .mid .btn-pri{background:#D4F24B;color:#0E1410;padding:12px 20px;border-radius:10px;font-weight:700}
   .mid .btn-sec{background:#1C2820;color:#D4F24B;padding:12px 20px;border-radius:10px;border:1px solid rgba(212,242,75,.2)}
 
   /* MIDNIGHT AURORA — Lore Dark gradient */
-  .midg{background:radial-gradient(120% 80% at 100% 0%,#2A3F2D 0%,#0E1410 70%);color:#E8F5DB;font-family:'Space Grotesk',system-ui}
+  .midg{background:radial-gradient(120% 80% at 100% 0%,#2A3F2D 0%,#0E1410 70%);color:#E8F5DB;font-family:var(--font-sans)}
   .midg .lab{color:#B9D09C}
   .midg .name{color:#fff;font-weight:500}
   .midg .btn-pri{background:#D4F24B;color:#0E1410;padding:12px 20px;border-radius:10px;font-weight:700;box-shadow:0 0 24px rgba(212,242,75,.3)}
@@ -81,23 +80,23 @@
   /* REVENANT · editorial restraint, signal orange */
   /* =========================================================== */
   /* REVENANT LIGHT — concrete + onyx, sharp corners */
-  .revL{background:#F1EEEB;color:#1E1B1B;font-family:'Space Grotesk',system-ui;border:1px solid #B7B0A7;border-radius:4px}
-  .revL .lab{color:#6A6764;font-family:'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase}
+  .revL{background:#F1EEEB;color:#1E1B1B;font-family:var(--font-sans);border:1px solid #B7B0A7;border-radius:4px}
+  .revL .lab{color:#6A6764;font-family:var(--font-mono);letter-spacing:.1em;text-transform:uppercase}
   .revL .name{font-weight:600;letter-spacing:-.01em}
   .revL .bal{color:#1E1B1B;font-weight:600}
   .revL .delta{color:#3A3836}
-  .revL .btn-pri{background:#1E1B1B;color:#F1EEEB;padding:12px 20px;border-radius:3px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:12px;font-family:'JetBrains Mono',monospace}
-  .revL .btn-sec{background:transparent;color:#1E1B1B;border:1px solid #B7B0A7;padding:11px 19px;border-radius:3px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;font-size:12px;font-family:'JetBrains Mono',monospace}
+  .revL .btn-pri{background:#1E1B1B;color:#F1EEEB;padding:12px 20px;border-radius:3px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:12px;font-family:var(--font-mono)}
+  .revL .btn-sec{background:transparent;color:#1E1B1B;border:1px solid #B7B0A7;padding:11px 19px;border-radius:3px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;font-size:12px;font-family:var(--font-mono)}
   .revL::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:#FF4F00;z-index:3}
 
   /* REVENANT DARK — onyx + signal orange */
-  .rev{background:#0E0F0C;color:#F1EEEB;font-family:'Space Grotesk',system-ui;border:1px solid #252420;border-radius:4px}
-  .rev .lab{color:#C4C0BA;font-family:'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase}
+  .rev{background:#0E0F0C;color:#F1EEEB;font-family:var(--font-sans);border:1px solid #252420;border-radius:4px}
+  .rev .lab{color:#C4C0BA;font-family:var(--font-mono);letter-spacing:.1em;text-transform:uppercase}
   .rev .name{color:#fff;font-weight:600;letter-spacing:-.01em}
   .rev .bal{color:#fff;font-weight:600}
   .rev .delta{color:#C4C0BA}
-  .rev .btn-pri{background:#FF4F00;color:#1E1B1B;padding:12px 20px;border-radius:3px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:12px;font-family:'JetBrains Mono',monospace}
-  .rev .btn-sec{background:transparent;color:#F1EEEB;border:1px solid #252420;padding:11px 19px;border-radius:3px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;font-size:12px;font-family:'JetBrains Mono',monospace}
+  .rev .btn-pri{background:#FF4F00;color:#1E1B1B;padding:12px 20px;border-radius:3px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:12px;font-family:var(--font-mono)}
+  .rev .btn-sec{background:transparent;color:#F1EEEB;border:1px solid #252420;padding:11px 19px;border-radius:3px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;font-size:12px;font-family:var(--font-mono)}
   .rev::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:#FF4F00;z-index:3}
 
   /* section framework */
@@ -146,7 +145,7 @@
           <div class="btnrow"><a class="btn btn-pri">Send</a><a class="btn btn-sec">Receive</a></div>
         </div>
       </div>
-      <div class="caption"><span><b>Hearth</b> · warm paper + graphite</span><span>Fraunces</span></div>
+      <div class="caption"><span><b>Hearth</b> · warm paper + graphite</span><span>Lock Serif</span></div>
     </div>
 
     <div class="unit">
@@ -163,7 +162,7 @@
           <div class="btnrow"><a class="btn btn-pri">Send</a><a class="btn btn-sec">Receive</a></div>
         </div>
       </div>
-      <div class="caption"><span><b>Hearth Glow</b> · paper + chartreuse bloom</span><span>Fraunces</span></div>
+      <div class="caption"><span><b>Hearth Glow</b> · paper + chartreuse bloom</span><span>Lock Serif</span></div>
     </div>
 
     <div class="unit">
@@ -179,7 +178,7 @@
           <div class="btnrow"><a class="btn btn-pri">Send →</a><a class="btn btn-sec">Receive</a></div>
         </div>
       </div>
-      <div class="caption"><span><b>Midnight</b> · chartreuse on charcoal</span><span>Space Grotesk</span></div>
+      <div class="caption"><span><b>Midnight</b> · chartreuse on charcoal</span><span>Aeonik</span></div>
     </div>
 
     <div class="unit">
@@ -196,7 +195,7 @@
           <div class="btnrow"><a class="btn btn-pri">Send →</a><a class="btn btn-sec">Receive</a></div>
         </div>
       </div>
-      <div class="caption"><span><b>Midnight Aurora</b> · moss-glow dark</span><span>Space Grotesk</span></div>
+      <div class="caption"><span><b>Midnight Aurora</b> · moss-glow dark</span><span>Aeonik</span></div>
     </div>
   </div>
 
