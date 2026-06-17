@@ -41,7 +41,9 @@
   --accent-hover: hsl(20 80% 62%);
   --accent-deep: hsl(20 78% 38%);
   --accent-soft: hsl(20 35% 18%);
-  --accent-fg: hsl(0 0% 100%);
+  /* Warm near-black on the lifted brick-orange = ~6:1 (AA) and on-brand */
+  /* high-vis pairing — consistent with revenant-light.                 */
+  --accent-fg: hsl(15 5% 9%);
 
   --success: hsl(140 28% 52%);
   --info:    hsl(212 22% 55%);

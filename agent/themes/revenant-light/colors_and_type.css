@@ -41,7 +41,9 @@
   --accent-hover: hsl(20 82% 43%);
   --accent-deep: hsl(20 80% 30%);
   --accent-soft: hsl(20 60% 92%);
-  --accent-fg: hsl(0 0% 100%);
+  /* Warm near-black on brick-orange = ~4.9:1 (AA) and the canonical    */
+  /* high-vis industrial pairing — black-on-safety-orange, not white.   */
+  --accent-fg: hsl(14 8% 10%);
 
   --success: hsl(140 22% 28%);
   --info:    hsl(212 20% 32%);
