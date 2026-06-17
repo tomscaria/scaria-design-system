@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Lore — Chart Library</title>
+<link rel="stylesheet" href="../tokens/colors_and_type.css"/>
+<link rel="stylesheet" href="_dataviz-kit.css"/>
+<link rel="stylesheet" href="theme-switcher.css"/>
+<style>
+  /* real brand fonts (standalone — no kit dependency) */
+  @font-face{font-family:"Aeonik";font-weight:400;font-display:swap;src:url("../fonts/Aeonik-Regular.woff2") format("woff2")}
+  @font-face{font-family:"Aeonik";font-weight:500;font-display:swap;src:url("../fonts/Aeonik-Medium.woff2") format("woff2")}
+  @font-face{font-family:"Aeonik";font-weight:700;font-display:swap;src:url("../fonts/Aeonik-Bold.woff2") format("woff2")}
+  @font-face{font-family:"Aeonik Mono";font-weight:400;font-display:swap;src:url("../fonts/AeonikMono-Regular.woff2") format("woff2")}
+  @font-face{font-family:"Aeonik Mono";font-weight:500;font-display:swap;src:url("../fonts/AeonikMono-Medium.woff2") format("woff2")}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font-sans);min-height:100vh;
+    padding:40px 28px 96px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1240px;margin:0 auto}
+  header.lib{margin-bottom:8px}
+  .lib h1{font-size:30px;font-weight:700;letter-spacing:-.02em;margin:0 0 6px}
+  .lib p{font-family:var(--font-mono);font-size:12px;color:var(--fg-3);margin:0;max-width:62ch;line-height:1.6}
+  /* categorical swatch strip */
+  .palette{display:flex;gap:0;margin:22px 0 28px;border:1px solid var(--line);border-radius:var(--r-md);overflow:hidden;box-shadow:var(--shadow-xs)}
+  .palette .sc{flex:1;height:42px;display:flex;align-items:flex-end;padding:5px 7px;font-family:var(--font-mono);font-size:9px;letter-spacing:.04em}
+  .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+  .card{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-lg);padding:18px;box-shadow:var(--shadow-xs);min-width:0}
+  .c4{grid-column:span 4}.c6{grid-column:span 6}.c8{grid-column:span 8}.c12{grid-column:span 12}
+  @media(max-width:900px){.c4,.c6,.c8{grid-column:span 12}}
+  /* pie / donut via conic-gradient — no SVG math */
+  .pie{width:150px;height:150px;border-radius:50%;flex:0 0 150px;
+    background:conic-gradient(var(--cat-1) 0 38%,var(--cat-2) 38% 64%,var(--cat-3) 64% 82%,var(--cat-4) 82% 93%,var(--cat-5) 93% 100%)}
+  .donut2{width:150px;height:150px;border-radius:50%;flex:0 0 150px;position:relative;
+    background:conic-gradient(var(--cat-1) 0 42%,var(--cat-2) 42% 70%,var(--cat-6) 70% 88%,var(--cat-4) 88% 100%);
+    -webkit-mask:radial-gradient(circle,transparent 52%,#000 53%);mask:radial-gradient(circle,transparent 52%,#000 53%)}
+  .pie-wrap{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+  svg.plot{width:100%;height:auto;display:block;overflow:visible}
+  .gl{stroke:var(--chart-grid);stroke-width:1;stroke-dasharray:3 4}
+  .axt{font-family:var(--font-mono);font-size:9px;fill:var(--chart-axis)}
+  .scatter circle{opacity:.78}
+  .center-num{font-family:var(--font-sans);font-weight:700;font-size:18px;fill:var(--fg)}
+</style></head>
+<body data-theme="lore-light">
+
+<div class="wrap">
+  <header class="lib">
+    <h1>Chart Library</h1>
+    <p>One categorical token wheel (--cat-1…8), every theme. Switch themes ↘ — bars, slices and areas re-skin from the same markup. Bind geometry with --v, color with data-cat.</p>
+  </header>
+
+  <!-- categorical palette strip -->
+  <div class="palette" id="palette"></div>
+
+  <div class="grid">
+
+    <!-- STACKED COLUMNS -->
+    <div class="card c6">
+      <div class="viz">
+        <div class="viz-head"><span class="viz-title">Revenue by segment</span><span class="viz-kicker">stacked · 8 wk</span></div>
+        <div class="viz-plot" style="--h:200px"><div class="viz-cols hoverable" id="stacked"></div></div>
+        <div class="viz-axis-x" id="stacked-x"></div>
+        <div class="viz-legend">
+          <span class="li"><span class="sw" data-cat="1"></span>Spot</span>
+          <span class="li"><span class="sw" data-cat="2"></span>Perp</span>
+          <span class="li"><span class="sw" data-cat="3"></span>Yield</span>
+          <span class="li"><span class="sw" data-cat="4"></span>Fees</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- GROUPED COLUMNS -->
+    <div class="card c6">
+      <div class="viz">
+        <div class="viz-head"><span class="viz-title">Cohort comparison</span><span class="viz-kicker">grouped</span></div>
+        <div class="viz-plot" style="--h:200px"><div class="viz-cols hoverable" id="grouped"></div></div>
+        <div class="viz-axis-x" id="grouped-x"></div>
+        <div class="viz-legend">
+          <span class="li"><span class="sw" data-cat="1"></span>2024</span>
+          <span class="li"><span class="sw" data-cat="2"></span>2025</span>
+          <span class="li"><span class="sw" data-cat="6"></span>2026</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- RANKED HORIZONTAL BARS -->
+    <div class="card c4">
+      <div class="viz">
+        <div class="viz-head"><span class="viz-title">Strategy P&amp;L</span><span class="viz-kicker">ranked</span></div>
+        <div class="viz-hbars" id="hbars"></div>
+      </div>
+    </div>
+
+    <!-- PIE + DONUT -->
+    <div class="card c4">
+      <div class="viz">
+        <div class="viz-head"><span class="viz-title">Allocation</span><span class="viz-kicker">pie</span></div>
+        <div class="pie-wrap">
+          <div class="pie"></div>
+          <div class="viz-legend" style="flex-direction:column;gap:6px">
+            <span class="li"><span class="sw round" data-cat="1"></span><b>38%</b> Spot</span>
+            <span class="li"><span class="sw round" data-cat="2"></span><b>26%</b> Perp</span>
+            <span class="li"><span class="sw round" data-cat="3"></span><b>18%</b> Yield</span>
+            <span class="li"><span class="sw round" data-cat="4"></span><b>11%</b> Stable</span>
+            <span class="li"><span class="sw round" data-cat="5"></span><b>7%</b> Other</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DONUT w/ center -->
+    <div class="card c4">
+      <div class="viz">
+        <div class="viz-head"><span class="viz-title">Fleet split</span><span class="viz-kicker">donut</span></div>
+        <div class="pie-wrap">
+          <div style="position:relative;flex:0 0 150px">
+            <div class="donut2"></div>
+            <div style="position:absolute;inset:0;display:grid;place-items:center;text-align:center">
+              <div><div style="font-family:var(--font-sans);font-weight:700;font-size:22px;line-height:1">228</div>
+              <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:.1em;color:var(--fg-3);text-transform:uppercase">agents</div></div>
+            </div>
+          </div>
+          <div class="viz-legend" style="flex-direction:column;gap:6px">
+            <span class="li"><span class="sw round" data-cat="1"></span><b>42%</b> Live</span>
+            <span class="li"><span class="sw round" data-cat="2"></span><b>28%</b> Canary</span>
+            <span class="li"><span class="sw round" data-cat="6"></span><b>18%</b> Shadow</span>
+            <span class="li"><span class="sw round" data-cat="4"></span><b>12%</b> Paper</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STAT-BARS COMBO (Fuzy 50/100/150) -->
+    <div class="card c4">
+      <div class="viz">
+        <div class="viz-head"><span class="viz-title">Growth</span><span class="viz-kicker">YoY</span></div>
+        <div class="statbars" style="--h:200px">
+          <div class="col" data-cat="3"><div class="n">50<span class="u">%</span></div><div class="blk" style="--v:33"></div><div class="cap">Q1</div></div>
+          <div class="col" data-cat="1"><div class="n">100<span class="u">%</span></div><div class="blk" style="--v:66"></div><div class="cap">Q2</div></div>
+          <div class="col" data-cat="2"><div class="n">150<span class="u">%</span></div><div class="blk" style="--v:100"></div><div class="cap">Q3</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STACKED AREA -->
+    <div class="card c8">
+      <div class="viz">
+        <div class="viz-head"><span class="viz-title">Cumulative PnL by venue</span><span class="viz-kicker">stacked area · 30d</span></div>
+        <svg class="plot" viewBox="0 0 600 200" preserveAspectRatio="none">
+          <line class="gl" x1="0" y1="50" x2="600" y2="50"/><line class="gl" x1="0" y1="100" x2="600" y2="100"/><line class="gl" x1="0" y1="150" x2="600" y2="150"/>
+          <path d="M0 200 L0 150 C120 150 180 140 300 120 C420 100 480 96 600 80 L600 200 Z" fill="var(--cat-1)" opacity=".85"/>
+          <path d="M0 200 L0 168 C120 168 180 162 300 150 C420 138 480 134 600 124 L600 200 Z" fill="var(--cat-2)" opacity=".85"/>
+          <path d="M0 200 L0 184 C120 184 180 182 300 176 C420 170 480 168 600 162 L600 200 Z" fill="var(--cat-3)" opacity=".9"/>
+        </svg>
+        <div class="viz-legend">
+          <span class="li"><span class="sw" data-cat="1"></span>Perp DEX</span>
+          <span class="li"><span class="sw" data-cat="2"></span>Prediction mkts</span>
+          <span class="li"><span class="sw" data-cat="3"></span>Spot</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MULTI-LINE -->
+    <div class="card c4">
+      <div class="viz">
+        <div class="viz-head"><span class="viz-title">Sharpe drift</span><span class="viz-kicker">line</span></div>
+        <svg class="plot" viewBox="0 0 300 200">
+          <line class="gl" x1="0" y1="50" x2="300" y2="50"/><line class="gl" x1="0" y1="100" x2="300" y2="100"/><line class="gl" x1="0" y1="150" x2="300" y2="150"/>
+          <polyline fill="none" stroke="var(--cat-1)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0,150 50,140 100,120 150,128 200,90 250,70 300,52"/>
+          <polyline fill="none" stroke="var(--cat-2)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0,170 50,160 100,164 150,140 200,150 250,130 300,118"/>
+          <polyline fill="none" stroke="var(--cat-6)" stroke-width="1.75" stroke-dasharray="5 4" stroke-linecap="round" points="0,180 50,178 100,172 150,170 200,166 250,162 300,158"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- SCATTER -->
+    <div class="card c4">
+      <div class="viz">
+        <div class="viz-head"><span class="viz-title">Risk / return</span><span class="viz-kicker">bubble</span></div>
+        <svg class="plot scatter" viewBox="0 0 300 200" id="scatter">
+          <line class="gl" x1="0" y1="100" x2="300" y2="100"/><line class="gl" x1="150" y1="0" x2="150" y2="200"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- BULLET GAUGES -->
+    <div class="card c4">
+      <div class="viz">
+        <div class="viz-head"><span class="viz-title">Targets</span><span class="viz-kicker">bullet · vs goal</span></div>
+        <div style="display:flex;flex-direction:column;gap:16px;margin-top:4px">
+          <div class="viz-bullet" data-cat="1" style="--v:78;--target:90"><div class="lab"><span>AUM</span><span>$78M / 90</span></div><div class="rail"><div class="meter"></div><div class="tick"></div></div></div>
+          <div class="viz-bullet" data-cat="3" style="--v:64;--target:60"><div class="lab"><span>Net inflow</span><span>64 / 60</span></div><div class="rail"><div class="meter"></div><div class="tick"></div></div></div>
+          <div class="viz-bullet" data-cat="2" style="--v:42;--target:75"><div class="lab"><span>Coverage</span><span>42 / 75</span></div><div class="rail"><div class="meter"></div><div class="tick"></div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SWARM-DENSITY HEATMAP (unique) -->
+    <div class="card c4">
+      <div class="viz">
+        <div class="viz-head"><span class="viz-title">Decision density</span><span class="viz-kicker">swarm map</span></div>
+        <div class="swarm-field" style="--cols:12;--swarm-gap:4px" id="swarmmap"></div>
+        <div class="viz-legend"><span class="li" style="color:var(--fg-3)">each cell = one agent · size &amp; hue = conviction</span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="theme-switcher.js" defer></script>
+<script>
+// palette strip
+(function(){
+  const p=document.getElementById('palette');
+  for(let i=1;i<=8;i++){const d=document.createElement('div');d.className='sc';d.dataset.cat=i;
+    d.style.background='var(--cat-'+i+')';d.textContent='cat-'+i;
+    d.style.color = (i===3||i===6||i===8)?'rgba(255,255,255,.9)':'rgba(0,0,0,.65)';
+    p.appendChild(d);}
+})();
+// stacked columns — 4 series per column
+(function(){
+  const cols=[[40,28,18,14],[52,30,20,10],[36,26,16,12],[60,34,22,16],[48,30,18,14],[64,38,24,18],[58,34,22,16],[70,40,26,20]];
+  const labels=['w1','w2','w3','w4','w5','w6','w7','w8'];
+  const max=Math.max(...cols.map(c=>c.reduce((a,b)=>a+b,0)));
+  const host=document.getElementById('stacked');
+  cols.forEach(c=>{
+    const total=c.reduce((a,b)=>a+b,0);
+    host.insertAdjacentHTML('beforeend',
+      `<div class="viz-col stack" style="height:${(total/max*100).toFixed(0)}%"><div class="viz-stack">`+
+      c.map((v,i)=>`<div class="viz-seg" data-cat="${i+1}" style="--v:${v}"></div>`).join('')+
+      `</div></div>`);
+  });
+  document.getElementById('stacked-x').innerHTML=labels.map(l=>`<span>${l}</span>`).join('');
+})();
+// grouped columns — 3 thin bars per slot
+(function(){
+  const groups=[[60,72,84],[48,58,70],[70,80,92],[55,66,78],[80,88,96]];
+  const labels=['Mar','Apr','May','Jun','Jul'];
+  const host=document.getElementById('grouped');
+  groups.forEach(g=>{
+    host.insertAdjacentHTML('beforeend',
+      `<div class="viz-col"><div class="viz-group">`+
+      `<div class="viz-bar" data-cat="1" style="--v:${g[0]}"></div>`+
+      `<div class="viz-bar" data-cat="2" style="--v:${g[1]}"></div>`+
+      `<div class="viz-bar" data-cat="6" style="--v:${g[2]}"></div>`+
+      `</div></div>`);
+  });
+  document.getElementById('grouped-x').innerHTML=labels.map(l=>`<span>${l}</span>`).join('');
+})();
+// ranked hbars
+(function(){
+  const rows=[['entropy-flow',92,'+$4.2M',1],['mean-revert',74,'+$3.1M',2],['momentum',61,'+$2.4M',3],['arb-basis',48,'+$1.8M',4],['carry',33,'+$1.1M',5]];
+  document.getElementById('hbars').innerHTML=rows.map(([nm,v,amt,cat])=>
+    `<div class="viz-hbar" data-cat="${cat}"><span class="nm">${nm}</span><div class="track"><div class="val" style="--v:${v}"></div></div><span class="amt">${amt}</span></div>`).join('');
+})();
+// scatter bubbles
+(function(){
+  const svg=document.getElementById('scatter');
+  const pts=[[60,150,7,3],[100,120,11,1],[140,90,9,2],[180,110,6,4],[150,70,14,1],[210,60,8,2],[90,160,5,5],[240,80,10,6],[120,140,7,3],[200,130,6,4]];
+  pts.forEach(([x,y,r,c])=>svg.insertAdjacentHTML('beforeend',`<circle cx="${x}" cy="${y}" r="${r}" fill="var(--cat-${c})"/>`));
+})();
+// swarm-density map — 48 agents, size + cat by conviction
+(function(){
+  const host=document.getElementById('swarmmap');
+  const glyphs=['↗','↘','→','↙','↖','−','↑','↓'];
+  for(let i=0;i<48;i++){
+    const conv=Math.random();
+    const cat=conv>.8?1:conv>.62?2:conv>.45?3:conv>.3?4:6;
+    const scale=(0.5+conv*0.5).toFixed(2);
+    const g=glyphs[(i*5+3)%glyphs.length];
+    host.insertAdjacentHTML('beforeend',
+      `<div class="glyph" data-cat="${cat}" style="--glyph-size:11px;transform:scale(${scale})">${g}</div>`);
+  }
+})();
+</script>
+</body></html>
