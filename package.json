@@ -41,6 +41,7 @@
     "./css": "./tokens/colors_and_type.css",
     "./css/primitives": "./tokens/primitives.css",
     "./css/kit": "./preview/_revenant-kit.css",
+    "./css/dataviz": "./preview/_dataviz-kit.css",
     "./css/layouts": "./preview/_primitives.css",
     "./tailwind": "./preset.js",
     "./tokens.json": "./tokens/tokens.json",
@@ -57,6 +58,7 @@
     "components",
     "preview/_primitives.css",
     "preview/_revenant-kit.css",
+    "preview/_dataviz-kit.css",
     "preset.js",
     "README.md",
     "LICENSE"

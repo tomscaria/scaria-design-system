@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Lore — Pattern &amp; Embellishment Library</title>
+<link rel="stylesheet" href="../tokens/colors_and_type.css"/>
+<link rel="stylesheet" href="_dataviz-kit.css"/>
+<link rel="stylesheet" href="theme-switcher.css"/>
+<style>
+  @font-face{font-family:"Aeonik";font-weight:400;font-display:swap;src:url("../fonts/Aeonik-Regular.woff2") format("woff2")}
+  @font-face{font-family:"Aeonik";font-weight:500;font-display:swap;src:url("../fonts/Aeonik-Medium.woff2") format("woff2")}
+  @font-face{font-family:"Aeonik";font-weight:700;font-display:swap;src:url("../fonts/Aeonik-Bold.woff2") format("woff2")}
+  @font-face{font-family:"Aeonik Mono";font-weight:400;font-display:swap;src:url("../fonts/AeonikMono-Regular.woff2") format("woff2")}
+  @font-face{font-family:"Aeonik Mono";font-weight:500;font-display:swap;src:url("../fonts/AeonikMono-Medium.woff2") format("woff2")}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font-sans);min-height:100vh;padding:40px 28px 96px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1240px;margin:0 auto}
+  h1{font-size:30px;font-weight:700;letter-spacing:-.02em;margin:0 0 6px}
+  .sub{font-family:var(--font-mono);font-size:12px;color:var(--fg-3);margin:0 0 28px;max-width:64ch;line-height:1.6}
+  .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+  .c3{grid-column:span 3}.c4{grid-column:span 4}.c6{grid-column:span 6}.c8{grid-column:span 8}
+  @media(max-width:900px){.c3,.c4{grid-column:span 6}.c6,.c8{grid-column:span 12}}
+  .tile{border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;background:var(--bg-2);box-shadow:var(--shadow-xs);position:relative}
+  .tile .body{padding:16px;height:200px;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+  .tile .body.dark{background:var(--bg-inverted)}
+  .tile .cap{padding:9px 14px;border-top:1px solid var(--line);font-family:var(--font-mono);font-size:10px;letter-spacing:.06em;color:var(--fg-3);text-transform:uppercase;display:flex;justify-content:space-between;gap:8px}
+  .tile .cap b{color:var(--fg-2);font-weight:500}
+  /* a hero composition tile: swarm staircase over a content panel */
+  .hero-comp{position:relative;height:240px;border-radius:var(--r-lg);overflow:hidden;border:1px solid var(--line);background:var(--bg-inverted);color:var(--fg-inverted)}
+  .hero-comp .bg{position:absolute;inset:0;opacity:1}
+  .hero-comp .label{position:absolute;left:20px;bottom:18px;z-index:2;font-weight:700;font-size:22px;letter-spacing:-.01em;max-width:14ch;
+    color:#F4F1EC;background:rgba(12,12,10,.62);padding:8px 12px;border-radius:var(--r-sm);backdrop-filter:blur(3px)}
+</style></head>
+<body data-theme="lore-light">
+<div class="wrap">
+  <h1>Pattern &amp; Embellishment Library</h1>
+  <p class="sub">Geometric brand vocabulary, theme-aware. The swarm-glyph field is the signature — a grid of agents resolving direction. Clip it to a staircase, send a mosaic to the back, or layer wave-bands behind a headline. Switch themes ↘.</p>
+
+  <div class="grid">
+    <!-- HERO COMPOSITIONS: swarm staircase -->
+    <div class="c8">
+      <div class="hero-comp">
+        <div class="bg clip-stair-up" style="position:absolute;inset:0"><div class="swarm-field" id="sf-stair" style="--cols:14;--swarm-gap:3px;height:100%"></div></div>
+        <div class="label">Swarms resolve direction.</div>
+      </div>
+    </div>
+    <div class="c4">
+      <div class="tile"><div class="body" style="padding:0"><div class="swarm-field clip-wedge" id="sf-wedge" style="--cols:9;--swarm-gap:3px;width:100%;height:100%"></div></div>
+        <div class="cap"><span>swarm + clip-wedge</span><b>.clip-wedge</b></div></div>
+    </div>
+
+    <!-- swarm full -->
+    <div class="c4"><div class="tile"><div class="body" style="padding:0"><div class="swarm-field" id="sf-full" style="--cols:8;--swarm-gap:3px;width:100%;height:100%"></div></div>
+      <div class="cap"><span>swarm field · 8 col</span><b>.swarm-field</b></div></div></div>
+    <!-- staircase down -->
+    <div class="c4"><div class="tile"><div class="body" style="padding:0"><div class="swarm-field clip-stair-down" id="sf-down" style="--cols:10;--swarm-gap:3px;width:100%;height:100%"></div></div>
+      <div class="cap"><span>staircase down</span><b>.clip-stair-down</b></div></div></div>
+    <!-- hollow mix -->
+    <div class="c4"><div class="tile"><div class="body" style="padding:0"><div class="swarm-field" id="sf-hollow" style="--cols:8;--swarm-gap:3px;width:100%;height:100%"></div></div>
+      <div class="cap"><span>swarm · hollow mix</span><b>.glyph.hollow</b></div></div></div>
+
+    <!-- mosaic -->
+    <div class="c4"><div class="tile"><div class="body"><div class="mosaic" style="--cols:5;width:170px">
+      <div data-cat="3" data-span="2" data-rspan="2"></div><div data-cat="1"></div><div data-cat="4"></div><div data-cat="2"></div>
+      <div data-cat="2"></div><div data-cat="1"></div><div data-cat="3"></div>
+      <div data-cat="4" data-span="2"></div><div data-cat="6"></div><div data-cat="1"></div><div data-cat="3"></div>
+      <div data-cat="1"></div><div data-cat="2"></div><div data-cat="4"></div><div data-cat="3" data-span="2"></div>
+    </div></div><div class="cap"><span>mosaic · color blocks</span><b>.mosaic</b></div></div></div>
+    <!-- half moons -->
+    <div class="c4"><div class="tile"><div class="body"><div class="halfmoons" style="width:170px;height:120px">
+      <div class="halfmoon" data-cat="1"></div><div class="halfmoon r" data-cat="2"></div><div class="halfmoon" data-cat="4"></div><div class="halfmoon r" data-cat="3"></div>
+    </div></div><div class="cap"><span>half-moons</span><b>.halfmoon</b></div></div></div>
+    <!-- wave bands -->
+    <div class="c4"><div class="tile"><div class="body"><div class="wave-bands" style="width:180px;height:150px">
+      <div class="band" data-cat="2" style="--bh:34%"></div><div class="band" data-cat="4" style="--bh:30%"></div><div class="band" data-cat="1" style="--bh:30%"></div><div class="band" data-cat="5" style="--bh:30%"></div>
+    </div></div><div class="cap"><span>wave bands</span><b>.wave-bands</b></div></div></div>
+
+    <!-- tiling backgrounds -->
+    <div class="c3"><div class="tile"><div class="body tile-dots" style="--cat-2:var(--cat-2)"></div><div class="cap"><span>dots</span><b>.tile-dots</b></div></div></div>
+    <div class="c3"><div class="tile"><div class="body tile-checker"></div><div class="cap"><span>checker</span><b>.tile-checker</b></div></div></div>
+    <div class="c3"><div class="tile"><div class="body tile-grid"></div><div class="cap"><span>blueprint grid</span><b>.tile-grid</b></div></div></div>
+    <div class="c3"><div class="tile"><div class="body" style="padding:0;background:var(--bg-inverted)"><div class="swarm-field clip-stair-up" id="sf-mini" style="--cols:7;--swarm-gap:2px;width:100%;height:100%"></div></div><div class="cap"><span>stair · on dark</span><b>combo</b></div></div></div>
+  </div>
+</div>
+
+<script src="theme-switcher.js" defer></script>
+<script>
+const GLYPHS=['↗','↘','→','↙','↖','−','↑','↓','↗','→'];
+function fill(id,n,opts={}){
+  const host=document.getElementById(id);if(!host)return;
+  for(let i=0;i<n;i++){
+    const hollow=opts.hollow&&i%5===0;
+    const g=GLYPHS[(i*3+1)%GLYPHS.length];
+    host.insertAdjacentHTML('beforeend',`<div class="glyph${hollow?' hollow':''}" data-cat="${hollow?(i%6)+1:''}" style="--glyph-size:${opts.size||14}px">${g}</div>`);
+  }
+}
+fill('sf-stair',14*6,{size:13});
+fill('sf-wedge',9*7,{size:12});
+fill('sf-full',8*7,{size:15});
+fill('sf-down',10*6,{size:12});
+fill('sf-hollow',8*7,{size:15,hollow:true});
+fill('sf-mini',7*8,{size:9});
+</script>
+</body></html>
