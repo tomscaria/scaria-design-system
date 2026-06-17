@@ -11,6 +11,9 @@
      <html data-theme="lore-light" data-expression="product">
    ============================================================ */
 
+/* Brand webfaces first — register @font-face before any theme paints. */
+@import "./agent/visual/fonts/fonts.css";
+
 @import "./agent/themes/lore-light/colors_and_type.css";
 @import "./agent/themes/lore-dark/colors_and_type.css";
 @import "./agent/themes/primitive/colors_and_type.css";
@@ -25,3 +28,6 @@
 */
 
 @import "./agent/visual/motion/motion.css";
+
+/* Data-viz + embellishment class layer (+ categorical palette tokens). */
+@import "./agent/visual/dataviz/dataviz.css";

@@ -17,7 +17,7 @@
     "preset.js",
     "styles.css",
     "magic_trick.md",
-    "readme.md"
+    "README.md"
   ],
   "exports": {
     ".": {
@@ -37,8 +37,8 @@
     "./themes/primitive-dark": "./agent/themes/primitive-dark/colors_and_type.css",
     "./themes/revenant-light": "./agent/themes/revenant-light/colors_and_type.css",
     "./themes/revenant-dark": "./agent/themes/revenant-dark/colors_and_type.css",
-    "./themes/berlin": "./agent/themes/berlin/colors_and_type.css",
     "./themes/kiosk": "./agent/themes/kiosk/colors_and_type.css",
+    "./dataviz": "./agent/visual/dataviz/dataviz.css",
     "./motion": "./agent/visual/motion/motion.css",
     "./motion.json": "./agent/visual/motion/motion.json",
     "./agent/*": "./agent/*",
