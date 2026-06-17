@@ -1,0 +1,156 @@
+/* ============================================================
+   Revenant Light — atomic theme micro-kit
+   ------------------------------------------------------------
+   Bell Labs rigor × trading-floor README × Discord maintainer.
+   Off-white concrete surface. Near-black warm ink. Brick-orange
+   signal accent. Aeonik + Aeonik Mono (mono is primary in dense
+   surfaces — calibration readouts, lifecycle badges, system labels).
+   Sharper motion, collapsed radii — this is a tool, not a product.
+   ============================================================ */
+
+[data-theme="revenant-light"] {
+  /* ---------- COLOR ---------- */
+  /* Surface: "Concrete Gray" — off-white, very slightly warm.       */
+  /* Reference: designmaxxing spec sheet #F1EEEB / hsl(30 14% 93%). */
+  --bg: hsl(32 12% 93%);
+  --bg-2: hsl(32 14% 96%);
+  --bg-3: hsl(0 0% 100%);
+  --bg-muted: hsl(32 10% 88%);
+  --bg-inverted: hsl(15 5% 9%);
+
+  /* Ink: warm near-black. Reference: designmaxxing SYSTEM BLACK    */
+  /* #1E1B1B — not pure black; very slightly warm charcoal.         */
+  --fg: hsl(14 8% 10%);
+  --fg-2: hsl(14 6% 22%);
+  --fg-3: hsl(14 4% 40%);
+  --fg-muted: hsl(14 3% 58%);
+  --fg-inverted: hsl(32 12% 93%);
+
+  --line: hsl(30 8% 76%);
+  --line-2: hsl(30 10% 83%);
+  --line-strong: hsl(14 8% 10%);
+
+  /* Brand: dark is the primary action.                              */
+  /* Accent: brick-orange signal — calibration active, lifecycle    */
+  /* badge, primary CTA. One per viewport. Never as background fill. */
+  --brand: hsl(14 8% 10%);
+  --brand-hover: hsl(14 6% 18%);
+  --brand-fg: hsl(20 82% 50%);
+
+  --accent: hsl(20 82% 50%);
+  --accent-hover: hsl(20 82% 43%);
+  --accent-deep: hsl(20 80% 30%);
+  --accent-soft: hsl(20 60% 92%);
+  --accent-fg: hsl(0 0% 100%);
+
+  --success: hsl(140 22% 28%);
+  --info:    hsl(212 20% 32%);
+  --warn:    hsl(36 62% 40%);
+  --danger:  hsl(6 60% 42%);
+
+  /* ---------- TYPE SCALE ---------- */
+  /* Same size steps as lore-light for system coherence.             */
+  /* Tighter line-heights throughout: manuscript-density, not glide. */
+  --fs-display-xl: 96px;   --lh-display-xl: 0.92;  --tracking-display-xl: -0.04em;
+  --fs-display-lg: 72px;   --lh-display-lg: 0.97;  --tracking-display-lg: -0.03em;
+  --fs-display-md: 56px;   --lh-display-md: 1.02;  --tracking-display-md: -0.025em;
+  --fs-display-sm: 40px;   --lh-display-sm: 1.06;  --tracking-display-sm: -0.02em;
+
+  --fs-header-xl: 32px;    --lh-header-xl: 1.12;   --tracking-header-xl: -0.015em;
+  --fs-header-lg: 24px;    --lh-header-lg: 1.18;   --tracking-header-lg: -0.01em;
+  --fs-header-md: 20px;    --lh-header-md: 1.22;   --tracking-header-md: -0.005em;
+  --fs-header-sm: 18px;    --lh-header-sm: 1.28;   --tracking-header-sm: 0;
+  --fs-header-caps: 11px;  --lh-header-caps: 1;    --tracking-header-caps: 0.10em;
+
+  /* Body: tighter than lore-light — 1.42 vs 1.55. Dense, readable. */
+  --fs-body-lg: 18px;      --lh-body-lg: 1.42;
+  --fs-body-md: 15px;      --lh-body-md: 1.42;
+  --fs-body-sm: 13px;      --lh-body-sm: 1.38;
+  --fs-body-xs: 11px;      --lh-body-xs: 1.35;
+
+  --fw-regular: 400;
+  --fw-medium:  500;
+  --fw-bold:    700;
+
+  /* ---------- FONT FAMILY ---------- */
+  /* No Lock Serif — that's distinctly Lore's voice.                 */
+  /* Aeonik carries display; Aeonik Mono carries metadata + labels.  */
+  --font-sans: "Aeonik", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-display: "Aeonik", ui-sans-serif, -apple-system, sans-serif;
+  --font-mono: "Aeonik Mono", ui-monospace, Menlo, Monaco, "Cascadia Mono", "Courier New", monospace;
+
+  /* ---------- MOTION — industrial snap ---------- */
+  /* Cut to ~half lore-light durations. Tools don't dwell.           */
+  --motion-duration-micro: 80ms;
+  --motion-duration-entry: 220ms;
+  --motion-duration-scene: 340ms;
+  --motion-ease-interaction: cubic-bezier(0.4, 0, 0.2, 1);
+  --motion-ease-reveal:      cubic-bezier(0.4, 0, 0.15, 1);
+  --motion-ease-ambient:     linear;
+
+  /* ---------- SPACING ---------- */
+  --sp-section-y: 80px;
+  --sp-section-x: 40px;
+  --sp-stack-xs:  4px;
+  --sp-stack-sm:  8px;
+  --sp-stack-md:  16px;
+  --sp-stack-lg:  28px;
+  --sp-stack-xl:  56px;
+  --sp-inline-xs: 4px;
+  --sp-inline-sm: 8px;
+  --sp-inline-md: 16px;
+  --sp-inline-lg: 24px;
+
+  /* ---------- RADII — collapsed (trading terminal, not SaaS) ------ */
+  --r-xs:   2px;
+  --r-sm:   3px;
+  --r-md:   4px;
+  --r-lg:   6px;
+  --r-xl:   8px;
+  --r-pill: 999rem;
+
+  /* ---------- SHADOW — flat, paper-on-desk quality ---------- */
+  --shadow-xs: 0 1px 2px rgba(18, 10, 6, 0.04);
+  --shadow-sm: 0 1px 3px rgba(18, 10, 6, 0.06), 0 1px 2px rgba(18, 10, 6, 0.05);
+  --shadow-md: 0 2px 4px rgba(18, 10, 6, 0.06), 0 4px 12px rgba(18, 10, 6, 0.06);
+  --shadow-lg: 0 3px 8px rgba(18, 10, 6, 0.07), 0 12px 28px rgba(18, 10, 6, 0.08);
+  --shadow-xl: 0 6px 16px rgba(18, 10, 6, 0.08), 0 24px 60px rgba(18, 10, 6, 0.10);
+}
+
+/* ---------- EXPRESSION: MARKETING (rswarm.ai, discovery surfaces) -- */
+/* LOUD. Full-bleed accent fills allowed. Chrome bars. Alarm-scale     */
+/* display type. Operational document structure — not SaaS.           */
+[data-theme="revenant-light"][data-expression="marketing"] {
+  /* Display: genuinely alarming. 152px is the floor, not the ceiling. */
+  --fs-display-xl: 152px;  --lh-display-xl: 0.84;  --tracking-display-xl: -0.05em;
+  --fs-display-lg: 112px;  --lh-display-lg: 0.88;  --tracking-display-lg: -0.04em;
+  --fs-display-md: 80px;   --lh-display-md: 0.94;  --tracking-display-md: -0.03em;
+  --fs-display-sm: 56px;   --lh-display-sm: 1.0;
+
+  /* Section breathing: very generous — each section is a full beat.  */
+  --sp-section-y: 160px;
+  --sp-stack-xl: 96px;
+  --sp-stack-lg: 40px;
+
+  /* Chrome bar: thin top-of-section status strip.                    */
+  --chrome-bar-height: 36px;
+  --chrome-bar-bg: var(--bg-inverted);
+  --chrome-bar-fg: var(--fg-inverted);
+
+  /* Accent sections: allowed in marketing as full-bleed fills.       */
+  --accent-section-bg: var(--accent);
+  --accent-section-fg: var(--accent-fg);
+
+  /* Motion: entry can breathe more on marketing surfaces.            */
+  --motion-duration-entry: 360ms;
+  --motion-duration-scene: 480ms;
+}
+
+/* ---------- EXPRESSION: PRODUCT (swarm-fund-mvp app surfaces) ------ */
+/* Tight, dashboard-density. Tools feel fast.                          */
+[data-theme="revenant-light"][data-expression="product"] {
+  --sp-section-y: 32px;
+  --sp-stack-xl: 40px;
+  --motion-duration-entry: 160ms;
+  --motion-duration-scene: 240ms;
+}
