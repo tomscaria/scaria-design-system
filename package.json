@@ -1,97 +1,97 @@
 {
   "name": "@tomscaria/lore-design-system",
   "version": "1.0.2",
-  "type": "module",
   "description": "Lore design system — tokens (colors, type, spacing), themes (lore-light/dark, revenant-light/dark, kiosk, primitive), kit CSS primitives, Tailwind preset, and thin React component wrappers. Consumed by swarm-fund-mvp, Thomas OS, lore-teaser-prea.",
-  "keywords": [
-    "design-system",
-    "lore",
-    "design-tokens",
-    "tailwind-preset",
-    "react",
-    "css-variables",
-    "themes"
-  ],
-  "author": "Tom Scaria <tomscaria@gmail.com>",
   "license": "UNLICENSED",
-  "homepage": "https://github.com/tomscaria/lore-design-system",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/tomscaria/lore-design-system.git"
-  },
-  "bugs": {
-    "url": "https://github.com/tomscaria/lore-design-system/issues"
-  },
+  "private": false,
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com",
-    "access": "restricted"
+    "access": "public"
   },
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "sideEffects": [
-    "**/*.css"
+  "type": "module",
+  "main": "./derived/npm/index.js",
+  "module": "./derived/npm/index.mjs",
+  "types": "./derived/npm/index.d.ts",
+  "files": [
+    "agent/",
+    "derived/npm/",
+    "preset.js",
+    "styles.css",
+    "magic_trick.md",
+    "readme.md"
   ],
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "types": "./derived/npm/index.d.ts",
+      "import": "./derived/npm/index.mjs",
+      "require": "./derived/npm/index.js"
     },
     "./css": "./tokens/colors_and_type.css",
     "./css/primitives": "./tokens/primitives.css",
     "./css/kit": "./preview/_revenant-kit.css",
     "./css/dataviz": "./preview/_dataviz-kit.css",
     "./css/layouts": "./preview/_primitives.css",
-    "./tailwind": "./preset.js",
     "./tokens.json": "./tokens/tokens.json",
     "./fonts/*": "./fonts/*",
-    "./package.json": "./package.json"
-  },
-  "files": [
-    "dist",
-    "src",
-    "tokens",
-    "agent/themes",
-    "agent/visual",
-    "fonts",
-    "components",
-    "preview/_primitives.css",
-    "preview/_revenant-kit.css",
-    "preview/_dataviz-kit.css",
-    "preset.js",
-    "README.md",
-    "LICENSE"
-  ],
-  "peerDependencies": {
-    "react": ">=18.0.0",
-    "react-dom": ">=18.0.0"
-  },
-  "peerDependenciesMeta": {
-    "react": {
-      "optional": true
+    "./package.json": "./package.json",
+    "./preset": {
+      "default": "./preset.js"
     },
-    "react-dom": {
-      "optional": true
-    }
-  },
-  "dependencies": {
-    "clsx": "^2.1.1"
-  },
-  "devDependencies": {
-    "@types/react": "^18.3.3",
-    "react": "^18.3.1",
-    "tsup": "^8.3.0",
-    "typescript": "^5.5.4"
+    "./styles": {
+      "default": "./styles.css"
+    },
+    "./themes/lore-light": "./agent/themes/lore-light/colors_and_type.css",
+    "./themes/lore-dark": "./agent/themes/lore-dark/colors_and_type.css",
+    "./themes/primitive": "./agent/themes/primitive/colors_and_type.css",
+    "./themes/primitive-dark": "./agent/themes/primitive-dark/colors_and_type.css",
+    "./themes/revenant-light": "./agent/themes/revenant-light/colors_and_type.css",
+    "./themes/revenant-dark": "./agent/themes/revenant-dark/colors_and_type.css",
+    "./themes/berlin": "./agent/themes/berlin/colors_and_type.css",
+    "./themes/kiosk": "./agent/themes/kiosk/colors_and_type.css",
+    "./motion": "./agent/visual/motion/motion.css",
+    "./motion.json": "./agent/visual/motion/motion.json",
+    "./agent/*": "./agent/*",
+    "./magic_trick": "./magic_trick.md",
+    "./brands/lore/magic_trick": "./agent/brands/lore/magic_trick.md",
+    "./brands/revenant/magic_trick": "./agent/brands/revenant/magic_trick.md"
   },
   "scripts": {
-    "build": "tsup",
-    "prepublishOnly": "npm run build",
-    "pack:dry": "npm pack --dry-run",
-    "sync": "node scripts/sync.mjs",
-    "check": "node scripts/check.mjs"
+    "build": "node scripts/build-derived.mjs",
+    "build:tsc": "tsc -p tsconfig.json",
+    "prepublishOnly": "pnpm run build",
+    "lint": "echo 'no lint configured yet'",
+    "test": "echo 'no tests configured yet'",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "pnpm run build && changeset publish"
   },
-  "engines": {
-    "node": ">=18"
-  }
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0",
+    "tailwindcss": ">=3.4.0"
+  },
+  "peerDependenciesMeta": {
+    "react": { "optional": true },
+    "react-dom": { "optional": true },
+    "tailwindcss": { "optional": false }
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.27.0",
+    "typescript": "^5.4.0"
+  },
+  "keywords": [
+    "design-system",
+    "atomic-kit",
+    "tailwind-preset",
+    "lore",
+    "revenant",
+    "scaria",
+    "tokens",
+    "themes"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tomscaria/lore-design-system.git"
+  },
+  "author": "Thomas Scaria <tomscaria@gmail.com>",
+  "homepage": "https://github.com/tomscaria/lore-design-system#readme"
 }

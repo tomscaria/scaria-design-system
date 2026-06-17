@@ -1,0 +1,26 @@
+# Source / authoring — not shipped
+src/
+scripts/
+.changeset/
+.github/
+human/
+inspo/
+DROP_INSTRUCTIONS.md
+SCAFFOLD_README.md
+consumer-patches/
+harvest-instructions/
+
+# Build artifacts that aren't the package
+node_modules/
+*.log
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
+
+# Config not needed at runtime
+tsconfig.json
+.changeset
+.git
+.gitignore
