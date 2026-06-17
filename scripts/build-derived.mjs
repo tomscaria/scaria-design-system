@@ -37,7 +37,7 @@ async function main() {
 // The kit's primary surface is CSS + preset + raw atomic files.
 // React components live behind subpath imports as they land.
 
-export const version = "0.1.0";
+export const version = "0.2.0";
 export const themes = [
   "lore-light",
   "lore-dark",
@@ -57,7 +57,7 @@ export const brands = ["lore", "revenant"];
     `// @tomscaria/lore-design-system — CJS entry
 "use strict";
 module.exports = {
-  version: "0.1.0",
+  version: "0.2.0",
   themes: [
     "lore-light",
     "lore-dark",

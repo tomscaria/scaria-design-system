@@ -1,9 +1,9 @@
 name: Release
 
+# Manual-only. Private publish goes to GitHub Packages, NOT public npm.
+# (Auto-publish-on-push was removed to avoid an accidental public release.)
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
@@ -31,7 +31,7 @@ jobs:
         with:
           node-version: 20
           cache: pnpm
-          registry-url: "https://registry.npmjs.org"
+          registry-url: "https://npm.pkg.github.com"
 
       - name: Install
         run: pnpm install --frozen-lockfile

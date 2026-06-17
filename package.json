@@ -1,11 +1,12 @@
 {
   "name": "@tomscaria/lore-design-system",
-  "version": "0.1.0",
-  "description": "Atomic brand kit for Scaria, Inc. — Lore + Revenant. Tailwind preset, themes, components, and the agent-readable brand POV.",
+  "version": "0.2.0",
+  "description": "Scaria Holdings Design System — Lore + Revenant atomic brand kit (themes, Tailwind preset, components, agent-readable brand POV).",
   "license": "UNLICENSED",
   "private": false,
   "publishConfig": {
-    "access": "public"
+    "registry": "https://npm.pkg.github.com",
+    "access": "restricted"
   },
   "type": "module",
   "main": "./derived/npm/index.js",
@@ -82,8 +83,8 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/tomscaria/lore-design-system.git"
+    "url": "https://github.com/tomscaria/scaria-holdings-design-system.git"
   },
   "author": "Thomas Scaria <tomscaria@gmail.com>",
-  "homepage": "https://github.com/tomscaria/lore-design-system#readme"
+  "homepage": "https://github.com/tomscaria/scaria-holdings-design-system#readme"
 }

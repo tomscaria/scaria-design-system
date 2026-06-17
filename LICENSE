@@ -10,7 +10,8 @@ issued, this package may only be installed and used by:
 - Projects owned or maintained by the copyright holder (e.g. swarm-fund-mvp,
   Thomas OS, lore-teaser-prea).
 - Other parties to whom the copyright holder has granted explicit access
-  via GitHub Packages read permissions on the lore-design-system repository.
+  via GitHub Packages read permissions on the scaria-holdings-design-system
+  repository (e.g. repositories under @tomscaria and the @refractor-labs org).
 
 Installing this package does not grant any license to copy, modify,
 redistribute, sublicense, or use the contents outside the projects
