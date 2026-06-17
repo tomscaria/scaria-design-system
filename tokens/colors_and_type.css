@@ -15,42 +15,42 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url("fonts/Aeonik-Regular.woff2") format("woff2");
+  src: url("../fonts/Aeonik-Regular.woff2") format("woff2");
 }
 @font-face {
   font-family: "Aeonik";
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url("fonts/Aeonik-Medium.woff2") format("woff2");
+  src: url("../fonts/Aeonik-Medium.woff2") format("woff2");
 }
 @font-face {
   font-family: "Aeonik";
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url("fonts/Aeonik-Bold.woff2") format("woff2");
+  src: url("../fonts/Aeonik-Bold.woff2") format("woff2");
 }
 @font-face {
   font-family: "Aeonik Mono";
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url("fonts/AeonikMono-Regular.woff2") format("woff2");
+  src: url("../fonts/AeonikMono-Regular.woff2") format("woff2");
 }
 @font-face {
   font-family: "Aeonik Mono";
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url("fonts/AeonikMono-Medium.woff2") format("woff2");
+  src: url("../fonts/AeonikMono-Medium.woff2") format("woff2");
 }
 @font-face {
   font-family: "Lock Serif";
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url("fonts/LockSerif-Regular.woff2") format("woff2");
+  src: url("../fonts/LockSerif-Regular.woff2") format("woff2");
 }
 
 /* ---------- ABSOLUTE PALETTE (from Prysm DS) ---------- */
