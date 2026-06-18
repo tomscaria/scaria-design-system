@@ -1,6 +1,6 @@
 {
   "name": "@tomscaria/lore-design-system",
-  "version": "0.1.0",
+  "version": "1.0.2",
   "type": "module",
   "description": "Lore design system — tokens (colors, type, spacing), themes (lore-light/dark, revenant-light/dark, kiosk, primitive), kit CSS primitives, Tailwind preset, and thin React component wrappers. Consumed by swarm-fund-mvp, Thomas OS, lore-teaser-prea.",
   "keywords": [

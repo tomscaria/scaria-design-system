@@ -1,8 +1,8 @@
 name: Publish to GitHub Packages
 
-# Manual trigger only — IP / licensing conversation gates the first publish.
-# Once green-lit, tag with `git tag v0.1.0 && git push --tags` and re-enable
-# the `push.tags` trigger below by uncommenting.
+# Publishes on any pushed `v*` tag, e.g. `git tag v1.0.2 && git push --tags`.
+# Can also be run manually (workflow_dispatch) — defaults to a dry-run pack so
+# you can inspect the tarball without publishing.
 on:
   workflow_dispatch:
     inputs:
@@ -11,9 +11,9 @@ on:
         type: boolean
         required: true
         default: true
-  # push:
-  #   tags:
-  #     - 'v*'
+  push:
+    tags:
+      - 'v*'
 
 permissions:
   contents: read
@@ -41,7 +41,7 @@ jobs:
         run: npm pack --dry-run
 
       - name: Publish
-        if: ${{ inputs.dry-run == false }}
+        if: ${{ github.event_name == 'push' || inputs.dry-run == false }}
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
