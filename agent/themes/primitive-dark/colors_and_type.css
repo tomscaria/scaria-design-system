@@ -5,8 +5,9 @@
    ============================================================ */
 
 [data-theme="primitive-dark"] {
-  /* Inherits the primitive type scale + spacing + motion;
-     overrides surface + foreground only. Author the rest when needed. */
+  /* Sibling selector to [data-theme="primitive"] — it does NOT inherit
+     primitive's tokens, so motion is declared explicitly below. Surface +
+     foreground are overridden here; type scale + spacing still TODO. */
   --bg: hsl(0 0% 4%);
   --bg-2: hsl(0 0% 7%);
   --bg-3: hsl(0 0% 10%);
@@ -33,6 +34,14 @@
   --accent-soft: hsl(0 0% 12%);
   --accent-fg: hsl(0 0% 4%);
 
-  /* TODO: type scale + motion + spacing + radii + shadow.
+  /* ---------- MOTION (snappy, no flourish — mirrors primitive) ---------- */
+  --motion-duration-micro: 120ms;
+  --motion-duration-entry: 300ms;
+  --motion-duration-scene: 500ms;
+  --motion-ease-interaction: cubic-bezier(0.4, 0, 0.2, 1);
+  --motion-ease-reveal:      cubic-bezier(0.4, 0, 0.2, 1);
+  --motion-ease-ambient:     ease-in-out;
+
+  /* TODO: type scale + spacing + radii + shadow.
      Pattern from primitive applies; copy when ready. */
 }
