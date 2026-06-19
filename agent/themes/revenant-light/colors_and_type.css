@@ -1,0 +1,113 @@
+/* ============================================================
+   Revenant Light — atomic theme micro-kit
+   ------------------------------------------------------------
+   American-Dynamism / field-spec register. Concrete Gray surface,
+   System Black ink, Signal Orange accent (Pantone 1655C).
+
+   Self-contained per-theme variable contract (color + type +
+   motion + spacing + radii + shadow), mirroring the runtime
+   tokens in tokens/colors_and_type.css. Same shape as lore-light.
+
+   Brand rule (both modes): --brand = strongest neutral inverse of
+   the surface (onyx here); --accent = signal orange, reserved for
+   ONE hero action/metric per view. Orange is never the brand fill.
+   ============================================================ */
+
+[data-theme="revenant-light"] {
+  /* ---------- COLOR ---------- */
+  --bg: #F1EEEB;                /* Concrete Gray — surface / field */
+  --bg-2: #FAFAF7;             /* raised card */
+  --bg-3: #FFFFFF;            /* modal / floating */
+  --bg-muted: #D2CCC3;         /* recessed fill / sidebar (1.38:1 step) */
+  --bg-inverted: #1E1B1B;
+
+  --fg: #1E1B1B;               /* System Black — 14.8:1 on concrete */
+  --fg-2: #3A3836;
+  --fg-3: #6A6764;
+  --fg-muted: #9A9795;
+  --fg-inverted: #F1EEEB;
+
+  --line: #B7B0A7;             /* visible rule (1.86:1), not a whisper */
+  --line-2: #CFC9C1;
+  --line-strong: #1E1B1B;
+
+  /* Brand — neutral onyx carries primary actions; orange is NEVER brand. */
+  --brand: #1E1B1B;
+  --brand-hover: #000000;
+  --brand-fg: #F1EEEB;
+
+  /* Accent — Signal Orange. Raw --accent is decorative/large-type;
+     --accent-deep is text-safe (7.4:1 AAA); --accent-fg is onyx on a fill. */
+  --accent: #FF4F00;
+  --accent-hover: #E04300;
+  --accent-deep: #8A2D00;
+  --accent-soft: #FFE8D8;
+  --accent-fg: #1E1B1B;
+
+  --success: #3B6B2A;  --success-soft: #D5E8C4;
+  --info:    #2A4B7A;  --info-soft:    #CDD9ED;
+  --warn:    #B87A28;  --warn-soft:    #F5E8C0;
+  --danger:  #C82929;  --danger-soft:  #F5E0E0;   /* fire-red, not signal orange */
+  --governance: #3A2D6B;  --governance-soft: #DDD6F0;
+
+  /* ---------- TYPE (operational restraint vs Lore) ---------- */
+  --fs-display-xl: 84px;   --lh-display-xl: 0.98;  --tracking-display-xl: -0.025em;
+  --fs-display-lg: 64px;   --lh-display-lg: 1.0;   --tracking-display-lg: -0.02em;
+  --fs-display-md: 48px;   --lh-display-md: 1.05;  --tracking-display-md: -0.015em;
+  --fs-display-sm: 36px;   --lh-display-sm: 1.1;   --tracking-display-sm: -0.01em;
+
+  --fs-header-xl: 30px;    --lh-header-xl: 1.15;   --tracking-header-xl: -0.01em;
+  --fs-header-lg: 24px;    --lh-header-lg: 1.2;    --tracking-header-lg: -0.005em;
+  --fs-header-md: 20px;    --lh-header-md: 1.25;   --tracking-header-md: 0;
+  --fs-header-sm: 18px;    --lh-header-sm: 1.3;    --tracking-header-sm: 0;
+  --fs-header-caps: 11px;  --lh-header-caps: 1;    --tracking-header-caps: 0.1em;
+
+  --fs-body-lg: 16px;      --lh-body-lg: 1.6;
+  --fs-body-md: 14px;      --lh-body-md: 1.55;   /* operational base = 14px */
+  --fs-body-sm: 13px;      --lh-body-sm: 1.5;
+  --fs-body-xs: 11px;      --lh-body-xs: 1.45;
+
+  --fw-regular: 400;  --fw-medium: 500;  --fw-bold: 700;
+
+  /* ---------- FONT FAMILY (identical to lore-* so components re-skin free;
+     the mono-data register is a layout decision, not a theme token) ---------- */
+  --font-sans: "Aeonik", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-display: "Lock Serif", "Aeonik", ui-serif, Georgia, serif;
+  --font-mono: "Aeonik Mono", ui-monospace, Menlo, Monaco, "Cascadia Mono", monospace;
+
+  /* ---------- MOTION (precision instrument — sharp, no overshoot) ---------- */
+  --motion-duration-micro: 120ms;
+  --motion-duration-entry: 280ms;
+  --motion-duration-scene: 450ms;
+  --motion-ease-interaction: cubic-bezier(0.2, 0, 0, 1);
+  --motion-ease-reveal:      cubic-bezier(0.2, 0, 0, 1);
+  --motion-ease-ambient:     ease-in-out;
+
+  /* ---------- SPACING ---------- */
+  --sp-section-y: 72px;  --sp-section-x: 40px;
+  --sp-stack-xs: 4px;  --sp-stack-sm: 8px;  --sp-stack-md: 16px;  --sp-stack-lg: 32px;  --sp-stack-xl: 56px;
+  --sp-inline-xs: 4px; --sp-inline-sm: 8px; --sp-inline-md: 16px; --sp-inline-lg: 24px;
+
+  /* ---------- RADII (tight / operational — sharp = precision instrument) ---------- */
+  --r-xs: 0px;  --r-sm: 2px;  --r-md: 4px;  --r-lg: 6px;  --r-xl: 8px;  --r-pill: 999rem;
+
+  /* ---------- SHADOW (flat offset, no blur — construction-drawing energy) ---------- */
+  --shadow-xs: 1px 1px 0 rgba(30,27,27,.10);
+  --shadow-sm: 2px 2px 0 rgba(30,27,27,.12);
+  --shadow-md: 3px 3px 0 rgba(30,27,27,.14), 0 1px 4px rgba(30,27,27,.06);
+  --shadow-lg: 4px 4px 0 rgba(30,27,27,.18), 0 4px 12px rgba(30,27,27,.08);
+  --shadow-xl: 6px 6px 0 rgba(30,27,27,.20), 0 8px 24px rgba(30,27,27,.10);
+}
+
+/* ---------- EXPRESSION: MARKETING (restrained vs Lore — still operational) ---------- */
+[data-theme="revenant-light"][data-expression="marketing"] {
+  --fs-display-xl: 104px;  --fs-display-lg: 80px;  --fs-display-md: 60px;
+  --sp-section-y: 128px;   --sp-stack-xl: 80px;
+  --motion-duration-entry: 480ms;
+}
+
+/* ---------- EXPRESSION: PRODUCT (default; explicit for clarity) ---------- */
+[data-theme="revenant-light"][data-expression="product"] {
+  --sp-section-y: 56px;
+  --motion-duration-entry: 200ms;
+}

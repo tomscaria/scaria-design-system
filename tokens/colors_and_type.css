@@ -553,6 +553,51 @@
 }
 
 /* ============================================================
+   EXPRESSION LAYER  (orthogonal to theme; product vs marketing)
+   ------------------------------------------------------------
+   Theme carries color + type IDENTITY. Expression carries RHYTHM:
+   section spacing, hero display scale, entry-motion pace. Compose
+   both on the root (or any ancestor):
+
+     <body data-theme="revenant-dark" data-expression="marketing">
+
+   These are inherited custom properties (NOT compound selectors),
+   so data-theme and data-expression may sit on DIFFERENT elements
+   and still resolve — e.g. data-theme on <body>, data-expression
+   set by <deck-stage> deeper in the tree. Surfaces consume them:
+
+     section { padding: var(--sp-section-y) 0; }
+     h1      { font-size: calc(clamp(36px,4.4vw,58px) * var(--display-scale)); }
+     .reveal { transition-duration: var(--motion-entry); }
+
+   --display-scale is a multiplier so each brand's display sizes
+   grow proportionally in marketing without per-theme overrides;
+   Revenant stays restrained because its base sizes are smaller.
+
+   Product is the default (declared on every themed root). Marketing
+   and an explicit product block follow in source order so they win
+   at equal specificity. Motion reuses the existing --dur-* tokens,
+   so prefers-reduced-motion collapses these to instant for free. */
+[data-theme] {
+  --sp-section-y: 72px;
+  --sp-stack-xl: 64px;
+  --display-scale: 1;
+  --motion-entry: var(--dur-quick);     /* 220ms */
+}
+[data-expression="marketing"] {
+  --sp-section-y: 140px;
+  --sp-stack-xl: 96px;
+  --display-scale: 1.18;
+  --motion-entry: var(--dur-slow);      /* 600ms — generous editorial reveals */
+}
+[data-expression="product"] {
+  --sp-section-y: 56px;
+  --sp-stack-xl: 56px;
+  --display-scale: 1;
+  --motion-entry: var(--dur-quick);
+}
+
+/* ============================================================
    DATA-VISUALIZATION TOKENS  (system-wide, theme-aware)
    ------------------------------------------------------------
    The categorical SERIES palette — the layer the semantic tokens
