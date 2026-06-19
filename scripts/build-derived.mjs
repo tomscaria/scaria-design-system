@@ -11,13 +11,17 @@
 // extend this script to tsc-compile src/ → derived/npm/.
 
 import { mkdir, writeFile } from "node:fs/promises";
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
 const OUT = join(ROOT, "derived", "npm");
+
+// Single source of truth — read the version from package.json so changeset
+// bumps propagate to the derived entry stubs instead of drifting.
+const VERSION = JSON.parse(readFileSync(join(ROOT, "package.json"), "utf8")).version;
 
 async function ensureDir(d) {
   await mkdir(d, { recursive: true });
@@ -37,7 +41,7 @@ async function main() {
 // The kit's primary surface is CSS + preset + raw atomic files.
 // React components live behind subpath imports as they land.
 
-export const version = "0.2.0";
+export const version = "${VERSION}";
 export const themes = [
   "lore-light",
   "lore-dark",
@@ -57,7 +61,7 @@ export const brands = ["lore", "revenant"];
     `// @tomscaria/lore-design-system — CJS entry
 "use strict";
 module.exports = {
-  version: "0.2.0",
+  version: "${VERSION}",
   themes: [
     "lore-light",
     "lore-dark",
@@ -97,6 +101,10 @@ export declare const brands: readonly ("lore" | "revenant")[];
     "agent/visual/fonts/fonts.css",
     "agent/visual/dataviz/dataviz.css",
     "agent/visual/patterns/patterns.css",
+    "agent/visual/patterns/orbfield.css",
+    "agent/visual/patterns/orbfield.js",
+    "agent/visual/botw/botw-flair.css",
+    "agent/visual/glyphs/ledger-glyphs.svg",
     "agent/visual/motion/motion.css",
     "agent/visual/motion/motion.json",
     "magic_trick.md",

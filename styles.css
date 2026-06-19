@@ -34,3 +34,11 @@
 
 /* Reusable operational UI patterns (stat panel, status grid, reveal, orbit). */
 @import "./agent/visual/patterns/patterns.css";
+
+/* OrbField — the opaque-coins hover-reveal (pairs with patterns/orbfield.js).
+   Universal interaction; theme-agnostic. Mount via the JS, style re-skins by token. */
+@import "./agent/visual/patterns/orbfield.css";
+
+/* NOTE: the BoTW flair overlay (agent/visual/botw/botw-flair.css) is intentionally
+   NOT imported here — it is Lore-only marketing flair. Opt in per-project with
+   `@import '@tomscaria/lore-design-system/botw'` + data-flair="botw". */
