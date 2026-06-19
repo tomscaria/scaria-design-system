@@ -36,7 +36,7 @@ body[data-theme="revenant-light"] #net{display:none}
 /* HERO */
 .hero{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,.94fr);gap:54px;align-items:center;
   min-height:calc(100vh - 57px - 56px)}
-h1.display{font-weight:700;font-size:clamp(36px,4.4vw,58px);line-height:1.05;letter-spacing:-.02em;
+h1.display{font-weight:700;font-size:calc(clamp(36px,4.4vw,58px) * var(--display-scale,1));line-height:1.05;letter-spacing:-.02em;
   margin:26px 0 28px;max-width:15ch;color:var(--fg)}
 .lede{font-family:var(--font-data);font-size:14.5px;line-height:1.7;color:var(--fg-3);max-width:46ch;margin:0 0 26px}
 .tags{margin:0 0 38px}
@@ -55,7 +55,7 @@ h1.display{font-weight:700;font-size:clamp(36px,4.4vw,58px);line-height:1.05;let
 .decision .figs .sep{color:var(--fg-muted)}
 
 /* SECTION SCAFFOLD */
-.mkt-band,.mkt-feature,.mkt-quote{position:relative;z-index:3;padding:72px 0;border-top:1px solid var(--line)}
+.mkt-band,.mkt-feature,.mkt-quote{position:relative;z-index:3;padding:var(--sp-section-y,72px) 0;border-top:1px solid var(--line)}
 .band-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:34px}
 .band-head .kicker{font-size:11px}
 .band-head .band-sub{font-family:var(--font-data);font-size:11px;letter-spacing:.04em;color:var(--fg-muted);text-transform:uppercase}
@@ -104,7 +104,7 @@ h1.display{font-weight:700;font-size:clamp(36px,4.4vw,58px);line-height:1.05;let
   .mkt-feature{grid-template-columns:1fr}.hero-stats{grid-template-columns:1fr 1fr}}
 </style></head>
 
-<body data-theme="revenant-dark">
+<body data-theme="revenant-dark" data-expression="marketing">
 
 <canvas id="net"></canvas>
 <div class="field-grid"></div>

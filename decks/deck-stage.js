@@ -293,6 +293,16 @@
     }
 
     connectedCallback() {
+      // Decks are marketing surfaces by default — opt the design-system token
+      // cascade into the marketing expression (larger hero display, generous
+      // section rhythm, slower reveals) unless an expression is already set on
+      // this element or an ancestor. Override per-deck with the `expression`
+      // attribute: expression="product" for a denser register, or expression=""
+      // to opt out entirely.
+      if (!this.hasAttribute('data-expression') && !this.closest('[data-expression]')) {
+        const expr = this.getAttribute('expression') ?? 'marketing';
+        if (expr) this.setAttribute('data-expression', expr);
+      }
       this._render();
       this._loadNotes();
       this._syncPrintPageRule();

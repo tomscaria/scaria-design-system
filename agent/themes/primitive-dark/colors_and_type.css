@@ -1,12 +1,16 @@
 /* ============================================================
-   Primitive Dark — STUB.
-   Inversion of primitive. Brand-neutral, Inter-based dark theme.
-   Defer values until primitive is widely used.
+   Primitive Dark — brand-neutral, Inter-based dark theme.
+   Inversion of primitive. Use to demonstrate raw primitives on
+   a dark surface without brand pollution.
+
+   Sibling selector to [data-theme="primitive"] — it does NOT
+   inherit primitive's tokens, so the full set (type / motion /
+   spacing / radii / shadow) is declared explicitly below,
+   mirroring primitive with dark-appropriate surfaces + shadows.
    ============================================================ */
 
 [data-theme="primitive-dark"] {
-  /* Inherits the primitive type scale + spacing + motion;
-     overrides surface + foreground only. Author the rest when needed. */
+  /* ---------- COLOR ---------- */
   --bg: hsl(0 0% 4%);
   --bg-2: hsl(0 0% 7%);
   --bg-3: hsl(0 0% 10%);
@@ -33,6 +37,55 @@
   --accent-soft: hsl(0 0% 12%);
   --accent-fg: hsl(0 0% 4%);
 
-  /* TODO: type scale + motion + spacing + radii + shadow.
-     Pattern from primitive applies; copy when ready. */
+  --success: hsl(150 45% 55%);
+  --info:    hsl(210 50% 62%);
+  --warn:    hsl(30 80% 60%);
+  --danger:  hsl(0 75% 65%);
+
+  /* ---------- TYPE (Inter-based, mirrors primitive) ---------- */
+  --fs-display-xl: 80px;   --lh-display-xl: 0.96;  --tracking-display-xl: -0.03em;
+  --fs-display-lg: 60px;   --lh-display-lg: 1.0;   --tracking-display-lg: -0.025em;
+  --fs-display-md: 44px;   --lh-display-md: 1.05;  --tracking-display-md: -0.02em;
+  --fs-display-sm: 32px;   --lh-display-sm: 1.1;   --tracking-display-sm: -0.015em;
+
+  --fs-header-xl: 28px;    --lh-header-xl: 1.15;   --tracking-header-xl: -0.01em;
+  --fs-header-lg: 22px;    --lh-header-lg: 1.2;    --tracking-header-lg: -0.005em;
+  --fs-header-md: 18px;    --lh-header-md: 1.25;   --tracking-header-md: 0;
+  --fs-header-sm: 16px;    --lh-header-sm: 1.3;    --tracking-header-sm: 0;
+  --fs-header-caps: 11px;  --lh-header-caps: 1;    --tracking-header-caps: 0.08em;
+
+  --fs-body-lg: 17px;      --lh-body-lg: 1.55;
+  --fs-body-md: 15px;      --lh-body-md: 1.55;
+  --fs-body-sm: 13px;      --lh-body-sm: 1.5;
+  --fs-body-xs: 11px;      --lh-body-xs: 1.45;
+
+  --fw-regular: 400;  --fw-medium: 500;  --fw-bold: 700;
+
+  /* ---------- FONT FAMILY (Inter, no display serif) ---------- */
+  --font-sans: "Inter", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-display: "Inter", ui-sans-serif, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Monaco, "Courier New", monospace;
+
+  /* ---------- MOTION (snappy, no flourish — mirrors primitive) ---------- */
+  --motion-duration-micro: 120ms;
+  --motion-duration-entry: 300ms;
+  --motion-duration-scene: 500ms;
+  --motion-ease-interaction: cubic-bezier(0.4, 0, 0.2, 1);
+  --motion-ease-reveal:      cubic-bezier(0.4, 0, 0.2, 1);
+  --motion-ease-ambient:     ease-in-out;
+
+  /* ---------- SPACING (mirrors primitive) ---------- */
+  --sp-section-y: 72px;  --sp-section-x: 32px;
+  --sp-stack-xs: 4px;  --sp-stack-sm: 8px;  --sp-stack-md: 16px;  --sp-stack-lg: 32px;  --sp-stack-xl: 56px;
+  --sp-inline-xs: 4px; --sp-inline-sm: 8px; --sp-inline-md: 16px; --sp-inline-lg: 24px;
+
+  /* ---------- RADII (tighter than Lore — mirrors primitive) ---------- */
+  --r-xs: 4px;  --r-sm: 6px;  --r-md: 8px;  --r-lg: 10px;  --r-xl: 14px;  --r-pill: 999rem;
+
+  /* ---------- SHADOW (honest blacks on dark surface) ---------- */
+  --shadow-xs: 0 1px 2px rgba(0,0,0,.5);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.6);
+  --shadow-md: 0 4px 12px rgba(0,0,0,.55);
+  --shadow-lg: 0 12px 32px rgba(0,0,0,.6);
+  --shadow-xl: 0 24px 60px rgba(0,0,0,.65);
 }
