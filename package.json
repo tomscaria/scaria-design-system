@@ -40,6 +40,7 @@
     "./themes/revenant-dark": "./agent/themes/revenant-dark/colors_and_type.css",
     "./themes/kiosk": "./agent/themes/kiosk/colors_and_type.css",
     "./dataviz": "./agent/visual/dataviz/dataviz.css",
+    "./patterns": "./agent/visual/patterns/patterns.css",
     "./motion": "./agent/visual/motion/motion.css",
     "./motion.json": "./agent/visual/motion/motion.json",
     "./agent/*": "./agent/*",

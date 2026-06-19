@@ -96,6 +96,7 @@ export declare const brands: readonly ("lore" | "revenant")[];
     "agent/themes/kiosk/colors_and_type.css",
     "agent/visual/fonts/fonts.css",
     "agent/visual/dataviz/dataviz.css",
+    "agent/visual/patterns/patterns.css",
     "agent/visual/motion/motion.css",
     "agent/visual/motion/motion.json",
     "magic_trick.md",

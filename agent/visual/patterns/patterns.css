@@ -1,0 +1,112 @@
+/* ============================================================
+   patterns.css — reusable "operational" UI patterns
+   ------------------------------------------------------------
+   Extracted from the Revenant landing so any theme (and any deck)
+   gets the same pieces, re-skinned via tokens. Everything resolves
+   from theme vars (--bg, --fg, --accent, --line, --success, the
+   mono font, the reveal easing) so a single markup block looks
+   correct under [data-theme="lore-light"], "revenant-dark", etc.
+
+   Pairs with ./css/dataviz (charts) and ./css/motion (primitives).
+   Load AFTER the theme. Token fallbacks keep it standalone too.
+
+   Contract: prefer the kit token names; fall back to the landing's
+   short names, then a literal — so it works in either context.
+   ============================================================ */
+
+:where(.stat-panel, .status-grid, .reveal, .live-dot) {
+  --_mono: var(--font-mono, var(--fm, ui-monospace, monospace));
+  --_ease: var(--motion-ease-reveal, var(--ease, cubic-bezier(.4, 0, .15, 1)));
+  --_live: var(--success, hsl(140 55% 46%));
+}
+
+/* ── SCROLL REVEAL ──
+   <div class="reveal"> … add class "in" when it enters the viewport.
+   Recipe (vanilla):
+     const io = new IntersectionObserver(es => es.forEach(e =>
+       e.isIntersecting && e.target.classList.add('in')), {threshold:.15});
+     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+   Respects prefers-reduced-motion. */
+.reveal { opacity: 0; transform: translateY(16px);
+  transition: opacity .38s var(--motion-ease-reveal, cubic-bezier(.4,0,.15,1)),
+              transform .38s var(--motion-ease-reveal, cubic-bezier(.4,0,.15,1)); }
+.reveal.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
+
+/* ── LIVE DOT ── a pulsing status indicator. <span class="live-dot"></span> */
+.live-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+  background: var(--success, hsl(140 55% 46%));
+  animation: kit-pulse 2s ease-in-out infinite; }
+.live-dot.ping { animation: kit-ping 2.8s ease-in-out infinite; }
+@keyframes kit-pulse { 0%,100% { opacity: 1 } 50% { opacity: .28 } }
+@keyframes kit-ping {
+  0%,100% { box-shadow: 0 0 0 0 var(--success, hsl(140 55% 46%)); }
+  60%     { box-shadow: 0 0 0 4px transparent; }
+}
+@media (prefers-reduced-motion: reduce) { .live-dot { animation: none } }
+
+/* ── STAT PANEL ──
+   A bordered live readout: header (kicker + live dot) + key/value rows.
+   <div class="stat-panel">
+     <div class="stat-panel-head">SYSTEM STATUS · LIVE <span class="live-dot"></span></div>
+     <div class="stat-row"><span class="stat-k">Population</span><span class="stat-v">847</span></div>
+     …
+   </div>
+   Position it yourself (it's layout-neutral — no absolute pin). */
+.stat-panel { border: 1px solid var(--line); background: var(--bg-2, var(--bg));
+  font-family: var(--font-mono, var(--fm, ui-monospace, monospace)); min-width: 220px; }
+.stat-panel-head { padding: 9px 14px; border-bottom: 1px solid var(--line);
+  font-size: 9px; text-transform: uppercase; letter-spacing: .13em; color: var(--fg-3);
+  display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.stat-row { display: flex; justify-content: space-between; align-items: center;
+  gap: 16px; padding: 8px 14px; border-bottom: 1px solid var(--line-2, var(--line)); font-size: 10px; }
+.stat-row:last-child { border-bottom: none; }
+.stat-k { color: var(--fg-3); text-transform: uppercase; letter-spacing: .09em; white-space: nowrap; }
+.stat-v { color: var(--fg); font-weight: 700; letter-spacing: .04em;
+  font-variant-numeric: tabular-nums; }
+.stat-v.ok { color: var(--success, hsl(140 55% 40%)); }
+
+/* ── STATUS GRID ── a 2-up grid of labelled statuses with optional OK dot.
+   <div class="status-grid">
+     <div class="status-cell"><div class="status-label">Mode</div>
+       <div class="status-val ok"><span class="live-dot ping"></span>All weather</div></div>
+   </div>  Set --cols to change columns. */
+.status-grid { display: grid; grid-template-columns: repeat(var(--cols, 2), 1fr);
+  border-top: 1px solid var(--line); }
+.status-cell { padding: 18px 24px;
+  border-right: 1px solid var(--line-2, var(--line));
+  border-bottom: 1px solid var(--line-2, var(--line)); min-width: 0; }
+.status-cell:nth-child(var(--cols, 2)n) { border-right: none; }
+.status-label { font-family: var(--font-mono, var(--fm, monospace)); font-size: 9px;
+  letter-spacing: .13em; text-transform: uppercase; color: var(--fg-3); margin-bottom: 5px; }
+.status-val { font-family: var(--font-mono, var(--fm, monospace)); font-size: 11px;
+  font-weight: 700; letter-spacing: .09em; color: var(--fg);
+  display: flex; align-items: center; gap: 7px; }
+.status-val.ok { color: var(--success, hsl(140 55% 40%)); }
+
+/* ── ORBIT (lifecycle diagram) ──
+   The signature BIRTH→CANARY→APEX→REVENANT orbital is GEOMETRY-driven
+   (N nodes placed on a circle), so the node positions live in markup /
+   are computed by the React <Orbit> component in the port. These classes
+   style the pieces; the component supplies the SVG <circle>/<text> coords.
+     .orbit        — the relative square stage
+     .orbit-ring   — the dashed circle
+     .orbit-node   — a node marker (add .active for the lit one)
+     .orbit-label  — a node's text label
+     .orbit-field  — the rotating field-text on the ring
+     .orbit-core   — the centered "THE APPARATUS" hub
+*/
+.orbit { position: relative; aspect-ratio: 1; width: 100%; }
+.orbit-ring { fill: none; stroke: var(--line); stroke-width: 1; stroke-dasharray: 2 6; }
+.orbit-node { fill: var(--bg); stroke: var(--fg-3); stroke-width: 1.5; }
+.orbit-node.active { stroke: var(--accent); fill: var(--accent);
+  animation: kit-orbit-pulse 2.6s ease-in-out infinite; }
+.orbit-label { font-family: var(--font-mono, var(--fm, monospace)); font-size: 11px;
+  font-weight: 700; letter-spacing: .12em; text-transform: uppercase; fill: var(--fg-2); }
+.orbit-field { font-family: var(--font-mono, var(--fm, monospace)); font-size: 9px;
+  letter-spacing: .18em; text-transform: uppercase; fill: var(--accent); opacity: .5; }
+.orbit-core { fill: none; stroke: var(--line); stroke-width: 1; }
+@keyframes kit-orbit-pulse { 0%,100% { opacity: .9 } 50% { opacity: .5 } }
+@media (prefers-reduced-motion: reduce) { .orbit-node.active { animation: none } }
