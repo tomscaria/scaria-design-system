@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en" data-theme="lore-light" data-expression="marketing" data-flair="botw">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Lore · The Long Ledger — BoTW marketing variation</title>
+
+<!-- 1) theme tokens  2) BoTW flair overlay  3) OrbField  4) shared patterns -->
+<link rel="stylesheet" href="../tokens/colors_and_type.css"/>
+<link rel="stylesheet" href="../agent/visual/botw/botw-flair.css"/>
+<link rel="stylesheet" href="../agent/visual/patterns/orbfield.css"/>
+<link rel="stylesheet" href="../agent/visual/patterns/patterns.css"/>
+
+<style>
+  /* ============================================================
+     lore-botw-landing — page composition only.
+     All identity (color/type/motion/flair) comes from the kit:
+     theme tokens + botw-flair.css + orbfield.css + patterns.css.
+     This file just lays out a calm→golden-hour marketing page.
+     ============================================================ */
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--bg);
+    color:var(--fg);
+    font-family:var(--font-sans);
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+    overflow-x:hidden;
+  }
+  a{color:inherit}
+
+  /* ── top HUD status bar (Aeonik mono, rune-slate readout) ── */
+  .lb-status{
+    position:sticky;top:0;z-index:30;
+    display:flex;align-items:center;gap:26px;
+    height:38px;padding:0 24px;
+    background:var(--fg);color:var(--bg);
+    font-family:var(--font-mono);font-size:11px;letter-spacing:.10em;text-transform:uppercase;
+    overflow:hidden;
+  }
+  .lb-status .mark{font-weight:700;letter-spacing:.22em}
+  .lb-status .it{opacity:.62;white-space:nowrap}
+  .lb-status .it b{opacity:1;font-weight:600}
+  .lb-status .gh{margin-left:auto;display:inline-flex;align-items:center;gap:8px;opacity:.9}
+  .lb-status .gh .live-dot{--dot:var(--botw-dusk)}
+
+  /* ── hero ── calm, generous, dawn-washed, with one warm pool of light ── */
+  .lb-hero{
+    position:relative;
+    display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:56px;
+    max-width:1240px;margin:0 auto;padding:88px 48px 96px;
+    min-height:calc(100vh - 38px);
+  }
+  /* dawn wash from the kit flair token, laid over the theme bg */
+  .lb-hero::before{content:"";position:absolute;inset:0;background:var(--bg-dawn);pointer-events:none;z-index:0}
+  .lb-hero > *{position:relative;z-index:1}
+
+  .lb-eyebrow{
+    display:inline-flex;align-items:center;gap:11px;
+    font-family:var(--font-mono);font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--fg-3);margin:0 0 26px;
+  }
+  .lb-h1{
+    font-family:var(--font-display);font-weight:600;
+    font-size:clamp(52px,7.4vw,104px);line-height:.92;letter-spacing:-.035em;margin:0;
+    color:var(--fg);
+  }
+  .lb-h1 em{font-style:normal;color:var(--accent)}
+  .lb-desc{
+    font-size:18px;line-height:1.5;color:var(--fg-2);max-width:430px;margin:30px 0 0;
+  }
+  .lb-desc strong{color:var(--fg);font-weight:500}
+
+  .lb-cta{display:flex;align-items:center;gap:22px;margin-top:38px}
+  /* primary button = kit .activate (cool→amber→lime). We add only sizing/type. */
+  .lb-btn{
+    appearance:none;cursor:pointer;
+    padding:13px 26px;background:var(--bg-2);
+    font-family:var(--font-mono);font-size:12px;font-weight:600;letter-spacing:.10em;text-transform:uppercase;color:var(--fg);
+  }
+  .lb-btn-ghost{
+    background:none;border:none;cursor:pointer;
+    font-family:var(--font-mono);font-size:12px;font-weight:500;letter-spacing:.10em;text-transform:uppercase;color:var(--fg-3);
+  }
+  .lb-btn-ghost:hover{color:var(--fg)}
+  .lb-btn-ghost::after{content:" →"}
+
+  /* mini HUD readout under the CTAs */
+  .lb-readout{
+    display:flex;gap:22px;margin-top:40px;
+    font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--fg-3);
+  }
+  .lb-readout b{color:var(--fg);font-weight:600}
+
+  /* ── hero figure: the OrbField (far/dim) with the live card (near/sharp) ── */
+  .lb-figure{position:relative;min-height:480px;display:grid;place-items:center}
+  .lb-orbs{position:absolute;inset:-10% -6%;z-index:0}
+  /* orbs render as opaque "coin" chips: a faint disc at rest that wakes to lime on hover
+     (line-art glyphs need a chip to read as coins the way Uniswap's filled logos do) */
+  .lb-orbs a.orb,.lb-explore-field a.orb{
+    --orb-rest:.58;background:var(--bg-2);border:1px solid var(--line);
+    border-radius:50%;box-shadow:var(--shadow-xs)}
+  /* inset the glyph within the coin via svg size (NOT padding — % padding resolves
+     against the container width and would balloon each orb) */
+  .lb-orbs a.orb svg,.lb-explore-field a.orb svg{width:56%;height:56%}
+  /* hovering the figure (card overlays the centre) OR the field wakes the whole constellation */
+  .lb-figure:hover .lb-orbs a.orb,.lb-figure:focus-within .lb-orbs a.orb,
+  .lb-explore-field:hover a.orb,.lb-explore-field:focus-within a.orb{
+    opacity:1;filter:blur(0) saturate(1);color:var(--accent);
+    background:color-mix(in srgb,var(--accent) 13%,var(--bg-2));border-color:var(--accent)}
+  .lb-orbs a.orb:hover,.lb-explore-field a.orb:hover{
+    background:color-mix(in srgb,var(--accent) 26%,var(--bg-2));border-color:var(--accent);box-shadow:var(--shadow-goldenhour)}
+
+  /* explore: the prominent OrbField showcase (the favorite — opaque coins, hover to explore) */
+  .lb-explore{position:relative;max-width:1180px;margin:0 auto;padding:104px 48px 88px;text-align:center}
+  .lb-explore h3{font-family:var(--font-display);font-weight:600;font-size:clamp(30px,3.8vw,54px);line-height:1;letter-spacing:-.025em;margin:0;color:var(--fg)}
+  .lb-explore h3 em{font-style:normal;color:var(--accent)}
+  .lb-explore .sub{margin:16px 0 0;font-family:var(--font-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-3)}
+  .lb-explore-field{position:relative;height:430px;margin-top:24px}
+  .lb-explore-field a.orb{--orb-rest:.82}
+
+  .lb-card-frame{position:relative;z-index:2;width:320px;padding:14px;background:var(--bg-2);box-shadow:var(--shadow-goldenhour)}
+  .lb-figure-cap{
+    position:absolute;left:0;right:0;bottom:-6px;text-align:center;z-index:2;
+    font-family:var(--font-mono);font-size:10.5px;letter-spacing:.10em;text-transform:uppercase;color:var(--fg-3);
+  }
+
+  /* the real Lore balance card (lifted from preview/card-balance.html) */
+  .bal-card{background:var(--bg);border:1px solid var(--line);border-radius:var(--r-md);padding:20px;color:var(--fg)}
+  .bal-card .eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--fg-3);margin-bottom:10px;font-family:var(--font-mono)}
+  .bal-card .big{font-family:var(--font-display);font-size:38px;line-height:1;letter-spacing:-.01em;font-weight:500;font-variant-numeric:tabular-nums slashed-zero}
+  .bal-card .row{display:flex;justify-content:space-between;align-items:baseline;margin-top:12px}
+  .bal-card .delta{color:var(--success);font-family:var(--font-mono);font-size:13px;font-variant-numeric:tabular-nums slashed-zero}
+  .bal-card .sub{font-size:13px;color:var(--fg-3);font-family:var(--font-mono)}
+  .bal-card .spark{height:46px;margin-top:16px;display:block;color:var(--accent)}
+  .bal-card .spark path{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;opacity:.9}
+
+  /* ── crescendo: the one full-bleed golden-hour epic beat ── */
+  .lb-crescendo{
+    position:relative;text-align:center;
+    padding:140px 32px;background:var(--bg-2);
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  }
+  .lb-crescendo .glyph-row{display:flex;justify-content:center;gap:26px;margin:0 0 34px;color:var(--accent)}
+  .lb-crescendo .glyph-row svg{width:34px;height:34px}
+  .lb-crescendo h2{
+    font-family:var(--font-display);font-weight:600;
+    font-size:clamp(40px,5.6vw,80px);line-height:.98;letter-spacing:-.03em;margin:0 auto;max-width:14ch;color:var(--fg);
+  }
+  .lb-crescendo h2 em{font-style:normal;color:var(--accent)}
+  .lb-crescendo p{margin:26px auto 0;max-width:46ch;color:var(--fg-2);font-size:17px;line-height:1.5}
+
+  /* ── footer with survey texture ── */
+  .lb-foot{padding:46px 48px;background:var(--bg);border-top:1px solid var(--line)}
+  .lb-foot > div{position:relative;z-index:1;display:flex;justify-content:space-between;align-items:center;gap:20px;max-width:1240px;margin:0 auto;
+    font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--fg-3)}
+  .lb-foot .mark{font-weight:700;letter-spacing:.22em;color:var(--fg)}
+
+  /* scroll-reveal (kit .reveal) — only below the fold; hero is always visible */
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s var(--motion-ease-reveal,ease),transform .7s var(--motion-ease-reveal,ease)}
+  .reveal.in{opacity:1;transform:none}
+
+  /* theme toggle (demo only — proves the skin re-themes light/dark) */
+  .lb-toggle{position:fixed;right:16px;bottom:16px;z-index:40;
+    font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+    padding:9px 14px;cursor:pointer;color:var(--fg)}
+
+  @media (max-width:860px){
+    .lb-hero{grid-template-columns:1fr;padding:56px 24px 64px;gap:40px}
+    .lb-figure{min-height:380px}
+    .lb-status{gap:16px}
+    .lb-status .it:nth-child(n+4){display:none}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .reveal{opacity:1;transform:none;transition:none}
+  }
+</style>
+</head>
+
+<body>
+
+<!-- ── inline ledger-glyph sprite (so <use href="#lg-0X"> resolves with zero fetch) ── -->
+<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="display:none" aria-hidden="true">
+<symbol id="lg-01" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="square" stroke-linejoin="miter"><path d="M30 20 V80 M50 20 V80 M70 20 V80 M20 50 H80"/><circle cx="50" cy="50" r="4.5" fill="currentColor" stroke="none"/></symbol>
+<symbol id="lg-02" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="square" stroke-linejoin="miter"><path d="M50 10 V60 M30 60 H70"/><circle cx="50" cy="80" r="6" fill="currentColor" stroke="none"/></symbol>
+<symbol id="lg-03" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="square" stroke-linejoin="miter"><path d="M20 40 V20 H40 M80 60 V80 H60"/><circle cx="50" cy="50" r="5" fill="currentColor" stroke="none"/></symbol>
+<symbol id="lg-04" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="square" stroke-linejoin="miter"><path d="M50 20 V80 M20 50 H80"/><circle cx="50" cy="10" r="4" fill="currentColor" stroke="none"/><circle cx="50" cy="90" r="4" fill="currentColor" stroke="none"/><circle cx="10" cy="50" r="4" fill="currentColor" stroke="none"/><circle cx="90" cy="50" r="4" fill="currentColor" stroke="none"/></symbol>
+<symbol id="lg-05" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="square" stroke-linejoin="miter"><path d="M20 50 H80 M30 80 L70 20"/><circle cx="70" cy="20" r="5" fill="currentColor" stroke="none"/></symbol>
+<symbol id="lg-06" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="square" stroke-linejoin="miter"><path d="M30 30 L70 30 L50 80 Z"/><circle cx="30" cy="30" r="6" fill="currentColor" stroke="none"/><circle cx="70" cy="30" r="6" fill="currentColor" stroke="none"/><circle cx="50" cy="80" r="6" fill="currentColor" stroke="none"/></symbol>
+<symbol id="lg-07" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="square" stroke-linejoin="miter"><path d="M30 20 V80 M30 30 H70 M30 50 H60 M30 70 H50"/><circle cx="70" cy="30" r="4" fill="currentColor" stroke="none"/></symbol>
+<symbol id="lg-08" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="square" stroke-linejoin="miter"><path d="M20 30 L50 60 L80 30 M20 50 L50 80 L80 50"/></symbol>
+<symbol id="lg-09" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="square" stroke-linejoin="miter"><path d="M30 30 V80 M70 30 V80 M30 30 H70 M50 30 V50"/><circle cx="50" cy="60" r="5" fill="currentColor" stroke="none"/></symbol>
+<symbol id="lg-10" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="square" stroke-linejoin="miter"><path d="M50 20 L80 50 L50 80 L20 50 Z M20 50 H80"/><circle cx="50" cy="50" r="4" fill="currentColor" stroke="none"/></symbol>
+<symbol id="lg-11" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="square" stroke-linejoin="miter"><path d="M50 80 V50 M50 50 L20 20 M50 50 L80 20"/><circle cx="20" cy="20" r="6" fill="currentColor" stroke="none"/><circle cx="80" cy="20" r="6" fill="currentColor" stroke="none"/></symbol>
+<symbol id="lg-12" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="square" stroke-linejoin="miter"><path d="M20 40 V20 H40 M60 20 H80 V40 M80 60 V80 H60 M40 80 H20 V60"/><circle cx="50" cy="50" r="7" fill="currentColor" stroke="none"/></symbol>
+</svg>
+
+<!-- ── HUD status bar ── -->
+<header class="lb-status">
+  <span class="mark">LORE</span>
+  <span class="it">LEDGER <b>LIVE</b></span>
+  <span class="it">FIELD <b>CALM</b></span>
+  <span class="it">HORIZON <b>40Y</b></span>
+  <span class="it">DISCIPLINE <b>NOMINAL</b></span>
+  <span class="gh"><span class="live-dot"></span> GOLDEN HOUR</span>
+</header>
+
+<!-- ── hero ── -->
+<section class="lb-hero goldenhour">
+  <div class="lb-hero-copy">
+    <p class="lb-eyebrow"><span class="live-dot"></span> The Long Ledger · A Lore variation /</p>
+    <h1 class="lb-h1">Every ledger<br>tells a <em>legend.</em></h1>
+    <p class="lb-desc">Lore turns the long, patient story of your money into something you can
+      <strong>read at a glance</strong> — and trust for decades, not days.</p>
+    <div class="lb-cta">
+      <button class="lb-btn activate" id="lb-open">Open your ledger</button>
+      <button class="lb-btn-ghost">See the long view</button>
+    </div>
+    <div class="lb-readout">
+      <span>HORIZON <b>40y</b></span>
+      <span>SIGNAL <b>99.7%</b></span>
+      <span>DRIFT <b>none</b></span>
+    </div>
+  </div>
+
+  <div class="lb-figure">
+    <!-- OrbField: dim ledger-glyph constellation; wakes on hover, each mark leads somewhere -->
+    <div class="orbfield lb-orbs" aria-label="Explore the ledger"></div>
+    <!-- live Lore card, staged in a beveled shrine-plate (cut-frame) -->
+    <div class="lb-card-frame cut-frame">
+      <div class="bal-card">
+        <div class="eyebrow">Total balance</div>
+        <div class="big">$128,400.22</div>
+        <div class="row"><div class="delta">+$14,210 · +12.4%</div><div class="sub">10y</div></div>
+        <svg class="spark" viewBox="0 0 240 46" preserveAspectRatio="none"><path d="M0 40 Q26 38 40 32 T84 26 Q120 22 150 16 T200 9 Q220 7 240 4"/></svg>
+      </div>
+    </div>
+    <div class="lb-figure-cap">Hover the field — every mark leads somewhere</div>
+  </div>
+</section>
+
+<!-- ── explore: the OrbField showcase (opaque coins, hover to wake, each leads somewhere) ── -->
+<section class="lb-explore reveal">
+  <h3>Every market<br>has a <em>mark.</em></h3>
+  <p class="sub">Hover the field — each coin wakes, and leads somewhere</p>
+  <div class="orbfield lb-explore-field" id="explore-field" aria-label="Explore markets"></div>
+</section>
+
+<!-- ── the one crescendo: full-bleed golden-hour epic beat ── -->
+<section class="lb-crescendo goldenhour reveal">
+  <div style="position:relative;z-index:1">
+    <div class="glyph-row">
+      <svg viewBox="0 0 100 100"><use href="#lg-06"/></svg>
+      <svg viewBox="0 0 100 100"><use href="#lg-10"/></svg>
+      <svg viewBox="0 0 100 100"><use href="#lg-12"/></svg>
+    </div>
+    <h2>The long game <em>always wins.</em></h2>
+    <p>No alerts to chase. No noise to outrun. Just a clear horizon and a ledger that
+      compounds while you live your life.</p>
+  </div>
+</section>
+
+<!-- ── footer ── -->
+<footer class="lb-foot topo-underlay">
+  <div>
+    <span class="mark">LORE</span>
+    <span>BoTW marketing variation · lore-light · data-flair=botw</span>
+    <span>© Scaria Holdings</span>
+  </div>
+</footer>
+
+<button class="lb-toggle activate" id="lb-theme">◐ lore-dark</button>
+
+<script type="module">
+  import { mountOrbField } from '../agent/visual/patterns/orbfield.js';
+
+  // OrbField — ledger glyphs (inline sprite → spritePath:''), each orb leads to a real page.
+  const ids   = ['lg-01','lg-02','lg-03','lg-04','lg-05','lg-06','lg-07','lg-08','lg-09','lg-10','lg-11','lg-12'];
+  const dests = ['card-balance.html','charts.html','finance-datatable.html','colors-brand.html',
+                 'type-display.html','components-cards.html','finance-orderbook.html','radii.html'];
+  mountOrbField(document.querySelector('.lb-orbs'), {
+    glyphSet:'ledger', spritePath:'', glyphs:ids, links:dests,
+    count:14, cascade:340, blurRange:[0,6], sizeRange:[30,54], seed:1337,
+  });
+  // the prominent showcase field — larger coins, more of them
+  mountOrbField(document.getElementById('explore-field'), {
+    glyphSet:'ledger', spritePath:'', glyphs:ids, links:dests,
+    count:30, cascade:440, blurRange:[0,5], sizeRange:[42,76], seed:7,
+  });
+
+  // scroll-reveal for below-the-fold sections
+  const io = new IntersectionObserver((es)=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} }),{threshold:.18});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // primary CTA: click "confirms" → blooms to lime (.is-on), proving the activation ramp
+  document.getElementById('lb-open').addEventListener('click', e=>e.currentTarget.classList.toggle('is-on'));
+
+  // theme toggle: prove the BoTW skin re-themes across light/dark
+  const root = document.documentElement, tog = document.getElementById('lb-theme');
+  tog.addEventListener('click', ()=>{
+    const dark = root.getAttribute('data-theme')==='lore-dark';
+    root.setAttribute('data-theme', dark?'lore-light':'lore-dark');
+    tog.textContent = dark?'◐ lore-dark':'◑ lore-light';
+  });
+</script>
+</body>
+</html>

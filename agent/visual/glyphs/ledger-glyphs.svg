@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="display:none" aria-hidden="true">
+<!--
+     ledger-glyphs.svg : "ancient ledger alphabet" for Lore
+
+     12 original "ledger-glyph" marks (lg-01 .. lg-12). An invented
+     surveyor / ledger / constellation notation: tally bars, plumb
+     lines, node-and-stroke, cross-marks, corner-brackets. Evokes
+     engraved rune-slate UI WITHOUT referencing any real-world
+     glyph system, alphabet, or game iconography.
+
+     Construction contract (every symbol obeys this):
+       * viewBox 0 0 100 100
+       * stroke endpoints snap to a 5x5 grid : coordinates are only
+         ever 10/20/30/40/50/60/70/80/90 (cell lines at 0,20,40,60,
+         80,100; midpoints at 10,30,50,70,90 for node centering)
+       * straight strokes plus small filled dots ONLY (no curves)
+       * stroke-width 6, square linecaps and square linejoins
+       * symbols set stroke=currentColor fill=none; dots are circles
+         with fill=currentColor stroke=none
+
+     Color: consumers drive everything via currentColor, so set
+     color:var(KIT-ACCENT-TOKEN) (Lore lime) or any kit token on the
+     host element. Render a single mark with a use reference into one
+     symbol id. Never hardcode a theme color here : currentColor is
+     the seam, and the kit accent token is the intended driver.
+-->
+
+<!-- lg-01 · TALLY-FOUR — four plumb bars, ledger count -->
+<symbol id="lg-01" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="square" stroke-linejoin="miter">
+  <path d="M30 20 V80 M50 20 V80 M70 20 V80 M20 50 H80"/>
+  <circle cx="50" cy="50" r="4.5" fill="currentColor" stroke="none"/>
+</symbol>
+
+<!-- lg-02 · PLUMB-NODE — vertical plumb line dropping to a settled node -->
+<symbol id="lg-02" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="square" stroke-linejoin="miter">
+  <path d="M50 10 V60 M30 60 H70"/>
+  <circle cx="50" cy="80" r="6" fill="currentColor" stroke="none"/>
+</symbol>
+
+<!-- lg-03 · CORNER-BRACKET — surveyor's framing mark, two L-arms + center dot -->
+<symbol id="lg-03" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="square" stroke-linejoin="miter">
+  <path d="M20 40 V20 H40 M80 60 V80 H60"/>
+  <circle cx="50" cy="50" r="5" fill="currentColor" stroke="none"/>
+</symbol>
+
+<!-- lg-04 · CROSS-MARK — registration cross with four boundary dots -->
+<symbol id="lg-04" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="square" stroke-linejoin="miter">
+  <path d="M50 20 V80 M20 50 H80"/>
+  <circle cx="50" cy="10" r="4" fill="currentColor" stroke="none"/>
+  <circle cx="50" cy="90" r="4" fill="currentColor" stroke="none"/>
+  <circle cx="10" cy="50" r="4" fill="currentColor" stroke="none"/>
+  <circle cx="90" cy="50" r="4" fill="currentColor" stroke="none"/>
+</symbol>
+
+<!-- lg-05 · LEDGER-ENTRY — a horizontal rule struck by a diagonal posting mark -->
+<symbol id="lg-05" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="square" stroke-linejoin="miter">
+  <path d="M20 50 H80 M30 80 L70 20"/>
+  <circle cx="70" cy="20" r="5" fill="currentColor" stroke="none"/>
+</symbol>
+
+<!-- lg-06 · CONSTELLATION-TRINE — three nodes wired into an asterism -->
+<symbol id="lg-06" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="square" stroke-linejoin="miter">
+  <path d="M30 30 L70 30 L50 80 Z"/>
+  <circle cx="30" cy="30" r="6" fill="currentColor" stroke="none"/>
+  <circle cx="70" cy="30" r="6" fill="currentColor" stroke="none"/>
+  <circle cx="50" cy="80" r="6" fill="currentColor" stroke="none"/>
+</symbol>
+
+<!-- lg-07 · DEPTH-BARS — stepped survey gauge, three descending rungs on a stem -->
+<symbol id="lg-07" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="square" stroke-linejoin="miter">
+  <path d="M30 20 V80 M30 30 H70 M30 50 H60 M30 70 H50"/>
+  <circle cx="70" cy="30" r="4" fill="currentColor" stroke="none"/>
+</symbol>
+
+<!-- lg-08 · CHEVRON-STACK — two nested down-chevrons, a ledger "carry" mark -->
+<symbol id="lg-08" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="square" stroke-linejoin="miter">
+  <path d="M20 30 L50 60 L80 30 M20 50 L50 80 L80 50"/>
+</symbol>
+
+<!-- lg-09 · GATE — twin uprights bridged by a lintel, node hanging at center -->
+<symbol id="lg-09" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="square" stroke-linejoin="miter">
+  <path d="M30 30 V80 M70 30 V80 M30 30 H70 M50 30 V50"/>
+  <circle cx="50" cy="60" r="5" fill="currentColor" stroke="none"/>
+</symbol>
+
+<!-- lg-10 · DIAMOND-MARK — a surveyor's lozenge with a struck horizon -->
+<symbol id="lg-10" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="square" stroke-linejoin="miter">
+  <path d="M50 20 L80 50 L50 80 L20 50 Z M20 50 H80"/>
+  <circle cx="50" cy="50" r="4" fill="currentColor" stroke="none"/>
+</symbol>
+
+<!-- lg-11 · FORK-LEDGER — a stem branching to two posted nodes (split entry) -->
+<symbol id="lg-11" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="square" stroke-linejoin="miter">
+  <path d="M50 80 V50 M50 50 L20 20 M50 50 L80 20"/>
+  <circle cx="20" cy="20" r="6" fill="currentColor" stroke="none"/>
+  <circle cx="80" cy="20" r="6" fill="currentColor" stroke="none"/>
+</symbol>
+
+<!-- lg-12 · BOUND-FIELD — full corner-bracket frame around a central node -->
+<symbol id="lg-12" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="square" stroke-linejoin="miter">
+  <path d="M20 40 V20 H40 M60 20 H80 V40 M80 60 V80 H60 M40 80 H20 V60"/>
+  <circle cx="50" cy="50" r="7" fill="currentColor" stroke="none"/>
+</symbol>
+
+</svg>
