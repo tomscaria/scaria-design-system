@@ -31,3 +31,6 @@
 
 /* Data-viz + embellishment class layer (+ categorical palette tokens). */
 @import "./agent/visual/dataviz/dataviz.css";
+
+/* Reusable operational UI patterns (stat panel, status grid, reveal, orbit). */
+@import "./agent/visual/patterns/patterns.css";
