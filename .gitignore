@@ -21,3 +21,7 @@ node_modules/
 npm-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+
+# Tooling artifacts (scrape cache, superpowers specs) — not project content
+.firecrawl/
+docs/superpowers/
