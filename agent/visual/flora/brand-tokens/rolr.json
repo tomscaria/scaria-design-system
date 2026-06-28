@@ -1,0 +1,12 @@
+{
+  "brand": "rolr",
+  "label": "ROLR",
+  "_note": "PLACEHOLDER values to prove the variant path. ROLR is a separate brand that shares the Revenant crypto-trader technical register. Re-skinning = these token tweaks only (colour / corner / line / material). Replace with the real ROLR theme when it lands.",
+  "palette": { "accent": "#3BE0C0", "ground": "#0E1412", "ink": "#E8F0EC", "muted": "#6E847C" },
+  "corner": "softly rounded 3px corners",
+  "line": "smooth slightly-rounded linework, round joins",
+  "material": "dark brushed metal with faint emissive circuit traces",
+  "type": "Aeonik display with IBM Plex Mono technical labels",
+  "register": "the same austere technical register as Revenant but darker — an on-chain trading-terminal energy",
+  "style": "linework on a deep near-black ground #0E1412, a single mint-teal #3BE0C0 accent, softly rounded corners and smooth strokes, on-chain trading-terminal aesthetic; no colour except the one teal accent"
+}

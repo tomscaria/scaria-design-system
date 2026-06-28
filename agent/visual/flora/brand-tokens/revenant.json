@@ -1,0 +1,11 @@
+{
+  "brand": "revenant",
+  "label": "REVENANT",
+  "palette": { "accent": "#E05A2B", "ground": "#EDE9E5", "ink": "#111111", "muted": "#6B6358" },
+  "corner": "sharp square 90-degree corners",
+  "line": "precise 1px hairline ink linework, miter joins",
+  "material": "matte anodized aluminium and bare PCB",
+  "type": "Aeonik display with IBM Plex Mono technical labels",
+  "register": "1960s Bell Labs technical manual crossed with a modern Anduril defense schematic — austere, clinical, exact",
+  "style": "monochrome black ink line drawing on warm off-white paper #EDE9E5, a single brick-orange #E05A2B accent only, corner registration crosshairs, datum target triangles, dimension tolerances and an ISO-style title block; no colour anywhere except the one orange accent"
+}

@@ -1,0 +1,3 @@
+# transient pipeline state (project ids) — not committed
+.state.json
+*.tmp
