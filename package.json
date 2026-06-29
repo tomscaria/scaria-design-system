@@ -36,6 +36,9 @@
     "./preset": {
       "default": "./preset.js"
     },
+    "./tailwind": {
+      "default": "./preset.js"
+    },
     "./styles": {
       "default": "./styles.css"
     },
