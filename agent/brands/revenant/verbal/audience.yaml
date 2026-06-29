@@ -1,0 +1,61 @@
+# Revenant audience model
+# Authoritative for messaging, copy, feature scope.
+# Updated by founder; do not infer changes from data.
+
+primary:
+  name: Hobbyist / pro-am quant
+  description: >
+    Someone running systematic strategies on their own capital or a small partnership.
+    Comfortable with Python, statistics, and venue APIs. Either previously inside a fund
+    and now independent, or self-taught with multi-year track record. Active in quant
+    Discords; reads CME notebooks for fun; can read a calibration plot without context.
+  reference_profiles:
+    - handle: "@zostaff"
+      note: "Public sharer of strategy work; respected for showing failure modes"
+    - handle: "@0xMovez"
+      note: "Onchain-native quant; venue-aware execution focus"
+    - handle: "@RohOnChain"
+      note: "Systematic researcher; comfortable with regime modeling vocabulary"
+    - handle: "@de1lymoon"
+      note: "Discord pro-am; high-frequency signal hunter"
+  what_they_already_have:
+    - Coding chops; can write a backtest from scratch
+    - Capital (own or pooled with a few peers); not asking permission to deploy
+    - Strong views on where retail quant infrastructure falls short
+    - A Discord they trust
+  what_they_don't_have:
+    - Production-grade CMA-ES sweep infra at sane cost
+    - A lifecycle framework that survives moving from backtest to paper to live
+    - Honest cross-venue execution tooling
+    - A peer-grade calibration plot pipeline
+  how_they_evaluate_us:
+    - Can they reproduce the plot we showed?
+    - Did we name the optimizer correctly?
+    - Did we account for fees + slippage at their size?
+    - Did we publish a strategy that went to Bench, and explain why?
+  what_makes_them_leave_immediately:
+    - "AI hedge fund" framing
+    - "Fine-tuning" used as a verb in technical copy
+    - Testimonials from non-quants
+    - "Schedule a demo" CTAs
+    - Glossary-style explanations of CMA-ES or Sharpe
+    - VC-coded language ("empower," "democratize," "unlock")
+
+secondary:
+  name: Operator-curious quant adjacent
+  description: >
+    A data scientist or engineer who follows quant Twitter, has built indicators, but
+    hasn't put their own capital behind a system yet. Reads the lifecycle dashboard
+    to learn the shape of the work.
+  treat_as: "Welcome reader, not the buyer. Don't lower the technical floor for them."
+
+not_audience:
+  - Institutional allocators (RIA, family office, fund-of-fund)
+  - Retail traders looking for signals or copy-trading
+  - LP capital seekers — we are not a fund
+  - "Tradfi curious about crypto" generalists — wrong altitude
+  - Anyone who needs "AI" in the headline to engage
+
+routing_signal: >
+  If reader's first question is "can I invest in your fund?" — route to Lore.
+  If reader's first question is "how do you cost your CMA-ES sweep?" — Revenant audience.

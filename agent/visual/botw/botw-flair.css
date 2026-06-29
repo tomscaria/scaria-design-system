@@ -1,0 +1,250 @@
+/* ============================================================================
+   LORE · BoTW FLAIR LAYER
+   ----------------------------------------------------------------------------
+   An optional "golden-hour / dormant-shrine" flair for the Lore design system.
+
+   Scope:   EVERYTHING here is nested under [data-flair="botw"]. Nothing leaks
+            into the base lore-light / lore-dark themes. Apply by adding the
+            attribute to any ancestor (usually <html> or a section):
+
+                <html data-theme="lore-dark" data-flair="botw"> … </html>
+
+   Contract:
+     · References kit tokens by var() WITH fallbacks, so the layer degrades
+       gracefully if loaded before the theme tokens or in isolation.
+     · NEVER hardcodes a theme color (bg / fg / line / accent). Those always
+       come from the active Lore theme so light/dark keep working untouched.
+     · Adds its own evocative BoTW palette (original approximations — not game
+       assets) plus two new motion atoms: --motion-spring and --motion-snap.
+
+   The mood: cool dormant slate that WARMS on interaction (amber sunrise) and
+   BLOOMS to Lore lime on success — like a shrine pedestal coming online at
+   golden hour over a grass field.
+   ============================================================================ */
+
+/* ---------------------------------------------------------------------------
+   1 · TOKENS
+   BoTW palette, two motion atoms, a golden-hour shadow, and tint helpers.
+   All custom-props live on the scope root so descendants can read them.
+   --------------------------------------------------------------------------- */
+[data-flair="botw"] {
+  /* --- BoTW palette (original approximations; evoke, never copy) --- */
+  --botw-dawn:         #FDFFE0;  /* palest sky-light, near-white chartreuse   */
+  --botw-dusk:         #E8C268;  /* golden-hour wash, warm gold               */
+  --botw-field:        #92C582;  /* sunlit grass green                        */
+  --botw-field-shadow: #536F50;  /* grass in shade, deep muted green          */
+  --botw-atmos:        #86A5A9;  /* hazy distance / atmospheric desaturation  */
+  --botw-cyan:         #6FD3E0;  /* dormant-slate glow, cool standby cyan     */
+  --botw-amber:        #F0892F;  /* activation warmth, sunrise amber          */
+  --botw-guardian:     #E2562A;  /* alert / targeting orange-red              */
+
+  /* --- New motion atoms --- */
+  --motion-spring: cubic-bezier(.34, 1.56, .64, 1); /* overshoot, "snaps to life" */
+  --motion-snap:   100ms;                            /* crisp short-interaction beat */
+
+  /* --- Golden-hour elevation: long, warm, low-angle shadow --- */
+  --shadow-goldenhour: 0 18px 44px -14px rgba(120, 82, 24, .30);
+
+  /* --- Tint helpers: faint atmospheric washes usable as backgrounds --- */
+  /* Layered over the theme --bg so they read as "light through air", not a
+     flat fill. color-mix gives a real blend with the theme; the gradient is
+     the fallback tint if color-mix is unsupported. */
+  --bg-dawn: linear-gradient(180deg,
+               color-mix(in srgb, var(--botw-dawn) 14%, transparent),
+               transparent 60%);
+  --bg-dusk: linear-gradient(180deg,
+               color-mix(in srgb, var(--botw-dusk) 12%, transparent),
+               transparent 70%);
+}
+
+/* ---------------------------------------------------------------------------
+   2 · .activate — the activation-glow interactive state
+   Temperature shift only: border + box-shadow + color. No layout change, so
+   it is safe to drop onto buttons, cards, list rows, pedestals, anything.
+
+   States:
+     rest        → cool dormant hairline + faint cyan halo  ("slate asleep")
+     hover/focus → warms to amber border + amber glow       ("powering on")
+     .is-on      → blooms to Lore lime (--accent)            ("confirmed")
+   --------------------------------------------------------------------------- */
+[data-flair="botw"] .activate {
+  /* Inherit shape from kit radius tokens, with sane fallbacks. */
+  border-radius: var(--r-md, 10px);
+
+  /* REST — dormant slate: 1px cool hairline + low-alpha cyan box-shadow. */
+  border: 1px solid color-mix(in srgb, var(--botw-cyan) 55%, transparent);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--botw-cyan) 14%, transparent),
+    0 0 12px -2px color-mix(in srgb, var(--botw-cyan) 22%, transparent);
+  color: var(--fg, currentColor);
+
+  /* Animate ONLY the temperature-bearing properties. Entry duration drives
+     the warm-up; the spring curve gives it that "clicks awake" overshoot. */
+  transition:
+    border-color var(--motion-duration-entry, 360ms) var(--motion-spring),
+    box-shadow   var(--motion-duration-entry, 360ms) var(--motion-spring),
+    color        var(--motion-duration-micro, 160ms) var(--motion-spring);
+}
+
+/* HOVER / FOCUS — warm to amber. Border ignites, glow blooms outward. */
+[data-flair="botw"] .activate:hover,
+[data-flair="botw"] .activate:focus-visible {
+  border-color: var(--botw-amber);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--botw-amber) 40%, transparent),
+    0 0 18px -1px color-mix(in srgb, var(--botw-amber) 45%, transparent),
+    var(--shadow-goldenhour);
+  color: color-mix(in srgb, var(--botw-amber) 30%, var(--fg, currentColor));
+  outline: none; /* the glow IS the focus affordance */
+}
+
+/* CONFIRMED — .is-on blooms to Lore lime. Highest-energy resting state. */
+[data-flair="botw"] .activate.is-on {
+  border-color: var(--accent, hsl(82 100% 55%));
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--accent, hsl(82 100% 55%)) 50%, transparent),
+    0 0 22px 0 color-mix(in srgb, var(--accent, hsl(82 100% 55%)) 40%, transparent);
+  color: var(--accent, hsl(82 100% 55%));
+}
+
+/* When confirmed, hover/focus stays in the lime register (don't drag it back
+   to amber) — just intensify the bloom slightly. */
+[data-flair="botw"] .activate.is-on:hover,
+[data-flair="botw"] .activate.is-on:focus-visible {
+  border-color: var(--accent, hsl(82 100% 55%));
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--accent, hsl(82 100% 55%)) 60%, transparent),
+    0 0 28px 2px color-mix(in srgb, var(--accent, hsl(82 100% 55%)) 50%, transparent),
+    var(--shadow-goldenhour);
+}
+
+/* ---------------------------------------------------------------------------
+   3 · .cut-frame — beveled cut-corner panel
+   Octagonal clip-path (~12px bevels) + 1px theme border, evoking the chamfered
+   metal plates of shrine tech. Optional L-bracket corner ornaments via
+   ::before / ::after in dormant cyan.
+
+   Note: clip-path crops the box, so the "border" is drawn as an inset ring via
+   box-shadow rather than `border` (a real border would be clipped at corners).
+   --------------------------------------------------------------------------- */
+[data-flair="botw"] .cut-frame {
+  --cut: 12px; /* bevel size — override per element if desired */
+  position: relative;
+  background: var(--bg-2, var(--bg, transparent));
+
+  /* Octagon: clip each corner at 45° by --cut. */
+  clip-path: polygon(
+    var(--cut) 0,
+    calc(100% - var(--cut)) 0,
+    100% var(--cut),
+    100% calc(100% - var(--cut)),
+    calc(100% - var(--cut)) 100%,
+    var(--cut) 100%,
+    0 calc(100% - var(--cut)),
+    0 var(--cut)
+  );
+
+  /* 1px ring in the theme line color, drawn inset so the clip doesn't eat it. */
+  box-shadow: inset 0 0 0 1px var(--line, color-mix(in srgb, currentColor 20%, transparent));
+}
+
+/* Corner ornaments — small L-bracket strokes top-left & bottom-right.
+   Pure decoration: pointer-events off, sits inside the bevel inset. */
+[data-flair="botw"] .cut-frame::before,
+[data-flair="botw"] .cut-frame::after {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  pointer-events: none;
+  border-color: var(--botw-cyan);
+  border-style: solid;
+  opacity: .8;
+}
+
+/* Top-left bracket: ⌐ (top + left strokes). */
+[data-flair="botw"] .cut-frame::before {
+  top: 6px;
+  left: 6px;
+  border-width: 1px 0 0 1px;
+}
+
+/* Bottom-right bracket: ⌐ rotated (bottom + right strokes). */
+[data-flair="botw"] .cut-frame::after {
+  right: 6px;
+  bottom: 6px;
+  border-width: 0 1px 1px 0;
+}
+
+/* ---------------------------------------------------------------------------
+   4 · .goldenhour — section light overlay
+   A top-anchored radial wash of golden dusk light, faint (~8%), non-interactive.
+   Drop onto a section to bathe it in low-angle sun.
+   --------------------------------------------------------------------------- */
+[data-flair="botw"] .goldenhour {
+  position: relative;
+}
+
+[data-flair="botw"] .goldenhour::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0; /* sits behind content; ensure inner content is positioned/z>0 */
+
+  /* Light pooling from the top-center, falling off quickly. */
+  background: radial-gradient(
+    120% 80% at 50% 0%,
+    color-mix(in srgb, var(--botw-dusk) 8%, transparent) 0%,
+    transparent 60%
+  );
+}
+
+/* ---------------------------------------------------------------------------
+   5 · .topo-underlay — faint survey / contour texture
+   A barely-there repeating contour-line + grid texture for behind data tables,
+   footers, empty states. Built from layered CSS gradients, very low opacity so
+   it never competes with content. Non-interactive.
+   --------------------------------------------------------------------------- */
+[data-flair="botw"] .topo-underlay {
+  position: relative;
+}
+
+[data-flair="botw"] .topo-underlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: .06; /* whole texture kept whisper-quiet */
+
+  /* Two diagonal contour bands + a faint survey grid, in atmospheric haze. */
+  background-image:
+    repeating-linear-gradient( 60deg,
+      color-mix(in srgb, var(--botw-atmos) 60%, transparent) 0 1px,
+      transparent 1px 22px),
+    repeating-linear-gradient(-60deg,
+      color-mix(in srgb, var(--botw-atmos) 60%, transparent) 0 1px,
+      transparent 1px 22px),
+    repeating-linear-gradient(0deg,
+      color-mix(in srgb, var(--botw-field-shadow) 50%, transparent) 0 1px,
+      transparent 1px 64px),
+    repeating-linear-gradient(90deg,
+      color-mix(in srgb, var(--botw-field-shadow) 50%, transparent) 0 1px,
+      transparent 1px 64px);
+  background-blend-mode: normal;
+}
+
+/* ---------------------------------------------------------------------------
+   6 · Reduced motion
+   Honor the user's preference: kill the warm-up animation so .activate snaps
+   straight to its target state with no transition.
+   --------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  [data-flair="botw"] .activate,
+  [data-flair="botw"] .activate:hover,
+  [data-flair="botw"] .activate:focus-visible,
+  [data-flair="botw"] .activate.is-on {
+    transition: none;
+  }
+}

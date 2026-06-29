@@ -27,26 +27,12 @@ module.exports = {
             transparent: 'transparent',
             current: 'currentColor',
 
-            // Semantic — all per-theme via CSS vars set in agent/themes/<theme>/colors_and_type.css
             background: 'var(--bg)',
             foreground: 'var(--fg)',
-            card: {
-                DEFAULT: 'var(--bg-2)',
-                foreground: 'var(--fg)',
-            },
-            popover: {
-                DEFAULT: 'var(--bg-3)',
-                foreground: 'var(--fg)',
-            },
-            muted: {
-                DEFAULT: 'var(--bg-muted)',
-                foreground: 'var(--fg-muted)',
-            },
-            brand: {
-                DEFAULT: 'var(--brand)',
-                hover: 'var(--brand-hover)',
-                foreground: 'var(--brand-fg)',
-            },
+            card: { DEFAULT: 'var(--bg-2)', foreground: 'var(--fg)' },
+            popover: { DEFAULT: 'var(--bg-3)', foreground: 'var(--fg)' },
+            muted: { DEFAULT: 'var(--bg-muted)', foreground: 'var(--fg-muted)' },
+            brand: { DEFAULT: 'var(--brand)', hover: 'var(--brand-hover)', foreground: 'var(--brand-fg)' },
             accent: {
                 DEFAULT: 'var(--accent)',
                 hover: 'var(--accent-hover)',
@@ -67,9 +53,6 @@ module.exports = {
             ring: 'var(--accent)',
         },
 
-        // PER-THEME via CSS vars. The actual numeric values live in
-        // agent/themes/<theme>/colors_and_type.css. Tailwind utilities like
-        // `text-display-lg` now resolve to the active theme's --fs-display-lg.
         fontSize: {
             'display-xl': ['var(--fs-display-xl)', { lineHeight: 'var(--lh-display-xl)', letterSpacing: 'var(--tracking-display-xl)' }],
             'display-lg': ['var(--fs-display-lg)', { lineHeight: 'var(--lh-display-lg)', letterSpacing: 'var(--tracking-display-lg)' }],
@@ -90,7 +73,6 @@ module.exports = {
             sans: ['var(--font-sans)'],
             display: ['var(--font-display)'],
             mono: ['var(--font-mono)'],
-            // Legacy aliases for compat
             default: ['var(--font-sans)'],
             serif: ['var(--font-display)'],
         },
@@ -132,22 +114,10 @@ module.exports = {
         },
 
         extend: {
-            // PRIMITIVE spacing — brand-wide pixel grid (NOT per-theme)
             spacing: {
-                sp1: '1px',
-                sp2: '2px',
-                sp4: '4px',
-                sp8: '8px',
-                sp12: '12px',
-                sp16: '16px',
-                sp24: '24px',
-                sp32: '32px',
-                sp48: '48px',
-                sp64: '64px',
-                sp96: '96px',
-                sp128: '128px',
-
-                // RHYTHM spacing — per-theme, per-expression
+                sp1: '1px', sp2: '2px', sp4: '4px', sp8: '8px',
+                sp12: '12px', sp16: '16px', sp24: '24px', sp32: '32px',
+                sp48: '48px', sp64: '64px', sp96: '96px', sp128: '128px',
                 'section-y': 'var(--sp-section-y)',
                 'section-x': 'var(--sp-section-x)',
                 'stack-xs':  'var(--sp-stack-xs)',
@@ -160,20 +130,9 @@ module.exports = {
                 'inline-md': 'var(--sp-inline-md)',
                 'inline-lg': 'var(--sp-inline-lg)',
             },
-
-            zIndex: {
-                zDefault: '1',
-                zSticky: '100',
-                zDropdown: '9200',
-                zModal: '9000',
-                zToast: '10000',
-            },
-
+            zIndex: { zDefault: '1', zSticky: '100', zDropdown: '9200', zModal: '9000', zToast: '10000' },
             keyframes: {
-                'm-float': {
-                    '0%, 100%': { transform: 'translateY(0)' },
-                    '50%':      { transform: 'translateY(-8px)' },
-                },
+                'm-float': { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-8px)' } },
                 'm-reveal': {
                     from: { opacity: '0', transform: 'translateY(16px)', filter: 'blur(4px)' },
                     to:   { opacity: '1', transform: 'translateY(0)',    filter: 'blur(0)' },
@@ -182,16 +141,9 @@ module.exports = {
                     '0%, 100%': { boxShadow: '0 0 0px hsl(var(--accent) / 0)' },
                     '50%':      { boxShadow: '0 0 20px hsl(var(--accent) / 0.15)' },
                 },
-                'accordion-down': {
-                    from: { height: '0' },
-                    to: { height: 'var(--radix-accordion-content-height)' },
-                },
-                'accordion-up': {
-                    from: { height: 'var(--radix-accordion-content-height)' },
-                    to: { height: '0' },
-                },
+                'accordion-down': { from: { height: '0' }, to: { height: 'var(--radix-accordion-content-height)' } },
+                'accordion-up':   { from: { height: 'var(--radix-accordion-content-height)' }, to: { height: '0' } },
             },
-
             animation: {
                 float:        'm-float 6s var(--motion-ease-ambient) infinite',
                 reveal:       'm-reveal var(--motion-duration-entry) var(--motion-ease-reveal) both',
@@ -199,10 +151,7 @@ module.exports = {
                 'accordion-down': 'accordion-down 0.2s ease-out',
                 'accordion-up':   'accordion-up 0.2s ease-out',
             },
-
-            backdropBlur: {
-                xs: '2px',
-            },
+            backdropBlur: { xs: '2px' },
         },
     },
 };

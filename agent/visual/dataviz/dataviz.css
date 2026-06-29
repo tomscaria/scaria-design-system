@@ -1,0 +1,211 @@
+/* ============================================================
+   _dataviz-kit.css — data-viz + geometric embellishment layer
+   ------------------------------------------------------------
+   The reusable class layer for charts and brand pattern fields.
+   Load AFTER tokens/colors_and_type.css. Everything resolves from
+   the categorical tokens (--cat-1…8, --chart-grid/axis/track) so a
+   single markup block re-skins itself under any [data-theme].
+
+   Two families:
+     1. CHARTS      — CSS-var-driven bars/stacks/bullets + SVG helpers
+     2. EMBELLISH   — swarm-glyph fields, staircase, half-moons,
+                      mosaic, wave-bands, tiling backgrounds
+
+   Data binding contract: geometry rides on CSS custom properties so
+   markup stays declarative —  <i class="viz-bar" style="--v:72"></i>
+   means "72% of the plot height". Colors ride on data-cat="N".
+   ============================================================ */
+
+/* ── CATEGORICAL PALETTE TOKENS ──
+   Bundled so the kit ships a working palette. The generic set derives
+   from each theme's semantic tokens (re-skins under any [data-theme]);
+   the four primary themes override with hand-tuned, accessible series.
+   Loads after the theme blocks (styles.css orders this). */
+:root, [data-theme]{
+  --cat-1: var(--accent);
+  --cat-2: var(--info);
+  --cat-3: var(--success);
+  --cat-4: var(--warn);
+  --cat-5: var(--governance, var(--fg-2));
+  --cat-6: var(--fg-3);
+  --cat-7: var(--danger);
+  --cat-8: var(--brand);
+  --chart-grid:  var(--line-2);
+  --chart-axis:  var(--fg-3);
+  --chart-track: var(--line);
+}
+:root, [data-theme="lore-light"]{
+  --cat-1:#D4F24B; --cat-2:#B561E0; --cat-3:#1D7A45; --cat-4:#7FCBA0;
+  --cat-5:#EC964B; --cat-6:#3E5266; --cat-7:#5BA3E0; --cat-8:#E07BA8;
+}
+[data-theme="lore-dark"]{
+  --cat-1:#D4F24B; --cat-2:#C994EE; --cat-3:#55BD7E; --cat-4:#9BE0BC;
+  --cat-5:#F0A85E; --cat-6:#9AA6B5; --cat-7:#6FAEF0; --cat-8:#ED93B6;
+}
+[data-theme="revenant-light"]{
+  --cat-1:#FF4F00; --cat-2:#3E5A6E; --cat-3:#5E7D3E; --cat-4:#B8863C;
+  --cat-5:#6B6560; --cat-6:#9A3D1F; --cat-7:#88A06B; --cat-8:#2C3B45;
+  --chart-grid:#CBC4BA; --chart-track:#DAD4CB;
+}
+[data-theme="revenant-dark"]{
+  --cat-1:#FF6A2A; --cat-2:#6F9AC0; --cat-3:#8FB060; --cat-4:#D4A850;
+  --cat-5:#9A938C; --cat-6:#E0703F; --cat-7:#A8C088; --cat-8:#5E7A8C;
+  --chart-grid:#262521; --chart-track:#20221D;
+}
+
+/* ── CATEGORICAL COLOR SETTER ──
+   data-cat="N" assigns the Nth series color to --c on that element
+   (and its SVG fill/stroke helpers). One attribute, every chart. */
+[data-cat="1"]{--c:var(--cat-1)} [data-cat="2"]{--c:var(--cat-2)}
+[data-cat="3"]{--c:var(--cat-3)} [data-cat="4"]{--c:var(--cat-4)}
+[data-cat="5"]{--c:var(--cat-5)} [data-cat="6"]{--c:var(--cat-6)}
+[data-cat="7"]{--c:var(--cat-7)} [data-cat="8"]{--c:var(--cat-8)}
+.fill-c{fill:var(--c)} .stroke-c{stroke:var(--c)} .text-c{color:var(--c)}
+
+/* legend swatch */
+.sw{width:10px;height:10px;border-radius:3px;flex-shrink:0;background:var(--c,var(--cat-1));display:inline-block}
+.sw.round{border-radius:50%}
+
+/* ── VIZ FRAME ──
+   A card-agnostic chart shell: title row (mono kicker), plot, legend.
+   No card chrome of its own — drop inside .panel / .surface / .card. */
+.viz{display:flex;flex-direction:column;gap:12px;min-width:0;font-family:var(--font-mono,monospace)}
+.viz-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.viz-title{font-family:var(--font-sans);font-weight:600;font-size:14px;letter-spacing:-.01em;color:var(--fg)}
+.viz-kicker{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--chart-axis,var(--fg-3))}
+.viz-legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:11px;color:var(--fg-3)}
+.viz-legend .li{display:inline-flex;align-items:center;gap:7px;min-width:0}
+.viz-legend .li b{color:var(--fg-2);font-weight:500}
+
+/* gridded plot area — dashed reference rules from --chart-grid */
+.viz-plot{position:relative;width:100%;height:var(--h,180px);
+  background-image:repeating-linear-gradient(to top,
+    transparent 0, transparent calc(25% - 1px),
+    var(--chart-grid,var(--line-2)) calc(25% - 1px), var(--chart-grid,var(--line-2)) 25%);
+  background-size:100% 100%}
+.viz-plot.no-grid{background-image:none}
+.viz-axis-x{display:flex;justify-content:space-between;font-size:10px;color:var(--chart-axis,var(--fg-3));margin-top:6px}
+
+/* ── COLUMN BARS (simple · stacked · grouped) ──
+   --v is the bar value as a % of plot height (0–100). */
+.viz-cols{display:flex;align-items:flex-end;gap:var(--col-gap,8px);height:100%;width:100%}
+.viz-col{flex:1 1 0;min-width:0;height:100%;display:flex;flex-direction:column;justify-content:flex-end}
+.viz-bar{width:100%;height:calc(var(--v,50) * 1%);background:var(--c,var(--cat-1));
+  border-radius:var(--r-sm,3px) var(--r-sm,3px) 0 0;transition:height .5s var(--ease-lore,cubic-bezier(.2,.8,.2,1)),opacity .12s}
+.viz-cols.hoverable .viz-bar{cursor:pointer}
+.viz-cols.hoverable:hover .viz-bar{opacity:.38}
+.viz-cols.hoverable .viz-col:hover .viz-bar{opacity:1}
+
+/* stacked: column is a fixed-height track; segments grow by flex weight (--v) */
+.viz-col.stack{justify-content:stretch}
+.viz-stack{display:flex;flex-direction:column-reverse;height:100%;width:100%;border-radius:var(--r-sm,3px) var(--r-sm,3px) 0 0;overflow:hidden;gap:1.5px}
+.viz-seg{flex:var(--v,1) 1 0;min-height:0;background:var(--c,var(--cat-1));transition:flex-grow .5s var(--ease-lore,cubic-bezier(.2,.8,.2,1))}
+
+/* grouped: thin bars sharing a slot */
+.viz-group{display:flex;align-items:flex-end;gap:3px;height:100%;width:100%}
+.viz-group .viz-bar{border-radius:var(--r-xs,2px) var(--r-xs,2px) 0 0}
+
+/* ── RANKED HORIZONTAL BARS ──
+   the Fuzy "horizontal bar" — label, track, value. --v = % of width. */
+.viz-hbars{display:flex;flex-direction:column;gap:10px;width:100%}
+.viz-hbar{display:grid;grid-template-columns:var(--label-w,84px) 1fr auto;align-items:center;gap:12px;font-size:11px}
+.viz-hbar .nm{color:var(--fg-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.viz-hbar .track{height:14px;background:var(--chart-track,var(--line));border-radius:var(--r-pill,999px);overflow:hidden}
+.viz-hbar .val{height:100%;width:calc(var(--v,50) * 1%);background:var(--c,var(--cat-1));border-radius:inherit;
+  transition:width .6s var(--ease-lore,cubic-bezier(.2,.8,.2,1))}
+.viz-hbar .amt{color:var(--fg);font-weight:500;font-variant-numeric:tabular-nums}
+
+/* ── BULLET / GAUGE ── single metric vs target on a track */
+.viz-bullet{display:flex;flex-direction:column;gap:5px;font-size:11px}
+.viz-bullet .lab{display:flex;justify-content:space-between;color:var(--fg-3)}
+.viz-bullet .rail{position:relative;height:8px;background:var(--chart-track,var(--line));border-radius:var(--r-pill,999px)}
+.viz-bullet .meter{position:absolute;inset:0 auto 0 0;width:calc(var(--v,50)*1%);background:var(--c,var(--cat-1));border-radius:inherit}
+.viz-bullet .tick{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--fg);left:calc(var(--target,80)*1%)}
+
+/* ── STAT HERO ── the giant number with the % in accent (Fuzy 50% / 200%) */
+.stat-hero{display:flex;flex-direction:column;gap:6px}
+.stat-hero .big{font-family:var(--font-sans);font-weight:700;line-height:.92;letter-spacing:-.03em;
+  font-size:var(--stat-size,clamp(44px,7vw,88px));color:var(--fg);font-variant-numeric:tabular-nums}
+.stat-hero .big .u{color:var(--c,var(--accent));font-weight:500}
+.stat-hero .cap{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-3)}
+
+/* ── STAT-BARS COMBO ── bars topped with their own number (Fuzy 50/100/150) */
+.statbars{display:flex;align-items:flex-end;gap:var(--col-gap,18px);height:var(--h,220px)}
+.statbars .col{flex:1 1 0;display:flex;flex-direction:column;justify-content:flex-end;gap:10px;text-align:center;height:100%}
+.statbars .n{font-family:var(--font-sans);font-weight:700;font-size:clamp(20px,2.4vw,30px);letter-spacing:-.01em;color:var(--fg);line-height:1}
+.statbars .n .u{color:var(--c,var(--accent))}
+.statbars .cap{font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--fg-3);order:1}
+.statbars .blk{height:calc(var(--v,50)*1%);background:var(--c,var(--cat-1));border-radius:var(--r-md,4px) var(--r-md,4px) 0 0;min-height:8px}
+
+/* ── DELTA / TREND ── gain-loss that is NEVER color-alone (WCAG 2.2 SC 1.4.1, Level A):
+   the arrow glyph + value carry the meaning; color is redundant reinforcement, not the
+   sole signal. Use for any +/- change, pos/neg, up/down figure. */
+.delta{display:inline-flex;align-items:center;gap:4px;font-family:var(--font-mono,monospace);font-variant-numeric:tabular-nums;font-weight:500;line-height:1}
+.delta::before{font-size:.8em;line-height:1}
+.delta.pos{color:var(--success)} .delta.pos::before{content:"▲"}
+.delta.neg{color:var(--danger)}  .delta.neg::before{content:"▼"}
+.delta.flat{color:var(--fg-3)}   .delta.flat::before{content:"—"}
+
+/* ============================================================
+   EMBELLISHMENTS — the geometric brand vocabulary
+   ============================================================ */
+
+/* ── SWARM-GLYPH FIELD ──
+   The signature: a grid of circles, each a directional decision glyph
+   (↗ ↘ → − ↙). It IS the swarm — agents resolving direction. Auto-cycles
+   a 6-step color rhythm (override any tile with data-cat). Set --cols. */
+.swarm-field{display:grid;grid-template-columns:repeat(var(--cols,8),1fr);gap:var(--swarm-gap,3px);min-width:0}
+.glyph{aspect-ratio:1;border-radius:50%;display:grid;place-items:center;
+  font-family:var(--font-mono,monospace);font-weight:500;font-size:var(--glyph-size,18px);line-height:1;
+  background:var(--c,var(--cat-2));color:var(--glyph-ink,#17140E);user-select:none}
+/* default 6-beat rhythm — paired bg+ink so glyphs always read */
+.swarm-field .glyph:nth-child(6n+1){background:var(--cat-1);color:#17140E}
+.swarm-field .glyph:nth-child(6n+2){background:var(--cat-2);color:#17140E}
+.swarm-field .glyph:nth-child(6n+3){background:var(--cat-3);color:var(--brand-fg,#F4F1EC)}
+.swarm-field .glyph:nth-child(6n+4){background:var(--cat-4);color:#17140E}
+.swarm-field .glyph:nth-child(6n+5){background:var(--cat-5);color:#17140E}
+.swarm-field .glyph:nth-child(6n+6){background:var(--cat-6);color:var(--brand-fg,#F4F1EC)}
+.swarm-field [data-cat]{background:var(--c)}
+/* a tile can opt to be hollow (outline only) — adds texture variation */
+.glyph.hollow{background:transparent;color:var(--c,var(--cat-2));box-shadow:inset 0 0 0 1.5px var(--c,var(--cat-2))}
+/* slow drift-in entrance, staggered by the browser via animation-delay inline */
+.swarm-field.rise .glyph{opacity:0;transform:scale(.6);animation:viz-pop .5s var(--ease-out-back,cubic-bezier(.34,1.56,.64,1)) forwards}
+@keyframes viz-pop{to{opacity:1;transform:none}}
+
+/* ── STAIRCASE CLIP ── cut any block into Fuzy's stepped diagonal wedge.
+   Pair with .swarm-field to get the descending-stair tile composition. */
+.clip-stair-up{clip-path:polygon(0 100%,0 66%,33% 66%,33% 33%,66% 33%,66% 0,100% 0,100% 100%)}
+.clip-stair-down{clip-path:polygon(0 0,33% 0,33% 33%,66% 33%,66% 66%,100% 66%,100% 100%,0 100%)}
+.clip-wedge{clip-path:polygon(0 100%,100% 0,100% 100%)}
+
+/* ── HALF-MOONS ── D-shapes, alternating orientation (Fuzy semicircles) */
+.halfmoons{display:flex;gap:var(--swarm-gap,4px);min-width:0}
+.halfmoon{flex:1 1 0;aspect-ratio:1/2;background:var(--c,var(--cat-1));border-radius:999px 0 0 999px}
+.halfmoon.r{border-radius:0 999px 999px 0}
+.halfmoon.t{aspect-ratio:2/1;border-radius:999px 999px 0 0}
+.halfmoon.b{aspect-ratio:2/1;border-radius:0 0 999px 999px}
+
+/* ── MOSAIC ── color-block grid (Fuzy's tetris field). Cells span via
+   data-span; colors via data-cat. Square aspect, tight gap. */
+.mosaic{display:grid;grid-template-columns:repeat(var(--cols,5),1fr);grid-auto-rows:1fr;gap:var(--swarm-gap,4px);aspect-ratio:var(--ar,1)}
+.mosaic > *{background:var(--c,var(--cat-1));border-radius:var(--r-sm,3px);min-width:0}
+.mosaic [data-span="2"]{grid-column:span 2} .mosaic [data-span="3"]{grid-column:span 3}
+.mosaic [data-rspan="2"]{grid-row:span 2} .mosaic [data-rspan="3"]{grid-row:span 3}
+
+/* ── TILING BACKGROUNDS ── drop behind content (send-to-back, like the
+   Fuzy "image library"). Pure CSS gradients — cheap, theme-aware. */
+.tile-dots{background-image:radial-gradient(var(--cat-2) 22%,transparent 23%);background-size:14px 14px}
+.tile-checker{background-image:
+    linear-gradient(45deg,var(--cat-1) 25%,transparent 25%,transparent 75%,var(--cat-1) 75%),
+    linear-gradient(45deg,var(--cat-1) 25%,transparent 25%,transparent 75%,var(--cat-1) 75%);
+  background-size:20px 20px;background-position:0 0,10px 10px;opacity:.9}
+.tile-grid{background-image:
+    linear-gradient(var(--chart-grid) 1px,transparent 1px),
+    linear-gradient(90deg,var(--chart-grid) 1px,transparent 1px);
+  background-size:24px 24px}
+
+/* ── WAVE BANDS ── stacked ribbons with curved tops (Fuzy wave block).
+   Each band is a row; the radius gives the crest. Use 3–5 bands. */
+.wave-bands{display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;border-radius:var(--r-md,4px);min-height:120px}
+.wave-bands .band{height:var(--bh,28%);background:var(--c,var(--cat-1));border-radius:100% 100% 0 0/40px 40px;margin-bottom:-22px}
+.wave-bands .band:last-child{margin-bottom:0}

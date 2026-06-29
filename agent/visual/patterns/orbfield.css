@@ -1,0 +1,115 @@
+/* ============================================================
+   orbfield.css — the "OrbField" hover-reveal constellation
+   ------------------------------------------------------------
+   Theme-agnostic port of the Uniswap "opaque popular coins you
+   hover" interaction. A field of dimmed, depth-blurred orbs
+   (links) that brighten + sharpen as a group on hover/focus,
+   then pop individually on direct hover. Every visual resolves
+   from kit tokens (--bg/--fg/--accent/--line + the motion vars)
+   so a single markup block re-skins under [data-theme="lore-…",
+   "revenant-…", …] with zero color edits.
+
+   Pairs with ./orbfield.js (mountOrbField) which scatters the
+   orbs and sets the per-orb inline custom props
+   (--orb-blur, --orb-delay, left/top, width/height).
+
+   Load AFTER the theme. Token fallbacks keep it standalone.
+   Contract: prefer kit token names; fall back to a literal so
+   it works even with no theme attached.
+   ============================================================ */
+
+.orbfield {
+  position: relative;
+  display: block;
+  /* sized by the consumer (width/height/aspect-ratio) */
+}
+
+/* ── ORB (each orb is a link) ──
+   Position set inline by JS via left/top (%) + width/height (px).
+   At REST: dimmed, depth-blurred, desaturated, neutral fg.
+   --orb-blur / --orb-delay are written per-orb by mountOrbField. */
+.orbfield a.orb {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  box-sizing: border-box;
+  /* JS sets left/top/width/height inline; these are safe defaults */
+  text-decoration: none;
+  line-height: 0;
+  color: var(--fg-3, currentColor);
+  opacity: var(--orb-rest, .25);
+  filter: blur(var(--orb-blur, 0px)) saturate(.4);
+  transform: scale(1);
+  will-change: opacity, filter, transform;
+  transition:
+    opacity   var(--motion-duration-entry, 360ms) var(--motion-spring, cubic-bezier(.34, 1.56, .64, 1)),
+    filter    var(--motion-duration-entry, 360ms) var(--motion-spring, cubic-bezier(.34, 1.56, .64, 1)),
+    transform var(--motion-duration-entry, 360ms) var(--motion-spring, cubic-bezier(.34, 1.56, .64, 1)),
+    color     var(--motion-duration-entry, 360ms) var(--motion-spring, cubic-bezier(.34, 1.56, .64, 1));
+  transition-delay: var(--orb-delay, 0ms); /* the staggered cascade */
+}
+
+/* ── GROUP REVEAL ──
+   Hovering (or focusing into) the field lights the whole
+   constellation: full opacity, sharp, saturated, accent-tinted.
+   The per-orb --orb-delay produces the cascade. */
+.orbfield:hover a.orb,
+.orbfield:focus-within a.orb {
+  opacity: 1;
+  filter: blur(0) saturate(1);
+  color: var(--accent);
+}
+
+/* ── INDIVIDUAL ORB ──
+   Direct hover pops the orb forward + above its neighbours. */
+.orbfield a.orb:hover {
+  transform: scale(1.12);
+  color: var(--accent);
+  z-index: 2;
+}
+
+/* Keyboard focus: a clear ring (no group dependency). */
+.orbfield a.orb:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  z-index: 2;
+}
+
+/* ── ORB GLYPH ── svg sprite tiles + <img> logo tiles fill the orb.
+   Ledger SVGs inherit currentColor so the rest→accent color
+   transition (and the group reveal) tints them for free. */
+.orbfield a.orb svg,
+.orbfield a.orb img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none; /* clicks/hover resolve on the <a>, not the glyph */
+}
+
+.orbfield a.orb svg {
+  fill: currentColor;
+  stroke: currentColor;
+}
+
+.orbfield a.orb img {
+  object-fit: contain;
+}
+
+/* ── REDUCED MOTION ──
+   Drop the blur + the staggered cascade entirely; keep only a
+   simple opacity dim→lit so the interaction stays legible. */
+@media (prefers-reduced-motion: reduce) {
+  .orbfield a.orb {
+    filter: none;
+    transition: opacity var(--motion-duration-micro, 150ms) linear,
+                color   var(--motion-duration-micro, 150ms) linear;
+    transition-delay: 0ms;
+  }
+  .orbfield:hover a.orb,
+  .orbfield:focus-within a.orb {
+    filter: none;
+  }
+  .orbfield a.orb:hover {
+    transform: none;
+  }
+}

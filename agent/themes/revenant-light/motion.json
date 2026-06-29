@@ -1,0 +1,17 @@
+{
+  "theme": "revenant-light",
+  "description": "Per-theme motion overrides. Terser than lore-light — industrial snap, not glide. Tools don't dwell.",
+  "durations": {
+    "micro_ms": 80,
+    "entry_ms_product": 160,
+    "entry_ms_marketing": 380,
+    "scene_ms_product": 240,
+    "scene_ms_marketing": 340
+  },
+  "easing": {
+    "interaction": "cubic-bezier(0.4, 0, 0.2, 1)",
+    "reveal": "cubic-bezier(0.4, 0, 0.15, 1)",
+    "ambient": "linear"
+  },
+  "notes": "ambient=linear is intentional: any ambient loop (ticker, pulse) should be mechanical, not organic. Reveal curve is snappier than lore-light's ease-out — prioritizes 'arrived' over 'floated in.'"
+}

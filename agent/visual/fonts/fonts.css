@@ -1,0 +1,15 @@
+/* ============================================================
+   @tomscaria/lore-design-system — webfont @font-face
+   ------------------------------------------------------------
+   Ships the brand faces the theme token blocks reference via
+   --font-sans / --font-display / --font-mono ("Aeonik", "Lock
+   Serif", "Aeonik Mono"). Imported FIRST by styles.css so the
+   faces are registered before any theme paints. woff2 files are
+   siblings of this file, so url() is relative to it.
+   ============================================================ */
+@font-face{font-family:"Aeonik";font-style:normal;font-weight:400;font-display:swap;src:url("./Aeonik-Regular.woff2") format("woff2")}
+@font-face{font-family:"Aeonik";font-style:normal;font-weight:500;font-display:swap;src:url("./Aeonik-Medium.woff2") format("woff2")}
+@font-face{font-family:"Aeonik";font-style:normal;font-weight:700;font-display:swap;src:url("./Aeonik-Bold.woff2") format("woff2")}
+@font-face{font-family:"Aeonik Mono";font-style:normal;font-weight:400;font-display:swap;src:url("./AeonikMono-Regular.woff2") format("woff2")}
+@font-face{font-family:"Aeonik Mono";font-style:normal;font-weight:500;font-display:swap;src:url("./AeonikMono-Medium.woff2") format("woff2")}
+@font-face{font-family:"Lock Serif";font-style:normal;font-weight:400;font-display:swap;src:url("./LockSerif-Regular.woff2") format("woff2")}

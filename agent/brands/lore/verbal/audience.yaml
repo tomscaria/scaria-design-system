@@ -1,0 +1,76 @@
+# Audience — agent-readable, structured. Founder-confirm before treating as final.
+
+primary:
+  name: Distribution partner product lead
+  description: |
+    Product / engineering lead at a consumer fintech, neobank, broker, or wallet,
+    evaluating whether to whitelabel a portfolio product vs build internally.
+  motivations:
+    - Ship a wealth tab without taking 12 months to build a portfolio platform
+    - Offer onchain exposure without owning the regulatory + custodial complexity
+    - Differentiate from competitors who only offer crypto via spot trading
+  objections:
+    - "Do we trust their settlement infrastructure"
+    - "Can we white-label to our brand cleanly"
+    - "What does this cost relative to building it"
+    - "Is there liquidity risk during a market dislocation"
+  proof_required:
+    - Verifiable on-chain holdings (real-time audit)
+    - Rebalance methodology + cadence
+    - Partner case study (or LOI list at minimum)
+    - Settlement chain coverage (which chains, why)
+
+secondary:
+  name: Capital allocator / LP
+  description: |
+    Family office, fund-of-funds, or strategic investor evaluating Lore as
+    a position. Not the buyer of LTPs; the buyer of Lore equity.
+  motivations:
+    - Exposure to the onchain wealth infrastructure thesis
+    - Belief that embedded finance + onchain rails is a category, not a feature
+  objections:
+    - "What's the moat vs traditional asset managers moving onchain"
+    - "Distribution dependencies — what if your top partner walks"
+    - "Regulatory tail risk"
+  proof_required:
+    - AUM growth chart
+    - Partner pipeline + unit economics
+    - Team credibility (background, track record)
+    - Defensibility narrative
+
+tertiary:
+  name: Regulatory / compliance reviewer at a partner
+  description: |
+    Compliance officer at a distribution partner reviewing whether the Lore
+    integration is greenlight-able.
+  motivations:
+    - Defensible audit trail
+    - Clear separation of broker-dealer / advisor roles
+    - Custody answer
+  proof_required:
+    - Compliance documentation
+    - Custody architecture
+    - Settlement finality story
+
+not_our_audience:
+  - Retail end-users (we don't ship to them)
+  - Crypto-native protocols (already have token exposure)
+  - DeFi degens (wrong tone, wrong product)
+  - Hedge funds doing tactical trading (we're long-duration portfolio infrastructure)
+
+tone_per_audience:
+  primary:
+    register: peer-to-peer, B2B SaaS
+    examples:
+      - "Drop in our SDK, ship a wealth tab in 4 weeks."
+      - "White-label the surface, we run the rails."
+  secondary:
+    register: institutional, measured
+    examples:
+      - "$42M AUM across 1,200 wallets at 4 months."
+      - "Distribution is contracted with three partners covering 18M consumers."
+  tertiary:
+    register: formal, citations-heavy
+    examples:
+      - "Custody is via MPC-protected wallets per architecture in §3."
+      - "Settlement finality occurs on-chain per the LTP smart contract audit (see Appendix B)."

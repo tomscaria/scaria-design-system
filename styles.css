@@ -1,0 +1,44 @@
+/* ============================================================
+   @tomscaria/lore-design-system — root styles
+   ------------------------------------------------------------
+   Imports every theme's per-theme variable block + the
+   brand-wide motion utilities.
+
+   Usage (Tailwind / app entry):
+     @import '@tomscaria/lore-design-system/styles';
+
+   Then on <html>:
+     <html data-theme="lore-light" data-expression="product">
+   ============================================================ */
+
+/* Brand webfaces first — register @font-face before any theme paints. */
+@import "./agent/visual/fonts/fonts.css";
+
+@import "./agent/themes/lore-light/colors_and_type.css";
+@import "./agent/themes/lore-dark/colors_and_type.css";
+@import "./agent/themes/primitive/colors_and_type.css";
+@import "./agent/themes/primitive-dark/colors_and_type.css";
+@import "./agent/themes/kiosk/colors_and_type.css";
+
+@import "./agent/themes/revenant-light/colors_and_type.css";
+@import "./agent/themes/revenant-dark/colors_and_type.css";
+
+/* Berlin theme is pending inspo authoring.
+@import "./agent/themes/berlin/colors_and_type.css";
+*/
+
+@import "./agent/visual/motion/motion.css";
+
+/* Data-viz + embellishment class layer (+ categorical palette tokens). */
+@import "./agent/visual/dataviz/dataviz.css";
+
+/* Reusable operational UI patterns (stat panel, status grid, reveal, orbit). */
+@import "./agent/visual/patterns/patterns.css";
+
+/* OrbField — the opaque-coins hover-reveal (pairs with patterns/orbfield.js).
+   Universal interaction; theme-agnostic. Mount via the JS, style re-skins by token. */
+@import "./agent/visual/patterns/orbfield.css";
+
+/* NOTE: the BoTW flair overlay (agent/visual/botw/botw-flair.css) is intentionally
+   NOT imported here — it is Lore-only marketing flair. Opt in per-project with
+   `@import '@tomscaria/lore-design-system/botw'` + data-flair="botw". */

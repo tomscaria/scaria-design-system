@@ -1,15 +1,6 @@
-# Exceeds GitHub 100MB limit — kept local-only for reference
-inspo/screencapture-brasshands-*.pdf
-
-# Build output
-dist/
-*.tsbuildinfo
-
-# Dependencies
 node_modules/
-.pnpm-store/
-
-# Editor / OS
+derived/
+*.log
 .DS_Store
 .vscode/
 .idea/

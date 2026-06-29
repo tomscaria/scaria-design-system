@@ -1,0 +1,16 @@
+{
+  "theme": "revenant-dark",
+  "description": "Same as revenant-light — dark mode carries identical motion contract. Snappy, purposeful, no dwell.",
+  "durations": {
+    "micro_ms": 80,
+    "entry_ms_product": 160,
+    "entry_ms_marketing": 380,
+    "scene_ms_product": 240,
+    "scene_ms_marketing": 340
+  },
+  "easing": {
+    "interaction": "cubic-bezier(0.4, 0, 0.2, 1)",
+    "reveal": "cubic-bezier(0.4, 0, 0.15, 1)",
+    "ambient": "linear"
+  }
+}
