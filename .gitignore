@@ -4,3 +4,15 @@ derived/
 .DS_Store
 .vscode/
 .idea/
+
+# npm pack artifacts
+*.tgz
+
+# Logs
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Tooling artifacts (scrape cache, superpowers specs) — not project content
+.firecrawl/
+docs/superpowers/

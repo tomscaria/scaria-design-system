@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Revenant — Data Primitives</title>
+<style>
+  :root{
+    --concrete:#EDE9E5; --ink:#111111; --accent:#E05A2B;
+    --hair:#C9C3BA; --muted:#6B6358; --warn:#9A7B3F;
+    --font-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+    --font-sans:"Aeonik","Inter",system-ui,-apple-system,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:#dedad3;color:var(--ink);font-family:var(--font-sans);padding:28px;
+    font-feature-settings:"tnum" 1}
+  .sheet{position:relative;max-width:1080px;margin:0 auto;background:var(--concrete);
+    padding:30px 34px 22px;border:1px dashed var(--muted)}
+  .corner{position:absolute;width:18px;height:18px}
+  .tl{top:-9px;left:-9px}.tr{top:-9px;right:-9px}.bl{bottom:-9px;left:-9px}.br{bottom:-9px;right:-9px}
+  .hdr{display:flex;align-items:baseline;gap:14px;border-bottom:1.5px solid var(--ink);
+    padding-bottom:9px;margin-bottom:2px}
+  .hdr .ref{font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.05em;
+    border:1px solid var(--ink);padding:1px 6px}
+  .hdr h1{font-size:14px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;margin:0}
+  .sub{font-family:var(--font-mono);font-size:10px;color:var(--muted);letter-spacing:.1em;
+    text-transform:uppercase;margin:8px 0 18px}
+  .panel{border:1px solid var(--hair);margin-bottom:16px}
+  .panel-h{display:flex;justify-content:space-between;align-items:baseline;
+    border-bottom:1px solid var(--hair);padding:8px 12px;font-family:var(--font-mono);font-size:10px;
+    letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .panel-h .t{color:var(--ink);font-weight:600}
+  .row2{display:grid;grid-template-columns:1.15fr 1fr;gap:16px}
+  /* spec table */
+  table{width:100%;border-collapse:collapse;font-family:var(--font-mono);font-size:10.5px}
+  th{text-align:left;color:var(--muted);font-weight:500;letter-spacing:.04em;text-transform:uppercase;
+    padding:7px 12px;border-bottom:1px solid var(--hair);font-size:9px}
+  td{padding:5px 12px;border-bottom:1px solid #E0DBD2}
+  td.n{text-align:right}
+  tr:last-child td{border-bottom:none}
+  .a-fail{color:var(--accent);font-weight:600}
+  .a-warn{color:var(--warn);font-weight:600}
+  /* terminal */
+  .term{font-family:var(--font-mono);font-size:10.5px;line-height:1.65;padding:12px 14px;color:#2a2722}
+  .term .err{color:var(--accent)}
+  .term .dim{color:var(--muted)}
+  /* population grid */
+  .pop{display:grid;grid-template-columns:1fr 150px;gap:0}
+  .pop-cells{padding:14px;display:grid;grid-template-columns:repeat(12,1fr);gap:5px;align-content:start}
+  .pop-side{border-left:1px solid var(--hair);padding:14px;font-family:var(--font-mono);font-size:10px}
+  .cellbox{aspect-ratio:1;border:1px solid var(--ink);display:flex;align-items:center;justify-content:center}
+  .c-active::after{content:"";width:5px;height:5px;background:var(--ink)}
+  .c-term{border-color:var(--accent)}
+  .c-term::after{content:"\00d7";color:var(--accent);font-size:11px;line-height:1}
+  .c-init::after{content:"";width:7px;height:7px;border:1.2px solid var(--muted);border-radius:50%}
+  .leg{display:flex;gap:6px;align-items:center;margin:3px 0;color:var(--muted)}
+  .leg .b{width:13px;height:13px;border:1px solid var(--ink);display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .stat{display:flex;justify-content:space-between;margin:5px 0;color:var(--muted)}
+  .stat b{color:var(--ink);font-weight:600}
+  .stat .acc{color:var(--accent)}
+  hr.sep{border:none;border-top:1px solid var(--hair);margin:12px 0}
+  /* title block */
+  .tblock{margin-top:18px;border:1.5px solid var(--ink);display:grid;
+    grid-template-columns:1fr 150px 70px;font-family:var(--font-mono);font-size:10px}
+  .tblock div{border-left:1px solid var(--ink);padding:6px 9px}
+  .tblock div:first-child{border-left:none}
+  .tblock .k{color:var(--muted);letter-spacing:.08em;text-transform:uppercase;display:block;font-size:8.5px}
+  .tblock .big{font-family:var(--font-sans);font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+  .rev{color:var(--accent);font-weight:600;font-size:13px}
+  .note{font-family:var(--font-mono);font-size:9px;color:var(--muted);margin:2px 0 0;letter-spacing:.04em}
+</style></head>
+<body>
+<div class="sheet">
+  <span class="corner tl"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="9" fill="none" stroke="#6B6358" stroke-width="1.2"/><path d="M20 4V36M4 20H36" stroke="#6B6358" stroke-width="1.2"/></svg></span>
+  <span class="corner tr"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="9" fill="none" stroke="#6B6358" stroke-width="1.2"/><path d="M20 4V36M4 20H36" stroke="#6B6358" stroke-width="1.2"/></svg></span>
+  <span class="corner bl"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="9" fill="none" stroke="#6B6358" stroke-width="1.2"/><path d="M20 4V36M4 20H36" stroke="#6B6358" stroke-width="1.2"/></svg></span>
+  <span class="corner br"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="9" fill="none" stroke="#6B6358" stroke-width="1.2"/><path d="M20 4V36M4 20H36" stroke="#6B6358" stroke-width="1.2"/></svg></span>
+
+  <div class="hdr"><span class="ref">REF-03/04/05</span><h1>Data primitives</h1></div>
+  <div class="sub">Revenant apparatus · bound to real telemetry (falsification-first) · the composable code layer ($0)</div>
+
+  <!-- spec table -->
+  <div class="panel">
+    <div class="panel-h"><span class="t">Calibration spec sheet</span><span>REF-04 · execution subsystem</span></div>
+    <table>
+      <thead><tr><th>Parameter</th><th>Symbol</th><th class="n">Nominal</th><th class="n">Tolerance</th><th>Units</th><th class="n">Threshold</th><th>Alert</th></tr></thead>
+      <tbody>
+        <tr><td>Clock skew</td><td>t_skew</td><td class="n">0.000</td><td class="n">± 2.000</td><td>µs</td><td class="n">&gt; 2.000</td><td class="a-warn">WARN</td></tr>
+        <tr><td>MD stale limit</td><td>t_md_stale</td><td class="n">250.0</td><td class="n">± 30.00</td><td>ms</td><td class="n">&gt; 300.0</td><td class="a-fail">FAIL</td></tr>
+        <tr><td>Order ack time</td><td>t_ack</td><td class="n">1.500</td><td class="n">± 0.500</td><td>ms</td><td class="n">&gt; 3.000</td><td class="a-fail">FAIL</td></tr>
+        <tr><td>Price dev limit</td><td>p_dev</td><td class="n">0.000</td><td class="n">± 2.500</td><td>bps</td><td class="n">&gt; 5.000</td><td class="a-warn">WARN</td></tr>
+        <tr><td>Position limit</td><td>pos_lim</td><td class="n">100.0</td><td class="n">± 0.000</td><td>%adv</td><td class="n">&gt; 100.0</td><td class="a-fail">FAIL</td></tr>
+        <tr><td>Risk cap util</td><td>r_util</td><td class="n">80.00</td><td class="n">± 5.000</td><td>%</td><td class="n">&gt; 95.00</td><td class="a-warn">WARN</td></tr>
+        <tr><td>Heartbeat intvl</td><td>t_hb</td><td class="n">1.000</td><td class="n">± 0.200</td><td>s</td><td class="n">&gt; 2.000</td><td class="a-fail">FAIL</td></tr>
+        <tr><td>P&amp;L var limit</td><td>var_95</td><td class="n">—</td><td class="n">—</td><td>$</td><td class="n">&gt; VAR95</td><td class="a-fail">FAIL</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="row2">
+    <!-- terminal -->
+    <div class="panel">
+      <div class="panel-h"><span class="t">Terminal output</span><span>REF-05 · agent ctrl log</span></div>
+      <div class="term">
+        <div class="dim">AGENT CTRL LOG — SESSION 2026-06-21</div>
+        <div>14:21:07.114Z · AGENT-047 · HB&nbsp;&nbsp; · ok · lat=0.312ms</div>
+        <div>14:21:07.615Z · AGENT-047 · MD&nbsp;&nbsp; · seq=881221 · ok</div>
+        <div>14:21:08.118Z · AGENT-047 · SIG&nbsp; · signals=42 · ok</div>
+        <div>14:21:08.621Z · AGENT-047 · RISK · util=78% · ok</div>
+        <div>14:21:09.127Z · AGENT-047 · ORD&nbsp; · id=771223 · ack=1.8ms</div>
+        <div class="err">14:21:10.133Z · AGENT-047 · ERROR · RISK_CAP_BREACH · util=96.7%</div>
+        <div class="err">14:21:10.134Z · AGENT-047 · STATE · TERMINATED · code=RCB_01</div>
+        <div class="err">14:21:10.241Z · ORCH&nbsp;&nbsp;&nbsp;&nbsp; · REPLACE · NEW AGENT-142</div>
+        <div>14:21:10.742Z · AGENT-142 · INIT · build=1.7.2 · ok</div>
+        <div>14:21:11.243Z · AGENT-142 · HB&nbsp;&nbsp; · ok · lat=0.289ms</div>
+        <div class="dim">…</div>
+      </div>
+    </div>
+
+    <!-- population grid -->
+    <div class="panel">
+      <div class="panel-h"><span class="t">Agent population grid</span><span>REF-03 · telemetry</span></div>
+      <div class="pop">
+        <div class="pop-cells" id="pop"></div>
+        <div class="pop-side">
+          <div class="leg"><span class="b"><span style="width:5px;height:5px;background:#111"></span></span> active</div>
+          <div class="leg"><span class="b" style="border-color:#E05A2B;color:#E05A2B">×</span> terminated</div>
+          <div class="leg"><span class="b"><span style="width:7px;height:7px;border:1.2px solid #6B6358;border-radius:50%"></span></span> init</div>
+          <hr class="sep"/>
+          <div class="stat"><span>ACTIVE</span><b>100</b></div>
+          <div class="stat"><span>TERMINATED</span><b class="acc">16</b></div>
+          <div class="stat"><span>INIT</span><b>04</b></div>
+          <hr class="sep"/>
+          <div class="stat"><span>UPTIME MED</span><b>3d 14:22</b></div>
+          <div class="stat"><span>P95 LAT</span><b>312µs</b></div>
+          <div class="stat"><span>ERR RATE</span><b>0.021%</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="note">VALUES ILLUSTRATIVE · IN PRODUCTION EACH PRIMITIVE BINDS TO LIVE TELEMETRY · NO INVENTED PERFORMANCE</p>
+
+  <div class="tblock">
+    <div><span class="k">Project</span><span class="big">Revenant apparatus</span></div>
+    <div><span class="k">Doc no.</span>RA-VD-0003<br/><span class="k" style="margin-top:4px">Date</span>2026-06-21</div>
+    <div><span class="k">Rev</span><span class="rev">0.1</span></div>
+  </div>
+</div>
+<script>
+  // population-grid primitive: data-driven cell render (120 agents)
+  (function(){
+    var grid=document.getElementById('pop'); if(!grid) return;
+    var N=120, term=16, init=4, cells=[];
+    for(var i=0;i<N;i++) cells.push('active');
+    // scatter terminated toward the tail (mirrors the lifecycle), init at the very end
+    for(var t=0;t<term;t++) cells[N-1-t-init]='term';
+    for(var k=0;k<init;k++) cells[N-1-k]='init';
+    grid.innerHTML=cells.map(function(c){return '<div class="cellbox c-'+c+'"></div>';}).join('');
+  })();
+</script>
+</body></html>
