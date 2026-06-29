@@ -1,0 +1,9 @@
+{
+  "id": "exploded-apparatus",
+  "brand": "revenant",
+  "model": "t2i-gemini-3-pro",
+  "cost": 0.18,
+  "prompt": "Orthographic exploded technical illustration of a stacked autonomous trading-agent module, three-quarter view. Eight thin circuit-board layers separated vertically with fine leader lines and numbered mono labels 01 sensor suite, 02 signal processor, 03 decision core, 04 policy module, 05 routing interface, 06 telemetry bus, 07 power watchdog, 08 chassis housing. matte anodized aluminium and bare PCB. monochrome black ink line drawing on warm off-white paper #EDE9E5, a single brick-orange #E05A2B accent only, corner registration crosshairs, datum target triangles, dimension tolerances and an ISO-style title block; no colour anywhere except the one orange accent. 1960s Bell Labs technical manual crossed with a modern Anduril defense schematic — austere, clinical, exact. Each number 01–08 appears exactly once, in order.",
+  "url": "https://media.flora.ai/node-inputs/2026/6/28/anonymous/4c0ebb91-fe0a-4090-aaf0-d1e0049eab47_nGpjb7ULBG.png",
+  "at": 1782665344553
+}

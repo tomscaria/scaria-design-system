@@ -73,8 +73,9 @@ async function runOne({ id, category, model, prompt, params, image_url }, PJ) {
     if (/fail|error|cancel/i.test(st)) return { id, cost, error: "run " + st };
   }
   if (!url) return { id, cost, error: "timeout last=" + st };
-  const ext = (url.split("?")[0].split(".").pop() || "png").slice(0, 4);
-  const buf = Buffer.from(await fetch(url).then(r => r.arrayBuffer()));
+  const resp = await fetch(url); const ct = resp.headers.get("content-type") || "";
+  const ext = /svg/.test(ct) ? "svg" : /(jpeg|jpg)/.test(ct) ? "jpg" : /webp/.test(ct) ? "webp" : /png/.test(ct) ? "png" : (url.split("?")[0].split(".").pop() || "png").slice(0, 4);
+  const buf = Buffer.from(await resp.arrayBuffer());
   fs.writeFileSync(path.join(outDir, `${id}.${ext}`), buf);
   fs.writeFileSync(path.join(outDir, `${id}.meta.json`), JSON.stringify({ id, brand, model, cost, prompt, url, at: Date.now() }, null, 2));
   return { id, cost, bytes: buf.length };
@@ -88,6 +89,7 @@ async function worklist(PJ) {
     if (!fs.existsSync(fromRoot)) { console.error(`no bases for '${fromBrand}' to vary from`); process.exit(1); }
     const items = [];
     for (const cat of fs.readdirSync(fromRoot)) {
+      if (only && cat !== only) continue;
       const cd = path.join(fromRoot, cat);
       for (const f of fs.readdirSync(cd).filter(f => /\.(png|jpg|jpeg|webp)$/.test(f))) {
         const id = f.replace(/\.[^.]+$/, "");
