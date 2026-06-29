@@ -6,6 +6,12 @@
       "runtimeExecutable": "python3",
       "runtimeArgs": ["-m", "http.server", "7340", "--directory", "/Users/stew/scaria/lore-design-system"],
       "port": 7340
+    },
+    {
+      "name": "preview-wt",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "7341", "--directory", "/Users/stew/scaria/lore-design-system/.claude/worktrees/happy-bardeen-defc58"],
+      "port": 7341
     }
   ]
 }
