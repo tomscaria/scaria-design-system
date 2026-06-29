@@ -45,10 +45,13 @@ async function ensureProject() {
 }
 
 async function uploadSeed(file) {
+  const ext = path.extname(file).toLowerCase();
+  const mime = ext === ".png" ? "image/png" : ext === ".webp" ? "image/webp" : "image/jpeg";
   const fd = new FormData();
-  fd.append("file", new Blob([fs.readFileSync(file)]), path.basename(file));
+  fd.append("file", new Blob([fs.readFileSync(file)], { type: mime }), path.basename(file));
   fd.append("workspace_id", WS);
   const r = await fetch(BASE + "/assets", { method: "POST", headers: H, body: fd }).then(r => r.json());
+  if (r.error) throw new Error(`upload failed: ${r.error.message}`);
   return r.url;
 }
 
