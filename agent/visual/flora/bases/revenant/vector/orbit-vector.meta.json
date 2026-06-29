@@ -2,7 +2,8 @@
   "id": "orbit-vector",
   "brand": "revenant",
   "model": "t2i-recraft-v4-1-vector-t2i",
-  "prompt": "Clean vector lifecycle orbital diagram: three THIN concentric ring OUTLINES only (no filled or thick black rings), hairline strokes; BIRTH at top, OPERATION at centre, TERMINATION at bottom; a fine degree tick ring, a dashed transition path, an ISO title block. Flat precise hairline line art with lots of negative space. monochrome black ink line drawing on warm off-white paper #EDE9E5, a single brick-orange #E05A2B accent only, corner registration crosshairs, datum target triangles, dimension tolerances and an ISO-style title block; no colour anywhere except the one orange accent.",
-  "url": "https://media.flora.ai/node-inputs/2026/6/29/anonymous/17a2b082-33bf-4bc8-85ea-96eea1362b18_y_F5SuAN9.svg",
-  "at": 0
+  "cost": 0.096,
+  "prompt": "Clean vector lifecycle orbital diagram: concentric rings, BIRTH OPERATION TERMINATION states, a degree tick ring, a dashed transition path. Flat precise line art. monochrome black ink line drawing on warm off-white paper #EDE9E5, a single brick-orange #E05A2B accent only, corner registration crosshairs, datum target triangles, dimension tolerances and an ISO-style title block; no colour anywhere except the one orange accent.",
+  "url": "https://media.flora.ai/node-inputs/2026/6/28/anonymous/a8c613cc-9a13-492d-adc5-53da1f28edbc_dsWW2wOTpt.svg",
+  "at": 1782665393818
 }
