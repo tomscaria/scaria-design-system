@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Lore — LeadRow (hover-to-somewhere list)</title>
+<link rel="stylesheet" href="../tokens/colors_and_type.css"/>
+<link rel="stylesheet" href="../agent/visual/patterns/leadrow.css"/>
+<link rel="stylesheet" href="theme-switcher.css"/>
+<style>
+  @font-face{font-family:"Aeonik";font-weight:400;font-display:swap;src:url("../fonts/Aeonik-Regular.woff2") format("woff2")}
+  @font-face{font-family:"Aeonik";font-weight:500;font-display:swap;src:url("../fonts/Aeonik-Medium.woff2") format("woff2")}
+  @font-face{font-family:"Aeonik";font-weight:700;font-display:swap;src:url("../fonts/Aeonik-Bold.woff2") format("woff2")}
+  @font-face{font-family:"Aeonik Mono";font-weight:400;font-display:swap;src:url("../fonts/AeonikMono-Regular.woff2") format("woff2")}
+  @font-face{font-family:"Aeonik Mono";font-weight:500;font-display:swap;src:url("../fonts/AeonikMono-Medium.woff2") format("woff2")}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font-sans);min-height:100vh;padding:40px 28px 96px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:760px;margin:0 auto}
+  h1{font-size:30px;font-weight:700;letter-spacing:-.02em;margin:0 0 6px}
+  .sub{font-family:var(--font-mono);font-size:12px;color:var(--fg-3);margin:0 0 28px;max-width:64ch;line-height:1.6}
+  h2{font-size:12px;font-weight:500;font-family:var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--fg-3);margin:34px 0 12px}
+</style></head>
+<body data-theme="lore-light">
+<div class="wrap">
+  <h1>LeadRow</h1>
+  <p class="sub">The hover-to-somewhere list row (uniswap / phantom / rainbow lineage). The entire row is a link;
+    hovering lifts the surface, slides the row toward its destination, and reveals an inline sparkline + the go-arrow.
+    Theme-agnostic — every value resolves from kit tokens, so the same markup re-skins under any theme. Switch themes ↘.</p>
+
+  <h2>Markets — hover any row</h2>
+  <div class="leadrow-list">
+
+    <a class="leadrow" href="#btc">
+      <span class="lr-mark"><svg viewBox="0 0 30 30"><circle cx="15" cy="15" r="13" fill="none" stroke="currentColor" stroke-width="2"/><path d="M11 9h6a4 4 0 0 1 0 8h-6zM11 13h6a4 4 0 0 1 0 8h-6zM13 7v3M16 7v3M13 21v3M16 21v3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+      <span class="lr-id"><b class="lr-name">Bitcoin</b><span class="lr-sub">BTC</span></span>
+      <svg class="lr-spark" viewBox="0 0 80 24" preserveAspectRatio="none"><path d="M0 18 L12 16 L24 19 L36 11 L48 13 L60 6 L72 8 L80 3"/></svg>
+      <span class="lr-fig"><b class="lr-val">$64,210</b><span class="lr-delta">+2.4%</span></span>
+      <span class="lr-go" aria-hidden="true">→</span>
+    </a>
+
+    <a class="leadrow" href="#eth">
+      <span class="lr-mark"><svg viewBox="0 0 30 30"><path d="M15 3 L24 15 L15 20 L6 15 Z M15 22 L24 17 L15 27 L6 17 Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></span>
+      <span class="lr-id"><b class="lr-name">Ethereum</b><span class="lr-sub">ETH</span></span>
+      <svg class="lr-spark" viewBox="0 0 80 24" preserveAspectRatio="none"><path d="M0 8 L12 10 L24 7 L36 14 L48 12 L60 17 L72 15 L80 19"/></svg>
+      <span class="lr-fig"><b class="lr-val">$3,118</b><span class="lr-delta neg">−1.1%</span></span>
+      <span class="lr-go" aria-hidden="true">→</span>
+    </a>
+
+    <a class="leadrow" href="#sol">
+      <span class="lr-mark"><svg viewBox="0 0 30 30"><path d="M7 10 h14 l-3 3 H4 z M7 15 h14 l-3 3 H4 z M9 20 h14 l-3 3 H6 z" fill="currentColor"/></svg></span>
+      <span class="lr-id"><b class="lr-name">Solana</b><span class="lr-sub">SOL</span></span>
+      <svg class="lr-spark" viewBox="0 0 80 24" preserveAspectRatio="none"><path d="M0 20 L12 17 L24 18 L36 12 L48 9 L60 11 L72 5 L80 4"/></svg>
+      <span class="lr-fig"><b class="lr-val">$148.92</b><span class="lr-delta">+6.7%</span></span>
+      <span class="lr-go" aria-hidden="true">→</span>
+    </a>
+
+    <a class="leadrow" href="#avax">
+      <span class="lr-mark"><svg viewBox="0 0 30 30"><path d="M15 5 L26 24 H4 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M15 13 l4 7 h-8 z" fill="currentColor"/></svg></span>
+      <span class="lr-id"><b class="lr-name">Avalanche</b><span class="lr-sub">AVAX</span></span>
+      <svg class="lr-spark" viewBox="0 0 80 24" preserveAspectRatio="none"><path d="M0 6 L12 9 L24 8 L36 13 L48 16 L60 14 L72 19 L80 21"/></svg>
+      <span class="lr-fig"><b class="lr-val">$36.40</b><span class="lr-delta neg">−3.2%</span></span>
+      <span class="lr-go" aria-hidden="true">→</span>
+    </a>
+
+    <a class="leadrow" href="#link">
+      <span class="lr-mark"><svg viewBox="0 0 30 30"><path d="M15 4 L25 10 V20 L15 26 L5 20 V10 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span>
+      <span class="lr-id"><b class="lr-name">Chainlink</b><span class="lr-sub">LINK</span></span>
+      <svg class="lr-spark" viewBox="0 0 80 24" preserveAspectRatio="none"><path d="M0 14 L12 13 L24 15 L36 10 L48 12 L60 9 L72 11 L80 7"/></svg>
+      <span class="lr-fig"><b class="lr-val">$17.85</b><span class="lr-delta">+0.9%</span></span>
+      <span class="lr-go" aria-hidden="true">→</span>
+    </a>
+
+  </div>
+
+  <h2>Accounts — same row, different payload</h2>
+  <div class="leadrow-list">
+
+    <a class="leadrow" href="#treasury">
+      <span class="lr-mark"><svg viewBox="0 0 30 30"><rect x="5" y="9" width="20" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M5 13 h20 M15 17 h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+      <span class="lr-id"><b class="lr-name">Treasury</b><span class="lr-sub">USD · operating</span></span>
+      <svg class="lr-spark" viewBox="0 0 80 24" preserveAspectRatio="none"><path d="M0 19 L12 18 L24 16 L36 17 L48 12 L60 10 L72 8 L80 5"/></svg>
+      <span class="lr-fig"><b class="lr-val">$1.28M</b><span class="lr-delta">+12.4%</span></span>
+      <span class="lr-go" aria-hidden="true">→</span>
+    </a>
+
+    <a class="leadrow" href="#yield">
+      <span class="lr-mark"><svg viewBox="0 0 30 30"><circle cx="15" cy="15" r="11" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 16 l3 3 l7 -7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="lr-id"><b class="lr-name">Yield vault</b><span class="lr-sub">staked · 30d lock</span></span>
+      <svg class="lr-spark" viewBox="0 0 80 24" preserveAspectRatio="none"><path d="M0 21 L12 20 L24 18 L36 16 L48 14 L60 12 L72 10 L80 8"/></svg>
+      <span class="lr-fig"><b class="lr-val">$420,118</b><span class="lr-delta">+5.1%</span></span>
+      <span class="lr-go" aria-hidden="true">→</span>
+    </a>
+
+  </div>
+</div>
+
+<script src="theme-switcher.js"></script>
+</body></html>

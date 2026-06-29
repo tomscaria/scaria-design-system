@@ -39,6 +39,9 @@
    Universal interaction; theme-agnostic. Mount via the JS, style re-skins by token. */
 @import "./agent/visual/patterns/orbfield.css";
 
+/* LeadRow — the hover-to-somewhere list row (link rows that lift + reveal + navigate). */
+@import "./agent/visual/patterns/leadrow.css";
+
 /* NOTE: the BoTW flair overlay (agent/visual/botw/botw-flair.css) is intentionally
    NOT imported here — it is Lore-only marketing flair. Opt in per-project with
    `@import '@tomscaria/lore-design-system/botw'` + data-flair="botw". */

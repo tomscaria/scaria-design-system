@@ -1,0 +1,91 @@
+/* ============================================================
+   leadrow.css — the "hover-to-somewhere" list row
+   ------------------------------------------------------------
+   Distilled from uniswap/phantom/rainbow: the ENTIRE row is a
+   link; hovering lifts the surface and reveals an inline preview
+   (sparkline + delta + a go-arrow); clicking navigates. Every
+   row "leads somewhere".
+
+   Theme-agnostic — surface/lift/accent all resolve from kit
+   tokens, so the same markup re-skins under any [data-theme].
+   Fixed column tracks (no layout shift on the reveal).
+
+   Markup:
+     <a class="leadrow" href="/markets/btc">
+       <span class="lr-mark"><svg>…glyph/logo…</svg></span>
+       <span class="lr-id"><b class="lr-name">Bitcoin</b><span class="lr-sub">BTC</span></span>
+       <svg class="lr-spark" viewBox="0 0 80 24" preserveAspectRatio="none"><path d="…"/></svg>
+       <span class="lr-fig"><b class="lr-val">$64,210</b><span class="lr-delta">+2.4%</span></span>
+       <span class="lr-go" aria-hidden="true">→</span>
+     </a>
+   ============================================================ */
+
+.leadrow-list {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg, 16px);
+  overflow: hidden;
+  background: var(--bg-2);
+}
+
+.leadrow {
+  display: grid;
+  grid-template-columns: 34px 1fr 80px minmax(96px, auto) 18px;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 18px;
+  text-decoration: none;
+  color: var(--fg);
+  border-top: 1px solid var(--line);
+  /* paired surface tokens (Uniswap convention) — fall back to theme bg steps */
+  background: var(--surface, transparent);
+  transition:
+    background var(--motion-duration-micro, 150ms) var(--motion-ease-interaction, ease),
+    transform var(--motion-duration-micro, 150ms) var(--motion-ease-interaction, ease);
+}
+.leadrow:first-child { border-top: none; }
+
+/* the lift: surface brightens, row nudges toward its destination */
+.leadrow:hover,
+.leadrow:focus-visible {
+  background: var(--surface-hover, var(--bg-3, var(--bg)));
+  transform: translateX(3px);
+  outline: none;
+}
+
+/* mark — glyph/logo tile; dim at rest, accent on hover (like the OrbField) */
+.lr-mark {
+  width: 30px; height: 30px;
+  display: grid; place-items: center;
+  color: var(--fg-3);
+  transition: color var(--motion-duration-micro, 150ms) ease;
+}
+.lr-mark svg, .lr-mark img { width: 100%; height: 100%; fill: currentColor; stroke: currentColor; }
+.leadrow:hover .lr-mark, .leadrow:focus-visible .lr-mark { color: var(--accent); }
+
+.lr-id { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.lr-name { font-weight: 500; }
+.lr-sub { font-family: var(--font-mono); font-size: 12px; color: var(--fg-3); letter-spacing: .02em; }
+
+/* inline preview — fixed 80px slot, fades+grows in on hover (no column shift) */
+.lr-spark { width: 80px; height: 24px; opacity: 0; transform: scaleX(.7); transform-origin: left;
+  transition: opacity .24s ease, transform .24s var(--motion-ease-reveal, ease); }
+.leadrow:hover .lr-spark, .leadrow:focus-visible .lr-spark { opacity: 1; transform: none; }
+.lr-spark path { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+.lr-fig { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+.lr-val { font-family: var(--font-mono); font-variant-numeric: tabular-nums slashed-zero; }
+.lr-delta { font-family: var(--font-mono); font-size: 12px; color: var(--success); }
+.lr-delta.neg { color: var(--danger); }
+
+/* the "leads somewhere" affordance — arrow slides in on hover */
+.lr-go { color: var(--fg-3); opacity: 0; transform: translateX(-5px);
+  transition: opacity var(--motion-duration-micro, 150ms) ease, transform var(--motion-duration-micro, 150ms) var(--motion-ease-interaction, ease); }
+.leadrow:hover .lr-go, .leadrow:focus-visible .lr-go { opacity: 1; transform: none; color: var(--accent); }
+
+@media (prefers-reduced-motion: reduce) {
+  .leadrow, .lr-spark, .lr-go { transition: none; }
+  .leadrow:hover, .leadrow:focus-visible { transform: none; }
+  .lr-spark { transform: none; }
+}
