@@ -6,7 +6,9 @@
 
 const HERO = "t2i-gemini-3-pro";
 const VECTOR = "t2i-recraft-v4-1-vector-t2i";
-const CHAR = "is2i-ideogram-character";
+// characters: NBP t2i for the first pass (no reference yet). Consistency-via-reference
+// (is2i-ideogram-character seeded by the chosen apex) is a later refinement.
+const CHAR = "t2i-gemini-3-pro";
 
 export const manifest = [
   // ── hero plates (rich, marketing + form bases) ─────────────────────────────
@@ -23,7 +25,7 @@ export const manifest = [
   { id: "apparatus-schematic", category: "vector", model: VECTOR, params: {},
     prompt: "Clean technical vector schematic of an autonomous trading apparatus, flat precise line art, labelled subsystems and connectors, an ISO title block. {{style}}." },
   { id: "orbit-vector", category: "vector", model: VECTOR, params: {},
-    prompt: "Clean vector lifecycle orbital diagram: concentric rings, BIRTH OPERATION TERMINATION states, a degree tick ring, a dashed transition path. Flat precise line art. {{style}}." },
+    prompt: "Clean vector lifecycle orbital diagram: three THIN concentric ring OUTLINES only (no filled or thick black rings), hairline strokes; BIRTH at top, OPERATION at centre, TERMINATION at bottom; a fine degree tick ring, a dashed transition path, an ISO title block. Flat precise hairline line art with lots of negative space. {{style}}." },
 
   // ── lifecycle characters (austere 'specimen' entities, NOT mascots) ─────────
   { id: "char-birth", category: "character", model: CHAR, params: {},

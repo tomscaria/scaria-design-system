@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Revenant — Flora draft bases</title>
+<style>
+  :root{--concrete:#EDE9E5;--ink:#111;--accent:#E05A2B;--hair:#C9C3BA;--muted:#6B6358;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;--sans:"Aeonik","Inter",system-ui,sans-serif}
+  body{margin:0;background:#dedad3;color:var(--ink);font-family:var(--sans);padding:24px}
+  h1{font-size:14px;letter-spacing:.18em;text-transform:uppercase;margin:0 0 2px}
+  .sub{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin:0 0 18px}
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .cell{background:var(--concrete);border:1px solid var(--hair)}
+  .cell .img{aspect-ratio:1;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#fff}
+  .cell img{max-width:100%;max-height:100%;object-fit:contain;display:block}
+  .cap{font-family:var(--mono);font-size:10px;padding:7px 9px;border-top:1px solid var(--hair);display:flex;justify-content:space-between}
+  .cap .id{color:var(--ink);font-weight:600}
+  .cap .cat{color:var(--muted)}
+  .grp{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;grid-column:1/-1;margin:8px 0 -4px;border-bottom:1px solid var(--hair);padding-bottom:4px}
+</style></head>
+<body>
+  <h1>Revenant — Flora draft bases</h1>
+  <div class="sub">16 assets · draft pass (1 each) · $2.63 · for review before iteration / upscale</div>
+  <div class="grid" id="g"></div>
+<script>
+  const B='/agent/visual/flora/bases/revenant/';
+  const items=[
+    ['HERO PLATES (NBP)'],
+    ['hero/exploded-apparatus.png','exploded-apparatus','hero'],
+    ['hero/lifecycle-orbit.png','lifecycle-orbit','hero'],
+    ['hero/full-system.png','full-system','hero'],
+    ['hero/population-wall.png','population-wall','hero'],
+    ['EDITABLE VECTORS (Recraft)'],
+    ['vector/apparatus-schematic.svg','apparatus-schematic','vector'],
+    ['vector/orbit-vector.svg','orbit-vector','vector'],
+    ['LIFECYCLE CHARACTERS (NBP)'],
+    ['character/char-birth.png','char-birth','character'],
+    ['character/char-canary.png','char-canary','character'],
+    ['character/char-apex.png','char-apex','character'],
+    ['character/char-revenant.png','char-revenant','character'],
+    ['LOGO'],
+    ['logo/wordmark.svg','wordmark','logo'],
+    ['logo/mark-3d.png','mark-3d','logo'],
+    ['APP ILLUSTRATIONS'],
+    ['app/empty-graveyard.png','empty-graveyard','app'],
+    ['app/loader-orbit.png','loader-orbit','app'],
+    ['app/success-apex.png','success-apex','app'],
+    ['SOCIAL / OG'],
+    ['og/og-apparatus.png','og-apparatus','og'],
+  ];
+  const g=document.getElementById('g');
+  for(const it of items){
+    if(it.length===1){const d=document.createElement('div');d.className='grp';d.textContent=it[0];g.appendChild(d);continue;}
+    const [src,id,cat]=it;
+    const c=document.createElement('div');c.className='cell';
+    c.innerHTML=`<div class="img"><img src="${B}${src}" loading="eager"/></div><div class="cap"><span class="id">${id}</span><span class="cat">${cat}</span></div>`;
+    g.appendChild(c);
+  }
+</script>
+</body></html>

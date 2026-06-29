@@ -1,0 +1,9 @@
+{
+  "id": "population-wall",
+  "brand": "revenant",
+  "model": "t2i-gemini-3-pro",
+  "cost": 0.18,
+  "prompt": "A telemetry wall: a dense regular grid of agent status cells — most filled 'active', some marked terminated, a few 'init' — with engraved column readouts, uptime and latency figures and tolerances down the side. monochrome black ink line drawing on warm off-white paper #EDE9E5, a single brick-orange #E05A2B accent only, corner registration crosshairs, datum target triangles, dimension tolerances and an ISO-style title block; no colour anywhere except the one orange accent.",
+  "url": "https://media.flora.ai/node-inputs/2026/6/28/anonymous/4d83288f-dbf8-4693-98a8-bce1ef1476c4_dSFsDqlEI.png",
+  "at": 1782665339468
+}
