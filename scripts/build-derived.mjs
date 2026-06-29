@@ -103,6 +103,7 @@ export declare const brands: readonly ("lore" | "revenant")[];
     "agent/visual/patterns/patterns.css",
     "agent/visual/patterns/orbfield.css",
     "agent/visual/patterns/orbfield.js",
+    "agent/visual/patterns/leadrow.css",
     "agent/visual/botw/botw-flair.css",
     "agent/visual/glyphs/ledger-glyphs.svg",
     "agent/visual/motion/motion.css",

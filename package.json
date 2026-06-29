@@ -53,6 +53,7 @@
     "./patterns": "./agent/visual/patterns/patterns.css",
     "./orbfield": "./agent/visual/patterns/orbfield.css",
     "./orbfield.js": "./agent/visual/patterns/orbfield.js",
+    "./leadrow": "./agent/visual/patterns/leadrow.css",
     "./botw": "./agent/visual/botw/botw-flair.css",
     "./glyphs/ledger": "./agent/visual/glyphs/ledger-glyphs.svg",
     "./motion": "./agent/visual/motion/motion.css",
