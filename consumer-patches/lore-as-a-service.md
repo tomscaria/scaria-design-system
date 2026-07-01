@@ -14,7 +14,7 @@ Same shape as the other Lore consumers:
 
 1. Add dep to `package.json` (the relevant consuming app — likely `packages/api` or whichever has UI surfaces)
 2. Tailwind preset import
-3. `@import '@tomscaria/lore-design-system/styles'` in globals
+3. `@import '@tomscaria/scaria-design-system/styles'` in globals
 4. `<html data-theme="lore-light" data-expression="product">` for product surfaces
 5. Lockfile regen
 6. Smoke test

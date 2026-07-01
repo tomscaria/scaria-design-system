@@ -1,0 +1,31 @@
+{
+  "$schema": "https://scaria-design-system.tomscaria.com/schemas/component-tokens.json",
+  "component": "Sparkline",
+  "version": "0.1.0",
+  "harvested_from": "ROLR prediction-market (Tick streaming price, featured outcome history)",
+  "consumes": {
+    "color": ["--up", "--down", "--accent", "--info"],
+    "motion": ["--motion-ease-ambient"],
+    "motion_primitive": ["stream", "trace"]
+  },
+  "variants": {
+    "streaming": [true, false],
+    "tone": ["auto", "fixed"],
+    "leadingDot": [true, false]
+  },
+  "default_variants": { "streaming": false, "tone": "auto", "windowSize": 30 },
+  "performance": {
+    "max_streaming_per_viewport": 3,
+    "tick_interval_ms": 1000
+  },
+  "accessibility": {
+    "decorative": true,
+    "pair_with": "LiveStat current value as text",
+    "reduced_motion": "static window, no scroll, no trace"
+  },
+  "anti_patterns": [
+    "More than 3 streaming sparklines per viewport",
+    "Over-aggressive Y autoscale making flat data look volatile",
+    "Streaming a series that is not actually updating"
+  ]
+}

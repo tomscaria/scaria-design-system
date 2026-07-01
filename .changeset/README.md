@@ -1,6 +1,6 @@
 # Changesets
 
-Versioning and release notes for `@tomscaria/lore-design-system`.
+Versioning and release notes for `@tomscaria/scaria-design-system`.
 
 ## Workflow
 

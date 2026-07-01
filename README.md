@@ -15,7 +15,7 @@ The result will use the correct fonts, type scale, motion curves, color palette,
 ## Structure
 
 ```
-lore-design-system/
+scaria-design-system/
 ├── readme.md              ← you are here
 ├── magic_trick.md         ← Scaria, Inc. umbrella POV
 ├── human/                 ← PDFs, Figma links
@@ -64,13 +64,13 @@ Default expression is `product`. Marketing/deck surfaces opt in.
 
 **As an npm package** (for traditional component imports):
 ```sh
-npm install @tomscaria/lore-design-system
+npm install @tomscaria/scaria-design-system
 ```
 ```ts
-import { Button, Card } from '@tomscaria/lore-design-system';
+import { Button, Card } from '@tomscaria/scaria-design-system';
 ```
 ```css
-@import '@tomscaria/lore-design-system/styles';
+@import '@tomscaria/scaria-design-system/styles';
 ```
 
 ## Editing

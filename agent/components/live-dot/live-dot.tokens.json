@@ -1,0 +1,26 @@
+{
+  "$schema": "https://scaria-design-system.tomscaria.com/schemas/component-tokens.json",
+  "component": "LiveDot",
+  "version": "0.1.0",
+  "harvested_from": "ROLR prediction-market (livedot/blink keyframe)",
+  "consumes": {
+    "color": ["--live", "--up", "--down", "--accent", "--brand", "--fg-muted"],
+    "type": ["--fs-body-xs", "--font-mono"],
+    "motion": ["--motion-duration-live", "--motion-ease-ambient"]
+  },
+  "variants": {
+    "tone": ["live", "up", "down", "accent", "brand"],
+    "pulsing": [true, false]
+  },
+  "default_variants": { "tone": "live", "pulsing": true },
+  "accessibility": {
+    "color_only": false,
+    "requires_adjacent_text": true,
+    "reduced_motion": "render static"
+  },
+  "anti_patterns": [
+    "Animating the label text instead of the dot",
+    "Using --live (pink) for market direction",
+    "Clusters of competing pulsing dots"
+  ]
+}

@@ -1,20 +1,20 @@
 # ============================================================
 # CONSUMER SETUP — copy this file to .npmrc in the consuming
-# project to install @tomscaria/lore-design-system from
+# project to install @tomscaria/scaria-design-system from
 # GitHub Packages (private registry).
 # ============================================================
 #
 # 1. Generate a GitHub Personal Access Token (classic) at
 #    https://github.com/settings/tokens with `read:packages` scope.
 #    OR use a fine-grained token with "Packages: Read" permission
-#    on the lore-design-system repo.
+#    on the scaria-design-system repo.
 #
 # 2. Export it as an env var (do NOT commit the actual token):
 #      export NPM_GITHUB_TOKEN=ghp_xxxxxxxxxxxxxxxxx
 #
 # 3. Copy this file to .npmrc in the consuming project root.
 #
-# 4. npm install @tomscaria/lore-design-system
+# 4. npm install @tomscaria/scaria-design-system
 #
 # ============================================================
 

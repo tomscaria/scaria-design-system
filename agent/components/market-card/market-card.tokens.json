@@ -1,0 +1,28 @@
+{
+  "$schema": "https://scaria-design-system.tomscaria.com/schemas/component-tokens.json",
+  "component": "MarketCard",
+  "version": "0.1.0",
+  "harvested_from": "ROLR prediction-market (markets list, both surfaces)",
+  "composes": ["OddsBar", "OutcomeChip", "LiveDot", "LiveStat"],
+  "consumes": {
+    "color": ["--bg-2", "--bg-muted", "--line", "--fg", "--fg-muted", "--up", "--down", "--accent"],
+    "type": ["--fs-body-md", "--fs-body-sm", "--fw-medium", "--font-mono"],
+    "radii": ["--r-lg"],
+    "shadow": ["--shadow-sm"],
+    "motion": ["--motion-duration-micro", "--motion-ease-interaction"]
+  },
+  "variants": {
+    "live": [true, false],
+    "state": ["open", "resolving", "resolved"]
+  },
+  "default_variants": { "live": false, "state": "open" },
+  "accessibility": {
+    "actionable_target": "whole card when onClick set",
+    "prices_in_text": true
+  },
+  "anti_patterns": [
+    "Colored left-border accent rail (forbidden vocabulary)",
+    "Animating the whole card on every price tick",
+    "Question type below --fs-body-sm"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "$schema": "https://scaria-design-system.tomscaria.com/schemas/component-tokens.json",
+  "component": "LiveStat",
+  "version": "0.1.0",
+  "harvested_from": "ROLR prediction-market (count-up pot/players, latency chip, countdown)",
+  "consumes": {
+    "color": ["--fg", "--fg-muted", "--up", "--down", "--accent", "--live"],
+    "type": ["--font-mono", "--font-display", "--fs-body-xs", "--fs-body-sm"],
+    "motion": ["--motion-duration-pop", "--motion-ease-pop"]
+  },
+  "variants": {
+    "format": ["money", "int", "cents", "duration"],
+    "display": ["mono", "serif"],
+    "countOnChange": [true, false],
+    "popOnChange": [true, false]
+  },
+  "default_variants": { "format": "int", "display": "mono", "countOnChange": true, "popOnChange": false },
+  "numerics": { "font_variant_numeric": "tabular-nums slashed-zero", "required": true },
+  "accessibility": {
+    "aria_live": "off for high-frequency values",
+    "reduced_motion": "no count, no pop"
+  },
+  "anti_patterns": [
+    "Proportional font on an updating value",
+    "Count-animating a per-second countdown",
+    "count + pop on the same high-frequency value"
+  ]
+}

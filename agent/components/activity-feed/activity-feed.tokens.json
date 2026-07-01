@@ -1,0 +1,31 @@
+{
+  "$schema": "https://scaria-design-system.tomscaria.com/schemas/component-tokens.json",
+  "component": "ActivityFeed",
+  "version": "0.1.0",
+  "harvested_from": "ROLR prediction-market (The Crew SPV live feed, feedin keyframe)",
+  "consumes": {
+    "color": ["--bg-2", "--line", "--fg", "--fg-muted", "--up", "--down", "--accent", "--accent-soft"],
+    "type": ["--font-mono", "--fs-body-sm", "--fs-body-xs"],
+    "radii": ["--r-md"],
+    "motion": ["--motion-duration-entry", "--motion-ease-reveal"],
+    "motion_primitive": ["feed_in"]
+  },
+  "variants": {
+    "rowTone": ["up", "down", "neutral", "mine"]
+  },
+  "default_variants": { "staggerMs": 80 },
+  "copy": {
+    "casing": "sentence",
+    "separator": "middle-dot",
+    "time": "relative (2h ago)"
+  },
+  "accessibility": {
+    "aria_live": "polite (throttled)",
+    "amount_direction": "sign + tone, not color alone"
+  },
+  "anti_patterns": [
+    "Re-running feed_in on the whole list",
+    "Stagger beyond 120ms",
+    "Emoji avatar fallback in product chrome"
+  ]
+}

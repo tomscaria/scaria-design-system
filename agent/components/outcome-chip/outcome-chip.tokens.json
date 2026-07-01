@@ -1,0 +1,27 @@
+{
+  "$schema": "https://scaria-design-system.tomscaria.com/schemas/component-tokens.json",
+  "component": "OutcomeChip",
+  "version": "0.1.0",
+  "harvested_from": "ROLR prediction-market (featured legend, resolving-soon, big-moves rows)",
+  "consumes": {
+    "color": ["--bg", "--bg-2", "--bg-muted", "--line", "--fg", "--fg-2", "--fg-muted", "--up", "--down", "--accent", "--accent-soft"],
+    "type": ["--font-mono", "--fs-body-xs", "--fw-bold"],
+    "radii": ["--r-sm"],
+    "motion": ["--motion-duration-micro", "--motion-ease-interaction"]
+  },
+  "variants": {
+    "size": ["sm", "md"],
+    "selected": [true, false],
+    "direction": ["flat", "up", "down"]
+  },
+  "default_variants": { "size": "sm", "selected": false },
+  "accessibility": {
+    "direction_signal": "arrow glyph, not color alone",
+    "tappable_is_button": true
+  },
+  "anti_patterns": [
+    "Coloring the whole chip by direction",
+    "Delta without sign + arrow",
+    "More than two sizes"
+  ]
+}

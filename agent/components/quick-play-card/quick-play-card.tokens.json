@@ -1,0 +1,27 @@
+{
+  "$schema": "https://scaria-design-system.tomscaria.com/schemas/component-tokens.json",
+  "component": "QuickPlayCard",
+  "version": "0.1.0",
+  "harvested_from": "ROLR prediction-market (casual home quick-play, Tick/Bingo/Pool tiles)",
+  "composes": ["Sparkline", "LiveStat", "LiveDot", "SquaresGrid"],
+  "consumes": {
+    "color": ["--brand", "--bg-2", "--accent", "--accent-deep", "--accent-fg", "--live", "--fg", "--fg-muted"],
+    "type": ["--font-mono", "--font-display", "--fs-body-md", "--fw-bold"],
+    "radii": ["--r-xl"],
+    "motion": ["--motion-duration-micro", "--motion-ease-interaction"],
+    "motion_primitive": ["magnet", "stream", "live_pulse"]
+  },
+  "variants": {
+    "game": ["tick", "bingo", "pool"]
+  },
+  "default_variants": { "game": "tick", "ctaLabel": "Play \u2192" },
+  "accessibility": {
+    "cta_is_labelled_button": true,
+    "presence_in_text": true
+  },
+  "anti_patterns": [
+    "More than one lime CTA per card",
+    "Three competing live elements",
+    "Arrow-only CTA with no accessible name"
+  ]
+}

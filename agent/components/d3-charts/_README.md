@@ -4,7 +4,7 @@
 
 ## What goes here
 
-Per the unification plan (Move 3): D3 chart components that exist in Thomas OS but not in the current `lore-design-system`. The Thomas OS instance is ahead — its charts are the canonical source going forward.
+Per the unification plan (Move 3): D3 chart components that exist in Thomas OS but not in the current `scaria-design-system`. The Thomas OS instance is ahead — its charts are the canonical source going forward.
 
 Expected file shape (per component):
 
@@ -39,6 +39,6 @@ When Thomas OS becomes accessible (MCP scope, local clone, or file upload):
 ## Anti-patterns
 
 - ❌ Lifting full component code without the spec — the spec is what makes it agent-readable
-- ❌ Lifting drift (Thomas OS files that diverge from `lore-design-system` HEAD without being genuinely ahead)
+- ❌ Lifting drift (Thomas OS files that diverge from `scaria-design-system` HEAD without being genuinely ahead)
 - ❌ Hard-coding colors / sizes in the chart code rather than reading CSS vars
 - ❌ Adding chart-library dependencies (d3, recharts) to the kit's `peerDependencies` without an explicit minor version bump

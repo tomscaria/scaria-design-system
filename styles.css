@@ -1,11 +1,11 @@
 /* ============================================================
-   @tomscaria/lore-design-system — root styles
+   @tomscaria/scaria-design-system — root styles
    ------------------------------------------------------------
    Imports every theme's per-theme variable block + the
    brand-wide motion utilities.
 
    Usage (Tailwind / app entry):
-     @import '@tomscaria/lore-design-system/styles';
+     @import '@tomscaria/scaria-design-system/styles';
 
    Then on <html>:
      <html data-theme="lore-light" data-expression="product">
@@ -22,6 +22,9 @@
 
 @import "./agent/themes/revenant-light/colors_and_type.css";
 @import "./agent/themes/revenant-dark/colors_and_type.css";
+
+@import "./agent/themes/rolr-light/colors_and_type.css";
+@import "./agent/themes/rolr-dark/colors_and_type.css";
 
 /* Berlin theme is pending inspo authoring.
 @import "./agent/themes/berlin/colors_and_type.css";
@@ -44,4 +47,4 @@
 
 /* NOTE: the BoTW flair overlay (agent/visual/botw/botw-flair.css) is intentionally
    NOT imported here — it is Lore-only marketing flair. Opt in per-project with
-   `@import '@tomscaria/lore-design-system/botw'` + data-flair="botw". */
+   `@import '@tomscaria/scaria-design-system/botw'` + data-flair="botw". */
