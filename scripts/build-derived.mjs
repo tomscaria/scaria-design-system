@@ -50,6 +50,8 @@ export const themes = [
   "primitive",
   "primitive-dark",
   "kiosk",
+  "rolr-light",
+  "rolr-dark",
 ];
 export const expressions = ["product", "marketing"];
 export const brands = ["lore", "revenant"];
@@ -70,6 +72,8 @@ module.exports = {
     "primitive",
     "primitive-dark",
     "kiosk",
+    "rolr-light",
+    "rolr-dark",
   ],
   expressions: ["product", "marketing"],
   brands: ["lore", "revenant"],
@@ -98,6 +102,8 @@ export declare const brands: readonly ("lore" | "revenant")[];
     "agent/themes/revenant-dark/colors_and_type.css",
     "agent/themes/primitive/colors_and_type.css",
     "agent/themes/kiosk/colors_and_type.css",
+    "agent/themes/rolr-light/colors_and_type.css",
+    "agent/themes/rolr-dark/colors_and_type.css",
     "agent/visual/fonts/fonts.css",
     "agent/visual/dataviz/dataviz.css",
     "agent/visual/patterns/patterns.css",

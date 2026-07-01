@@ -1,0 +1,35 @@
+{
+  "component": "depth-book",
+  "version": "0.1.0",
+  "status": "harvested",
+  "summary": "Two-sided limit-order book / market-depth ladder with cumulative depth bars. Streams live.",
+  "variants": ["focused", "mini"],
+  "tokens": {
+    "surface": ["--bg-2", "--line", "--line-2", "--r-lg"],
+    "bid": ["--up", "--up-soft"],
+    "ask": ["--down", "--down-soft"],
+    "ink": ["--fg-2", "--fg-3", "--fg-muted"],
+    "type": ["--font-mono"],
+    "motion": ["--motion-ease-reveal", "--motion-duration-entry"]
+  },
+  "props": {
+    "market": "{ name, sub?, price, spread, vol?, oi?, trades?, color }",
+    "rows": "Array<{ bidSize:number, bidPrice:number, askSize:number, askPrice:number }>",
+    "variant": "\"focused\" | \"mini\"",
+    "live": "boolean"
+  },
+  "derived": {
+    "bidBarWidth": "cumulativeBidSize(level) / max(totalBid, totalAsk)",
+    "askBarWidth": "cumulativeAskSize(level) / max(totalBid, totalAsk)"
+  },
+  "motion": {
+    "live": "size + depth-bar width re-measure with width transition (~500ms ease-reveal)",
+    "reduced": "snap depth bars to final width; no transition"
+  },
+  "anti_patterns": [
+    "raw hex for bid/ask (use --up / --down)",
+    "animating price columns (only sizes + bars move)",
+    "symmetric/centered depth bars (must grow outward from the spread)"
+  ],
+  "source": "ROLR market-detail (order book) surface; reskinned from the v1 olive exploration to the shipped indigo brand."
+}

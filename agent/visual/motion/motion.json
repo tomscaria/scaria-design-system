@@ -1,19 +1,21 @@
 {
   "$schema": "https://lore-design-system.tomscaria.com/schemas/motion.json",
   "name": "Lore motion system",
-  "version": "0.1.0",
-  "source": "Codified from docs/brand/MOTION_SYSTEM.md (Lore brand-authoritative motion doc)",
+  "version": "0.2.0",
+  "source": "Codified from docs/brand/MOTION_SYSTEM.md (Lore brand-authoritative motion doc). v0.2.0 adds the liveness primitives harvested from the ROLR prediction-market product.",
   "purpose_gate": {
-    "rule": "Every motion element must satisfy at least one of: orientation, proof, delight. If none — remove it.",
+    "rule": "Every motion element must satisfy at least one of: orientation, proof, delight, liveness. If none — remove it.",
     "purposes": {
-      "orientation": "Where am I in the story? (e.g. Snap-Step scroll locks)",
-      "proof": "Show product behavior (e.g. chart line drawing in)",
-      "delight": "Subtle polish (e.g. hero card float)"
+      "orientation": "Where am I in the story? (e.g. Snap-Step scroll locks, slide-in screen transitions)",
+      "proof": "Show product behavior (e.g. chart line drawing in, odds bar filling, count-up)",
+      "delight": "Subtle polish (e.g. hero card float, settlement confetti)",
+      "liveness": "Is this surface live right now? Real-time presence, streaming price, an active pot. Added for ROLR — a prediction market's whole value is that it is happening now. Use liveness motion only where the data is genuinely real-time; faking it is the anti-pattern."
     }
   },
   "primitives": {
     "float": {
       "description": "Subtle vertical drift or parallax on hero objects. Ambient.",
+      "purpose": "delight",
       "framer_motion": {
         "animate": { "y": [0, -8, 0] },
         "transition": { "duration": 6, "repeat": "Infinity", "ease": "easeInOut" }
@@ -21,6 +23,7 @@
     },
     "snap_step": {
       "description": "Scroll locks briefly at key beats. One snap = one idea.",
+      "purpose": "orientation",
       "framer_motion": {
         "initial": { "opacity": 0 },
         "whileInView": { "opacity": 1 },
@@ -29,7 +32,8 @@
       }
     },
     "reveal": {
-      "description": "Fade in + slight rise (8–16px) + optional blur-to-sharp.",
+      "description": "Fade in + slight rise (8-16px) + optional blur-to-sharp.",
+      "purpose": "orientation",
       "framer_motion": {
         "initial": { "opacity": 0, "y": 16, "filter": "blur(4px)" },
         "whileInView": { "opacity": 1, "y": 0, "filter": "blur(0px)" },
@@ -38,7 +42,8 @@
       }
     },
     "trace": {
-      "description": "Chart lines draw in; numbers count up; skeleton → real data. Provides credibility.",
+      "description": "Chart lines draw in; numbers count up; skeleton -> real data. Provides credibility.",
+      "purpose": "proof",
       "framer_motion_path": {
         "initial": { "pathLength": 0 },
         "whileInView": { "pathLength": 1 },
@@ -48,6 +53,7 @@
     },
     "magnet": {
       "description": "Subtle magnetic pull on hover/touch; firm press feedback. Interaction confidence.",
+      "purpose": "delight",
       "framer_motion": {
         "whileHover": { "scale": 1.03 },
         "whileTap": { "scale": 0.97 },
@@ -56,6 +62,7 @@
     },
     "glow_pulse": {
       "description": "Soft accent-color glow on active cards, selected tabs, primary CTA. Never continuous everywhere.",
+      "purpose": "delight",
       "framer_motion": {
         "animate": {
           "boxShadow": [
@@ -66,19 +73,115 @@
         },
         "transition": { "duration": 2.5, "repeat": "Infinity", "ease": "easeInOut" }
       }
+    },
+
+    "live_pulse": {
+      "description": "Opacity pulse (1 -> 0.25 -> 1) on a small presence dot. The universal 'this is live right now' indicator: live demo headers, 'N playing now', latency chips, in-play scores. Harvested from ROLR `livedot`/`blink`.",
+      "purpose": "liveness",
+      "css_keyframe": "m-live-pulse",
+      "framer_motion": {
+        "animate": { "opacity": [1, 0.25, 1] },
+        "transition": { "duration": 1.3, "repeat": "Infinity", "ease": "easeInOut" }
+      },
+      "usage": "Pair with --live (presence) or a market/status color. The dot is 7-9px; never animate the label text, only the dot."
+    },
+    "win_glow": {
+      "description": "Tight accent ring + glow pulse on a winning / live-active cell (Pool square, Bingo cell, resolving-soon leader). Harder and faster than glow_pulse. Harvested from ROLR `winglow`.",
+      "purpose": "liveness",
+      "css_keyframe": "m-win-glow",
+      "framer_motion": {
+        "animate": {
+          "boxShadow": [
+            "0 0 0 1.5px hsl(var(--win)), 0 0 10px hsl(var(--win) / 0.6)",
+            "0 0 0 1.5px hsl(var(--win)), 0 0 16px hsl(var(--win) / 1)",
+            "0 0 0 1.5px hsl(var(--win)), 0 0 10px hsl(var(--win) / 0.6)"
+          ]
+        },
+        "transition": { "duration": 1.3, "repeat": "Infinity", "ease": "easeInOut" }
+      },
+      "usage": "Exactly one win-glow per board at a time — it marks the single currently-winning cell. When the winning cell moves, move the glow."
+    },
+    "stream": {
+      "description": "Real-time data streaming: a sparkline extends one point at a time and live numbers count toward their new value. JS-driven (setInterval ~1s), not a CSS loop. Harvested from the ROLR Tick price feed + pot/player counters.",
+      "purpose": "liveness",
+      "implementation": "On each tick, append a point to the series (shift to keep a fixed window) and re-render the polyline; for scalar values, ease the displayed number toward the target. Recolor the line by --up/--down vs the previous value.",
+      "usage": "Cap at 2-3 streaming series per viewport. Always tabular slashed-zero so digits don't jitter width. Respect prefers-reduced-motion: show the latest value statically, no count animation."
+    },
+    "pop": {
+      "description": "Scale overshoot (0.7 -> 1.06 -> 1) on a number/badge that just changed or a result that just landed. Harvested from ROLR `popin`.",
+      "purpose": "proof",
+      "css_keyframe": "m-pop",
+      "framer_motion": {
+        "initial": { "scale": 0.7, "opacity": 0 },
+        "animate": { "scale": 1, "opacity": 1 },
+        "transition": { "type": "spring", "stiffness": 500, "damping": 18 }
+      },
+      "usage": "One-shot, on value change or mount. The only place ROLR allows spring/overshoot. Don't loop it."
+    },
+    "feed_in": {
+      "description": "Activity-feed row entry: rise 10px + fade. New rows enter at the top of a live feed (a bet placed, a square claimed, a member joined). Harvested from ROLR `feedin`.",
+      "purpose": "orientation",
+      "css_keyframe": "m-feed-in",
+      "framer_motion": {
+        "initial": { "opacity": 0, "y": 10 },
+        "animate": { "opacity": 1, "y": 0 },
+        "transition": { "duration": 0.4, "ease": [0.25, 0.46, 0.45, 0.94] }
+      },
+      "usage": "Stagger newest-first; cap stagger at 120ms. Only animate genuinely new rows, never the whole list on re-render."
+    },
+    "slide_in": {
+      "description": "Screen/overlay transition: slide in from the right (~26px) + fade. Game overlays, settlement screens, step-to-step flows on the phone surface. Harvested from ROLR `slidein`.",
+      "purpose": "orientation",
+      "css_keyframe": "m-slide-in",
+      "framer_motion": {
+        "initial": { "opacity": 0, "x": 26 },
+        "animate": { "opacity": 1, "x": 0 },
+        "transition": { "duration": 0.35, "ease": [0.25, 0.46, 0.45, 0.94] }
+      }
+    },
+    "bar_fill": {
+      "description": "Odds / progress bar grows from scaleX(0) to scaleX(1) on mount. Gives the probability split a sense of being measured. Harvested from ROLR `barfill`.",
+      "purpose": "proof",
+      "css_keyframe": "m-bar-fill",
+      "framer_motion": {
+        "initial": { "scaleX": 0 },
+        "animate": { "scaleX": 1 },
+        "transition": { "duration": 0.5, "ease": [0.25, 0.46, 0.45, 0.94] }
+      },
+      "usage": "transform-origin:left. Animate on first paint only; subsequent odds changes should tween width, not re-fill."
+    },
+    "breathe": {
+      "description": "Slow scale+opacity pulse (1 -> 1.06) on a single live hero number (a probability that is updating live, an in-play percentage). Heavier sibling of float, for one focal number. Harvested from ROLR `breathe`.",
+      "purpose": "liveness",
+      "css_keyframe": "m-breathe",
+      "framer_motion": {
+        "animate": { "scale": [1, 1.06, 1], "opacity": [0.9, 1, 0.9] },
+        "transition": { "duration": 2.2, "repeat": "Infinity", "ease": "easeInOut" }
+      },
+      "usage": "Maximum one per viewport, reserved for the single most-live number on screen."
+    },
+    "confetti": {
+      "description": "Settlement celebration: particles fall + rotate from above. One-shot on a win/settlement screen only. Harvested from ROLR `confettiFall`.",
+      "purpose": "delight",
+      "css_keyframe": "m-confetti-fall",
+      "usage": "Settlement / win moments only. Never ambient, never on a dashboard. 16-24 particles, randomized left/size/duration/delay, theme accent + up/down colors."
     }
   },
   "timing": {
     "durations_ms": {
       "micro": { "min": 120, "max": 180, "default": 150, "usage": "Button hover, tab switch" },
-      "entry": { "min": 300, "max": 450, "default": 400, "usage": "Scroll-triggered fade-in" },
-      "scene": { "min": 500, "max": 700, "default": 600, "usage": "Stage tab change, snap-step" }
+      "entry": { "min": 300, "max": 450, "default": 400, "usage": "Scroll-triggered fade-in, feed_in, slide_in, bar_fill" },
+      "scene": { "min": 500, "max": 700, "default": 600, "usage": "Stage tab change, snap-step" },
+      "pop":   { "min": 300, "max": 500, "default": 350, "usage": "Number/badge change (pop)" },
+      "live":  { "min": 1200, "max": 1500, "default": 1300, "usage": "Presence pulse period (live_pulse, win_glow)" }
     },
     "easing": {
       "spring_default": { "type": "spring", "stiffness": 400, "damping": 25, "usage": "Interactions, CTA" },
       "spring_soft": { "type": "spring", "stiffness": 260, "damping": 20, "usage": "Float, ambient" },
-      "ease_out": { "cubic_bezier": [0.25, 0.46, 0.45, 0.94], "usage": "Reveal entries" },
-      "linear": { "usage": "Never use as primary easing" }
+      "spring_pop": { "type": "spring", "stiffness": 500, "damping": 18, "usage": "pop (the only overshoot ROLR allows)" },
+      "ease_out": { "cubic_bezier": [0.25, 0.46, 0.45, 0.94], "usage": "Reveal, feed_in, slide_in, bar_fill" },
+      "ambient": { "value": "ease-in-out", "usage": "live_pulse, win_glow, breathe — organic, breathing. ROLR signature; inverse of revenant's mechanical linear." },
+      "linear": { "usage": "Never use as primary easing (revenant ambient is the deliberate exception)" }
     },
     "stagger_max_ms": 120
   },
@@ -89,11 +192,18 @@
     "trace_chart": 2,
     "magnet_cta": "unlimited",
     "reveal_entry": "unlimited",
+    "live_pulse": "unlimited (presence dots are cheap and meaningful)",
+    "win_glow": 1,
+    "breathe": 1,
+    "stream": 3,
+    "confetti": "1 (settlement only)",
     "reduction_priority": [
-      "Decorative Float → reduce to 1",
-      "Extra Glow Pulse → limit to primary CTA only",
-      "Additional Snap-Steps → merge scenes",
-      "Trace → static chart fallback"
+      "Decorative Float -> reduce to 1",
+      "Extra Glow Pulse -> limit to primary CTA only",
+      "Additional Snap-Steps -> merge scenes",
+      "Trace -> static chart fallback",
+      "Stream -> show latest value statically",
+      "Breathe -> static number"
     ]
   },
   "viewport_rules": {
@@ -101,25 +211,31 @@
     "viewport_amount_tall": 0.3,
     "viewport_amount_compact": 0.6,
     "scroll_direction": "vertical_only",
-    "reduced_motion": "Respect prefers-reduced-motion. Disable Float, Glow Pulse, Trace. Keep Reveal as instant opacity."
+    "reduced_motion": "Respect prefers-reduced-motion. Disable Float, Glow Pulse, Trace, Live Pulse, Win Glow, Breathe, Confetti. Keep Reveal/Feed-in/Slide-in as instant opacity. Stream shows latest value with no count animation."
   },
   "anti_patterns": [
     "Continuous spinning loaders as decoration",
     "Parallax on every section",
-    "Bounce easing",
+    "Bounce easing (pop's overshoot is the single sanctioned exception)",
     "Slow (>700ms) transitions",
     "Multiple competing focal animations per section",
     "Glow on every card simultaneously",
-    "Animation re-trigger on scroll-up (use viewport.once: true)"
+    "Animation re-trigger on scroll-up (use viewport.once: true)",
+    "Faking liveness: live_pulse / stream / breathe on data that is not actually real-time",
+    "More than one win-glow per board",
+    "Confetti anywhere but a settlement/win moment"
   ],
   "per_theme_overrides_path": "themes/<theme>/motion.json",
   "css_var_contract": {
     "--motion-duration-micro": "150ms",
     "--motion-duration-entry": "400ms",
     "--motion-duration-scene": "600ms",
+    "--motion-duration-live": "1300ms",
+    "--motion-duration-pop": "350ms",
     "--motion-ease-interaction": "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
     "--motion-ease-reveal": "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
     "--motion-ease-ambient": "ease-in-out",
-    "note": "Themes override these vars in agent/themes/<theme>/colors_and_type.css. Consumers read them via var() in CSS or via the motion.css helpers below."
+    "--motion-ease-pop": "cubic-bezier(0.34, 1.56, 0.64, 1)",
+    "note": "Themes override these vars in agent/themes/<theme>/colors_and_type.css. Consumers read them via var() in CSS or via the motion.css helpers below. --motion-duration-live, --motion-duration-pop and --motion-ease-pop are added in v0.2.0 for the liveness primitives."
   }
 }

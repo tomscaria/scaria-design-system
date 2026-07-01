@@ -49,6 +49,8 @@
     "./themes/revenant-light": "./agent/themes/revenant-light/colors_and_type.css",
     "./themes/revenant-dark": "./agent/themes/revenant-dark/colors_and_type.css",
     "./themes/kiosk": "./agent/themes/kiosk/colors_and_type.css",
+    "./themes/rolr-light": "./agent/themes/rolr-light/colors_and_type.css",
+    "./themes/rolr-dark": "./agent/themes/rolr-dark/colors_and_type.css",
     "./dataviz": "./agent/visual/dataviz/dataviz.css",
     "./patterns": "./agent/visual/patterns/patterns.css",
     "./orbfield": "./agent/visual/patterns/orbfield.css",

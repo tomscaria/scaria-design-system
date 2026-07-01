@@ -23,6 +23,9 @@
 @import "./agent/themes/revenant-light/colors_and_type.css";
 @import "./agent/themes/revenant-dark/colors_and_type.css";
 
+@import "./agent/themes/rolr-light/colors_and_type.css";
+@import "./agent/themes/rolr-dark/colors_and_type.css";
+
 /* Berlin theme is pending inspo authoring.
 @import "./agent/themes/berlin/colors_and_type.css";
 */

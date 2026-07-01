@@ -1,0 +1,29 @@
+{
+  "$schema": "https://lore-design-system.tomscaria.com/schemas/component-tokens.json",
+  "component": "OddsBar",
+  "version": "0.1.0",
+  "harvested_from": "ROLR prediction-market (Yes/No split bar on market cards)",
+  "consumes": {
+    "color": ["--up", "--down", "--success", "--danger", "--bg-muted", "--accent", "--accent-soft"],
+    "type": ["--font-mono", "--fs-body-xs", "--fs-body-sm", "--fw-bold"],
+    "radii": ["--r-pill", "--r-xs"],
+    "motion": ["--motion-duration-entry", "--motion-duration-micro", "--motion-ease-reveal"]
+  },
+  "variants": {
+    "showLabels": [true, false],
+    "fillOnMount": [true, false],
+    "ways": ["2", "n"]
+  },
+  "default_variants": { "showLabels": true, "fillOnMount": true, "height": 8 },
+  "accessibility": {
+    "role": "img",
+    "aria_label": "summarize split as text",
+    "color_only": false,
+    "min_contrast_segment_vs_track": 3.0
+  },
+  "anti_patterns": [
+    "Rounded corners or gaps between internal segments",
+    "Re-running bar_fill on every odds tick",
+    "Color-only outcome (always pair with labelled cents)"
+  ]
+}

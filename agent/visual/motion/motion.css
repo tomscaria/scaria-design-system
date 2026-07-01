@@ -1,7 +1,13 @@
 /* ============================================================
    Lore motion — CSS helpers
-   Source of truth: ./motion.json
+   Source of truth: ./motion.json   (v0.2.0)
    Themes override the --motion-* vars in agent/themes/<theme>/colors_and_type.css.
+
+   v0.2.0 adds the LIVENESS primitives harvested from the ROLR
+   prediction-market product:
+     live_pulse · win_glow · pop · feed_in · slide_in ·
+     bar_fill · breathe · confetti
+   (stream is JS-driven — see motion.json — no CSS keyframe.)
    ============================================================ */
 
 /* Default values — themes override per data-theme block. */
@@ -9,12 +15,15 @@
   --motion-duration-micro: 150ms;
   --motion-duration-entry: 400ms;
   --motion-duration-scene: 600ms;
+  --motion-duration-live: 1300ms;
+  --motion-duration-pop: 350ms;
   --motion-ease-interaction: cubic-bezier(0.25, 0.46, 0.45, 0.94);
   --motion-ease-reveal: cubic-bezier(0.25, 0.46, 0.45, 0.94);
   --motion-ease-ambient: ease-in-out;
+  --motion-ease-pop: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* ---------- KEYFRAMES (the six primitives) ---------- */
+/* ---------- KEYFRAMES (six base primitives) ---------- */
 
 @keyframes m-float {
   0%, 100% { transform: translateY(0); }
@@ -36,11 +45,72 @@
   50%      { box-shadow: 0 0 20px hsl(var(--accent) / 0.15); }
 }
 
+/* ---------- KEYFRAMES (liveness primitives, v0.2.0) ---------- */
+
+/* live_pulse — presence dot opacity pulse */
+@keyframes m-live-pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.25; }
+}
+
+/* win_glow — tight accent ring + glow on a winning/active cell.
+   Uses --win (falls back to --accent). */
+@keyframes m-win-glow {
+  0%, 100% { box-shadow: 0 0 0 1.5px var(--win, var(--accent)), 0 0 10px hsl(var(--win-h, 72 85% 62%) / 0.6); }
+  50%      { box-shadow: 0 0 0 1.5px var(--win, var(--accent)), 0 0 16px hsl(var(--win-h, 72 85% 62%) / 1); }
+}
+
+/* pop — number/badge change with slight overshoot */
+@keyframes m-pop {
+  0%   { transform: scale(0.7);  opacity: 0; }
+  60%  { transform: scale(1.06); }
+  100% { transform: scale(1);    opacity: 1; }
+}
+
+/* feed_in — activity row entry */
+@keyframes m-feed-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* slide_in — screen / overlay transition from the right */
+@keyframes m-slide-in {
+  from { opacity: 0; transform: translateX(26px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* bar_fill — odds / progress bar measured-fill */
+@keyframes m-bar-fill {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+/* breathe — single live hero number pulse */
+@keyframes m-breathe {
+  0%, 100% { transform: scale(1);    opacity: 0.9; }
+  50%      { transform: scale(1.06); opacity: 1; }
+}
+
+/* confetti — settlement particles fall + rotate (set --m-confetti-distance per board height) */
+@keyframes m-confetti-fall {
+  0%   { transform: translateY(-30px) rotate(0);      opacity: 1; }
+  100% { transform: translateY(var(--m-confetti-distance, 560px)) rotate(420deg); opacity: 1; }
+}
+
 /* ---------- UTILITY CLASSES ---------- */
 
 .m-float        { animation: m-float 6s var(--motion-ease-ambient) infinite; }
 .m-reveal       { animation: m-reveal var(--motion-duration-entry) var(--motion-ease-reveal) both; }
 .m-glow-pulse   { animation: m-glow-pulse 2.5s var(--motion-ease-ambient) infinite; }
+
+.m-live-pulse   { animation: m-live-pulse var(--motion-duration-live) var(--motion-ease-ambient) infinite; }
+.m-win-glow     { animation: m-win-glow var(--motion-duration-live) var(--motion-ease-ambient) infinite; }
+.m-pop          { animation: m-pop var(--motion-duration-pop) var(--motion-ease-pop) both; }
+.m-feed-in      { animation: m-feed-in var(--motion-duration-entry) var(--motion-ease-reveal) both; }
+.m-slide-in     { animation: m-slide-in 350ms var(--motion-ease-reveal) both; }
+.m-bar-fill     { transform-origin: left; animation: m-bar-fill var(--motion-duration-entry) var(--motion-ease-reveal) both; }
+.m-breathe      { animation: m-breathe 2.2s var(--motion-ease-ambient) infinite; }
+.m-confetti     { animation: m-confetti-fall 1.4s linear forwards; }
 
 .m-magnet {
   transition:
@@ -63,8 +133,16 @@
 
 @media (prefers-reduced-motion: reduce) {
   .m-float,
-  .m-glow-pulse { animation: none; }
-  .m-reveal     { animation: none; opacity: 1; transform: none; filter: none; }
+  .m-glow-pulse,
+  .m-live-pulse,
+  .m-win-glow,
+  .m-breathe { animation: none; }
+  .m-reveal,
+  .m-feed-in,
+  .m-slide-in   { animation: none; opacity: 1; transform: none; filter: none; }
+  .m-bar-fill   { animation: none; transform: none; }
+  .m-pop        { animation: none; transform: none; opacity: 1; }
+  .m-confetti   { animation: none; opacity: 0; }   /* drop celebration entirely */
   .m-magnet     { transition: none; }
   .m-magnet:hover,
   .m-magnet:active { transform: none; }

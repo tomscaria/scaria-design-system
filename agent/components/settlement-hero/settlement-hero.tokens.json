@@ -1,0 +1,35 @@
+{
+  "$schema": "https://lore-design-system.tomscaria.com/schemas/component-tokens.json",
+  "component": "SettlementHero",
+  "version": "0.1.0",
+  "harvested_from": "ROLR prediction-market (The Crew auto-settle screen: popin + confettiFall + slidein)",
+  "composes": ["LiveStat"],
+  "consumes": {
+    "color": ["--font-display", "--up", "--success", "--down", "--danger", "--fg-muted", "--accent"],
+    "type": ["--font-display", "--font-mono", "--fs-display-md", "--fs-body-xs"],
+    "motion": ["--motion-duration-pop", "--motion-ease-pop"],
+    "motion_primitive": ["pop", "confetti", "slide_in"]
+  },
+  "variants": {
+    "outcome": ["won", "lost"]
+  },
+  "default_variants": { "outcome": "won", "particleCount": 20 },
+  "invariants": {
+    "confetti_max_per_page": 1,
+    "confetti_context": "settlement/win only"
+  },
+  "copy": {
+    "no_exclamation_marks": true,
+    "casing": "sentence"
+  },
+  "accessibility": {
+    "confetti_aria_hidden": true,
+    "result_in_text": true,
+    "reduced_motion": "no confetti, no pop"
+  },
+  "anti_patterns": [
+    "Ambient or dashboard confetti",
+    "Looping the pop",
+    "Exclamation-mark celebration copy"
+  ]
+}

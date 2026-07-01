@@ -1,0 +1,29 @@
+{
+  "$schema": "https://lore-design-system.tomscaria.com/schemas/component-tokens.json",
+  "component": "SquaresGrid",
+  "version": "0.1.0",
+  "harvested_from": "ROLR prediction-market (Bingo markets board, Pool office squares)",
+  "consumes": {
+    "color": ["--bg-muted", "--accent", "--accent-soft", "--win"],
+    "radii": ["--r-xs"],
+    "motion": ["--motion-duration-live", "--motion-ease-ambient"],
+    "motion_primitive": ["win_glow"]
+  },
+  "variants": {
+    "game": ["bingo", "pool"],
+    "cellState": ["empty", "claimed", "mine", "winning"]
+  },
+  "default_variants": { "cellGap": 3, "cellRadius": 3 },
+  "invariants": {
+    "winning_cells_max": 1
+  },
+  "accessibility": {
+    "winning_meaning_in_text": true,
+    "reduced_motion": "static 2px --win ring instead of pulse"
+  },
+  "anti_patterns": [
+    "More than one winning cell",
+    "Animating every claimed cell",
+    "Non-square cells from grid stretch"
+  ]
+}
