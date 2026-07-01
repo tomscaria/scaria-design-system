@@ -1,6 +1,6 @@
 # Scaffold drop instructions
 
-Starter kit for the new Lore atomic design system. Copy into `~/scaria/lore-design-system/` on your Mac to bootstrap the Little Plains "HTML Brand" structure.
+Starter kit for the new Lore atomic design system. Copy into `~/scaria/scaria-design-system/` on your Mac to bootstrap the Little Plains "HTML Brand" structure.
 
 ## What's in here
 
@@ -36,8 +36,8 @@ Starter kit for the new Lore atomic design system. Copy into `~/scaria/lore-desi
 ## Drop pattern
 
 ```sh
-# Merge into your existing lore-design-system (don't overwrite — it already has assets/, components/, decks/, docs/, fonts/)
-rsync -av /home/user/lore-design-system-scaffold/ ~/scaria/lore-design-system/
+# Merge into your existing scaria-design-system (don't overwrite — it already has assets/, components/, decks/, docs/, fonts/)
+rsync -av /home/user/scaria-design-system-scaffold/ ~/scaria/scaria-design-system/
 ```
 
 The atomic-kit structure (`agent/`, `human/`, `inspo/`, `magic_trick.md`, top-level `readme.md`) sits **alongside** your existing `assets/`, `components/`, `decks/`, `docs/`, `fonts/`. Nothing existing gets clobbered.
@@ -54,7 +54,7 @@ The model has everything it needs: tone, type scale, color rules, motion vocabul
 
 ## What this scaffold DOES NOT do
 
-- ❌ Doesn't refactor the existing `lore-design-system` component code (`src/components/...`) to use the new tokens — that's Move 1 follow-on work that needs MCP scope on the repo.
+- ❌ Doesn't refactor the existing `scaria-design-system` component code (`src/components/...`) to use the new tokens — that's Move 1 follow-on work that needs MCP scope on the repo.
 - ✅ `revenant-light` and `revenant-dark` authored from inspo — CSS vars in `tokens/colors_and_type.css`.
 - ❌ Doesn't harvest Thomas OS D3 charts or logo systems — Move 3, needs MCP scope on Thomas OS.
 - ❌ Doesn't publish to npm — Move 4, needs local lockfile + Changesets setup.
@@ -64,14 +64,14 @@ The model has everything it needs: tone, type scale, color rules, motion vocabul
 After you drop this in:
 
 1. **Founder pass** — review the 🟡 drafts (positioning, audience, differentiation, concepts, magic_trick.md). Each was assembled from existing brand cues; needs your judgment to confirm or rewrite.
-2. **Grant MCP scope** on `tomscaria/lore-design-system` so I can PR (a) refactor the component CSS to read from the new CSS vars, (b) port the remaining themes that exist in your current repo, (c) set up Changesets + the publish workflow.
+2. **Grant MCP scope** on `tomscaria/scaria-design-system` so I can PR (a) refactor the component CSS to read from the new CSS vars, (b) port the remaining themes that exist in your current repo, (c) set up Changesets + the publish workflow.
 3. **Upload inspo images individually** so Phase 0 for `revenant-light` / `revenant-dark` can begin. Start with the most directional ones (likely `designmaxxing 1/2`, `HH3Wc0aa8AAtpjp`, `machine age modern`).
 4. **Drop `inspo/` confirms.** The Emmett HTML framework is already consumed.
 
 ## Full file tree
 
 ```
-lore-design-system-scaffold/
+scaria-design-system-scaffold/
 ├── SCAFFOLD_README.md
 ├── readme.md
 ├── magic_trick.md

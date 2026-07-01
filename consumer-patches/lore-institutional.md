@@ -4,7 +4,7 @@
 
 ## Prereqs
 
-- `@tomscaria/lore-design-system@^0.1.0` published
+- `@tomscaria/scaria-design-system@^0.1.0` published
 - Local checkout at `~/scaria/lore-institutional/`
 - Flora harvest decision made (lift vs. replace — see `harvest-instructions/lore-institutional.md`)
 - Branch: `claude/unify-lore-components-0GPeV`
@@ -22,7 +22,7 @@ If Flora is **lifted** into the kit: the migration removes Flora from `lore-inst
 ```diff
  {
    "dependencies": {
-+    "@tomscaria/lore-design-system": "^0.1.0",
++    "@tomscaria/scaria-design-system": "^0.1.0",
    }
  }
 ```
@@ -30,14 +30,14 @@ If Flora is **lifted** into the kit: the migration removes Flora from `lore-inst
 ### 2. Tailwind config
 
 ```ts
-import preset from "@tomscaria/lore-design-system/preset";
+import preset from "@tomscaria/scaria-design-system/preset";
 export default { presets: [preset] };
 ```
 
 ### 3. Root styles
 
 ```css
-@import '@tomscaria/lore-design-system/styles';
+@import '@tomscaria/scaria-design-system/styles';
 ```
 
 ### 4. `<html>` defaults — Lore + MARKETING expression

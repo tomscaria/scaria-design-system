@@ -37,7 +37,7 @@ async function main() {
 
   await writeEntry(
     join(OUT, "index.mjs"),
-    `// @tomscaria/lore-design-system — ESM entry
+    `// @tomscaria/scaria-design-system — ESM entry
 // The kit's primary surface is CSS + preset + raw atomic files.
 // React components live behind subpath imports as they land.
 
@@ -60,7 +60,7 @@ export const brands = ["lore", "revenant"];
 
   await writeEntry(
     join(OUT, "index.js"),
-    `// @tomscaria/lore-design-system — CJS entry
+    `// @tomscaria/scaria-design-system — CJS entry
 "use strict";
 module.exports = {
   version: "${VERSION}",
@@ -83,7 +83,7 @@ module.exports = {
 
   await writeEntry(
     join(OUT, "index.d.ts"),
-    `// @tomscaria/lore-design-system — types
+    `// @tomscaria/scaria-design-system — types
 export declare const version: string;
 export declare const themes: readonly string[];
 export declare const expressions: readonly ("product" | "marketing")[];

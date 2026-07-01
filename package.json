@@ -1,5 +1,5 @@
 {
-  "name": "@tomscaria/lore-design-system",
+  "name": "@tomscaria/scaria-design-system",
   "version": "1.0.2",
   "description": "Lore design system — tokens (colors, type, spacing), themes (lore-light/dark, revenant-light/dark, kiosk, primitive), kit CSS primitives, Tailwind preset, and thin React component wrappers. Consumed by swarm-fund-mvp, Thomas OS, lore-teaser-prea.",
   "license": "UNLICENSED",
@@ -101,8 +101,8 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/tomscaria/lore-design-system.git"
+    "url": "https://github.com/tomscaria/scaria-design-system.git"
   },
   "author": "Thomas Scaria <tomscaria@gmail.com>",
-  "homepage": "https://github.com/tomscaria/lore-design-system#readme"
+  "homepage": "https://github.com/tomscaria/scaria-design-system#readme"
 }

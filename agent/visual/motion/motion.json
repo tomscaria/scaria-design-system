@@ -1,5 +1,5 @@
 {
-  "$schema": "https://lore-design-system.tomscaria.com/schemas/motion.json",
+  "$schema": "https://scaria-design-system.tomscaria.com/schemas/motion.json",
   "name": "Lore motion system",
   "version": "0.2.0",
   "source": "Codified from docs/brand/MOTION_SYSTEM.md (Lore brand-authoritative motion doc). v0.2.0 adds the liveness primitives harvested from the ROLR prediction-market product.",

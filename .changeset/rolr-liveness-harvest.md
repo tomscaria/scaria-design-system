@@ -1,5 +1,5 @@
 ---
-"@tomscaria/lore-design-system": minor
+"@tomscaria/scaria-design-system": minor
 ---
 
 Harvest the ROLR liveness layer + `rolr` theme pair into the kit.

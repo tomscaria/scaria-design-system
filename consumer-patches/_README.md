@@ -1,10 +1,10 @@
 # Consumer migration patches
 
-> Per-consumer patches for migrating off ad-hoc DS setups to `@tomscaria/lore-design-system`. Apply **after** the package is published to npm (or via a workspace `file:` dependency during local dev).
+> Per-consumer patches for migrating off ad-hoc DS setups to `@tomscaria/scaria-design-system`. Apply **after** the package is published to npm (or via a workspace `file:` dependency during local dev).
 
 ## Prereqs
 
-1. **`@tomscaria/lore-design-system` is published** (or locally linked via `pnpm link --global` / `file:` dep)
+1. **`@tomscaria/scaria-design-system` is published** (or locally linked via `pnpm link --global` / `file:` dep)
 2. **Local dev machine** — every consumer's lockfile must be regenerated (`pnpm install` or `npm install`). This step cannot run from a sandbox environment.
 
 ## Migration order
@@ -21,16 +21,16 @@
 
 1. **Add the dep**:
    ```json
-   { "dependencies": { "@tomscaria/lore-design-system": "^0.1.0" } }
+   { "dependencies": { "@tomscaria/scaria-design-system": "^0.1.0" } }
    ```
 2. **Update Tailwind config** to use the preset:
    ```ts
-   import preset from "@tomscaria/lore-design-system/preset";
+   import preset from "@tomscaria/scaria-design-system/preset";
    export default { presets: [preset], content: [...] };
    ```
 3. **Import root styles** (replaces ad-hoc `@layer base { :root { --bg: ... } }` blocks):
    ```css
-   @import "@tomscaria/lore-design-system/styles";
+   @import "@tomscaria/scaria-design-system/styles";
    ```
 4. **Set `data-theme` (and optionally `data-expression`) on `<html>`**:
    ```tsx

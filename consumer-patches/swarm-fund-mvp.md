@@ -8,17 +8,17 @@
 
 ```sh
 # 1. Kit linked, not installed-from-npm
-cd ~/scaria/lore-design-system
+cd ~/scaria/scaria-design-system
 pnpm link --global
 cd ~/scaria/swarm-fund-mvp
-pnpm link --global @tomscaria/lore-design-system
+pnpm link --global @tomscaria/scaria-design-system
 
 # 2. Peer deps satisfied
 node -e "const p = require('./package.json'); console.log({react: p.dependencies.react, rd: p.dependencies['react-dom'], tw: p.devDependencies.tailwindcss || p.dependencies.tailwindcss});"
 # Expect: react >=18, react-dom >=18, tailwindcss >=3.4
 
 # 3. Phase 0 themes exist and are uncommented in styles.css
-grep 'revenant-light\|revenant-dark' ~/scaria/lore-design-system/styles.css
+grep 'revenant-light\|revenant-dark' ~/scaria/scaria-design-system/styles.css
 # Expect two @import lines, NOT commented
 
 # 4. Detect the consumer stack
@@ -50,7 +50,7 @@ Add the preset. Keep existing `content` array (the kit doesn't ship one — it's
 
 ```diff
   module.exports = {
-+   presets: [require('@tomscaria/lore-design-system/preset')],
++   presets: [require('@tomscaria/scaria-design-system/preset')],
     content: [
       './app/**/*.{ts,tsx,mdx}',
       './components/**/*.{ts,tsx}',
@@ -70,7 +70,7 @@ Add the preset. Keep existing `content` array (the kit doesn't ship one — it's
 Prepend the kit import, **before** any local layer declarations:
 
 ```diff
-+ @import '@tomscaria/lore-design-system/styles';
++ @import '@tomscaria/scaria-design-system/styles';
 +
   @tailwind base;
   @tailwind components;
@@ -112,7 +112,7 @@ The `data-expression` cascades, so this overrides the root's `product` setting o
 
 **If Phase 0 chose Revenant fonts that differ from Lore's set** (Aeonik / Lock Serif / Aeonik Mono), the local session must:
 
-1. Add the new `.woff2` files to `~/scaria/lore-design-system/agent/visual/fonts/`.
+1. Add the new `.woff2` files to `~/scaria/scaria-design-system/agent/visual/fonts/`.
 2. Reference them in `agent/themes/revenant-light/colors_and_type.css` via `--font-{sans,display,mono}`.
 3. Have the consumer load them — Next.js: `next/font/local` in `app/layout.tsx`. Vite: `@font-face` in root CSS.
 
@@ -214,7 +214,7 @@ Open the app. Manually verify:
 cd ~/scaria/swarm-fund-mvp
 git checkout -b claude/atomic-kit-migration
 git add -A
-git commit -m "Adopt @tomscaria/lore-design-system atomic kit (revenant-light/dark)"
+git commit -m "Adopt @tomscaria/scaria-design-system atomic kit (revenant-light/dark)"
 git push -u origin claude/atomic-kit-migration
 gh pr create --draft --title "Adopt atomic kit — Revenant themes" --body-file _migration-notes.md
 ```
@@ -231,7 +231,7 @@ The kit is `pnpm link`ed, not installed. To roll back:
 
 ```sh
 cd ~/scaria/swarm-fund-mvp
-pnpm unlink --global @tomscaria/lore-design-system
+pnpm unlink --global @tomscaria/scaria-design-system
 git checkout main -- tailwind.config.* app/globals.css app/layout.tsx
 pnpm install
 ```

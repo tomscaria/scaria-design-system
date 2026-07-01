@@ -1,5 +1,5 @@
 {
-  "$schema": "https://lore-design-system.tomscaria.com/schemas/component-tokens.json",
+  "$schema": "https://scaria-design-system.tomscaria.com/schemas/component-tokens.json",
   "component": "OutcomeChip",
   "version": "0.1.0",
   "harvested_from": "ROLR prediction-market (featured legend, resolving-soon, big-moves rows)",
