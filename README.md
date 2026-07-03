@@ -62,9 +62,18 @@ Default expression is `product`. Marketing/deck surfaces opt in.
 ~/scaria/<your-project>/lore-kit/  ← clone or copy the agent/ folder here
 ```
 
-**As an npm package** (for traditional component imports):
+**As an npm package** (for traditional component imports). Published to **GitHub Packages**, not npmjs.org — point the `@tomscaria` scope there first:
 ```sh
+# one-time, per consuming repo (or in ~/.npmrc):
+echo "@tomscaria:registry=https://npm.pkg.github.com/" >> .npmrc
+# auth (GitHub PAT with read:packages) goes in ~/.npmrc:
+#   //npm.pkg.github.com/:_authToken=<token>
 npm install @tomscaria/scaria-design-system
+```
+
+**From a local checkout** (no registry, works today):
+```json
+"@tomscaria/scaria-design-system": "file:../scaria-design-system"
 ```
 ```ts
 import { Button, Card } from '@tomscaria/scaria-design-system';

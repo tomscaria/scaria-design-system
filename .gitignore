@@ -1,6 +1,11 @@
 node_modules/
 derived/
+dist/
 *.log
+
+# Secrets — never commit
+.env
+.env.*
 .DS_Store
 .vscode/
 .idea/
