@@ -51,6 +51,29 @@ module.exports = {
             'border-strong': 'var(--line-strong)',
             input: 'var(--line)',
             ring: 'var(--accent)',
+
+            // Kit-native names — the vocabulary the kit CSS and ported components
+            // are written against (bg-bg-2, text-fg-3, border-line, …). Same vars
+            // as the shadcn-style names above; both name sets stay supported.
+            bg: {
+                DEFAULT: 'var(--bg)',
+                2: 'var(--bg-2)',
+                3: 'var(--bg-3)',
+                muted: 'var(--bg-muted)',
+                inverted: 'var(--bg-inverted)',
+            },
+            fg: {
+                DEFAULT: 'var(--fg)',
+                2: 'var(--fg-2)',
+                3: 'var(--fg-3)',
+                muted: 'var(--fg-muted)',
+                inverted: 'var(--fg-inverted)',
+            },
+            line: {
+                DEFAULT: 'var(--line)',
+                2: 'var(--line-2)',
+                strong: 'var(--line-strong)',
+            },
         },
 
         fontSize: {

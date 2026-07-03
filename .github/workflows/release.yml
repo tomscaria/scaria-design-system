@@ -1,9 +1,12 @@
 name: Release
 
+# PARKED: manual-trigger only. This npmjs/changesets pipeline needs two things
+# before it can run on push again:
+#   1. an NPM_TOKEN repo secret (npmjs.org automation token)
+#   2. a committed pnpm-lock.yaml (repo currently locks with package-lock.json)
+# Until then, releases go through publish.yml → GitHub Packages on v* tags.
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
