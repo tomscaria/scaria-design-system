@@ -43,7 +43,7 @@
     "./css/kit": "./preview/_revenant-kit.css",
     "./css/dataviz": "./preview/_dataviz-kit.css",
     "./css/layouts": "./preview/_primitives.css",
-    "./tailwind": "./preset.js",
+    "./tailwind": "./preset.cjs",
     "./tokens.json": "./tokens/tokens.json",
     "./fonts/*": "./fonts/*",
     "./package.json": "./package.json"
@@ -59,7 +59,7 @@
     "preview/_primitives.css",
     "preview/_revenant-kit.css",
     "preview/_dataviz-kit.css",
-    "preset.js",
+    "preset.cjs",
     "README.md",
     "LICENSE"
   ],
