@@ -1,47 +1,55 @@
 # rolr-dark
 
-ROLR prediction-market book. Near-black warm olive surface, ember primary, lime hero accent, live-presence pink. The Pro / desktop trading surface.
+ROLR prediction-market book — v2, the shipped brand. Cool near-black ground, ROLR indigo as the single brand color, green/rose market semantics, rose-pink live presence, orange demoted to a category accent. The Pro / desktop trading surface and the marketing-site dark ground.
+
+> v1 of this theme was an ember/lime exploration harvested before the real brand landed. v2 (CHANGELOG 1.1.0) re-skins to the shipped ROLR brand, sampled from the desktop product + marketing site. The CSS (`colors_and_type.css`) is authoritative.
 
 ## Positioning
 
-This is the dark "order book" surface for the ROLR prediction market — the Pro desktop expression. It reads like a calm, well-lit trading room: dense but legible, alive with real-time price, presence and pot movement, but never frantic. Same financial substrate as Lore; a different product with its own pulse.
+The dark "order book" surface for the ROLR prediction market — the Pro desktop expression, and (via the `marketing` expression) the rolr.xyz landing voice. It reads like a calm, well-lit trading room: dense but legible, alive with real-time price, presence and pot movement, but never frantic.
 
-ROLR ships two surfaces that share one book: `rolr-dark` (Pro · desktop) and `rolr-light` (Casual · iOS). Same balance, positions and liquidity underneath — the theme is the surface, not a separate account.
+ROLR ships two surfaces that share one book: `rolr-dark` (Pro · desktop · marketing) and `rolr-light` (Casual · iOS). Same balance, positions and liquidity underneath — the theme is the surface, not a separate account.
 
 ## Surface + ink
 
-- **`--bg`**: `hsl(75 24% 8%)` (#16190F) — "book black," a warm near-black olive. Not Lore's `lore-dark`; greener and lower.
-- **`--bg-2`**: `hsl(90 11% 10%)` (#1A1D18) — raised card. Every market tile sits here.
-- **`--bg-muted`**: `hsl(90 11% 13%)` (#22251E) — inset wells (game tiles inside the quick-play card, odds-bar track).
-- **`--fg`**: `hsl(43 38% 91%)` (#F1ECE0) — parchment ink, carried over from Lore for warmth.
+- **`--bg`**: `#0B0B0E` — "book black," a cool near-black. Marketing expression deepens it to `#08080B`.
+- **`--bg-2`**: `#141418` — raised card. Every market tile sits here.
+- **`--bg-3`**: `#1B1B22` — floating / popover. **`--bg-muted`**: `#202029` — inset wells and tracks.
+- **`--fg`**: `#F5F4F8` — near-white ink; tiers `#B8B8C2` / `#85858F` / `#5C5C67`.
 
-## Accent + brand
+## Brand + accent
 
-Two-tier, and the distinction is load-bearing:
+Single-brand, and the discipline is load-bearing:
 
-- **`--brand`: ember** `hsl(19 64% 58%)` (#D9794C) — primary action: Deposit, active nav, the selected Pro/Casual toggle. The "money" color.
-- **`--accent`: lime** `hsl(72 85% 62%)` (#D4F24B) — the games + win color. Quick-play CTAs, Tick up-ticks, win-cell glow, the lime "Play →" chips. Reserve it for play and winning, not for navigation.
-- **`--accent-deep`** `hsl(76 74% 43%)` (#9BBD1C) — lime label text where the bright lime would vibrate.
+- **`--brand`: ROLR indigo** `#6664FC` — EVERY primary action: Deposit, active nav, selected toggles, the assumptions pill. There is no second action color.
+- **`--accent`: orange** `#F2754A` — demoted to category tiles and one-off marks only. Never a button fill, never the brand.
 
-Don't swap them: ember = transact, lime = play/win. Using lime for Deposit or ember for Play breaks the learned mapping.
+Don't promote orange back to actions — indigo carries the whole interaction layer.
 
 ## Market + liveness semantics
 
-ROLR adds four tokens the base kit doesn't have:
+Four tokens the base kit doesn't have:
 
-- **`--up`** / **`--down`** — market direction. `--up` = `--success` (#7FC08A), `--down` = `--danger` (#E0794F). Yes/up prices and ↗ deltas are `--up`; No/down prices and ↘ deltas are `--down`. Always paired with a sign or arrow, never color alone.
-- **`--live`** `hsl(335 100% 65%)` (#FF4D8D) — presence pink. The "● 12,940 playing" dot, the only place pink appears. Signals *people are here right now*, distinct from market color.
-- **`--win`** = accent lime — the win-cell glow on Pool/Bingo boards.
+- **`--up`** / **`--down`** — market direction. `--up` = `--success` (#34D17E), `--down` = `--danger` (#F8567F). Yes/up prices and ↗ deltas are `--up`; No/down are `--down`. Always paired with a sign or arrow, never color alone.
+- **`--live`** `#FF5C8A` — presence pink. The "● 12,940 playing" dot; the only place pink appears.
+- **`--win`** = `--brand` — win-cell / podium glow.
+- **`--series-1..8`** — categorical ramp for multi-outcome charts and depth books.
 
 ## Type
 
-- **`--font-display`: Lock Serif** — hero numbers (balance, pots) and section openers only.
-- **`--font-mono`: Aeonik Mono** — every value that updates: prices, cents, latency, player counts, volume, countdowns. If a number can change while you watch, it's mono + tabular slashed-zero.
-- Body 14px / 1.5 — terminal density, but a notch looser than revenant.
+- **`--font-display`: Jersey 10** — the pixel display face for marketing headlines and numeric callouts (replaces Lore's Lock Serif).
+- **`--font-cond`: Anton** — the condensed heavy face for the single hero money number ($25,000,000).
+- **`--font-sans`: Aeonik** — UI/body. **`--font-mono`: Aeonik Mono** — every value that updates: prices, cents, latency, counts, countdowns. If a number can change while you watch, it's mono + tabular slashed-zero.
+- Jersey 10 and Anton load from Google Fonts; Aeonik faces ship in `fonts/`.
 
 ## Radii
 
-11–18px cards. Rounder than revenant (precision) and Lore-dark, softer than a SaaS card — the casual sibling keeps it friendly even on the Pro surface.
+6–22px, rounder than revenant (precision); soft fintech. Pills at `999rem`.
+
+## Expressions
+
+- **`product`** (default) — 40px section rhythm, 200ms entries.
+- **`marketing`** — the rolr.xyz landing voice: `--bg` deepens to `#08080B`, display-xl scales to 148px, 110px section rhythm, slower (600ms) reveals. Pages compose black sections + white cards + chrome spot art.
 
 ## Motion
 
@@ -49,7 +57,7 @@ See `motion.json`. The signature is **liveness** — `ease-in-out` ambient (orga
 
 ## What to avoid
 
-- Lime for navigation or deposit (that's ember's job)
+- Orange for actions or navigation (that's indigo's job now)
 - Pink for anything except live human presence
 - Direction by color alone — always pair `--up`/`--down` with a sign or arrow
 - More than one `breathe` / `win-glow` focal animation per viewport

@@ -5,7 +5,11 @@
     {id:'lore-light',   label:'Hearth',    dot:'#F2EADB', ring:'#141613'},
     {id:'lore-dark',    label:'Midnight',  dot:'#0E1410', ring:'#D4F24B'},
     {id:'revenant-light',label:'Rev·L',   dot:'#F1EEEB', ring:'#FF4F00'},
-    {id:'revenant-dark', label:'Rev·D',   dot:'#0E0F0C', ring:'#FF4F00'}
+    {id:'revenant-dark', label:'Rev·D',   dot:'#0E0F0C', ring:'#FF4F00'},
+    {id:'rolr-light',    label:'ROLR·L',  dot:'#FFFBF0', ring:'#6664FC'},
+    {id:'rolr-dark',     label:'ROLR·D',  dot:'#0B0B0E', ring:'#6664FC'},
+    {id:'kiosk',         label:'Kiosk',   dot:'#F5F5EF', ring:'#E8F520'},
+    {id:'primitive',     label:'Prim',    dot:'#FFFFFF', ring:'#111111'}
   ];
   const LS_KEY = 'lore.preview.theme';
   const body = document.body;
