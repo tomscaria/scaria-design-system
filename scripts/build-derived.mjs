@@ -2,7 +2,7 @@
 // Build derived/npm from the atomic kit.
 //
 // For v0.1.0 the package ships:
-//   - preset.js (root, used directly)
+//   - preset.cjs (root, used directly — CJS so require()/import both load it)
 //   - styles.css (root, used directly)
 //   - agent/* (raw kit files for tools that read the atomic kit)
 //   - derived/npm/index.{mjs,js,d.ts} — entry stubs so the package is importable as JS
@@ -94,7 +94,7 @@ export declare const brands: readonly ("lore" | "revenant")[];
   console.log("derived/npm built");
 
   const mustExist = [
-    "preset.js",
+    "preset.cjs",
     "styles.css",
     "agent/themes/lore-light/colors_and_type.css",
     "agent/themes/lore-dark/colors_and_type.css",

@@ -19,7 +19,7 @@
     "preview/_primitives.css",
     "preview/_revenant-kit.css",
     "preview/_dataviz-kit.css",
-    "preset.js",
+    "preset.cjs",
     "styles.css",
     "magic_trick.md",
     "README.md"
@@ -39,10 +39,10 @@
     "./fonts/*": "./fonts/*",
     "./package.json": "./package.json",
     "./preset": {
-      "default": "./preset.js"
+      "default": "./preset.cjs"
     },
     "./tailwind": {
-      "default": "./preset.js"
+      "default": "./preset.cjs"
     },
     "./styles": {
       "default": "./styles.css"
