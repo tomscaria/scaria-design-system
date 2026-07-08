@@ -172,3 +172,121 @@
 .wave-bands{display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;border-radius:var(--r-md,4px);min-height:120px}
 .wave-bands .band{height:var(--bh,28%);background:var(--c,var(--cat-1));border-radius:100% 100% 0 0/40px 40px;margin-bottom:-22px}
 .wave-bands .band:last-child{margin-bottom:0}
+
+/* ============================================================
+   dataviz-extensions.css — capability, risk-quadrant & growth-callout layer
+   ------------------------------------------------------------
+   ADDITIVE to dataviz.css. Append this whole block to BOTH copies of the
+   kit that live in this repo so the agent-context and interactive-preview
+   builds stay identical:
+     - agent/visual/dataviz/dataviz.css
+     - preview/_dataviz-kit.css
+   Load order unchanged: tokens/colors_and_type.css → dataviz.css (+ this
+   file) → theme-switcher.css.
+
+   Built while designing the ROLR platform-vision page — these three
+   families were missing from the kit and had to be hand-rolled inline;
+   harvesting them back so the next project gets them for free.
+
+   Three families, all riding the EXISTING --cat-N / --c / --chart-* /
+   --glyph-ink tokens so they re-skin under any [data-theme] with zero
+   markup changes, same contract as the rest of the kit:
+     1. HARVEY   — conic-gradient capability/coverage rating (rows × cols)
+     2. QUADRANT — a labeled 2-axis plot shell (risk-register scatter,
+                   segment/persona bubble maps — same shell, different data)
+     3. CALLOUT  — a growth-trend arrow + value badge overlay for bar charts
+   ============================================================ */
+
+/* ── HARVEY-BALL CAPABILITY RATING ──
+   The consulting-deck "how much do we have of this" glyph — a ring filled
+   to --v percent, drawn with conic-gradient (no SVG, matches the pie/donut
+   pattern already in this kit).
+   Data binding: --v = fill percentage (0–100), data-cat = color.
+
+   <i class="viz-harvey" data-cat="3" style="--v:75"></i>              */
+.viz-harvey{
+  --size: 18px;
+  width:var(--size);height:var(--size);border-radius:50%;flex:none;display:inline-block;
+  background:conic-gradient(var(--c,var(--cat-1)) calc(var(--v,0) * 1%), var(--chart-track,var(--line)) 0);
+  box-shadow:inset 0 0 0 1px var(--chart-grid,var(--line-2));
+}
+.viz-harvey.lg{--size:24px}
+.viz-harvey.sm{--size:13px}
+
+/* Full matrix: capability rows × rating-dimension columns. Set --cols on
+   .viz-harvey-matrix to the dimension count (the label column is implicit).
+   Markup per row: one .hm-row-label + N .hm-cell (each holding one ball).
+
+   <div class="viz-harvey-matrix" style="--cols:4">
+     <span></span><span class="hm-head">Today</span><span class="hm-head">Ph.2</span>...
+     <span class="hm-row-label">Settlement</span>
+     <span class="hm-cell"><i class="viz-harvey" data-cat="3" style="--v:100"></i></span>
+     ...
+   </div>                                                               */
+.viz-harvey-matrix{display:grid;grid-template-columns:var(--label-w,1fr) repeat(var(--cols,4),56px);
+  align-items:center;gap:10px 14px;font-size:11px}
+.viz-harvey-matrix .hm-head{font-family:var(--font-mono);font-size:9px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--chart-axis,var(--fg-3));text-align:center;align-self:end;padding-bottom:4px}
+.viz-harvey-matrix .hm-row-label{color:var(--fg-2);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.viz-harvey-matrix .hm-cell{display:flex;justify-content:center}
+
+/* ── QUADRANT PLOT SHELL ──
+   A labeled 2-axis plot: crossed gridlines + corner captions. Drop dots
+   (.qd) positioned by cx/cy in the viewBox's own units. For two axes each
+   scored 0–100 on a 0..300 × 0..200 viewBox: cx = pct_x * 3, cy = 200 -
+   pct_y * 2 (SVG y grows downward). Radius can ride a third variable
+   (population, severity) — same shell serves a risk-register scatter
+   (likelihood × impact, dot = letter keyed to a table row) or a
+   persona/segment bubble map (reach × value, dot = short code, radius ~
+   population) — the only thing that differs is the data, not the CSS.
+
+   Small dots: put the label ABOVE via .qd.label-above (adds a 3px dot +
+   colored label) instead of inside — use this once dot radius drops below
+   ~11px or the letter/code stops fitting.
+
+   <div class="viz-quadrant" style="--h:220px">
+     <svg class="plot" viewBox="0 0 300 200">
+       <line class="gl" x1="0" y1="100" x2="300" y2="100"/>
+       <line class="gl" x1="150" y1="0" x2="150" y2="200"/>
+       <g class="qd" data-cat="7"><circle cx="230" cy="46" r="11"/><text x="230" y="47">A</text></g>
+       <g class="qd label-above" data-cat="2"><circle cx="60" cy="160"/><text x="60" y="150">Casual</text></g>
+     </svg>
+     <span class="corner tr">high impact</span><span class="corner bl">low priority</span>
+   </div>                                                                */
+.viz-quadrant{position:relative;width:100%;height:var(--h,200px)}
+.viz-quadrant .plot{width:100%;height:100%;overflow:visible}
+.viz-quadrant .qd circle{fill:var(--c,var(--cat-1));transition:opacity .25s}
+.viz-quadrant .qd text{font-family:var(--font-mono);font-weight:700;font-size:10px;
+  fill:var(--glyph-ink,#17140E);text-anchor:middle;dominant-baseline:central;pointer-events:none}
+.viz-quadrant .qd.dim{opacity:.32}
+.viz-quadrant .qd.label-above circle{r:3}
+.viz-quadrant .qd.label-above text{fill:var(--c,var(--cat-1));font-size:9px}
+.viz-quadrant .corner{position:absolute;font-family:var(--font-mono);font-size:9px;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--chart-axis,var(--fg-3))}
+.viz-quadrant .corner.tr{right:2px;top:2px} .viz-quadrant .corner.br{right:2px;bottom:2px}
+.viz-quadrant .corner.tl{left:2px;top:2px}  .viz-quadrant .corner.bl{left:2px;bottom:2px}
+
+/* ── GROWTH CALLOUT (arrow + value badge) ──
+   Overlay a rising/falling trend line with an oval value badge on top of
+   any .viz-plot / bar chart — the "historical growth 5→7%, expected ~5%
+   going forward" consulting annotation. Draw as an absolutely-positioned
+   SVG sibling of the bars, sharing the same viewBox proportions as the
+   plot it sits over (put both in a position:relative wrapper).
+   Badge fill rides --c like every other categorical element; ink follows
+   the same --glyph-ink contract as .glyph, so it stays legible on any
+   theme's categorical palette without a separate token.
+
+   <div style="position:relative">
+     <div class="viz-plot" style="--h:200px"><div class="viz-cols">...</div></div>
+     <svg class="viz-callout" data-cat="1" viewBox="0 0 300 200" preserveAspectRatio="none">
+       <path d="M20,150 C120,130 200,90 260,45"/>
+       <path class="head" d="M260,45 L251,50 L257,38 Z"/>
+       <g class="badge" transform="translate(160,98)"><ellipse rx="24" ry="14"/><text>8%</text></g>
+     </svg>
+   </div>                                                                 */
+.viz-callout{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+.viz-callout path{fill:none;stroke:var(--fg,#17140E);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.viz-callout path.head{fill:var(--fg,#17140E);stroke:none}
+.viz-callout .badge ellipse{fill:var(--c,var(--cat-1));stroke:var(--bg,none)}
+.viz-callout .badge text{font-family:var(--font-sans);font-weight:700;font-size:12px;
+  fill:var(--glyph-ink,#17140E);text-anchor:middle;dominant-baseline:central}
