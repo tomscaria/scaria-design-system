@@ -1,0 +1,294 @@
+/* ============================================================
+   BRAND LAYER — the Scaria constants  (v1)
+   ------------------------------------------------------------
+   The through-line across EVERY theme (primitive, lore, rolr,
+   revenant): crosshair cursor + chartreuse click tick, paper
+   grain, section dial, letterspaced kicker with a live dot,
+   amber ticker tape, reveal-on-scroll, and the studio hero-art
+   helpers. Everything reads theme tokens — switching data-theme
+   re-lights the layer, never restyles it.
+
+   JS counterpart in consumers: BrandLayer component
+   (cursor tracking, dial fold-counting, reveal observer).
+   Classes are prefixed bl- ("brand layer").
+   ============================================================ */
+
+/* ---------- Garnish fallbacks (element selector so any
+   [data-theme] block wins the cascade) ---------- */
+html {
+  --term-amber: #E8A33D;
+  --term-green: #7FA84C;
+  --glow: #A9BD85;
+  --grain-opacity: 0.05;
+  --hero-art-filter: none;
+}
+
+/* Dark siblings re-light the fixed studio art + grain. */
+[data-theme="lore-dark"],
+[data-theme="rolr-dark"],
+[data-theme="revenant-dark"] {
+  --hero-art-filter: brightness(0.86) saturate(0.94) contrast(1.02);
+  --grain-opacity: 0.07;
+  --glow: #55663B;
+}
+
+/* ============================================================
+   1 · PAPER GRAIN — the whole site is printed matter
+   ============================================================ */
+.bl-grain {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: var(--grain-opacity);
+  mix-blend-mode: soft-light;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 240px 240px;
+}
+
+/* ============================================================
+   2 · CROSSHAIR CURSOR — trading-terminal reticle
+   JS adds html.bl-cursor-on only for (pointer:fine) devices.
+   ============================================================ */
+@media (pointer: fine) {
+  html.bl-cursor-on,
+  html.bl-cursor-on * { cursor: none !important; }
+  html.bl-cursor-on input,
+  html.bl-cursor-on textarea,
+  html.bl-cursor-on select,
+  html.bl-cursor-on [contenteditable="true"] { cursor: text !important; }
+}
+
+.bl-cursor,
+.bl-cursor-ring,
+.bl-click {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.bl-cursor {
+  width: 5px;
+  height: 5px;
+  margin: -2.5px 0 0 -2.5px;
+  border-radius: 50%;
+  background: var(--fg);
+}
+
+/* Reticle: hairline ring + 4 compass ticks drawn with gradients. */
+.bl-cursor-ring {
+  width: 30px;
+  height: 30px;
+  margin: -15px 0 0 -15px;
+  border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--fg) 45%, transparent);
+  background:
+    linear-gradient(var(--fg) 0 0) top    center / 1px 6px no-repeat,
+    linear-gradient(var(--fg) 0 0) bottom center / 1px 6px no-repeat,
+    linear-gradient(var(--fg) 0 0) left   center / 6px 1px no-repeat,
+    linear-gradient(var(--fg) 0 0) right  center / 6px 1px no-repeat;
+  transition:
+    transform var(--motion-duration-micro, 140ms) var(--motion-ease-interaction, ease),
+    border-color var(--motion-duration-micro, 140ms) linear;
+}
+.bl-cursor-ring.is-hover {
+  transform: scale(1.45) rotate(45deg);
+  border-color: var(--accent-deep);
+}
+.bl-cursor-ring.is-down { transform: scale(0.75); }
+.bl-cursor-ring.is-hover.is-down { transform: scale(1.1) rotate(45deg); }
+
+/* Click tick — one expanding chartreuse ring per pointerdown. */
+.bl-click {
+  width: 12px;
+  height: 12px;
+  margin: -6px 0 0 -6px;
+  border-radius: 50%;
+  border: 1.5px solid var(--accent-deep);
+  animation: bl-tick 480ms var(--motion-ease-reveal, ease-out) forwards;
+}
+@keyframes bl-tick {
+  from { opacity: 0.9; transform: scale(1); }
+  to   { opacity: 0;   transform: scale(4.6); }
+}
+
+/* ============================================================
+   3 · SECTION DIAL — the n/5 badge, bottom right
+   (SVG progress ring supplied by the component.)
+   ============================================================ */
+.bl-dial {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 90;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  border: 0;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  background: var(--bg-inverted);
+  color: var(--fg-inverted);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  box-shadow: var(--shadow-md);
+  transition: transform var(--motion-duration-micro, 140ms) var(--motion-ease-interaction, ease);
+}
+.bl-dial:hover { transform: translateY(-2px); }
+.bl-dial:focus-visible { outline: 2px solid var(--accent-deep); outline-offset: 3px; }
+.bl-dial svg { position: absolute; inset: 0; transform: rotate(-90deg); }
+.bl-dial svg circle {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 480ms var(--motion-ease-reveal, ease-out);
+}
+.bl-dial span { position: relative; z-index: 1; }
+@media (max-width: 767px) {
+  .bl-dial { width: 46px; height: 46px; right: 14px; bottom: 14px; font-size: 11px; }
+}
+
+/* ============================================================
+   4 · SCROLL CUE — letterspaced invitation + bobbing chevron
+   ============================================================ */
+.bl-scroll-cue {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.42em;
+  text-indent: 0.42em; /* re-center the tracked text */
+  text-transform: uppercase;
+  color: var(--fg-2);
+}
+.bl-scroll-cue svg { animation: bl-bob 2.2s var(--motion-ease-ambient, ease-in-out) infinite; }
+@keyframes bl-bob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(5px); }
+}
+
+/* ============================================================
+   5 · KICKER — mono caps wayfinding with the moss dot
+   ============================================================ */
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7em;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: var(--fw-medium, 500);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-header-caps, 0.18em);
+  color: var(--fg-2);
+}
+.kicker::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent-deep);
+  flex-shrink: 0;
+}
+.kicker--live::before { animation: bl-pulse var(--motion-duration-live, 2400ms) var(--motion-ease-ambient, ease-in-out) infinite; }
+.kicker--bare::before { display: none; }
+@keyframes bl-pulse {
+  0%, 100% { opacity: 1;    transform: scale(1); }
+  50%      { opacity: 0.45; transform: scale(0.78); }
+}
+
+/* ============================================================
+   6 · TICKER TAPE — amber terminal strip (data garnish only)
+   ============================================================ */
+.bl-ticker {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+.bl-ticker-track {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 2.6em;
+  padding: 9px 0;
+  white-space: nowrap;
+  will-change: transform;
+  animation: bl-marquee 72s linear infinite;
+}
+.bl-ticker:hover .bl-ticker-track { animation-play-state: paused; }
+.bl-ticker-item { font-family: var(--font-mono); font-size: 11px; display: inline-flex; gap: 0.7em; align-items: baseline; }
+.bl-ticker-sym { color: var(--term-amber); font-weight: var(--fw-medium, 500); letter-spacing: 0.08em; }
+.bl-ticker-px  { color: var(--fg-2); }
+.bl-ticker-chg.up   { color: var(--term-green); }
+.bl-ticker-chg.down { color: var(--danger); }
+@keyframes bl-marquee { to { transform: translateX(-50%); } }
+
+/* ============================================================
+   7 · REVEAL — enter on scroll (armed only when JS mounts:
+   html.bl-anim guard keeps content visible if JS fails)
+   ============================================================ */
+html.bl-anim [data-reveal] {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity var(--motion-duration-entry, 420ms) var(--motion-ease-reveal, ease-out),
+    transform var(--motion-duration-entry, 420ms) var(--motion-ease-reveal, ease-out);
+}
+html.bl-anim [data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* ============================================================
+   8 · STUDIO HERO ART — fixed painting, re-lit per theme
+   ============================================================ */
+.bl-hero-art { filter: var(--hero-art-filter, none); }
+
+/* Blend the plate's parchment floor into whatever ground the
+   active theme uses — this is what makes ONE plate work on all
+   nine themes. */
+.bl-hero-fade {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 24%;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent, var(--bg));
+}
+.bl-hero-fade--top {
+  inset: 0 0 auto 0;
+  height: 10%;
+  background: linear-gradient(0deg, transparent, var(--bg));
+}
+
+/* Monitor-wall moss glow, breathing. */
+.bl-hero-glow {
+  position: absolute;
+  pointer-events: none;
+  background: radial-gradient(closest-side, var(--glow), transparent 70%);
+  mix-blend-mode: soft-light;
+  opacity: 0;
+  animation: bl-breathe 7s var(--motion-ease-ambient, ease-in-out) infinite;
+}
+@keyframes bl-breathe {
+  0%, 100% { opacity: 0.05; }
+  50%      { opacity: 0.4; }
+}
+
+/* ============================================================
+   REDUCED MOTION — stillness, not absence
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .bl-ticker-track { animation: none; }
+  .bl-scroll-cue svg { animation: none; }
+  .kicker--live::before { animation: none; }
+  .bl-hero-glow { animation: none; opacity: 0.16; }
+  .bl-click { animation-duration: 1ms; }
+  html.bl-anim [data-reveal] { opacity: 1; transform: none; transition: none; }
+}

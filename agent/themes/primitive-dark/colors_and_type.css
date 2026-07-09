@@ -1,91 +1,120 @@
 /* ============================================================
-   Primitive Dark — brand-neutral, Inter-based dark theme.
-   Inversion of primitive. Use to demonstrate raw primitives on
-   a dark surface without brand pollution.
+   Primitive Dark — STUDIO NIGHT  (v2 · Scaria flagship, after hours)
+   ------------------------------------------------------------
+   The same studio with the lights off: deep olive-black ground,
+   parchment ink, chartreuse promoted to brand (it's the only thing
+   glowing), terminal amber at full luminance. Mirror of primitive
+   (surfaces + foreground + lines flip; type, motion, radii hold).
 
    Sibling selector to [data-theme="primitive"] — it does NOT
-   inherit primitive's tokens, so the full set (type / motion /
-   spacing / radii / shadow) is declared explicitly below,
-   mirroring primitive with dark-appropriate surfaces + shadows.
+   inherit primitive's tokens, so the full set is declared.
    ============================================================ */
 
 [data-theme="primitive-dark"] {
   /* ---------- COLOR ---------- */
-  --bg: hsl(0 0% 4%);
-  --bg-2: hsl(0 0% 7%);
-  --bg-3: hsl(0 0% 10%);
-  --bg-muted: hsl(0 0% 6%);
-  --bg-inverted: hsl(0 0% 100%);
+  --bg: #14150F;               /* night studio — olive-black */
+  --bg-2: #1C1E15;             /* card */
+  --bg-3: #24261B;             /* floating / popover */
+  --bg-muted: #0E0F0A;         /* inset well / track */
+  --bg-inverted: #F0ECE1;
 
-  --fg: hsl(0 0% 96%);
-  --fg-2: hsl(0 0% 75%);
-  --fg-3: hsl(0 0% 55%);
-  --fg-muted: hsl(0 0% 36%);
-  --fg-inverted: hsl(0 0% 4%);
+  --fg: #EDEADC;               /* parchment ink */
+  --fg-2: #C3C0AF;
+  --fg-3: #93957F;
+  --fg-muted: #6B6D5A;
+  --fg-inverted: #16180F;
 
-  --line: hsl(0 0% 15%);
-  --line-2: hsl(0 0% 10%);
-  --line-strong: hsl(0 0% 96%);
+  --line: #2E3023;
+  --line-2: #24261A;
+  --line-strong: #EDEADC;
 
-  --brand: hsl(0 0% 96%);
-  --brand-hover: hsl(0 0% 85%);
-  --brand-fg: hsl(0 0% 4%);
+  /* Brand — at night, chartreuse IS the light source. */
+  --brand: #D4F24B;
+  --brand-hover: #E1FA6B;
+  --brand-fg: #16180F;
+  --brand-soft: rgba(212, 242, 75, 0.10);
 
-  --accent: hsl(0 0% 96%);
-  --accent-hover: hsl(0 0% 85%);
-  --accent-deep: hsl(0 0% 100%);
-  --accent-soft: hsl(0 0% 12%);
-  --accent-fg: hsl(0 0% 4%);
+  --accent: #D4F24B;
+  --accent-hover: #E1FA6B;
+  --accent-deep: #B7D63A;      /* AA text on night ground */
+  --accent-soft: #2A2F15;
+  --accent-fg: #16180F;
 
-  --success: hsl(150 45% 55%);
-  --info:    hsl(210 50% 62%);
-  --warn:    hsl(30 80% 60%);
-  --danger:  hsl(0 75% 65%);
+  --success: #8FC98F;  --success-soft: #1D2A1D;
+  --info:    #9FB4C2;  --info-soft:    #1D242A;
+  --warn:    #E8A33D;  --warn-soft:    #2E2211;   /* amber runs hot at night */
+  --danger:  #D98B69;  --danger-soft:  #2E1D14;
 
-  /* ---------- TYPE (Inter-based, mirrors primitive) ---------- */
-  --fs-display-xl: 80px;   --lh-display-xl: 0.96;  --tracking-display-xl: -0.03em;
-  --fs-display-lg: 60px;   --lh-display-lg: 1.0;   --tracking-display-lg: -0.025em;
-  --fs-display-md: 44px;   --lh-display-md: 1.05;  --tracking-display-md: -0.02em;
-  --fs-display-sm: 32px;   --lh-display-sm: 1.1;   --tracking-display-sm: -0.015em;
+  /* Studio-specific — market/terminal garnish (brand-layer consumes). */
+  --term-amber: #E8A33D;
+  --term-green: #9FC865;
+  --glow: #55663B;
+  --grain-opacity: 0.07;
+  --hero-art-filter: brightness(0.86) saturate(0.94) contrast(1.02);
 
-  --fs-header-xl: 28px;    --lh-header-xl: 1.15;   --tracking-header-xl: -0.01em;
-  --fs-header-lg: 22px;    --lh-header-lg: 1.2;    --tracking-header-lg: -0.005em;
+  /* ---------- TYPE SCALE (identical to primitive) ---------- */
+  --fs-display-xl: 96px;   --lh-display-xl: 0.98;  --tracking-display-xl: -0.015em;
+  --fs-display-lg: 64px;   --lh-display-lg: 1.02;  --tracking-display-lg: -0.012em;
+  --fs-display-md: 46px;   --lh-display-md: 1.06;  --tracking-display-md: -0.01em;
+  --fs-display-sm: 34px;   --lh-display-sm: 1.1;   --tracking-display-sm: -0.008em;
+
+  --fs-header-xl: 28px;    --lh-header-xl: 1.12;   --tracking-header-xl: -0.01em;
+  --fs-header-lg: 22px;    --lh-header-lg: 1.18;   --tracking-header-lg: -0.005em;
   --fs-header-md: 18px;    --lh-header-md: 1.25;   --tracking-header-md: 0;
-  --fs-header-sm: 16px;    --lh-header-sm: 1.3;    --tracking-header-sm: 0;
-  --fs-header-caps: 11px;  --lh-header-caps: 1;    --tracking-header-caps: 0.08em;
+  --fs-header-sm: 15px;    --lh-header-sm: 1.3;    --tracking-header-sm: 0;
+  --fs-header-caps: 11px;  --lh-header-caps: 1;    --tracking-header-caps: 0.18em;
 
-  --fs-body-lg: 17px;      --lh-body-lg: 1.55;
+  --fs-body-lg: 17px;      --lh-body-lg: 1.6;
   --fs-body-md: 15px;      --lh-body-md: 1.55;
   --fs-body-sm: 13px;      --lh-body-sm: 1.5;
   --fs-body-xs: 11px;      --lh-body-xs: 1.45;
 
   --fw-regular: 400;  --fw-medium: 500;  --fw-bold: 700;
 
-  /* ---------- FONT FAMILY (Inter, no display serif) ---------- */
-  --font-sans: "Inter", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-display: "Inter", ui-sans-serif, sans-serif;
-  --font-mono: ui-monospace, "SF Mono", Menlo, Monaco, "Courier New", monospace;
+  /* ---------- FONT FAMILY (identical to primitive) ---------- */
+  --font-sans: "Aeonik", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-display: "Lock Serif", "Aeonik", ui-serif, Georgia, serif;
+  --font-mono: "Aeonik Mono", ui-monospace, Menlo, Monaco, "Cascadia Mono", monospace;
 
-  /* ---------- MOTION (snappy, no flourish — mirrors primitive) ---------- */
-  --motion-duration-micro: 120ms;
-  --motion-duration-entry: 300ms;
-  --motion-duration-scene: 500ms;
-  --motion-ease-interaction: cubic-bezier(0.4, 0, 0.2, 1);
-  --motion-ease-reveal:      cubic-bezier(0.4, 0, 0.2, 1);
+  /* ---------- MOTION (identical to primitive) ---------- */
+  --motion-duration-micro: 140ms;
+  --motion-duration-entry: 420ms;
+  --motion-duration-scene: 640ms;
+  --motion-duration-live:  2400ms;
+  --motion-duration-pop:   320ms;
+  --motion-ease-interaction: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --motion-ease-reveal:      cubic-bezier(0.2, 0.8, 0.2, 1);
   --motion-ease-ambient:     ease-in-out;
+  --motion-ease-pop:         cubic-bezier(0.34, 1.56, 0.64, 1);
 
-  /* ---------- SPACING (mirrors primitive) ---------- */
+  /* ---------- SPACING ---------- */
   --sp-section-y: 72px;  --sp-section-x: 32px;
   --sp-stack-xs: 4px;  --sp-stack-sm: 8px;  --sp-stack-md: 16px;  --sp-stack-lg: 32px;  --sp-stack-xl: 56px;
   --sp-inline-xs: 4px; --sp-inline-sm: 8px; --sp-inline-md: 16px; --sp-inline-lg: 24px;
 
-  /* ---------- RADII (tighter than Lore — mirrors primitive) ---------- */
-  --r-xs: 4px;  --r-sm: 6px;  --r-md: 8px;  --r-lg: 10px;  --r-xl: 14px;  --r-pill: 999rem;
+  /* ---------- RADII (identical to primitive) ---------- */
+  --r-xs: 2px;  --r-sm: 4px;  --r-md: 6px;  --r-lg: 8px;  --r-xl: 12px;  --r-pill: 999rem;
 
-  /* ---------- SHADOW (honest blacks on dark surface) ---------- */
-  --shadow-xs: 0 1px 2px rgba(0,0,0,.5);
-  --shadow-sm: 0 1px 3px rgba(0,0,0,.6);
-  --shadow-md: 0 4px 12px rgba(0,0,0,.55);
-  --shadow-lg: 0 12px 32px rgba(0,0,0,.6);
-  --shadow-xl: 0 24px 60px rgba(0,0,0,.65);
+  /* ---------- SHADOW (honest blacks + faint chartreuse clearance ring) ---------- */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(212, 242, 75, 0.04);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(212, 242, 75, 0.06);
+  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(212, 242, 75, 0.08);
+  --shadow-xl: 0 24px 70px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(212, 242, 75, 0.10);
+}
+
+/* ---------- EXPRESSION: MARKETING ---------- */
+[data-theme="primitive-dark"][data-expression="marketing"] {
+  --fs-display-xl: 132px;  --lh-display-xl: 0.94;
+  --fs-display-lg: 88px;
+  --fs-display-md: 60px;
+  --sp-section-y: 120px;
+  --sp-stack-xl: 80px;
+  --motion-duration-entry: 600ms;
+}
+
+/* ---------- EXPRESSION: PRODUCT (default) ---------- */
+[data-theme="primitive-dark"][data-expression="product"] {
+  --sp-section-y: 56px;
+  --motion-duration-entry: 220ms;
 }

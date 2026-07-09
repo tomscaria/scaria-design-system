@@ -45,6 +45,11 @@
 /* LeadRow — the hover-to-somewhere list row (link rows that lift + reveal + navigate). */
 @import "./agent/visual/patterns/leadrow.css";
 
+/* Brand Layer — the Scaria constants across every theme (crosshair cursor,
+   paper grain, section dial, kicker, ticker tape, reveal, studio hero-art).
+   Token-driven: data-theme re-lights it, never restyles it. */
+@import "./agent/visual/patterns/brand-layer.css";
+
 /* NOTE: the BoTW flair overlay (agent/visual/botw/botw-flair.css) is intentionally
    NOT imported here — it is Lore-only marketing flair. Opt in per-project with
    `@import '@tomscaria/scaria-design-system/botw'` + data-flair="botw". */

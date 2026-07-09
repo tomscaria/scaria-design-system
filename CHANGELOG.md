@@ -1,5 +1,13 @@
 # @tomscaria/scaria-design-system
 
+## 1.3.0
+
+### Minor Changes
+
+- **Primitive → THE STUDIO.** `primitive` / `primitive-dark` re-authored from the brand-neutral Inter baseline into the Scaria flagship marketing theme — the new default public identity for tomscaria.com. Material from Lore (parchment `#F0ECE1`, chartreuse `#D4F24B`, Lock Serif + Aeonik + Aeonik Mono), discipline from Revenant (ink-filled actions, one accent per view, 2–12px radii), plus studio garnish tokens: `--term-amber` (Bloomberg amber, data-only), `--term-green`, `--glow` (monitor moss), `--grain-opacity`, `--hero-art-filter`. Both expressions (`product` / `marketing`) authored; `primitive-dark` graduates from stub to full Studio Night theme.
+
+- **Brand Layer** (`agent/visual/patterns/brand-layer.css`, export `./brand-layer`, wired into `./styles`). The cross-theme Scaria constants: crosshair cursor + chartreuse click tick (`pointer:fine` only), paper-grain overlay, section dial (`n/N`), letterspaced scroll cue, `.kicker` mono-caps wayfinding with moss dot, amber ticker tape, `[data-reveal]` scroll entrances (JS-armed via `html.bl-anim`, safe without JS), and studio hero-art helpers (`--hero-art-filter` re-lighting for dark siblings). Fully token-driven; respects `prefers-reduced-motion`.
+
 ## 1.2.1
 
 ### Patch Changes
