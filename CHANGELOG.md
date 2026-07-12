@@ -1,5 +1,11 @@
 # @tomscaria/scaria-design-system
 
+## 1.3.1
+
+### Patch Changes
+
+- **brand-layer hardening** (adversarial review of the 1.3.0 ship): cursor position moves to a `.bl-cursor-wrap` wrapper so `.is-hover`/`.is-down` ring transforms are no longer clobbered by the per-frame translate; `forced-colors: active` restores the OS pointer and hides the reticle; ticker tape becomes a theme-invariant ink terminal strip (amber/green/clay now pass contrast) and swaps its flex `gap` for per-item `margin-right` so the −50% marquee wraps seamlessly; grain drops `mix-blend-mode` (whole-viewport re-blend per scrolled frame); new `.bl-hero-fold` class carries the fold height with a stacked `vh`→`svh` fallback; `@media print` hides all brand-layer chrome. `primitive` `--fg-3` darkened `#6E7064` → `#65675B` (4.9:1 on parchment).
+
 ## 1.3.0
 
 ### Minor Changes

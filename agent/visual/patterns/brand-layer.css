@@ -40,8 +40,9 @@ html {
   inset: 0;
   z-index: 60;
   pointer-events: none;
+  /* No blend mode: an unblended fixed layer composites once; soft-light
+     forced a whole-viewport re-blend on every scrolled frame. */
   opacity: var(--grain-opacity);
-  mix-blend-mode: soft-light;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 240px 240px;
 }
@@ -60,7 +61,7 @@ html {
 }
 
 .bl-cursor,
-.bl-cursor-ring,
+.bl-cursor-wrap,
 .bl-click {
   position: fixed;
   top: 0;
@@ -77,11 +78,18 @@ html {
   background: var(--fg);
 }
 
-/* Reticle: hairline ring + 4 compass ticks drawn with gradients. */
-.bl-cursor-ring {
+/* Position (rAF-lerped translate3d) lives on the wrapper so the inner
+   ring's .is-hover / .is-down transforms aren't clobbered per frame. */
+.bl-cursor-wrap {
   width: 30px;
   height: 30px;
   margin: -15px 0 0 -15px;
+}
+
+/* Reticle: hairline ring + 4 compass ticks drawn with gradients. */
+.bl-cursor-ring {
+  position: absolute;
+  inset: 0;
   border-radius: 50%;
   border: 1px solid color-mix(in srgb, var(--fg) 45%, transparent);
   background:
@@ -99,6 +107,16 @@ html {
 }
 .bl-cursor-ring.is-down { transform: scale(0.75); }
 .bl-cursor-ring.is-hover.is-down { transform: scale(1.1) rotate(45deg); }
+
+/* High-contrast / forced-colors: never suppress the OS pointer, and the
+   replacement reticle would be stripped anyway — hide it. */
+@media (forced-colors: active) {
+  html.bl-cursor-on,
+  html.bl-cursor-on * { cursor: auto !important; }
+  .bl-cursor,
+  .bl-cursor-wrap,
+  .bl-click { display: none; }
+}
 
 /* Click tick — one expanding chartreuse ring per pointerdown. */
 .bl-click {
@@ -206,28 +224,41 @@ html {
 /* ============================================================
    6 · TICKER TAPE — amber terminal strip (data garnish only)
    ============================================================ */
+/* The tape is a terminal: it keeps its own ink ground on EVERY theme
+   (amber/green/clay only pass contrast on near-black — and a black strip
+   IS the motif). Literals are intentional, not tokens. */
 .bl-ticker {
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
+  background: #16180F;
+  border-top: 1px solid rgba(240, 236, 225, 0.1);
+  border-bottom: 1px solid rgba(240, 236, 225, 0.1);
   overflow: hidden;
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
   mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
 }
+/* No flex gap: the track is the item list ×2, so spacing must live ON each
+   item (margin-right) for translateX(-50%) to wrap seamlessly — a container
+   gap leaves the loop g/2 short and the tape snaps every cycle. */
 .bl-ticker-track {
   display: inline-flex;
   align-items: baseline;
-  gap: 2.6em;
   padding: 9px 0;
   white-space: nowrap;
   will-change: transform;
   animation: bl-marquee 72s linear infinite;
 }
 .bl-ticker:hover .bl-ticker-track { animation-play-state: paused; }
-.bl-ticker-item { font-family: var(--font-mono); font-size: 11px; display: inline-flex; gap: 0.7em; align-items: baseline; }
+.bl-ticker-item {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  display: inline-flex;
+  gap: 0.7em;
+  align-items: baseline;
+  margin-right: 3.8em; /* ≈ the old 2.6em container gap at track font-size */
+}
 .bl-ticker-sym { color: var(--term-amber); font-weight: var(--fw-medium, 500); letter-spacing: 0.08em; }
-.bl-ticker-px  { color: var(--fg-2); }
-.bl-ticker-chg.up   { color: var(--term-green); }
-.bl-ticker-chg.down { color: var(--danger); }
+.bl-ticker-px  { color: #B7B4A4; }
+.bl-ticker-chg.up   { color: #8FC24E; }
+.bl-ticker-chg.down { color: #E08A63; }
 @keyframes bl-marquee { to { transform: translateX(-50%); } }
 
 /* ============================================================
@@ -250,6 +281,16 @@ html.bl-anim [data-reveal].is-in {
    8 · STUDIO HERO ART — fixed painting, re-lit per theme
    ============================================================ */
 .bl-hero-art { filter: var(--hero-art-filter, none); }
+
+/* Full-fold sizing for the home plate. Stacked declarations: browsers
+   without svh keep the vh line instead of dropping the whole value
+   (which an inline style cannot express). */
+.bl-hero-fold {
+  height: min(calc(100vh - 56px), calc(52vw + 350px));
+  height: min(calc(100svh - 56px), calc(52vw + 350px));
+  min-height: 420px;
+  max-height: 1200px;
+}
 
 /* Blend the plate's parchment floor into whatever ground the
    active theme uses — this is what makes ONE plate work on all
@@ -279,6 +320,19 @@ html.bl-anim [data-reveal].is-in {
 @keyframes bl-breathe {
   0%, 100% { opacity: 0.05; }
   50%      { opacity: 0.4; }
+}
+
+/* ============================================================
+   PRINT — no chrome on paper (resume PDFs etc.)
+   ============================================================ */
+@media print {
+  .bl-ticker,
+  .bl-cursor,
+  .bl-cursor-wrap,
+  .bl-click,
+  .bl-dial,
+  .bl-grain,
+  .bl-scroll-cue { display: none !important; }
 }
 
 /* ============================================================

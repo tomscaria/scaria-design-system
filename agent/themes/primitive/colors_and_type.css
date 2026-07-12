@@ -26,7 +26,7 @@
 
   --fg: #1A1B18;               /* chair-black ink */
   --fg-2: #45473E;
-  --fg-3: #6E7064;
+  --fg-3: #65675B; /* 4.9:1 on --bg — the 10-12px mono nav/footer text rides this */
   --fg-muted: #9A9C8E;
   --fg-inverted: #F4F1E7;
 
