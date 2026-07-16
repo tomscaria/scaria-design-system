@@ -2,7 +2,7 @@
   "name": "@tomscaria/scaria-design-system",
   "version": "1.3.1",
   "description": "Lore design system — tokens (colors, type, spacing), themes (lore-light/dark, revenant-light/dark, kiosk, primitive), kit CSS primitives, Tailwind preset, and thin React component wrappers. Consumed by swarm-fund-mvp, Thomas OS, lore-teaser-prea.",
-  "license": "Apache-2.0",
+  "license": "MIT",
   "private": false,
   "publishConfig": {
     "access": "public"
@@ -22,8 +22,7 @@
     "preset.cjs",
     "styles.css",
     "magic_trick.md",
-    "README.md",
-    "NOTICE"
+    "README.md"
   ],
   "exports": {
     ".": {
