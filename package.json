@@ -1,6 +1,6 @@
 {
   "name": "@tomscaria/consumer-fintech-design-system",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "Consumer fintech design system — design tokens, a multi-theme runtime (earth, arcade, revenant, primitive/studio, kiosk) with product/marketing expressions, kit CSS primitives, a Tailwind preset, and thin React component wrappers.",
   "license": "MIT",
   "private": false,
@@ -13,6 +13,7 @@
   "types": "./derived/npm/index.d.ts",
   "files": [
     "agent/",
+    "bin/",
     "derived/npm/",
     "tokens/",
     "fonts/",
@@ -116,5 +117,8 @@
     "url": "https://github.com/tomscaria/scaria-design-system.git"
   },
   "author": "Thomas Scaria <tomscaria@gmail.com>",
-  "homepage": "https://github.com/tomscaria/scaria-design-system#readme"
+  "homepage": "https://github.com/tomscaria/scaria-design-system#readme",
+  "bin": {
+    "consumer-fintech-design-system": "./bin/cli.mjs"
+  }
 }
