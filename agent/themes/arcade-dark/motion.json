@@ -1,0 +1,27 @@
+{
+  "theme": "arcade-dark",
+  "description": "Per-theme motion overrides for the ROLR prediction-market book. Liveness-forward: the surface is alive because the market is. Pulses are organic (ease-in-out), data streams in real time, settlements celebrate.",
+  "durations": {
+    "micro_ms": 150,
+    "entry_ms_product": 200,
+    "entry_ms_marketing": 500,
+    "scene_ms_product": 350,
+    "scene_ms_marketing": 600,
+    "live_ms": 1300,
+    "pop_ms": 350
+  },
+  "easing": {
+    "interaction": "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+    "reveal": "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+    "ambient": "ease-in-out",
+    "pop": "cubic-bezier(0.34, 1.56, 0.64, 1)"
+  },
+  "liveness_budget": {
+    "live_pulse": "unlimited (presence dots are cheap and meaningful)",
+    "win_glow": 1,
+    "breathe": 1,
+    "stream": 3,
+    "confetti": "1 — settlement only, never ambient"
+  },
+  "notes": "ambient=ease-in-out (organic) is the ROLR signature and the inverse of revenant-dark's mechanical linear. A live market should feel like it's breathing, not ticking. pop uses a slight overshoot for number/badge changes — the only place ROLR allows spring-like motion."
+}

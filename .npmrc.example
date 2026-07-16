@@ -1,6 +1,6 @@
 # ============================================================
 # CONSUMER SETUP — copy this file to .npmrc in the consuming
-# project to install @tomscaria/scaria-design-system from
+# project to install @tomscaria/consumer-fintech-design-system from
 # GitHub Packages (private registry).
 # ============================================================
 #
@@ -14,7 +14,7 @@
 #
 # 3. Copy this file to .npmrc in the consuming project root.
 #
-# 4. npm install @tomscaria/scaria-design-system
+# 4. npm install @tomscaria/consumer-fintech-design-system
 #
 # ============================================================
 

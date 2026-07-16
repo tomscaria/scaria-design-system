@@ -66,8 +66,8 @@ interface ActivityFeedProps {
 
 | Theme | New bet row |
 |---|---|
-| rolr-dark | `#1A1D18` row, mono `$40` in `--up`, `--fg-muted` time |
-| rolr-light | white row, parchment border, deep-lime amount |
+| arcade-dark | `#1A1D18` row, mono `$40` in `--up`, `--fg-muted` time |
+| arcade-light | white row, parchment border, deep-lime amount |
 
 ## File layout
 

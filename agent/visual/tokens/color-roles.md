@@ -64,4 +64,4 @@ The hero brand color. Strict usage rules — see `accent-usage.md`.
 1. **Never reference a hex directly** in component code. Always go through a CSS var. If a value doesn't exist, add a token, don't inline.
 2. **Never use raw `text-white` or `text-black`.** Use `--fg`, `--fg-inverted`, `--bg`, `--bg-inverted`.
 3. **`--accent` is not background fill.** See `accent-usage.md` for the strict list.
-4. **`--brand` and `--accent` may share a value** (lore-dark), or differ (lore-light: brand = graphite, accent = lime). Don't conflate them in code.
+4. **`--brand` and `--accent` may share a value** (earth-dark), or differ (earth-light: brand = graphite, accent = lime). Don't conflate them in code.

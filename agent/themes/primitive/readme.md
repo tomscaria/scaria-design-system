@@ -12,7 +12,7 @@ Mood: *Bloomberg terminal, but clean.* Editorial calm carrying operator density.
 
 - The public site (default theme) and any marketing/portfolio surface
 - Case studies, memo hubs, share links that should read "Scaria" without naming a venture brand
-- Anywhere the old advice said "use lore-light for product" but the surface is *personal-brand* first
+- Anywhere the old advice said "use earth-light for product" but the surface is *personal-brand* first
 
 ## Rules
 

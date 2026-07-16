@@ -104,6 +104,6 @@ When generating umbrella-level (cross-brand) materials — pitch decks for Scari
 - Use the **smartphone → knowledge worker** analogy when explaining *why* this matters socially. Use the **gold-rush → modern mining** analogy when explaining *how* edges are extracted now.
 - When pivoting from the umbrella into a product, the seam is: "Lore is the human-aggregation apparatus. Revenant is the agent-aggregation apparatus. Both are collective intelligence, both run on onchain rails, both built by the same operator."
 - Soften any "the two products feed each other" framing. The honest version is that they share a founder, a substrate, and a thesis — not systems.
-- Visually, the umbrella surface should feel like the parent of both brand identities — neither lore-light nor revenant-light, but a primitive-light-ish neutral that lets either brand surface beneath it without dissonance.
+- Visually, the umbrella surface should feel like the parent of both brand identities — neither earth-light nor revenant-light, but a primitive-light-ish neutral that lets either brand surface beneath it without dissonance.
 - When the audience is unclear between the two products, default to umbrella framing and let the conversation route them.
 - House vocabulary: "collective intelligence," "the apparatus," "edges for all," "moving the financial system to the internet," "front-row seat," "early, often too early," "Community Capital Network" (Lore), "the cohort" (Revenant), "Birth → Canary → Apex → Revenant" (Revenant lifecycle).

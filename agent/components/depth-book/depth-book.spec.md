@@ -72,6 +72,6 @@ Mini-book = `header` (compact, market-color tinted) + `ladder` only (4–6 rows)
 
 | theme | last price | bid bar | ask bar |
 |---|---|---|---|
-| `rolr-dark` | `--down` #F8567F | `--up-soft` rgba(52,209,126,.15) | `--down-soft` rgba(248,86,127,.15) |
-| `rolr-light` | `--down` #E0345F | `--up-soft` #E4F4EB | `--down-soft` #FBE4EB |
-| `lore-dark` | inherits | `--success` soft | `--danger` soft |
+| `arcade-dark` | `--down` #F8567F | `--up-soft` rgba(52,209,126,.15) | `--down-soft` rgba(248,86,127,.15) |
+| `arcade-light` | `--down` #E0345F | `--up-soft` #E4F4EB | `--down-soft` #FBE4EB |
+| `earth-dark` | inherits | `--success` soft | `--danger` soft |

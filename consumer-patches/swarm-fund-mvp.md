@@ -11,7 +11,7 @@
 cd ~/scaria/scaria-design-system
 pnpm link --global
 cd ~/scaria/swarm-fund-mvp
-pnpm link --global @tomscaria/scaria-design-system
+pnpm link --global @tomscaria/consumer-fintech-design-system
 
 # 2. Peer deps satisfied
 node -e "const p = require('./package.json'); console.log({react: p.dependencies.react, rd: p.dependencies['react-dom'], tw: p.devDependencies.tailwindcss || p.dependencies.tailwindcss});"
@@ -50,7 +50,7 @@ Add the preset. Keep existing `content` array (the kit doesn't ship one — it's
 
 ```diff
   module.exports = {
-+   presets: [require('@tomscaria/scaria-design-system/preset')],
++   presets: [require('@tomscaria/consumer-fintech-design-system/preset')],
     content: [
       './app/**/*.{ts,tsx,mdx}',
       './components/**/*.{ts,tsx}',
@@ -70,7 +70,7 @@ Add the preset. Keep existing `content` array (the kit doesn't ship one — it's
 Prepend the kit import, **before** any local layer declarations:
 
 ```diff
-+ @import '@tomscaria/scaria-design-system/styles';
++ @import '@tomscaria/consumer-fintech-design-system/styles';
 +
   @tailwind base;
   @tailwind components;
@@ -214,7 +214,7 @@ Open the app. Manually verify:
 cd ~/scaria/swarm-fund-mvp
 git checkout -b claude/atomic-kit-migration
 git add -A
-git commit -m "Adopt @tomscaria/scaria-design-system atomic kit (revenant-light/dark)"
+git commit -m "Adopt @tomscaria/consumer-fintech-design-system atomic kit (revenant-light/dark)"
 git push -u origin claude/atomic-kit-migration
 gh pr create --draft --title "Adopt atomic kit — Revenant themes" --body-file _migration-notes.md
 ```
@@ -231,7 +231,7 @@ The kit is `pnpm link`ed, not installed. To roll back:
 
 ```sh
 cd ~/scaria/swarm-fund-mvp
-pnpm unlink --global @tomscaria/scaria-design-system
+pnpm unlink --global @tomscaria/consumer-fintech-design-system
 git checkout main -- tailwind.config.* app/globals.css app/layout.tsx
 pnpm install
 ```

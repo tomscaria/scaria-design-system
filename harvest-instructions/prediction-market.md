@@ -10,12 +10,12 @@ It also adds a new product surface pair — **ROLR**, the internet-native predic
 
 ## What was lifted
 
-### 1. Themes — `agent/themes/rolr-dark/`, `agent/themes/rolr-light/`
+### 1. Themes — `agent/themes/arcade-dark/`, `agent/themes/arcade-light/`
 
-A new two-surface theme. Full per-theme variable blocks (color + type + motion + spacing + radii + shadows + fonts) following the `lore-light` contract, plus `motion.json`, `tokens.json`, `readme.md` each.
+A new two-surface theme. Full per-theme variable blocks (color + type + motion + spacing + radii + shadows + fonts) following the `earth-light` contract, plus `motion.json`, `tokens.json`, `readme.md` each.
 
-- **rolr-dark** — the Pro/desktop "book": near-black warm olive surface (#16190F), ember primary (#D9794C), lime hero accent (#D4F24B).
-- **rolr-light** — the Casual/iOS surface: warm white (#FFFBF0), graphite primary, deep-lime accent, ember for the no/down side.
+- **arcade-dark** — the Pro/desktop "book": near-black warm olive surface (#16190F), ember primary (#D9794C), lime hero accent (#D4F24B).
+- **arcade-light** — the Casual/iOS surface: warm white (#FFFBF0), graphite primary, deep-lime accent, ember for the no/down side.
 - New **semantic tokens** absent from the base kit: `--up`, `--down` (market direction), `--live` (human-presence pink #FF4D8D), `--win` (win-cell glow). These are ROLR-introduced but theme-portable.
 
 ### 2. Motion — `agent/visual/motion/motion.{json,css}` (v0.1.0 → v0.2.0)
@@ -53,7 +53,7 @@ Each with a `*.spec.md` + `*.tokens.json` companion, matching the `button/` conv
 
 ### 4. Reference — `reference/ROLR primitives.dc.html`
 
-A live gallery rendering every harvested primitive + component under `rolr-dark`, with the liveness motion actually running (streaming spark, pulsing presence, win-glow, count-up, feed-in, settlement). Drop-test surface for the harvest.
+A live gallery rendering every harvested primitive + component under `arcade-dark`, with the liveness motion actually running (streaming spark, pulsing presence, win-glow, count-up, feed-in, settlement). Drop-test surface for the harvest.
 
 ## What was rewritten (not lifted verbatim)
 
@@ -71,4 +71,4 @@ A live gallery rendering every harvested primitive + component under `rolr-dark`
 
 - If ROLR ships the tug-of-war / streak motifs, harvest `ropePull` + `flamewiggle` + `dash` as a second motion pass.
 - Consider promoting `--up` / `--down` / `--live` into the base semantic token set (every theme), since market/liveness UIs aren't ROLR-exclusive.
-- Add `button` intent `accent` example rows for `rolr-dark` / `rolr-light` to `button.spec.md`'s per-theme table.
+- Add `button` intent `accent` example rows for `arcade-dark` / `arcade-light` to `button.spec.md`'s per-theme table.

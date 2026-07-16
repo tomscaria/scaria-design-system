@@ -60,8 +60,8 @@ interface LiveStatProps {
 
 | Theme | Hero pot |
 |---|---|
-| rolr-dark | Lock Serif `--accent` lime on `--bg-muted` |
-| rolr-light | Lock Serif `--fg` graphite; mono readouts in `--fg-muted` |
+| arcade-dark | Lock Serif `--accent` lime on `--bg-muted` |
+| arcade-light | Lock Serif `--fg` graphite; mono readouts in `--fg-muted` |
 
 ## File layout
 

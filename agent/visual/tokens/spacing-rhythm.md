@@ -36,14 +36,14 @@ Semantic. Vary per theme and per expression. Use for layout-level spacing where 
 
 ## Why two systems
 
-Section spacing in `lore-light + marketing` (160px) is fundamentally different from section spacing in `lore-light + product` (48px) — but the *primitive* 16px stays 16px in both. Without two systems, you'd either over-spec primitives (every padding becomes per-theme, exhausting) or under-spec rhythm (everything compresses in product, becomes wrong).
+Section spacing in `earth-light + marketing` (160px) is fundamentally different from section spacing in `earth-light + product` (48px) — but the *primitive* 16px stays 16px in both. Without two systems, you'd either over-spec primitives (every padding becomes per-theme, exhausting) or under-spec rhythm (everything compresses in product, becomes wrong).
 
 ## Reference values
 
 | Theme | Expression | section-y | stack-xl |
 |---|---|---|---|
-| lore-light | product | 48px | 64px |
-| lore-light | marketing | 160px | 96px |
+| earth-light | product | 48px | 64px |
+| earth-light | marketing | 160px | 96px |
 | primitive | product | 72px | 56px |
 | kiosk | product | 64px | 96px |
 | kiosk | marketing | 200px | 96px |

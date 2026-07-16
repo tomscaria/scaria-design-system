@@ -1,21 +1,21 @@
 /* ============================================================
-   @tomscaria/scaria-design-system — root styles
+   @tomscaria/consumer-fintech-design-system — root styles
    ------------------------------------------------------------
    Imports every theme's per-theme variable block + the
    brand-wide motion utilities.
 
    Usage (Tailwind / app entry):
-     @import '@tomscaria/scaria-design-system/styles';
+     @import '@tomscaria/consumer-fintech-design-system/styles';
 
    Then on <html>:
-     <html data-theme="lore-light" data-expression="product">
+     <html data-theme="earth-light" data-expression="product">
    ============================================================ */
 
 /* Brand webfaces first — register @font-face before any theme paints. */
 @import "./agent/visual/fonts/fonts.css";
 
-@import "./agent/themes/lore-light/colors_and_type.css";
-@import "./agent/themes/lore-dark/colors_and_type.css";
+@import "./agent/themes/earth-light/colors_and_type.css";
+@import "./agent/themes/earth-dark/colors_and_type.css";
 @import "./agent/themes/primitive/colors_and_type.css";
 @import "./agent/themes/primitive-dark/colors_and_type.css";
 @import "./agent/themes/kiosk/colors_and_type.css";
@@ -23,8 +23,8 @@
 @import "./agent/themes/revenant-light/colors_and_type.css";
 @import "./agent/themes/revenant-dark/colors_and_type.css";
 
-@import "./agent/themes/rolr-light/colors_and_type.css";
-@import "./agent/themes/rolr-dark/colors_and_type.css";
+@import "./agent/themes/arcade-light/colors_and_type.css";
+@import "./agent/themes/arcade-dark/colors_and_type.css";
 
 /* Berlin theme is pending inspo authoring.
 @import "./agent/themes/berlin/colors_and_type.css";
@@ -52,4 +52,4 @@
 
 /* NOTE: the BoTW flair overlay (agent/visual/botw/botw-flair.css) is intentionally
    NOT imported here — it is Lore-only marketing flair. Opt in per-project with
-   `@import '@tomscaria/scaria-design-system/botw'` + data-flair="botw". */
+   `@import '@tomscaria/consumer-fintech-design-system/botw'` + data-flair="botw". */

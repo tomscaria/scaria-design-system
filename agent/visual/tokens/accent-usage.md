@@ -38,7 +38,7 @@ The `--accent` value changes per theme but the usage rules don't:
 
 | Theme | Accent value |
 |---|---|
-| lore-light, lore-dark | Lime `hsl(82 100% 55%)` |
+| earth-light, earth-dark | Lime `hsl(82 100% 55%)` |
 | primitive | Foreground (no separate accent — brand-neutral) |
 | kiosk | Electric yellow `hsl(63 100% 58%)` |
 | revenant-light, revenant-dark | TBD from inspo |

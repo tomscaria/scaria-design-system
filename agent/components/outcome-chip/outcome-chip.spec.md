@@ -64,8 +64,8 @@ interface OutcomeChipProps {
 
 | Theme | Rising outcome |
 |---|---|
-| rolr-dark | `Nor 98¢ ↗` — price `--fg`, arrow `--up` green on `#16190F` |
-| rolr-light | `Alg 65¢ ↗` — arrow `--accent-deep`, chip on white |
+| arcade-dark | `Nor 98¢ ↗` — price `--fg`, arrow `--up` green on `#16190F` |
+| arcade-light | `Alg 65¢ ↗` — arrow `--accent-deep`, chip on white |
 
 ## File layout
 

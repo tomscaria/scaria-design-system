@@ -6,8 +6,8 @@
  */
 
 export type Theme =
-  | 'lore-light'
-  | 'lore-dark'
+  | 'earth-light'
+  | 'earth-dark'
   | 'revenant-light'
   | 'revenant-dark'
   | 'kiosk'

@@ -1,0 +1,126 @@
+/* ============================================================
+   ROLR Light — atomic theme micro-kit  (v2 · real brand)
+   ------------------------------------------------------------
+   The casual / daylight surface. Cool near-white ground, white
+   cards, ROLR indigo brand, deep-green / rose market semantics.
+
+   v2 re-skins the harvest to the SHIPPED ROLR brand (sampled from
+   the desktop product): app light ground #F3F3F6, indigo #6664FC,
+   deeper green/rose for AA contrast on white. Mirror of arcade-dark
+   (surface + foreground + lines flip; brand + accent + fonts hold).
+   ============================================================ */
+
+[data-theme="arcade-light"] {
+  /* ---------- COLOR ---------- */
+  --bg: #F3F3F6;               /* cool light page */
+  --bg-2: #FFFFFF;             /* card */
+  --bg-3: #FFFFFF;             /* floating / popover */
+  --bg-muted: #ECECF1;         /* inset well / track */
+  --bg-inverted: #14141A;
+
+  --fg: #14141A;               /* near-black ink */
+  --fg-2: #4A4A56;
+  --fg-3: #73737E;
+  --fg-muted: #9A9AA3;
+  --fg-inverted: #FFFFFF;
+
+  --line: #E5E5EC;
+  --line-2: #EFEFF3;
+  --line-strong: #C9C9D2;
+
+  /* Brand — same indigo across modes. */
+  --brand: #6664FC;
+  --brand-hover: #5451E6;
+  --brand-fg: #FFFFFF;
+  --brand-soft: rgba(102, 100, 252, 0.12);
+
+  --accent: #DE4905;           /* orange, text-safe on white */
+  --accent-hover: #C43E04;
+  --accent-deep: #9E3203;
+  --accent-soft: #FBE7DC;
+  --accent-fg: #FFFFFF;
+
+  --success: #0F9D58;  --success-soft: #E4F4EB;   /* deep green for AA on white */
+  --info:    #2A6FDB;  --info-soft:    #E0EAFB;
+  --warn:    #B5780F;  --warn-soft:    #F8EAC8;
+  --danger:  #E0345F;  --danger-soft:  #FBE4EB;
+
+  --up:    var(--success);
+  --down:  var(--danger);
+  --live:  #E0345F;
+  --win:   var(--brand);
+
+  --series-1: #6664FC; --series-2: #2A6FDB; --series-3: #C58A12; --series-4: #0F9D58;
+  --series-5: #E0345F; --series-6: #7C4DDB; --series-7: #0E9C8E; --series-8: #DE4905;
+
+  /* ---------- TYPE SCALE ---------- */
+  --fs-display-xl: 96px;   --lh-display-xl: 0.92;  --tracking-display-xl: -0.02em;
+  --fs-display-lg: 66px;   --lh-display-lg: 0.98;  --tracking-display-lg: -0.015em;
+  --fs-display-md: 52px;   --lh-display-md: 1.0;   --tracking-display-md: -0.01em;
+  --fs-display-sm: 40px;   --lh-display-sm: 1.04;  --tracking-display-sm: -0.01em;
+
+  --fs-header-xl: 30px;    --lh-header-xl: 1.05;   --tracking-header-xl: -0.02em;
+  --fs-header-lg: 23px;    --lh-header-lg: 1.1;    --tracking-header-lg: -0.015em;
+  --fs-header-md: 18px;    --lh-header-md: 1.25;   --tracking-header-md: -0.005em;
+  --fs-header-sm: 15px;    --lh-header-sm: 1.3;    --tracking-header-sm: 0;
+  --fs-header-caps: 11px;  --lh-header-caps: 1;    --tracking-header-caps: 0.14em;
+
+  --fs-body-lg: 18px;      --lh-body-lg: 1.55;
+  --fs-body-md: 14px;      --lh-body-md: 1.5;
+  --fs-body-sm: 13px;      --lh-body-sm: 1.45;
+  --fs-body-xs: 11px;      --lh-body-xs: 1.4;
+
+  --fw-regular: 400;  --fw-medium: 500;  --fw-bold: 700;
+
+  /* ---------- FONT FAMILY (identical to arcade-dark) ---------- */
+  --font-sans:    "Aeonik", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-display: "Jersey 10", "Aeonik", ui-monospace, monospace;
+  --font-cond:    "Anton", "Aeonik", sans-serif;
+  --font-mono:    "Aeonik Mono", ui-monospace, Menlo, Monaco, "Cascadia Mono", monospace;
+
+  /* ---------- MOTION ---------- */
+  --motion-duration-micro: 150ms;
+  --motion-duration-entry: 350ms;
+  --motion-duration-scene: 600ms;
+  --motion-duration-live:  1300ms;
+  --motion-duration-pop:   350ms;
+  --motion-ease-interaction: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --motion-ease-reveal:      cubic-bezier(0.22, 0.61, 0.36, 1);
+  --motion-ease-ambient:     ease-in-out;
+  --motion-ease-pop:         cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* ---------- SPACING ---------- */
+  --sp-section-y: 40px;  --sp-section-x: 32px;
+  --sp-stack-xs: 4px;  --sp-stack-sm: 8px;  --sp-stack-md: 13px;  --sp-stack-lg: 24px;  --sp-stack-xl: 44px;
+  --sp-inline-xs: 4px; --sp-inline-sm: 8px; --sp-inline-md: 13px; --sp-inline-lg: 18px;
+
+  /* ---------- RADII ---------- */
+  --r-xs: 6px;  --r-sm: 8px;  --r-md: 12px;  --r-lg: 16px;  --r-xl: 22px;  --r-pill: 999rem;
+
+  /* ---------- SHADOW (warm-neutral, soft) ---------- */
+  --shadow-xs: 0 1px 2px rgba(20, 20, 26, 0.05);
+  --shadow-sm: 0 1px 2px rgba(20, 20, 26, 0.06), 0 2px 4px rgba(20, 20, 26, 0.05);
+  --shadow-md: 0 2px 6px rgba(20, 20, 26, 0.07), 0 6px 16px rgba(20, 20, 26, 0.06);
+  --shadow-lg: 0 4px 12px rgba(20, 20, 26, 0.08), 0 16px 40px rgba(20, 20, 26, 0.08);
+  --shadow-xl: 0 8px 24px rgba(20, 20, 26, 0.10), 0 40px 80px -28px rgba(20, 20, 26, 0.14);
+}
+
+/* ---------- EXPRESSION: MARKETING ----------
+   Light marketing: near-white ground, light-gray contrast panels,
+   white cards with hairline borders, indigo + chrome. Big pixel
+   headers + condensed money number. */
+[data-theme="arcade-light"][data-expression="marketing"] {
+  --bg: #FFFFFF;
+  --fs-display-xl: 148px;  --lh-display-xl: 0.9;
+  --fs-display-lg: 96px;
+  --fs-display-md: 64px;
+  --sp-section-y: 110px;
+  --sp-stack-xl: 80px;
+  --motion-duration-entry: 600ms;
+}
+
+/* ---------- EXPRESSION: PRODUCT (default) ---------- */
+[data-theme="arcade-light"][data-expression="product"] {
+  --sp-section-y: 40px;
+  --motion-duration-entry: 200ms;
+}

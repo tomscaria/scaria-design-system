@@ -4,7 +4,7 @@
 
 ## Prereqs
 
-- `@tomscaria/scaria-design-system@^0.1.0` published or `pnpm link --global`'d
+- `@tomscaria/consumer-fintech-design-system@^0.1.0` published or `pnpm link --global`'d
 - Local checkout at `~/scaria/lorepreseriesa/`
 - Branch: `claude/unify-lore-components-0GPeV` (per session policy)
 - Motion harvest from this repo into the kit has happened (`harvest-instructions/lorepreseriesa.md`) — otherwise the kit's motion vocabulary may not match what `lorepreseriesa` lives with today
@@ -18,7 +18,7 @@ Add the dep. Remove `tailwindcss-animate` only if the kit's motion utilities cov
 ```diff
  {
    "dependencies": {
-+    "@tomscaria/scaria-design-system": "^0.1.0",
++    "@tomscaria/consumer-fintech-design-system": "^0.1.0",
      "react": "^18.3.1",
      ...
    },
@@ -37,7 +37,7 @@ Replace the entire `theme.extend.colors` block (it duplicates what the kit's pre
 
 ```ts
 import type { Config } from "tailwindcss";
-import preset from "@tomscaria/scaria-design-system/preset";
+import preset from "@tomscaria/consumer-fintech-design-system/preset";
 
 export default {
   presets: [preset],
@@ -59,7 +59,7 @@ Replace the inlined `:root` token block with the kit's styles. Keep the Inter fo
 
 ```css
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-@import '@tomscaria/scaria-design-system/styles';
+@import '@tomscaria/consumer-fintech-design-system/styles';
 
 @tailwind base;
 @tailwind components;
@@ -68,14 +68,14 @@ Replace the inlined `:root` token block with the kit's styles. Keep the Inter fo
 
 ### 4. Set `data-theme` + `data-expression` on `<html>`
 
-`lorepreseriesa` is a teaser/marketing surface. Default it to lore-light + marketing.
+`lorepreseriesa` is a teaser/marketing surface. Default it to earth-light + marketing.
 
 ```html
 <!-- index.html -->
-<html lang="en" data-theme="lore-light" data-expression="marketing">
+<html lang="en" data-theme="earth-light" data-expression="marketing">
 ```
 
-If a "dark mode" toggle exists today, repoint it to flip `data-theme` between `lore-light` and `lore-dark` instead of `class="dark"`.
+If a "dark mode" toggle exists today, repoint it to flip `data-theme` between `earth-light` and `earth-dark` instead of `class="dark"`.
 
 ### 5. Lockfile
 
@@ -91,7 +91,7 @@ pnpm install
 - [ ] Build: `pnpm build` (or `bun run build`) — should complete without DS-related errors
 - [ ] Dev: `pnpm dev` — open localhost, the hero loads with lime CTA, parchment surface, graphite type
 - [ ] Visual regression: compare deployed Vercel preview against current production
-- [ ] Toggle `data-theme="lore-dark"` in dev
+- [ ] Toggle `data-theme="earth-dark"` in dev
 - [ ] Confirm `tailwindcss-animate` removal didn't break any animations
 
 ### 7. Commit + push
@@ -99,7 +99,7 @@ pnpm install
 ```sh
 git checkout -b claude/unify-lore-components-0GPeV
 git add -A
-git commit -m "feat: migrate to @tomscaria/scaria-design-system"
+git commit -m "feat: migrate to @tomscaria/consumer-fintech-design-system"
 git push -u origin claude/unify-lore-components-0GPeV
 ```
 
@@ -108,5 +108,5 @@ Open as **draft PR** until the kit is actually published. After publish, mark re
 ## Risks
 
 - **Motion divergence.** If the motion harvest from `lorepreseriesa` into the kit hasn't happened yet, motion characteristics may shift.
-- **Vercel build env.** Confirm Vercel can resolve `@tomscaria/scaria-design-system` from the public npm registry.
+- **Vercel build env.** Confirm Vercel can resolve `@tomscaria/consumer-fintech-design-system` from the public npm registry.
 - **Bun lockfile.** The repo has multiple lockfiles. Canonicalize on one.

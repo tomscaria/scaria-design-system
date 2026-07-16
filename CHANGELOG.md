@@ -1,4 +1,13 @@
-# @tomscaria/scaria-design-system
+# @tomscaria/consumer-fintech-design-system
+
+## 2.0.0
+
+### Major Changes
+
+- **Package renamed** `@tomscaria/scaria-design-system` → `@tomscaria/consumer-fintech-design-system`. Update import specifiers and the dependency name (see `MIGRATION.md`).
+- **Themes renamed**: `lore-*` → `earth-*`, `rolr-*` → `arcade-*` (dirs, `data-theme` values, `/themes/*` subpath exports, tokens.json names). `revenant-*`, `primitive*`, and `kiosk` unchanged.
+- **Backward-compat**: old `data-theme="lore-light"` / `lore-dark"` values ship as deprecated aliases resolving to the renamed tokens, so live consumers (e.g. `prysm-squads-mvp`) keep rendering on 2.0.0 with no change. To be removed in a future major. `rolr-*` had no runtime consumer — renamed outright, no alias.
+- Relicensed under **Apache-2.0**; README rewritten for the new identity; removed dev-only `inspo/` screenshots and outdated scaffold notes.
 
 ## 1.3.1
 

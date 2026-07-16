@@ -37,8 +37,8 @@ scaria-design-system/
     │       ├── web/       ← landing artifact templates
     │       └── product/   ← product UI artifact templates
     ├── themes/            ← one micro-kit per theme
-    │   ├── lore-light/    ← ✅ retrofit from existing
-    │   ├── lore-dark/     ← ✅ retrofit
+    │   ├── earth-light/    ← ✅ retrofit from existing
+    │   ├── earth-dark/     ← ✅ retrofit
     │   ├── primitive/     ← ✅ retrofit (rename from primitive-light)
     │   ├── primitive-dark/← 🆕 stub (inversion later)
     │   ├── revenant-light/← 🆕 author from inspo (Phase 0)
@@ -68,13 +68,13 @@ Default expression is `product`. Marketing/deck surfaces opt in.
 
 **As an npm package** (for traditional component imports):
 ```sh
-npm install @tomscaria/scaria-design-system
+npm install @tomscaria/consumer-fintech-design-system
 ```
 ```ts
-import { Button, Card } from '@tomscaria/scaria-design-system';
+import { Button, Card } from '@tomscaria/consumer-fintech-design-system';
 ```
 ```css
-@import '@tomscaria/scaria-design-system/styles';
+@import '@tomscaria/consumer-fintech-design-system/styles';
 ```
 
 ## Editing

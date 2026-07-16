@@ -24,8 +24,8 @@ html {
 }
 
 /* Dark siblings re-light the fixed studio art + grain. */
-[data-theme="lore-dark"],
-[data-theme="rolr-dark"],
+[data-theme="earth-dark"],
+[data-theme="arcade-dark"],
 [data-theme="revenant-dark"] {
   --hero-art-filter: brightness(0.86) saturate(0.94) contrast(1.02);
   --grain-opacity: 0.07;

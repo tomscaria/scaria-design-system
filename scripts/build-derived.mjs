@@ -37,21 +37,21 @@ async function main() {
 
   await writeEntry(
     join(OUT, "index.mjs"),
-    `// @tomscaria/scaria-design-system — ESM entry
+    `// @tomscaria/consumer-fintech-design-system — ESM entry
 // The kit's primary surface is CSS + preset + raw atomic files.
 // React components live behind subpath imports as they land.
 
 export const version = "${VERSION}";
 export const themes = [
-  "lore-light",
-  "lore-dark",
+  "earth-light",
+  "earth-dark",
   "revenant-light",
   "revenant-dark",
   "primitive",
   "primitive-dark",
   "kiosk",
-  "rolr-light",
-  "rolr-dark",
+  "arcade-light",
+  "arcade-dark",
 ];
 export const expressions = ["product", "marketing"];
 export const brands = ["lore", "revenant"];
@@ -60,20 +60,20 @@ export const brands = ["lore", "revenant"];
 
   await writeEntry(
     join(OUT, "index.js"),
-    `// @tomscaria/scaria-design-system — CJS entry
+    `// @tomscaria/consumer-fintech-design-system — CJS entry
 "use strict";
 module.exports = {
   version: "${VERSION}",
   themes: [
-    "lore-light",
-    "lore-dark",
+    "earth-light",
+    "earth-dark",
     "revenant-light",
     "revenant-dark",
     "primitive",
     "primitive-dark",
     "kiosk",
-    "rolr-light",
-    "rolr-dark",
+    "arcade-light",
+    "arcade-dark",
   ],
   expressions: ["product", "marketing"],
   brands: ["lore", "revenant"],
@@ -83,7 +83,7 @@ module.exports = {
 
   await writeEntry(
     join(OUT, "index.d.ts"),
-    `// @tomscaria/scaria-design-system — types
+    `// @tomscaria/consumer-fintech-design-system — types
 export declare const version: string;
 export declare const themes: readonly string[];
 export declare const expressions: readonly ("product" | "marketing")[];
@@ -96,14 +96,14 @@ export declare const brands: readonly ("lore" | "revenant")[];
   const mustExist = [
     "preset.cjs",
     "styles.css",
-    "agent/themes/lore-light/colors_and_type.css",
-    "agent/themes/lore-dark/colors_and_type.css",
+    "agent/themes/earth-light/colors_and_type.css",
+    "agent/themes/earth-dark/colors_and_type.css",
     "agent/themes/revenant-light/colors_and_type.css",
     "agent/themes/revenant-dark/colors_and_type.css",
     "agent/themes/primitive/colors_and_type.css",
     "agent/themes/kiosk/colors_and_type.css",
-    "agent/themes/rolr-light/colors_and_type.css",
-    "agent/themes/rolr-dark/colors_and_type.css",
+    "agent/themes/arcade-light/colors_and_type.css",
+    "agent/themes/arcade-dark/colors_and_type.css",
     "agent/visual/fonts/fonts.css",
     "agent/visual/dataviz/dataviz.css",
     "agent/visual/patterns/patterns.css",

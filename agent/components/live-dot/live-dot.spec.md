@@ -56,9 +56,9 @@ interface LiveDotProps {
 
 | Theme | Live presence dot |
 |---|---|
-| rolr-dark | Pink dot on #1A1D18 card, mono label in `--fg-3` |
-| rolr-light | Pink dot on white, mono label in `--fg-muted` |
-| lore-light | Falls back to `--accent` (no `--live` token) — pass `tone="accent"` |
+| arcade-dark | Pink dot on #1A1D18 card, mono label in `--fg-3` |
+| arcade-light | Pink dot on white, mono label in `--fg-muted` |
+| earth-light | Falls back to `--accent` (no `--live` token) — pass `tone="accent"` |
 
 ## File layout
 

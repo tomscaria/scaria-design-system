@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Generate Lore X/Twitter banners (1500x500), no type.
-A "halfway point" between lore-light (warm parchment + chartreuse, organic flow)
+A "halfway point" between earth-light (warm parchment + chartreuse, organic flow)
 and revenant (near-black + signal-orange, sharp registration marks + grid).
 
 Chartreuse is the through-line that matches the chartreuse profile avatar.

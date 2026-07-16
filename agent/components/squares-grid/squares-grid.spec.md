@@ -59,8 +59,8 @@ interface SquaresGridProps {
 
 | Theme | Pool grid |
 |---|---|
-| rolr-dark | `#2E4329` cells, `--accent` claims, lime win-glow |
-| rolr-light | dark-tile grid inside the Pool card; lime claims + glow |
+| arcade-dark | `#2E4329` cells, `--accent` claims, lime win-glow |
+| arcade-light | dark-tile grid inside the Pool card; lime claims + glow |
 
 ## File layout
 

@@ -26,8 +26,8 @@ When you're over budget, remove in this order:
 
 | Theme | `--motion-duration-entry` |
 |---|---|
-| lore-light, lore-dark (product) | 200ms |
-| lore-light, lore-dark (marketing) | 600ms |
+| earth-light, earth-dark (product) | 200ms |
+| earth-light, earth-dark (marketing) | 600ms |
 | primitive | 300ms |
 | kiosk | 200ms (terse, no flourish) |
 

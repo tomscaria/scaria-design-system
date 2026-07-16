@@ -66,8 +66,8 @@ interface QuickPlayCardProps {
 
 | Theme | Tick tile |
 |---|---|
-| rolr-dark | graphite tile on `#1A1D18` card, lime CTA |
-| rolr-light | graphite Tick tile on warm-white screen, lime CTA |
+| arcade-dark | graphite tile on `#1A1D18` card, lime CTA |
+| arcade-light | graphite Tick tile on warm-white screen, lime CTA |
 
 ## File layout
 

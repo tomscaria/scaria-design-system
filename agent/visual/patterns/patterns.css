@@ -5,7 +5,7 @@
    gets the same pieces, re-skinned via tokens. Everything resolves
    from theme vars (--bg, --fg, --accent, --line, --success, the
    mono font, the reveal easing) so a single markup block looks
-   correct under [data-theme="lore-light"], "revenant-dark", etc.
+   correct under [data-theme="earth-light"], "revenant-dark", etc.
 
    Pairs with ./css/dataviz (charts) and ./css/motion (primitives).
    Load AFTER the theme. Token fallbacks keep it standalone too.
