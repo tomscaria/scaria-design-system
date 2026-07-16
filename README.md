@@ -75,5 +75,5 @@ working. See [`MIGRATION.md`](./MIGRATION.md).
 
 ## License
 
-[Apache-2.0](./LICENSE) — © 2026 Scaria, Inc. Free to use in commercial and
+[MIT](./LICENSE) — © 2026 Scaria, Inc. Free to use in commercial and
 proprietary products; attribution required.
