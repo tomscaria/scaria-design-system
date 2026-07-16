@@ -59,7 +59,7 @@ export const brands = ["lore", "revenant"];
   );
 
   await writeEntry(
-    join(OUT, "index.js"),
+    join(OUT, "index.cjs"),
     `// @tomscaria/consumer-fintech-design-system — CJS entry
 "use strict";
 module.exports = {

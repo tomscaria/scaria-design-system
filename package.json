@@ -1,6 +1,6 @@
 {
   "name": "@tomscaria/consumer-fintech-design-system",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Consumer fintech design system — design tokens, a multi-theme runtime (earth, arcade, revenant, primitive/studio, kiosk) with product/marketing expressions, kit CSS primitives, a Tailwind preset, and thin React component wrappers.",
   "license": "MIT",
   "private": false,
@@ -8,7 +8,7 @@
     "access": "public"
   },
   "type": "module",
-  "main": "./derived/npm/index.js",
+  "main": "./derived/npm/index.cjs",
   "module": "./derived/npm/index.mjs",
   "types": "./derived/npm/index.d.ts",
   "files": [
@@ -28,7 +28,7 @@
     ".": {
       "types": "./derived/npm/index.d.ts",
       "import": "./derived/npm/index.mjs",
-      "require": "./derived/npm/index.js"
+      "require": "./derived/npm/index.cjs"
     },
     "./css": "./tokens/colors_and_type.css",
     "./css/primitives": "./tokens/primitives.css",
