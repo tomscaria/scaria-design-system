@@ -1,5 +1,11 @@
 # @tomscaria/consumer-fintech-design-system
 
+## 2.0.1
+
+### Patch Changes
+
+- fix(entry): ship the root CJS entry as `derived/npm/index.cjs`. The generated `index.js` used `module.exports` under `"type": "module"`, so Node parsed it as ESM and `require('@tomscaria/consumer-fintech-design-system')` returned an empty module (`version`/`themes` undefined). Same fix as the 1.2.1 preset repair; ESM `import` was unaffected.
+
 ## 2.0.0
 
 ### Major Changes
