@@ -1,11 +1,25 @@
 name: Release
 
-# PARKED: manual-trigger only. This npmjs/changesets pipeline needs two things
-# before it can run on push again:
-#   1. an NPM_TOKEN repo secret (npmjs.org automation token)
-#   2. a committed pnpm-lock.yaml (repo currently locks with package-lock.json)
-# Until then, releases go through publish.yml → GitHub Packages on v* tags.
+# Public-npm release pipeline (changesets → npmjs.org).
+#
+# Flow:
+#   - Push to main WITH pending .changeset/*.md  -> opens/updates a
+#     "chore: version packages" PR (bumps versions + writes CHANGELOG).
+#   - Push to main with NO pending changesets     -> runs `changeset publish`,
+#     which publishes any package whose version is not yet on the registry.
+#
+# Prerequisite (one-time, must be done in repo settings — cannot be scripted):
+#   - Add an NPM_TOKEN repo secret: an npmjs.org *automation* token for an
+#     account that owns (or can publish to) the @tomscaria scope.
+#   Until NPM_TOKEN exists, the release step is SKIPPED (the job is a green
+#   no-op), so enabling this workflow does not create red runs on main.
+#
+# Registry note: package.json has publishConfig.access=public and no registry,
+# so `changeset publish` targets npmjs.org (public, no token needed to INSTALL).
+# publish.yml (GitHub Packages, on v* tags) remains as a manual/mirror path.
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
@@ -18,37 +32,38 @@ jobs:
       contents: write
       pull-requests: write
       id-token: write
+    env:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v3
-        with:
-          version: 9
-
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: pnpm
+          cache: npm
           registry-url: "https://registry.npmjs.org"
 
       - name: Install
-        run: pnpm install --frozen-lockfile
+        run: npm ci
 
       - name: Build derived
-        run: pnpm run build
+        run: npm run build
 
+      # Skipped until the NPM_TOKEN secret is set, so the workflow is a clean
+      # no-op rather than a failing run before publishing is provisioned.
       - name: Create release PR or publish
+        if: ${{ env.NPM_TOKEN != '' }}
         uses: changesets/action@v1
         with:
-          publish: pnpm run release
-          version: pnpm run version-packages
+          publish: npm run release
+          version: npm run version-packages
           commit: "chore: version packages"
           title: "chore: version packages"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
