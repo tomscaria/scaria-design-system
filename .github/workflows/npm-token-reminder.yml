@@ -1,0 +1,61 @@
+name: NPM token expiry reminder
+
+# The NPM_TOKEN secret (npm automation token) has a hard expiry. When it lapses,
+# the Release workflow's publish step fails. This job runs weekly and opens a
+# tracking issue in the ~2 weeks before expiry so the token gets rotated in time.
+#
+# >>> UPDATE `EXPIRES` below whenever you rotate the token (set it to the exact
+#     expiry npm shows on the token page). Current token: created 2026-07-16,
+#     90-day expiry -> 2026-10-14.
+#
+# Better long-term fix: switch to npm Trusted Publishing (OIDC) — no token, no
+# expiry, nothing to rotate. Then this workflow can be deleted.
+
+on:
+  schedule:
+    - cron: "0 9 * * 1"   # Mondays 09:00 UTC
+  workflow_dispatch:
+
+permissions:
+  issues: write
+
+jobs:
+  remind:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Open a rotation issue near expiry
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const EXPIRES = new Date('2026-10-14T00:00:00Z'); // <-- update on each rotation
+            const daysLeft = Math.ceil((EXPIRES - new Date()) / 86400000);
+            // Only act in the 14-day window before expiry (and a short grace after).
+            if (daysLeft > 14 || daysLeft < -14) {
+              core.info(`NPM_TOKEN expires in ${daysLeft} days — outside reminder window, nothing to do.`);
+              return;
+            }
+            const title = `Rotate NPM_TOKEN — expires ${EXPIRES.toISOString().slice(0, 10)}`;
+            const open = await github.rest.issues.listForRepo({
+              owner: context.repo.owner, repo: context.repo.repo, state: 'open', per_page: 100,
+            });
+            if (open.data.some(i => i.title === title)) {
+              core.info('Reminder issue already open — skipping.');
+              return;
+            }
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title,
+              body: [
+                `The **NPM_TOKEN** repo secret (npm automation token) expires on **${EXPIRES.toISOString().slice(0, 10)}** (~${daysLeft} days).`,
+                `When it lapses, the Release workflow's publish step will fail.`,
+                ``,
+                `**Rotate it:**`,
+                `1. npmjs.com → Access Tokens → Generate New Token → Automation (bypass 2FA, Read+Write, all packages).`,
+                `2. GitHub → repo → Settings → Secrets and variables → Actions → update **NPM_TOKEN**.`,
+                `3. Edit \`.github/workflows/npm-token-reminder.yml\` → set \`EXPIRES\` to the new expiry date.`,
+                ``,
+                `**Or remove this chore permanently:** switch the Release workflow to npm **Trusted Publishing (OIDC)** — no token, no expiry — then delete this workflow.`,
+              ].join('\n'),
+            });
+            core.info(`Opened rotation issue: ${title}`);
