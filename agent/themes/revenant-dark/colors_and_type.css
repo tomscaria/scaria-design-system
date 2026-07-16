@@ -2,12 +2,12 @@
    Revenant Dark — atomic theme micro-kit
    ------------------------------------------------------------
    Night-ops sibling of revenant-light. Deep near-black field
-   (faint olive undertone, cooler than lore-dark's warm graphite),
+   (faint olive undertone, cooler than earth-dark's warm graphite),
    Signal Orange as the primary action / status accent, warm
    concrete-cream text.
 
    Self-contained per-theme variable contract, mirroring runtime
-   tokens/colors_and_type.css. Same shape as lore-dark.
+   tokens/colors_and_type.css. Same shape as earth-dark.
 
    Brand rule: --brand is a neutral concrete-cream fill (NOT orange);
    signal orange is --accent, reserved for ONE hero per view. Shadows

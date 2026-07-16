@@ -1,7 +1,7 @@
 {
-  "name": "@tomscaria/scaria-design-system",
-  "version": "1.3.1",
-  "description": "Lore design system — tokens (colors, type, spacing), themes (lore-light/dark, revenant-light/dark, kiosk, primitive), kit CSS primitives, Tailwind preset, and thin React component wrappers. Consumed by swarm-fund-mvp, Thomas OS, lore-teaser-prea.",
+  "name": "@tomscaria/consumer-fintech-design-system",
+  "version": "2.0.0",
+  "description": "Consumer fintech design system — design tokens, a multi-theme runtime (earth, arcade, revenant, primitive/studio, kiosk) with product/marketing expressions, kit CSS primitives, a Tailwind preset, and thin React component wrappers.",
   "license": "MIT",
   "private": false,
   "publishConfig": {
@@ -47,15 +47,15 @@
     "./styles": {
       "default": "./styles.css"
     },
-    "./themes/lore-light": "./agent/themes/lore-light/colors_and_type.css",
-    "./themes/lore-dark": "./agent/themes/lore-dark/colors_and_type.css",
+    "./themes/earth-light": "./agent/themes/earth-light/colors_and_type.css",
+    "./themes/earth-dark": "./agent/themes/earth-dark/colors_and_type.css",
     "./themes/primitive": "./agent/themes/primitive/colors_and_type.css",
     "./themes/primitive-dark": "./agent/themes/primitive-dark/colors_and_type.css",
     "./themes/revenant-light": "./agent/themes/revenant-light/colors_and_type.css",
     "./themes/revenant-dark": "./agent/themes/revenant-dark/colors_and_type.css",
     "./themes/kiosk": "./agent/themes/kiosk/colors_and_type.css",
-    "./themes/rolr-light": "./agent/themes/rolr-light/colors_and_type.css",
-    "./themes/rolr-dark": "./agent/themes/rolr-dark/colors_and_type.css",
+    "./themes/arcade-light": "./agent/themes/arcade-light/colors_and_type.css",
+    "./themes/arcade-dark": "./agent/themes/arcade-dark/colors_and_type.css",
     "./dataviz": "./agent/visual/dataviz/dataviz.css",
     "./patterns": "./agent/visual/patterns/patterns.css",
     "./orbfield": "./agent/visual/patterns/orbfield.css",
@@ -103,13 +103,13 @@
   },
   "keywords": [
     "design-system",
-    "atomic-kit",
+    "fintech",
+    "design-tokens",
     "tailwind-preset",
-    "lore",
-    "revenant",
+    "themes",
+    "css-variables",
     "scaria",
-    "tokens",
-    "themes"
+    "revenant"
   ],
   "repository": {
     "type": "git",

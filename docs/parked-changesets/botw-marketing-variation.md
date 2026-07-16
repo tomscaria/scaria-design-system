@@ -1,5 +1,5 @@
 ---
-"@tomscaria/scaria-design-system": minor
+"@tomscaria/consumer-fintech-design-system": minor
 ---
 
 Add the OrbField interaction + the BoTW Lore marketing flair layer.

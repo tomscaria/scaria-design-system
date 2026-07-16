@@ -6,7 +6,7 @@
 > — sampled directly from the production desktop app + the rolr.xyz marketing site —
 > and adds the marketing expression + the missing depth-book primitive.
 
-## 1. Theme re-skin — `agent/themes/rolr-dark` + `rolr-light` (colors_and_type.css)
+## 1. Theme re-skin — `agent/themes/arcade-dark` + `arcade-light` (colors_and_type.css)
 
 The early exploration's palette was wrong for the shipped product. Replaced with the
 real brand (sampled hexes):

@@ -34,11 +34,11 @@
   --chart-axis:  var(--fg-3);
   --chart-track: var(--line);
 }
-:root, [data-theme="lore-light"]{
+:root, [data-theme="earth-light"]{
   --cat-1:#D4F24B; --cat-2:#B561E0; --cat-3:#1D7A45; --cat-4:#7FCBA0;
   --cat-5:#EC964B; --cat-6:#3E5266; --cat-7:#5BA3E0; --cat-8:#E07BA8;
 }
-[data-theme="lore-dark"]{
+[data-theme="earth-dark"]{
   --cat-1:#D4F24B; --cat-2:#C994EE; --cat-3:#55BD7E; --cat-4:#9BE0BC;
   --cat-5:#F0A85E; --cat-6:#9AA6B5; --cat-7:#6FAEF0; --cat-8:#ED93B6;
 }

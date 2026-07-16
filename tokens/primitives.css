@@ -143,7 +143,7 @@
 }
 
 /* ---------- SEMANTIC TOKENS: LORE LIGHT (default) ---------- */
-:root, [data-theme="lore-light"] {
+:root, [data-theme="earth-light"] {
   /* Surfaces */
   --bg: var(--p-parchment);
   --bg-2: #F8F4EA;       /* raised card */
@@ -227,7 +227,7 @@
 }
 
 /* ---------- LORE DARK ---------- */
-[data-theme="lore-dark"] {
+[data-theme="earth-dark"] {
   --bg: var(--p-graphite);
   --bg-2: #1A1D18;
   --bg-3: #242720;

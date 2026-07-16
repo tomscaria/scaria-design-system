@@ -1,20 +1,20 @@
 # Theme: `insto` (Institutional)
 
-The institutional sibling of `lore-light`. Built and battle-tested in the [`lore-institutional`](https://github.com/tomscaria/lore-institutional) teaser site. Use when the audience is institutional fund managers, VC partners, asset allocators, or capital strategics — not retail consumers.
+The institutional sibling of `earth-light`. Built and battle-tested in the [`lore-institutional`](https://github.com/tomscaria/lore-institutional) teaser site. Use when the audience is institutional fund managers, VC partners, asset allocators, or capital strategics — not retail consumers.
 
 ## When to use
 
 | Surface | Theme |
 |---|---|
-| Consumer neobank app (Save/Spend/Send/Invest tabs) | `lore-light` |
-| Marketing site for the consumer product | `lore-light` |
-| Pitch deck for a B2C investor | `lore-light` |
+| Consumer neobank app (Save/Spend/Send/Invest tabs) | `earth-light` |
+| Marketing site for the consumer product | `earth-light` |
+| Pitch deck for a B2C investor | `earth-light` |
 | **Institutional teaser site (fund managers, asset managers)** | **`insto`** |
 | **Fund-operations console / admin dashboard** | **`insto`** |
 | **Pitch deck for institutional investors or partners** | **`insto`** |
 | **Partner-facing documentation (custodial APIs, compliance docs)** | **`insto`** |
 
-Litmus test: if the page is showing AUM numbers, compliance perimeters, or fund-manager workflows, use `insto`. If it's showing a balance widget, an asset feed, or a P2P payment screen, use `lore-light`.
+Litmus test: if the page is showing AUM numbers, compliance perimeters, or fund-manager workflows, use `insto`. If it's showing a balance widget, an asset feed, or a P2P payment screen, use `earth-light`.
 
 ## Palette anchor
 
@@ -134,9 +134,9 @@ See [`tomscaria/lore-institutional`](https://github.com/tomscaria/lore-instituti
 
 ## What NOT to do on `insto`
 
-- Don't use the `lore-light` chartreuse/lime accent — gold-500 is the insto accent
+- Don't use the `earth-light` chartreuse/lime accent — gold-500 is the insto accent
 - Don't use Lock Serif display font — too BotW-fantasy for institutional
-- Don't carry over `lore-light` decorative ornament (parchment textures, BotW iconography) — keep it Bloomberg-clean
+- Don't carry over `earth-light` decorative ornament (parchment textures, BotW iconography) — keep it Bloomberg-clean
 - Don't tab between audiences — tile them
 - Don't use phone mockups for B2B partner-type illustration — use desktop console cards
 - Don't say "revolutionary" or any other banned word

@@ -6,7 +6,7 @@
 
    Self-contained per-theme variable contract (color + type +
    motion + spacing + radii + shadow), mirroring the runtime
-   tokens in tokens/colors_and_type.css. Same shape as lore-light.
+   tokens in tokens/colors_and_type.css. Same shape as earth-light.
 
    Brand rule (both modes): --brand = strongest neutral inverse of
    the surface (onyx here); --accent = signal orange, reserved for

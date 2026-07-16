@@ -128,7 +128,7 @@ The research **could not verify** these; treat as follow-ups, not settled:
    Mercury, Ramp, Monzo, Nubank) *actually* layer tokens/palettes — **no** surviving claim
    cites their real systems. Don't assert "Stripe does X."
 2. Dark-mode patterns for financial data (desaturating gain/loss to hold 4.5:1 without
-   vibrating on dark) — in scope, no verified claim. (Our lore-dark/revenant-dark work
+   vibrating on dark) — in scope, no verified claim. (Our earth-dark/revenant-dark work
    addresses this in practice but isn't research-backed.)
 3. Concrete regulatory UI bindings (SEC / FCA / EU EAA-2025 / ADA) beyond generic WCAG 2.2 AA.
 4. Exact verbatim DTCG 2025.10 section text for composite types / JSON-Pointer references —

@@ -32,10 +32,10 @@ Each = a token-skinned component shipping a `/preview/*.html` clickable demo + a
 - **Light app flair only:** activation-glow on interactive states, ledger-glyph empty-states/loaders, faint topographic underlay. Everything painterly stays on marketing pages.
 
 ## Decomposition + build order
-- **SP-1 Motion+Component kit (code)** → **SP-2 Flora asset pipeline (Style-DNA per theme → batch hero/OG/social + loops)** in parallel → **SP-3 marketing-page assembly** (one lore-light reference page → theme-swap validation).
+- **SP-1 Motion+Component kit (code)** → **SP-2 Flora asset pipeline (Style-DNA per theme → batch hero/OG/social + loops)** in parallel → **SP-3 marketing-page assembly** (one earth-light reference page → theme-swap validation).
 
 ## The produce loop (the user's `/loop twice`)
-- **Round 1 (foundation + proof):** ledger-glyph SVG set, BoTW activation/palette flair layer (`botw-flair.css`), the **OrbField** engine (swappable glyphSet), assembled into one **clickable lore-light BoTW prototype** (`preview/lore-botw-landing.html`: hero + OrbField + activation-glow + cut-corner frames + golden-hour). Render-verified across light/dark.
+- **Round 1 (foundation + proof):** ledger-glyph SVG set, BoTW activation/palette flair layer (`botw-flair.css`), the **OrbField** engine (swappable glyphSet), assembled into one **clickable earth-light BoTW prototype** (`preview/lore-botw-landing.html`: hero + OrbField + activation-glow + cut-corner frames + golden-hour). Render-verified across light/dark.
 - **Round 2 (refine + expand):** critique round 1, refine the motion/feel, add the hover-to-somewhere rows + section-bridge + StatOdometer, prove the theme-swap (same page under another theme), and stage the Flora-asset hooks.
 
 ## Out of scope (for now)

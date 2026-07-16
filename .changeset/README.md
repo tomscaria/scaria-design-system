@@ -1,6 +1,6 @@
 # Changesets
 
-Versioning and release notes for `@tomscaria/scaria-design-system`.
+Versioning and release notes for `@tomscaria/consumer-fintech-design-system`.
 
 ## Workflow
 

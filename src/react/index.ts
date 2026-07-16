@@ -6,9 +6,9 @@
  * all the visual work.
  *
  * Usage:
- *   import { Panel, Button, StatStrip, StatCell, Badge, LogRow, SysHeader, LiveDot } from '@tomscaria/scaria-design-system';
- *   import '@tomscaria/scaria-design-system/css';     // tokens + theme blocks
- *   import '@tomscaria/scaria-design-system/css/kit'; // component classes
+ *   import { Panel, Button, StatStrip, StatCell, Badge, LogRow, SysHeader, LiveDot } from '@tomscaria/consumer-fintech-design-system';
+ *   import '@tomscaria/consumer-fintech-design-system/css';     // tokens + theme blocks
+ *   import '@tomscaria/consumer-fintech-design-system/css/kit'; // component classes
  *
  *   <body data-theme="revenant-dark">
  *     <SysHeader wordmark="LORE® REVENANT" status={<LiveDot />} />

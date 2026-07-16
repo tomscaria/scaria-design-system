@@ -57,8 +57,8 @@ interface SparklineProps {
 
 | Theme | Tick line |
 |---|---|
-| rolr-dark | `--accent` lime rising / `#F58D80` falling on `#22251E` |
-| rolr-light | same tones; hosted inside the dark Tick tile |
+| arcade-dark | `--accent` lime rising / `#F58D80` falling on `#22251E` |
+| arcade-light | same tones; hosted inside the dark Tick tile |
 
 ## File layout
 

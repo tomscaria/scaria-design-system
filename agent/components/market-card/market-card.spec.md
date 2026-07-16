@@ -66,8 +66,8 @@ interface MarketCardProps {
 
 | Theme | Card |
 |---|---|
-| rolr-dark | `#1A1D18` card, `#2C2F28` border, green/ember prices |
-| rolr-light | white card, parchment border, deep-lime / ember prices |
+| arcade-dark | `#1A1D18` card, `#2C2F28` border, green/ember prices |
+| arcade-light | white card, parchment border, deep-lime / ember prices |
 
 ## File layout
 

@@ -1,93 +1,79 @@
-# Lore Design System — Atomic Kit
+# consumer-fintech-design-system
 
-> Atomic brand kit for Lore + Revenant under Scaria, Inc. Built on the "HTML Brand" framework (Emmett / Little Plains, 2026). One brand encoded in two formats:
-> - `human/` — traditional guidelines (PDFs, Figma)
-> - `agent/` — machine-readable atomic files any agentic tool (Claude Design, Cursor, Code) can read and build from
+A consumer-fintech design system by **Scaria, Inc.** — design tokens, a multi-theme
+runtime, a Tailwind preset, kit CSS primitives, and thin React component wrappers.
+One system, encoded in two formats:
 
-## Quickstart for an agent
+- **`agent/`** — machine-readable atomic files any agentic tool (Claude, Cursor, Code) can read and build from.
+- **`tokens/` + `styles.css` + `preset.cjs`** — the runtime a product ships: CSS variables, per-theme blocks, and the Tailwind preset.
 
-Given the full `agent/` folder and a target theme, you can build a coherent landing page, UI surface, or campaign in one prompt. Try:
+## Themes
 
-> "Generate me an HTML landing page based on the atomic design system at `agent/`, using the `revenant-light` theme and `marketing` expression."
+Composed on `<html>`/`<body>` via `data-theme` (identity: color + type) and
+`data-expression` (rhythm: spacing, hero scale, motion pace — `product` | `marketing`).
 
-The result will use the correct fonts, type scale, motion curves, color palette, tone of voice, and component primitives — all sourced from this kit.
-
-## Structure
-
-```
-scaria-design-system/
-├── readme.md              ← you are here
-├── magic_trick.md         ← Scaria, Inc. umbrella POV
-├── human/                 ← PDFs, Figma links
-├── inspo/                 ← reference imagery (drives new theme authoring)
-└── agent/
-    ├── brands/
-    │   ├── lore/{magic_trick.md, verbal/×6}
-    │   └── revenant/{magic_trick.md, verbal/×6}
-    ├── visual/            ← brand-wide visual primitives
-    │   ├── fonts/         ← Aeonik, Aeonik Mono, Lock Serif, Inter, Geist
-    │   ├── assets/        ← logos, marks, employee/partner/employer marks
-    │   ├── tokens/        ← token specimens (introspectable JSON / md)
-    │   ├── motion/        ← motion.json + motion.css (six primitives)
-    │   └── artifacts/
-    │       ├── web/       ← landing artifact templates
-    │       └── product/   ← product UI artifact templates
-    ├── themes/            ← one micro-kit per theme
-    │   ├── lore-light/    ← ✅ retrofit from existing
-    │   ├── lore-dark/     ← ✅ retrofit
-    │   ├── primitive/     ← ✅ retrofit
-    │   ├── primitive-dark/← 🆕 stub
-    │   ├── revenant-light/← 🆕 author from inspo (Phase 0)
-    │   ├── revenant-dark/ ← 🆕 author from inspo (Phase 0)
-    │   ├── berlin/        ← 🆕 awaiting inspo
-    │   └── kiosk/         ← ♻️ restore from earlier expressive themes
-    └── components/        ← UI primitives + specs (theme-agnostic)
-```
-
-## The two axes
-
-Themes carry **color + type identity**. Expressions carry **rhythm** (density, motion budget, section spacing). Compose both on `<html>`:
+| Theme | Register |
+|---|---|
+| `earth-light` / `earth-dark` | Warm consumer-fintech — parchment, graphite, chartreuse |
+| `arcade-light` / `arcade-dark` | Prediction-market / liveness — indigo, near-black grounds |
+| `revenant-light` / `revenant-dark` | American-Dynamism ops — concrete, onyx, signal orange |
+| `primitive` / `primitive-dark` | **The Studio** — Scaria flagship marketing identity |
+| `kiosk` | High-contrast, touch-first |
 
 ```html
-<html data-theme="revenant-light" data-expression="product">   <!-- dashboard -->
-<html data-theme="revenant-light" data-expression="marketing"> <!-- deck/landing -->
+<html data-theme="earth-light" data-expression="marketing">
 ```
 
-Default expression is `product`. Marketing/deck surfaces opt in.
+## Install
 
-## Consuming
-
-**As an atomic kit** (drop folder into Cursor / Claude Design / agent):
-```
-~/scaria/<your-project>/lore-kit/  ← clone or copy the agent/ folder here
+```bash
+npm install @tomscaria/consumer-fintech-design-system
 ```
 
-**As an npm package** (for traditional component imports). Published to **GitHub Packages**, not npmjs.org — point the `@tomscaria` scope there first:
-```sh
-# one-time, per consuming repo (or in ~/.npmrc):
-echo "@tomscaria:registry=https://npm.pkg.github.com/" >> .npmrc
-# auth (GitHub PAT with read:packages) goes in ~/.npmrc:
-#   //npm.pkg.github.com/:_authToken=<token>
-npm install @tomscaria/scaria-design-system
+> Published to GitHub Packages today (scoped `@tomscaria`, needs a `read:packages`
+> token via `.npmrc`). A zero-auth public-npm path is being wired up separately.
+
+## Quickstart
+
+**CSS tokens + all themes:**
+```js
+import '@tomscaria/consumer-fintech-design-system/styles';   // fonts + every theme + brand layer
+// or just the token layer:
+import '@tomscaria/consumer-fintech-design-system/css';
 ```
 
-**From a local checkout** (no registry, works today):
-```json
-"@tomscaria/scaria-design-system": "file:../scaria-design-system"
-```
-```ts
-import { Button, Card } from '@tomscaria/scaria-design-system';
-```
-```css
-@import '@tomscaria/scaria-design-system/styles';
+**Tailwind preset** (colors, type scale, spacing, motion all resolve through the theme CSS vars):
+```js
+// tailwind.config.js
+const preset = require('@tomscaria/consumer-fintech-design-system/tailwind');
+module.exports = { presets: [preset], content: ['./src/**/*.{ts,tsx}'] };
 ```
 
-## Editing
+**React wrappers** (optional — React is an optional peer dependency):
+```tsx
+import { Button, Panel, StatStrip } from '@tomscaria/consumer-fintech-design-system';
+```
 
-Change a primary color: edit one CSS var in `agent/themes/<theme>/colors_and_type.css`.
-Change a motion curve: edit the JSON in `agent/visual/motion/motion.json`.
-Re-publish derived npm; consumers pick up changes on `npm update`.
+## Subpath exports
+
+| Import | What |
+|---|---|
+| `.` | React component wrappers (ESM + CJS + types) |
+| `/styles` | Aggregate CSS: fonts + every theme + brand layer |
+| `/css`, `/css/primitives`, `/css/kit`, `/css/dataviz` | Individual CSS layers |
+| `/tailwind` (alias `/preset`) | Tailwind preset (`.cjs` — `require` and `import` both work) |
+| `/themes/<name>` | A single theme's `colors_and_type.css` |
+| `/tokens.json` | Machine-readable token summary |
+| `/agent/*` | Raw atomic kit files |
+
+## Migration
+
+Renaming from `@tomscaria/scaria-design-system`, and the `lore-*` / `rolr-*` themes
+were renamed to `earth-*` / `arcade-*` in **2.0.0**. The old `data-theme="lore-*"`
+values still resolve via deprecated backward-compat aliases, so existing markup keeps
+working. See [`MIGRATION.md`](./MIGRATION.md).
 
 ## License
 
-UNLICENSED. IP owned by tomscaria, licensed to refractor-labs for production use (primarily `prysm-squads-mvp`).
+[MIT](./LICENSE) — © 2026 Scaria, Inc. Free to use in commercial and
+proprietary products; attribution required.

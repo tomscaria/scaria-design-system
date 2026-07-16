@@ -4,10 +4,10 @@
    An optional "golden-hour / dormant-shrine" flair for the Lore design system.
 
    Scope:   EVERYTHING here is nested under [data-flair="botw"]. Nothing leaks
-            into the base lore-light / lore-dark themes. Apply by adding the
+            into the base earth-light / earth-dark themes. Apply by adding the
             attribute to any ancestor (usually <html> or a section):
 
-                <html data-theme="lore-dark" data-flair="botw"> … </html>
+                <html data-theme="earth-dark" data-flair="botw"> … </html>
 
    Contract:
      · References kit tokens by var() WITH fallbacks, so the layer degrades

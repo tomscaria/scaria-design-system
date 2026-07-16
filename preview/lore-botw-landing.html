@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-theme="lore-light" data-expression="marketing" data-flair="botw">
+<html lang="en" data-theme="earth-light" data-expression="marketing" data-flair="botw">
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -265,12 +265,12 @@
 <footer class="lb-foot topo-underlay">
   <div>
     <span class="mark">LORE</span>
-    <span>BoTW marketing variation · lore-light · data-flair=botw</span>
+    <span>BoTW marketing variation · earth-light · data-flair=botw</span>
     <span>© Scaria Holdings</span>
   </div>
 </footer>
 
-<button class="lb-toggle activate" id="lb-theme">◐ lore-dark</button>
+<button class="lb-toggle activate" id="lb-theme">◐ earth-dark</button>
 
 <script type="module">
   import { mountOrbField } from '../agent/visual/patterns/orbfield.js';
@@ -299,9 +299,9 @@
   // theme toggle: prove the BoTW skin re-themes across light/dark
   const root = document.documentElement, tog = document.getElementById('lb-theme');
   tog.addEventListener('click', ()=>{
-    const dark = root.getAttribute('data-theme')==='lore-dark';
-    root.setAttribute('data-theme', dark?'lore-light':'lore-dark');
-    tog.textContent = dark?'◐ lore-dark':'◑ lore-light';
+    const dark = root.getAttribute('data-theme')==='earth-dark';
+    root.setAttribute('data-theme', dark?'earth-light':'earth-dark');
+    tog.textContent = dark?'◐ earth-dark':'◑ earth-light';
   });
 </script>
 </body>

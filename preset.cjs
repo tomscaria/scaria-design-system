@@ -2,7 +2,7 @@
  * Lore Design System — Tailwind preset (refactored for per-theme tokens)
  *
  * Consumers wire this preset in their tailwind.config:
- *   presets: [require('@tomscaria/scaria-design-system/preset')]
+ *   presets: [require('@tomscaria/consumer-fintech-design-system/preset')]
  *
  * Change from the previous preset: fontSize / fontFamily / spacing / motion
  * now resolve through CSS variables instead of literal pixel values, so they

@@ -91,8 +91,8 @@ const button = cva(
 
 | Theme | Primary CTA visual |
 |---|---|
-| lore-light | Graphite fill, lime text |
-| lore-dark | Lime fill, graphite text (because brand inverts) |
+| earth-light | Graphite fill, lime text |
+| earth-dark | Lime fill, graphite text (because brand inverts) |
 | primitive | Black fill, white text |
 | kiosk | Black fill, yellow text, hard-offset shadow, 0px radius |
 

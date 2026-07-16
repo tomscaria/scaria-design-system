@@ -1,10 +1,10 @@
 # Consumer migration patches
 
-> Per-consumer patches for migrating off ad-hoc DS setups to `@tomscaria/scaria-design-system`. Apply **after** the package is published to npm (or via a workspace `file:` dependency during local dev).
+> Per-consumer patches for migrating off ad-hoc DS setups to `@tomscaria/consumer-fintech-design-system`. Apply **after** the package is published to npm (or via a workspace `file:` dependency during local dev).
 
 ## Prereqs
 
-1. **`@tomscaria/scaria-design-system` is published** (or locally linked via `pnpm link --global` / `file:` dep)
+1. **`@tomscaria/consumer-fintech-design-system` is published** (or locally linked via `pnpm link --global` / `file:` dep)
 2. **Local dev machine** — every consumer's lockfile must be regenerated (`pnpm install` or `npm install`). This step cannot run from a sandbox environment.
 
 ## Migration order
@@ -21,20 +21,20 @@
 
 1. **Add the dep**:
    ```json
-   { "dependencies": { "@tomscaria/scaria-design-system": "^0.1.0" } }
+   { "dependencies": { "@tomscaria/consumer-fintech-design-system": "^0.1.0" } }
    ```
 2. **Update Tailwind config** to use the preset:
    ```ts
-   import preset from "@tomscaria/scaria-design-system/preset";
+   import preset from "@tomscaria/consumer-fintech-design-system/preset";
    export default { presets: [preset], content: [...] };
    ```
 3. **Import root styles** (replaces ad-hoc `@layer base { :root { --bg: ... } }` blocks):
    ```css
-   @import "@tomscaria/scaria-design-system/styles";
+   @import "@tomscaria/consumer-fintech-design-system/styles";
    ```
 4. **Set `data-theme` (and optionally `data-expression`) on `<html>`**:
    ```tsx
-   <html data-theme="lore-light" data-expression="product">
+   <html data-theme="earth-light" data-expression="product">
    ```
 5. **Remove local shadcn copies** that the kit replaces (only as components ship — currently only `button` is in the kit).
 6. **Regenerate lockfile locally** + commit.

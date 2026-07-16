@@ -4,7 +4,7 @@
 
 ## Prereqs
 
-- `@tomscaria/scaria-design-system@^0.1.0` published or `pnpm link --global`'d
+- `@tomscaria/consumer-fintech-design-system@^0.1.0` published or `pnpm link --global`'d
 - Local checkout at `~/scaria/prysm-squads-mvp/`
 - Branch: `claude/unify-lore-components-0GPeV`
 - **Pattern harvest** from `packages/design-system-vite` into the kit has happened (`harvest-instructions/prysm-squads-mvp.md`)
@@ -13,7 +13,7 @@
 
 Don't rip out `packages/design-system-vite` in one PR. Run dual-DS:
 
-1. **Phase A** — Add `@tomscaria/scaria-design-system` alongside the internal DS. `lore-webapp` imports from BOTH during transition.
+1. **Phase A** — Add `@tomscaria/consumer-fintech-design-system` alongside the internal DS. `lore-webapp` imports from BOTH during transition.
 2. **Phase B** — Per-component migration: as each kit component matches an internal DS component, switch the import. Track in `packages/lore-webapp/MIGRATION.md`.
 3. **Phase C** — Once `lore-webapp` has zero internal-DS imports, mark `packages/design-system-vite` deprecated.
 
@@ -27,7 +27,7 @@ This patch covers **Phase A** only. Phases B and C are per-component PRs that fo
  // packages/lore-webapp/package.json
  {
    "dependencies": {
-+    "@tomscaria/scaria-design-system": "^0.1.0",
++    "@tomscaria/consumer-fintech-design-system": "^0.1.0",
      "@refractor-labs/design-system-vite": "workspace:*",
      ...
    }
@@ -39,7 +39,7 @@ This patch covers **Phase A** only. Phases B and C are per-component PRs that fo
 ```ts
 // packages/lore-webapp/tailwind.config.ts (or .js)
 import type { Config } from "tailwindcss";
-import preset from "@tomscaria/scaria-design-system/preset";
+import preset from "@tomscaria/consumer-fintech-design-system/preset";
 
 export default {
   presets: [preset],
@@ -54,7 +54,7 @@ export default {
 
 ```css
 /* packages/lore-webapp/src/styles/globals.css */
-@import '@tomscaria/scaria-design-system/styles';
+@import '@tomscaria/consumer-fintech-design-system/styles';
 
 @tailwind base;
 @tailwind components;
@@ -70,10 +70,10 @@ export default {
 For App Router (`app/layout.tsx`):
 
 ```tsx
-<html lang="en" data-theme="lore-light" data-expression="product">
+<html lang="en" data-theme="earth-light" data-expression="product">
 ```
 
-Set to `lore-dark` if that's the current canonical theme for the Prysm experience.
+Set to `earth-dark` if that's the current canonical theme for the Prysm experience.
 
 ### 5. Lockfile
 
@@ -96,7 +96,7 @@ pnpm install
 ```sh
 git checkout -b claude/unify-lore-components-0GPeV
 git add -A
-git commit -m "feat: Phase A — add @tomscaria/scaria-design-system to lore-webapp"
+git commit -m "feat: Phase A — add @tomscaria/consumer-fintech-design-system to lore-webapp"
 git push -u origin claude/unify-lore-components-0GPeV
 ```
 

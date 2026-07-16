@@ -167,7 +167,7 @@
 }
 
 /* ---------- SEMANTIC TOKENS: LORE LIGHT (default) ---------- */
-:root, [data-theme="lore-light"] {
+:root, [data-theme="earth-light"], [data-theme="lore-light"] {
   /* Surfaces */
   --bg: var(--p-parchment);
   --bg-2: #F8F4EA;       /* raised card */
@@ -251,7 +251,7 @@
 }
 
 /* ---------- LORE DARK ---------- */
-[data-theme="lore-dark"] {
+[data-theme="earth-dark"], [data-theme="lore-dark"] {
   --bg: var(--p-graphite);
   --bg-2: #1A1D18;
   --bg-3: #242720;
@@ -381,7 +381,7 @@
 
    Use when: the surface is field-spec, dashboard, ops-facing, or the Revenant
    trading agent lifecycle stage (the highest operational tier in swarm-fund).
-   Not for general consumer / fintech surfaces — use lore-light instead.
+   Not for general consumer / fintech surfaces — use earth-light instead.
 
    Typography note: for pure terminal / status-board surfaces, override
    --font-sans with var(--font-mono) to lean fully into the operational register.
@@ -420,7 +420,7 @@
   /* Brand — neutral max-contrast ink carries primary actions; orange is NEVER the brand.
      Revenant's rule (both light & dark): --brand = the strongest neutral inverse of the
      surface, --accent = signal orange, reserved for ONE hero action/metric per view. This
-     deviates deliberately from lore-dark (where --brand collapses onto the accent) because
+     deviates deliberately from earth-dark (where --brand collapses onto the accent) because
      signal orange carries semantic load ("active state / system signal") that a pure identity
      hue like chartreuse does not — spending it on every button would dilute the one color
      that means "act here". */
@@ -470,7 +470,7 @@
 
 /* ---------- REVENANT DARK ----------
    Night-ops sibling of revenant-light. Deep near-black field (slight olive
-   undertone, cooler than lore-dark's warm graphite), signal orange as the
+   undertone, cooler than earth-dark's warm graphite), signal orange as the
    primary action / status accent. Reference images: Funding American Progress
    (pure-black + white editorial), Nucleus Engineering Office (charcoal +
    coral-red + mono type), AI-OPS (orange-on-black field).
@@ -484,7 +484,7 @@
    ONE hero action/metric per view via --accent. This mirrors the Atlas reference
    (a single orange "CONTACT US" over an otherwise inked layout) and keeps orange's
    "system signal" meaning intact. (Note: this is a deliberate deviation from
-   lore-dark, which collapses --brand onto its accent — see revenant-light brand note.)
+   earth-dark, which collapses --brand onto its accent — see revenant-light brand note.)
 
    Shadows use a subtle signal-orange ring alongside deep black drop-shadow.
    This creates the "clearance required / system active" glow from the Nucleus
@@ -622,7 +622,7 @@
    The fallback is declared on `:root, [data-theme]` — NOT `:root` alone.
    Themes set `data-theme` on <body>, but `--accent`/`--line-2` etc. are
    defined on that same <body>; a `:root`-only fallback would resolve
-   `var(--accent)` against <html> (always the lore-light default) and
+   `var(--accent)` against <html> (always the earth-light default) and
    every non-curated theme's charts would silently render in Lore's
    palette. Declaring on `[data-theme]` too makes `var(--accent)` resolve
    against the ACTIVE theme element, so EVERY theme (kiosk, champagne,
@@ -646,9 +646,9 @@
 /* LORE — playful, chartreuse-forward wheel. Chartreuse hero, then
    lavender / forest / mint / amber / slate / sky / rose. Mirrors the
    inspo "Fuzy" library (lime + lavender + forest + mint) while staying
-   inside Lore's own primitive palette. (Default theme = lore-light, so
+   inside Lore's own primitive palette. (Default theme = earth-light, so
    :root is included here to curate the no-data-theme case too.) */
-:root, [data-theme="lore-light"]{
+:root, [data-theme="earth-light"], [data-theme="lore-light"]{
   --cat-1: var(--p-chartreuse);   /* #D4F24B */
   --cat-2: #B561E0;               /* lavender-violet */
   --cat-3: #1D7A45;               /* forest */
@@ -658,7 +658,7 @@
   --cat-7: #5BA3E0;               /* sky */
   --cat-8: #E07BA8;               /* rose */
 }
-[data-theme="lore-dark"]{
+[data-theme="earth-dark"], [data-theme="lore-dark"]{
   --cat-1: var(--p-chartreuse);   /* pops on graphite */
   --cat-2: #C994EE;
   --cat-3: #55BD7E;

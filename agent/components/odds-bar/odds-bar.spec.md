@@ -59,8 +59,8 @@ interface OddsBarProps {
 
 | Theme | Yes/No bar |
 |---|---|
-| rolr-dark | `--up` green / `--down` ember on `#23261F` track |
-| rolr-light | `--accent-hover` lime / `#E8B4A8` on parchment track |
+| arcade-dark | `--up` green / `--down` ember on `#23261F` track |
+| arcade-light | `--accent-hover` lime / `#E8B4A8` on parchment track |
 
 ## File layout
 

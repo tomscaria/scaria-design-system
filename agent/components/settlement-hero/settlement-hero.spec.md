@@ -69,8 +69,8 @@ interface SettlementHeroProps {
 
 | Theme | Won screen |
 |---|---|
-| rolr-dark | Lock Serif `--up` amount, lime+green+ember confetti |
-| rolr-light | graphite headline, green amount on warm white |
+| arcade-dark | Lock Serif `--up` amount, lime+green+ember confetti |
+| arcade-light | graphite headline, green amount on warm white |
 
 ## File layout
 
