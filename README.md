@@ -35,6 +35,17 @@ npm install @tomscaria/consumer-fintech-design-system
 
 ## Quickstart
 
+**One command** (checks deps, wires the preset + styles, prints the theme scaffold):
+```bash
+npx @tomscaria/consumer-fintech-design-system init
+```
+Migrating from `@tomscaria/scaria-design-system` or `lore-*`/`rolr-*` themes:
+```bash
+npx @tomscaria/consumer-fintech-design-system migrate --apply
+```
+
+### Manual setup
+
 **CSS tokens + all themes:**
 ```js
 import '@tomscaria/consumer-fintech-design-system/styles';   // fonts + every theme + brand layer

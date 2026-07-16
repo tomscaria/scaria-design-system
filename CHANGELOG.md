@@ -1,5 +1,13 @@
 # @tomscaria/consumer-fintech-design-system
 
+## 2.1.0
+
+### Minor Changes
+
+- **Adoption CLI** (`bin/cli.mjs`, zero dependencies):
+  - `npx @tomscaria/consumer-fintech-design-system init [--write]` — wires the DS into an app: checks the dependency, prints (or applies) the Tailwind preset hookup, `@import '.../styles'`, and the `data-theme`/`data-expression` scaffold.
+  - `npx @tomscaria/consumer-fintech-design-system migrate [--apply]` — migrates a consumer off `@tomscaria/scaria-design-system` and the old `lore-*`/`rolr-*` theme names (dep key + version range handled structurally in package.json; lockfiles left for reinstall). Dry-run by default.
+
 ## 2.0.1
 
 ### Patch Changes
