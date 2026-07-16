@@ -53,17 +53,22 @@ jobs:
       - name: Build derived
         run: npm run build
 
-      # Skipped until the NPM_TOKEN secret is set, so the workflow is a clean
-      # no-op rather than a failing run before publishing is provisioned.
-      - name: Create release PR or publish
+      # Direct, idempotent publish. Skipped until NPM_TOKEN is set (green no-op).
+      # Publishes the current package.json version only if it isn't already on
+      # npm, so re-runs are safe. Prints npm whoami to surface auth/scope issues.
+      - name: Publish to npm
         if: ${{ env.NPM_TOKEN != '' }}
-        uses: changesets/action@v1
-        with:
-          publish: npm run release
-          version: npm run version-packages
-          commit: "chore: version packages"
-          title: "chore: version packages"
+        run: |
+          set -euo pipefail
+          echo "authenticated as: $(npm whoami || echo '(whoami FAILED — bad token)')"
+          PKG=$(node -p "require('./package.json').name")
+          VER=$(node -p "require('./package.json').version")
+          echo "target: $PKG@$VER"
+          if npm view "$PKG@$VER" version >/dev/null 2>&1; then
+            echo "$PKG@$VER already published — skipping."
+          else
+            npm publish --access public
+            echo "published $PKG@$VER"
+          fi
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
