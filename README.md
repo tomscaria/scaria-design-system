@@ -30,8 +30,10 @@ Composed on `<html>`/`<body>` via `data-theme` (identity: color + type) and
 npm install @tomscaria/consumer-fintech-design-system
 ```
 
-> Published to GitHub Packages today (scoped `@tomscaria`, needs a `read:packages`
-> token via `.npmrc`). A zero-auth public-npm path is being wired up separately.
+> Published to the **public npm registry** — no token, no `.npmrc`, no auth of any
+> kind. A plain `npm install` (or `pnpm add` / `yarn add` / `bun add`) works in any
+> project. (GitHub Packages also carries older mirrored versions; ignore it —
+> npmjs.org is the canonical registry.)
 
 ## Quickstart
 
